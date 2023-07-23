@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./src-tauri/prisma-cli/Cargo.toml"
+    ]
+}
