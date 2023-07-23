@@ -1,15 +1,21 @@
-import { createSignal } from "solid-js";
-import logo from "./assets/logo.svg";
-import { invoke } from "@tauri-apps/api/tauri";
+import { For, createEffect, createSignal } from "solid-js";
 import "./App.css";
+import { Post, createPost, getPosts } from "./bindings";
 
 function App() {
-  const [greetMsg, setGreetMsg] = createSignal("");
+  const [greetMsg, setGreetMsg] = createSignal<Post[]>();
   const [name, setName] = createSignal("");
 
+  createEffect(async () => {
+    setGreetMsg(await getPosts())
+  })
+
   async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name: name() }));
+    createPost({
+      title: name(),
+      content: "Hello from Solid!",
+    });
+
   }
 
   return (
@@ -22,9 +28,6 @@ function App() {
         </a>
         <a href="https://tauri.app" target="_blank">
           <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={logo} class="logo solid" alt="Solid logo" />
         </a>
       </div>
 
@@ -45,7 +48,15 @@ function App() {
         <button type="submit">Greet</button>
       </form>
 
-      <p>{greetMsg()}</p>
+      <For each={greetMsg()}>
+        {(msg) => (
+          <div>
+            <h1>{msg.title}</h1>
+            <p>{msg.content}</p>
+          </div>
+        )}
+        </For>
+        
     </div>
   );
 }
