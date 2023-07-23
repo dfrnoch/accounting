@@ -1,64 +1,19 @@
-import { For, createEffect, createSignal } from "solid-js";
-import "./App.css";
-import { Post, createPost, getPosts } from "./bindings";
+import { Route, Routes } from "@solidjs/router";
+import type { Component } from "solid-js";
+import { Toaster } from "solid-toast";
+import Layout from "./components/Core/Layout";
 
-function App() {
-  const [greetMsg, setGreetMsg] = createSignal<Post[]>();
-  const [name, setName] = createSignal("");
+import Home from "./pages/Home";
 
-  createEffect(async () => {
-    setGreetMsg(await getPosts())
-  })
-
-  async function greet() {
-    createPost({
-      title: name(),
-      content: "Hello from Solid!",
-    });
-
-  }
-
+const App: Component = () => {
   return (
-    <div class="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div class="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-        </a>
-      </div>
-
-      <p>Click on the Tauri, Vite, and Solid logos to learn more.</p>
-
-      <form
-        class="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-
-      <For each={greetMsg()}>
-        {(msg) => (
-          <div>
-            <h1>{msg.title}</h1>
-            <p>{msg.content}</p>
-          </div>
-        )}
-        </For>
-        
-    </div>
+    <Layout>
+      <Toaster position="bottom-right" gutter={8} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Layout>
   );
-}
+};
 
 export default App;
