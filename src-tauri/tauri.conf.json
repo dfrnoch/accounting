@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "finance",
+    "productName": "accounting",
     "version": "0.0.0"
   },
   "tauri": {
@@ -37,7 +37,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "finance",
+        "title": "accounting",
         "width": 800,
         "height": 600
       }

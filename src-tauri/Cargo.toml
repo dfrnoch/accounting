@@ -1,5 +1,5 @@
 [package]
-name = "finance"
+name = "accounting"
 version = "0.0.1"
 description = "A Tauri App"
 authors = ["lynx"]
