@@ -1,4 +1,5 @@
 import { ParentComponent } from "solid-js";
+import MenuButton from "../Menu/Button";
 import { useI18n } from "../../i18n";
 
 const Layout: ParentComponent = (props) => {
@@ -6,12 +7,11 @@ const Layout: ParentComponent = (props) => {
 
   return (
     <div class="container flex flex-row">
-      <div class="w-1/4 bg-gray">
-        <h1 class="text-2xl font-bold">
-          {t.hello()}, {t.world()}!
-        </h1>
+      <div class="w-1/5 bg-gray">
+        <MenuButton label={t.hello()} icon="home" active={true} onClick={() => {}} />
+
       </div>
-      <div class="w-3/4">{props.children}</div>
+      <div class="w-4/5">{props.children}</div>
     </div>
   );
 };
