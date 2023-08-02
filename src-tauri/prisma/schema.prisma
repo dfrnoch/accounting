@@ -11,6 +11,7 @@ generator client {
 
 model Company {
     id       Int       @id @default(autoincrement())
+    active   Boolean   @default(true)
     name     String
     email    String
     invoices Invoice[]
@@ -27,6 +28,11 @@ model Company {
     // Additional fields
     phoneNumber String?
     website     String?
+}
+
+model Test {
+    id   Int    @id @default(autoincrement())
+    name String
 }
 
 model Client {
