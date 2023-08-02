@@ -5,3 +5,4 @@ dist
 # Rust
 target
 db.rs
+src-tauri/dev.db 
