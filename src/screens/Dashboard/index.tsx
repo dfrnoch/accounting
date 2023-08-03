@@ -15,8 +15,9 @@ const Dashboard: Component = () => {
   } = useSelector();
 
   const fetchCompany = async () => {
-    const companyData = await getCompany(state.companyId);
+    const companyData = await getCompany(state.companyId || 1);
     if (!companyData) {
+      updateState({ companyId: 1 });
       return;
     }
 

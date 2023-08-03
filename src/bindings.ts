@@ -24,4 +24,4 @@ export function createPost(data: CreateCompanyData) {
 
 export type CreateCompanyData = { name: string }
 export type Test = { id: number; name: string }
-export type Company = { id: number; active: boolean; name: string; email: string; cin: string | null; vatId: string | null; registeredAddress: string; streetAddress: string; city: string; postalCode: string; phoneNumber: string | null; website: string | null }
+export type Company = { id: number; name: string; email: string; cin: string | null; vatId: string | null; streetAddress: string; city: string; postalCode: string; phoneNumber: string | null; website: string | null }

@@ -10,7 +10,9 @@ interface IMenuButtonProps {
 const MenuButton: Component<IMenuButtonProps> = (props) => {
   return (
     <div
-      class="flex items-center justify-center bg-gray transition-all hover:bg-gray-100 gap-4"
+      class={`flex items-center justify-center bg-gray transition-all hover:bg-gray-100 gap-4 hover:cursor-pointer${
+        props.active ? " bg-gray-100" : ""
+      }`}
       onClick={props.onClick}
     >
       {props.label}

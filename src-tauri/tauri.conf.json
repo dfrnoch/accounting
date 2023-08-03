@@ -16,6 +16,12 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "os": {
+        "all": true
+      },
+      "window": {
+        "startDragging": true
       }
     },
     "bundle": {
@@ -39,7 +45,10 @@
         "resizable": true,
         "title": "accounting",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "minWidth": 700,
+        "minHeight": 500,
+        "titleBarStyle": "Overlay"
       }
     ]
   }

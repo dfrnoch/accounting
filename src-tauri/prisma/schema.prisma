@@ -11,14 +11,12 @@ generator client {
 
 model Company {
     id       Int       @id @default(autoincrement())
-    active   Boolean   @default(true)
     name     String
     email    String
     invoices Invoice[]
 
-    cin               String? @unique // IČO
-    vatId             String? @unique // DIČ
-    registeredAddress String
+    cin   String? @unique // IČO
+    vatId String? @unique // DIČ
 
     // Adress
     streetAddress String

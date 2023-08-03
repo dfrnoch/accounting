@@ -4,6 +4,7 @@ import { Toaster } from "solid-toast";
 import { Show, createEffect, createSignal, lazy } from "solid-js";
 import { checkDb } from "./bindings";
 import { StoreProvider } from "./utils/store";
+import TitleBar from "./components/Core/TitleBar";
 const Dashboard = lazy(() => import("./screens/Dashboard"));
 const SetupWizard = lazy(() => import("./screens/SetupWizard"));
 
@@ -18,10 +19,10 @@ const App: Component = () => {
 
   const checkSetup = async () => {
     const data = await checkDb();
-    if (!data) {
-      return setScreen(Screen.Setup);
+    if (data) {
+      return setScreen(Screen.Dashboard);
     }
-    setScreen(Screen.Dashboard);
+    return setScreen(Screen.Setup);
   };
 
   createEffect(() => {
@@ -30,7 +31,7 @@ const App: Component = () => {
 
   return (
     <I18nProvider>
-      <Toaster />
+      <TitleBar />
       <Show when={screen() === Screen.Dashboard}>
         <StoreProvider>
           <Dashboard />
@@ -46,6 +47,7 @@ const App: Component = () => {
           </div>
         </div>
       </Show>
+      <Toaster />
     </I18nProvider>
   );
 };

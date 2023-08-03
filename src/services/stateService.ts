@@ -13,7 +13,7 @@ export const StateService = () => {
 
   onMount(() => {
     const stateString = localStorage.getItem("state");
-    if (!stateString) return;
+    if (!stateString) return setState({ companyId: null, currentMenu: "home" });
     setState(() => JSON.parse(stateString) as unknown as StateService);
   });
 

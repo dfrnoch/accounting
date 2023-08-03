@@ -9,7 +9,7 @@ const Layout: ParentComponent = (props) => {
 
   return (
     <div class="container flex flex-row">
-      <div class="w-1/5 bg-gray">
+      <div class="w-1/5 bg-gray pt-10">
         <MenuButton
           label={t.hello()}
           icon="home"
@@ -23,7 +23,6 @@ const Layout: ParentComponent = (props) => {
           icon="home"
           active={false}
           onClick={() => {
-            console.log("invoices");
             navigate("/invoices");
           }}
         />
