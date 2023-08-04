@@ -3,25 +3,26 @@
 
 #[allow(warnings, unused)]
 mod db;
-// mod window_ext;
-
-// #[cfg(target_os = "macos")]
-// #[macro_use]
-// extern crate objc;
 
 use db::*;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
-use specta::{collect_types, Type};
+// use specta::{collect_types, Type};
 use std::sync::Arc;
-use tauri::State;
-use tauri_specta::ts;
-// use window_ext::WindowExt;
+use tauri::{Manager, State};
+use tauri_plugin_autostart::MacosLauncher;
+// use tauri_specta::ts;
+
+#[derive(Clone, serde::Serialize)]
+struct Payload {
+    args: Vec<String>,
+    cwd: String,
+}
 
 type DbState<'a> = State<'a, Arc<PrismaClient>>;
 
+// #[specta::specta]
 #[tauri::command]
-#[specta::specta]
 async fn check_db(db: DbState<'_>) -> Result<bool, ()> {
     db.company()
         .count(vec![])
@@ -31,8 +32,8 @@ async fn check_db(db: DbState<'_>) -> Result<bool, ()> {
         .map(|x| x > 0)
 }
 
+// #[specta::specta]
 #[tauri::command]
-#[specta::specta]
 async fn get_company(
     db: DbState<'_>,
     id: Option<i32>,
@@ -43,13 +44,13 @@ async fn get_company(
         .await
 }
 
-#[derive(Deserialize, Type)]
+#[derive(Deserialize)]
 struct CreateCompanyData {
     name: String,
 }
 
+// #[specta::specta]
 #[tauri::command]
-#[specta::specta]
 async fn create_post(db: DbState<'_>, data: CreateCompanyData) -> Result<test::Data, ()> {
     db.test()
         .create(data.name, vec![])
@@ -62,35 +63,38 @@ async fn create_post(db: DbState<'_>, data: CreateCompanyData) -> Result<test::D
 async fn main() {
     let db = PrismaClient::_builder().build().await.unwrap();
 
-    #[cfg(debug_assertions)]
-    ts::export(
-        collect_types![check_db, get_company, create_post],
-        "../src/bindings.ts",
-    )
-    .unwrap();
+    // #[cfg(debug_assertions)]
+    // ts::export(
+    //     collect_types![check_db, get_company, create_post],
+    //     "../src/bindings.ts",
+    // )
+    // .unwrap();
 
     //TODO: enable only in release mode
     // #[cfg(debug_assertions)]
     // db.db_push().await.unwrap();
 
     tauri::Builder::default()
-        // .setup(|app| {
-        //     let win = app.get_window("main").unwrap();
-        //     win.set_transparent_titlebar(true);
-        //     win.position_traffic_lights(40.0, 20.0);
-        //     Ok(())
-        // })
-        // .on_window_event(|e| {
-        //     let apply_offset = || {
-        //         let win = e.window();
-        //         win.position_traffic_lights(40., 20.);
-        //     };
-        //     match e.event() {
-        //         WindowEvent::Resized(..) => apply_offset(),
-        //         WindowEvent::ThemeChanged(..) => apply_offset(),
-        //         _ => {}
-        //     }
-        // })
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            Some(vec!["--flag1", "--flag2"]),
+        ))
+        .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
+            println!("{}, {argv:?}, {cwd}", app.package_info().name);
+            app.emit_all("single-instance", Payload { args: argv, cwd })
+                .unwrap();
+        }))
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_upload::init())
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_http::init())
+        .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_app::init())
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_os::init())
+        .plugin(tauri_plugin_window::init())
         .invoke_handler(tauri::generate_handler![check_db, get_company, create_post])
         .manage(Arc::new(db))
         .run(tauri::generate_context!())

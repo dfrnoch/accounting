@@ -13,10 +13,10 @@ members = ["prisma-cli"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.4.0", features = [] }
+tauri-build = { version = "2.0.0-alpha.6", features = [] }
 
 [dependencies]
-tauri = { version = "1.4.1", features = [ "os-all", "window-start-dragging", "shell-open"] }
+tauri = { version = "2.0.0-alpha.10", features = [] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.8", features = [
@@ -25,11 +25,28 @@ prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust
     "mocking",
     "specta",
 ] }
-specta = "1.0"
-tauri-specta = { version = "1.0", features = ["typescript"] }
+# specta = "1.0"
+# tauri-specta = { git = "https://github.com/oscartbeaumont/tauri-specta", features = [
+#     "typescript",
+# ], branch = "v2" }
 tokio = { version = "1.29.1", features = ["macros"] }
-cocoa = "0.25.0"
+tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-upload = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-updater = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-dialog = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-http = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-fs = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-clipboard-manager = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-notification = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-app = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-process = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-os = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+tauri-plugin-window = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+
+[target.'cfg(target_os = "macos")'.dependencies]
 objc = "0.2.7"
+cocoa = "0.24.1"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
