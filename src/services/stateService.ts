@@ -3,7 +3,6 @@ import { StoreSetter, createStore } from "solid-js/store";
 
 interface StateService {
   companyId: number | null;
-  currentMenu: string;
 }
 
 const stateStore = createStore<StateService>({} as StateService);
@@ -13,7 +12,7 @@ export const StateService = () => {
 
   onMount(() => {
     const stateString = localStorage.getItem("state");
-    if (!stateString) return setState({ companyId: null, currentMenu: "home" });
+    if (!stateString) return setState({ companyId: null });
     setState(() => JSON.parse(stateString) as unknown as StateService);
   });
 

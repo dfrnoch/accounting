@@ -1,6 +1,6 @@
 import { Route, Routes } from "@solidjs/router";
 import type { Component } from "solid-js";
-import Layout from "../../components/Core/Layout";
+import Layout from "../../components/Dashboard/Layout";
 import { createEffect, lazy } from "solid-js";
 import { useSelector } from "../../utils/store";
 import { getCompany } from "../../bindings";
@@ -22,7 +22,7 @@ const Dashboard: Component = () => {
     }
 
     updateCompany(companyData);
-    updateState({ companyId: companyData.id, currentMenu: "home" });
+    updateState({ companyId: companyData.id });
   };
 
   createEffect(() => {

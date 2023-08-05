@@ -19,6 +19,10 @@ const TitleBar: Component = () => {
       <Show when={os() === "macos"}>
         <div class="fixed top-0 left-0 w-screen h-28px z-98 bg-red" data-tauri-drag-region />
       </Show>
+
+      <Show when={os() === "windows"}>
+        <div class="fixed top-0 left-0 w-screen h-38px z-98 bg-red" data-tauri-drag-region />
+      </Show>
     </>
   );
 };

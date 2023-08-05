@@ -4,7 +4,8 @@ import { Toaster } from "solid-toast";
 import { Show, createEffect, createSignal, lazy } from "solid-js";
 import { checkDb } from "./bindings";
 import { StoreProvider } from "./utils/store";
-import TitleBar from "./components/Core/TitleBar";
+import TitleBar from "./components/Dashboard/TitleBar";
+
 const Dashboard = lazy(() => import("./screens/Dashboard"));
 const SetupWizard = lazy(() => import("./screens/SetupWizard"));
 

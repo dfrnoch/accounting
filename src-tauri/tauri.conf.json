@@ -40,8 +40,8 @@
         "title": "accounting",
         "width": 800,
         "height": 600,
-        "minWidth": 700,
-        "minHeight": 500,
+        "minWidth": 800,
+        "minHeight": 600,
         "titleBarStyle": "Overlay"
       }
     ]
