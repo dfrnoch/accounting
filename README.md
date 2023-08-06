@@ -1,8 +1,28 @@
-# Finance App Documentation
+<div align="center">
+
+  <h2>⚠️ Heavily in development (Nothing works rn)</h2>
+
+  <img height="170x" src=".github/assets/icon.png" />
+
+  <h1>Accounting</h1>
+
+  <p>
+    <strong>Customisable Accounting Software</strong>
+  </p>
+
+  <p>
+    <!-- <a href="https://github.com/lnxcz/accounting/actions"><img alt="CI" src="https://img.shields.io/github/workflow/status/lnxcz/accounting/%F0%9F%94%A5%20CI/main?color=blue&label=%F0%9F%94%A5%20CI%20" /></a> -->
+    <a href="https://wakatime.com/badge/user/5a193983-d8c2-4f90-acc2-b1f41cfe8941/project/4b8e9fbd-ea88-4f3b-8b83-776a85214bbc"><img src="https://wakatime.com/badge/user/5a193983-d8c2-4f90-acc2-b1f41cfe8941/project/4b8e9fbd-ea88-4f3b-8b83-776a85214bbc.svg" alt="wakatime"></a>
+    <img alt="Accounting top language" src="https://img.shields.io/github/languages/top/lnxcz/accounting">
+    <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/github/license/lnxcz/accounting?color=blue" /></a>
+    <a href="https://deepsource.io/gh/lnxcz/accounting/?ref=repository-badge}" target="_blank"><img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/lnxcz/accounting.svg/?label=active+issues&show_trend=true&token=3xXa6npD95aic4uoRExbchlH"/></a>
+  </p>
+</div>
+
 
 ## Overview
 
-The Finance App is a desktop application built with Tauri, SolidJS and TypeScript. It is designed to help small businesses manage their finances, invoices and accounting.
+The Accounting App is a desktop application built with Tauri, SolidJS and TypeScript. It is designed to help small businesses manage their finances, invoices and accounting.
 
 ## Tech Stack
 
@@ -56,3 +76,16 @@ To run the app locally:
 ## Contributing
 
 Pull requests are welcome! Feel free to open issues to discuss new features or improvements.
+
+## License
+
+Accounting is licensed under [GPL-3.0 license](./LICENSE).
+
+
+## Project Analytics
+
+![Alt](https://repobeats.axiom.co/api/embed/54602517fd6bbea511cb9031d0c493774608bbce.svg "Repobeats analytics image")
+
+## Credits
+
+[Microsoft Fluent Emojis](https://github.com/microsoft/fluentui-emoji)
