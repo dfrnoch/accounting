@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@motionone/solid": "^10.16.2",
+    "@motionone/solid": "^10.16",
     "@solid-primitives/i18n": "^1.4.0",
     "@solidjs/router": "^0.8.2",
     "@tauri-apps/api": "2.0.0-alpha.5",
@@ -34,10 +34,11 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.0.0-alpha.10",
+    "@types/node": "^20.4.8",
     "@unocss/transformer-variant-group": "^0.53.6",
     "typescript": "^5.1",
     "unocss": "^0.53.6",
-    "vite": "^4.4",
+    "vite": "4.4",
     "vite-plugin-solid": "^2.7.0"
   }
 }

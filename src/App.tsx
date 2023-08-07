@@ -1,12 +1,12 @@
 import type { Component } from "solid-js";
-import { I18nProvider } from "./i18n";
+import { I18nProvider } from "@/i18n";
 import { Toaster } from "solid-toast";
 import { Show, createEffect, createSignal, lazy } from "solid-js";
-import { checkDb } from "./bindings";
-import { StoreProvider } from "./utils/store";
+import { checkDb } from "@/bindings";
+import { StoreProvider } from "@/store";
 
 const Dashboard = lazy(() => import("./screens/Dashboard"));
-const SetupWizard = lazy(() => import("./screens/SetupWizard"));
+const SetupWizard = lazy(() => import("./screens/Setup/Setup"));
 
 enum Screen {
   Dashboard = "dashboard",

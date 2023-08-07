@@ -1,6 +1,6 @@
+import { Company } from "@/bindings";
 import { onMount } from "solid-js";
 import { createStore } from "solid-js/store";
-import { Company } from "../bindings";
 
 const companyStore = createStore<Company>({} as Company);
 

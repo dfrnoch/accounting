@@ -1,5 +1,5 @@
+import { useSelector } from "@/store";
 import { Component } from "solid-js";
-import { useSelector } from "../../../utils/store";
 
 const Home: Component = () => {
   const {

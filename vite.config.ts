@@ -1,10 +1,22 @@
 import { defineConfig } from "vite";
 import UnoCSS from "unocss/vite";
 import solidPlugin from "vite-plugin-solid";
+import path from "path";
 
 // https://vitejs.dev/config/
+// @ts-ignore
 export default defineConfig(async () => ({
   plugins: [solidPlugin(), UnoCSS()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      // "@assets": path.resolve(__dirname, "./src/assets"),
+      // "@shared": path.resolve(__dirname, "./src/shared"),
+      // "@store": path.resolve(__dirname, "./src/store/index.tsx"),
+      // "@utils": path.resolve(__dirname, "./src/utils"),
+      // "@i18n": path.resolve(__dirname, "./src/i18n"),
+    },
+  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors
@@ -19,6 +31,7 @@ export default defineConfig(async () => ({
   envPrefix: ["VITE_", "TAURI_"],
   build: {
     // Tauri supports es2021
+    // rome-ignore lint/suspicious/noDoubleEquals: <explanation>
     target: process.env.TAURI_PLATFORM == "windows" ? "chrome105" : "safari13",
     // don't minify for debug builds
     minify: !process.env.TAURI_DEBUG ? "esbuild" : false,

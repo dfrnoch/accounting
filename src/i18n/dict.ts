@@ -7,6 +7,9 @@ export const dict = {
 
     sidebar_button_home: "Home",
     sidebar_button_invoices: "Invoices",
+    sidebar_button_clients: "Clients",
+    sidebar_button_expenses: "Expenses",
+    sidebar_button_reports: "Reports",
   },
   cs: {
     hello: "Ahoj",
@@ -16,5 +19,8 @@ export const dict = {
 
     sidebar_button_home: "Domů",
     sidebar_button_invoices: "Faktury",
+    sidebar_button_clients: "Klienti",
+    sidebar_button_expenses: "Výdaje",
+    sidebar_button_reports: "Reporty",
   },
 };

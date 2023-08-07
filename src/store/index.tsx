@@ -1,6 +1,6 @@
 import { createContext, ParentComponent, useContext } from "solid-js";
-import { CompanyService } from "../services/companyService";
-import { StateService } from "../services/stateService";
+import { CompanyService } from "./services/companyService";
+import { StateService } from "./services/stateService";
 
 export type RootState = {
   companyService: ReturnType<typeof CompanyService>;
