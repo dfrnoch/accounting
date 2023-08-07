@@ -84,7 +84,7 @@ Accounting is licensed under [GPL-3.0 license](./LICENSE).
 
 ## Project Analytics
 
-![Alt](https://repobeats.axiom.co/api/embed/54602517fd6bbea511cb9031d0c493774608bbce.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/d93a104357975a3d30a2e4d93b388c6fec7c9cf2.svg "Repobeats analytics image")
 
 ## Credits
 
