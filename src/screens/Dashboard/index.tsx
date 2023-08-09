@@ -6,10 +6,10 @@ import TitleBar from "./components/TitleBar";
 import Sidebar from "./components/Sidebar";
 import { useSelector } from "@/store";
 
-const Home = lazy(() => import("./pages/Home/Home"));
-const Invoices = lazy(() => import("./pages/Invoices/Invoices"));
-const Expenses = lazy(() => import("./pages/Expenses/Expenses"));
-const Clients = lazy(() => import("./pages/Clients/Clients"));
+const Overview = lazy(() => import("./pages/Overview/Overview"));
+const Invoices = lazy(() => import("./pages/Sales/Invoices/Invoices"));
+const Expenses = lazy(() => import("./pages/Purchase/Expenses/Expenses"));
+const Clients = lazy(() => import("./pages/Directory/Clients/Clients"));
 
 const Dashboard: Component = () => {
   const {
@@ -38,10 +38,11 @@ const Dashboard: Component = () => {
       <Sidebar />
       <div class="w-4/5 xl:w-full">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/invoices" element={<Invoices />} />
-          <Route path="/expenses" element={<Expenses />} />
-          <Route path="/clients" element={<Clients />} />
+          <Route path="/" element={<Overview />} />
+          <Route path="/sales/invoices" element={<Invoices />} />
+          <Route path="/directory/clients" element={<Clients />} />
+          <Route path="/purchase/expenses" element={<Expenses />} />
+          {/* <Route path="/purchase/receivedinvoice" element={<RecievedI />} /> */}
         </Routes>
       </div>
     </div>

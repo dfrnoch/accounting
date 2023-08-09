@@ -5,7 +5,12 @@ interface ISidebarSectionProps {
 }
 
 const SidebarSection: ParentComponent<ISidebarSectionProps> = (props) => {
-  return <div>{props.children}</div>;
+  return (
+    <div class="mb-5">
+      <div class="text-black text-sm font-semibold">{props.title}</div>
+      <div class="">{props.children}</div>
+    </div>
+  );
 };
 
 export default SidebarSection;

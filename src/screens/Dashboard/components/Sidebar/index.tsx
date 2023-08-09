@@ -23,14 +23,19 @@ const Sidebar: Component = () => {
   } = useSelector();
 
   return (
-    <div class="w-1/5 lg:max-w-220px min-w-140px bg-gray pt-10 h-screen relative">
-      {/* TODO: multiple buttons in sidebar */}
-      <SidebarSection title="idk">cus</SidebarSection>
-      <SidebarButton target="/">{t.sidebar_button_home()}</SidebarButton>
-      <SidebarButton target="/invoices">{t.sidebar_button_invoices()}</SidebarButton>
-      <SidebarButton target="/expenses">{t.sidebar_button_expenses()}</SidebarButton>
-      <SidebarButton target="/clients">{t.sidebar_button_clients()}</SidebarButton>
-      <SidebarButton target="/reports">{t.sidebar_button_reports()}</SidebarButton>
+    <div class="w-1/5 lg:max-w-220px min-w-140px bg-gray pt-10 px-4 h-screen relative">
+      <SidebarButton target="/">{t.sidebar_button_overview()}</SidebarButton>
+
+      <SidebarSection title={t.sidebar_section_sales()}>
+        <SidebarButton target="sales/invoices">{t.sidebar_button_invoices()}</SidebarButton>
+      </SidebarSection>
+      <SidebarSection title={t.sidebar_section_purchase()}>
+        <SidebarButton target="/purchase/expenses">{t.sidebar_button_expenses()}</SidebarButton>
+      </SidebarSection>
+
+      <SidebarSection title={t.sidebar_section_directory()}>
+        <SidebarButton target="/direcotry/clients">{t.sidebar_button_clients()}</SidebarButton>
+      </SidebarSection>
 
       {/* profile */}
       <div class="absolute bottom-5 w-full">
