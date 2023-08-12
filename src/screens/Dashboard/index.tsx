@@ -33,19 +33,21 @@ const Dashboard: Component = () => {
   });
 
   return (
-    <div class="flex flex-row w-screen">
+    <>
       <TitleBar />
-      <Sidebar />
-      <div class="w-4/5 xl:w-full">
-        <Routes>
-          <Route path="/" element={<Overview />} />
-          <Route path="/sales/invoices" element={<Invoices />} />
-          <Route path="/directory/clients" element={<Clients />} />
-          <Route path="/purchase/expenses" element={<Expenses />} />
-          {/* <Route path="/purchase/receivedinvoice" element={<RecievedI />} /> */}
-        </Routes>
+      <div class="flex flex-row w-screen items-start">
+        <Sidebar />
+        <div class="w-4/5 lg:w-full">
+          <Routes>
+            <Route path="/" element={<Overview />} />
+            <Route path="/sales/invoices" element={<Invoices />} />
+            <Route path="/directory/clients" element={<Clients />} />
+            <Route path="/purchase/expenses" element={<Expenses />} />
+            {/* <Route path="/purchase/receivedinvoice" element={<RecievedI />} /> */}
+          </Routes>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

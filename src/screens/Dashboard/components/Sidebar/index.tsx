@@ -23,7 +23,7 @@ const Sidebar: Component = () => {
   } = useSelector();
 
   return (
-    <div class="w-1/5 lg:max-w-220px min-w-140px bg-gray pt-10 px-4 h-screen relative">
+    <div class="w-1/5 lg:max-w-220px min-w-140px bg-gray pt-10 px-4 h-screen relative shrink-0">
       <SidebarButton target="/">{t.sidebar_button_overview()}</SidebarButton>
 
       <SidebarSection title={t.sidebar_section_sales()}>
@@ -34,7 +34,7 @@ const Sidebar: Component = () => {
       </SidebarSection>
 
       <SidebarSection title={t.sidebar_section_directory()}>
-        <SidebarButton target="/direcotry/clients">{t.sidebar_button_clients()}</SidebarButton>
+        <SidebarButton target="/directory/clients">{t.sidebar_button_clients()}</SidebarButton>
       </SidebarSection>
 
       {/* profile */}
