@@ -39,13 +39,12 @@ const Sidebar: Component = () => {
 
       {/* profile */}
       <div class="absolute bottom-5 w-full">
-        <div class="rounded-xl border-t border-zinc-800/50 bg-zinc-900/80 p-2 backdrop-blur-md">
+        <div class="rounded-xl border-t border-zinc-800/50 bg-zinc-900/80 backdrop-blur-md">
           <div class="flex items-center justify-between">
             <ProfileButton onClick={() => setCurrentPopover(PopoverList.Settings)}>
               <SettingsIcon />
             </ProfileButton>
             <ProfileButton onClick={() => setCurrentPopover(PopoverList.Profile)}>{company.name}</ProfileButton>
-            <ProfileButton onClick={() => {}}>aa</ProfileButton>
           </div>
         </div>
       </div>

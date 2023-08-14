@@ -24,7 +24,6 @@
     "@tauri-apps/plugin-os": "github:tauri-apps/tauri-plugin-os#v2",
     "@tauri-apps/plugin-process": "github:tauri-apps/tauri-plugin-process#v2",
     "@tauri-apps/plugin-updater": "^2.0.0-alpha.0",
-    "@tauri-apps/plugin-upload": "github:tauri-apps/tauri-plugin-upload#v2",
     "@tauri-apps/plugin-window": "2.0.0-alpha.0",
     "@unocss/reset": "^0.53.6",
     "solid-headless": "^0.13.1",

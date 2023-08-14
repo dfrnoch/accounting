@@ -10,7 +10,7 @@ const SidebarButton: ParentComponent<IMenuButtonProps> = (props) => {
     <A
       href={props.target}
       end={true}
-      class="flex items-center justify-center bg-gray transition-all hover:bg-gray-100 gap-4 hover:cursor-pointer rounded-md"
+      class="flex items-center ml-2 bg-gray transition-all hover:bg-gray-100 gap-4 hover:cursor-pointer rounded-md px-2"
       activeClass="bg-gray-100"
     >
       {props.children}
