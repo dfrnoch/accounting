@@ -1,7 +1,6 @@
 import { Component, Show, createSignal } from "solid-js";
 import SidebarButton from "./Button";
 import SidebarSection from "./Section";
-import ProfileButton from "./Profile/Button";
 import { useSelector } from "@/store";
 import { useI18n } from "@/i18n";
 import SettingsIcon from "@/shared/icons/Settings";
@@ -40,12 +39,13 @@ const Sidebar: Component = () => {
       </div>
 
       {/* profile */}
-      <div class="rounded-xl border-t border-zinc-800/50 bg-zinc-900/80 backdrop-blur-md">
-        <div class="flex items-center justify-between">
-          <ProfileButton onClick={() => setCurrentPopover(PopoverList.Settings)}>
-            <SettingsIcon />
-          </ProfileButton>
-          <ProfileButton onClick={() => setCurrentPopover(PopoverList.Profile)}>{company.name}</ProfileButton>
+      <div class="flex flex-row justify-start gap-3 items-center">
+        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+          <SettingsIcon />
+        </div>
+        <div class="flex flex-col leading-4">
+          <span class="text">{company.name}</span>
+          <span class="text-gray-700 text-sm">{company.email}</span>
         </div>
       </div>
 

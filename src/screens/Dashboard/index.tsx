@@ -43,7 +43,6 @@ const Dashboard: Component = () => {
             <Route path="/sales/invoices" element={<Invoices />} />
             <Route path="/directory/clients" element={<Clients />} />
             <Route path="/purchase/expenses" element={<Expenses />} />
-            {/* <Route path="/purchase/receivedinvoice" element={<RecievedI />} /> */}
           </Routes>
         </div>
       </div>
