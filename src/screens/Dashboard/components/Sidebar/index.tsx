@@ -23,31 +23,32 @@ const Sidebar: Component = () => {
   } = useSelector();
 
   return (
-    <div class="w-1/5 lg:max-w-220px min-w-140px bg-gray pt-10 px-4 h-screen relative shrink-0">
-      <SidebarButton target="/">{t.sidebar_button_overview()}</SidebarButton>
+    <div class="w-1/5 lg:max-w-220px min-w-140px bg-gray pt-10 pb-4 px-4 h-screen relative shrink-0 flex flex-col justify-between">
+      <div>
+        <SidebarButton target="/">{t.sidebar_button_overview()}</SidebarButton>
 
-      <SidebarSection title={t.sidebar_section_sales()}>
-        <SidebarButton target="sales/invoices">{t.sidebar_button_invoices()}</SidebarButton>
-      </SidebarSection>
-      <SidebarSection title={t.sidebar_section_purchase()}>
-        <SidebarButton target="/purchase/expenses">{t.sidebar_button_expenses()}</SidebarButton>
-      </SidebarSection>
+        <SidebarSection title={t.sidebar_section_sales()}>
+          <SidebarButton target="sales/invoices">{t.sidebar_button_invoices()}</SidebarButton>
+        </SidebarSection>
+        <SidebarSection title={t.sidebar_section_purchase()}>
+          <SidebarButton target="/purchase/expenses">{t.sidebar_button_expenses()}</SidebarButton>
+        </SidebarSection>
 
-      <SidebarSection title={t.sidebar_section_directory()}>
-        <SidebarButton target="/directory/clients">{t.sidebar_button_clients()}</SidebarButton>
-      </SidebarSection>
+        <SidebarSection title={t.sidebar_section_directory()}>
+          <SidebarButton target="/directory/clients">{t.sidebar_button_clients()}</SidebarButton>
+        </SidebarSection>
+      </div>
 
       {/* profile */}
-      <div class="absolute bottom-5 w-full">
-        <div class="rounded-xl border-t border-zinc-800/50 bg-zinc-900/80 backdrop-blur-md">
-          <div class="flex items-center justify-between">
-            <ProfileButton onClick={() => setCurrentPopover(PopoverList.Settings)}>
-              <SettingsIcon />
-            </ProfileButton>
-            <ProfileButton onClick={() => setCurrentPopover(PopoverList.Profile)}>{company.name}</ProfileButton>
-          </div>
+      <div class="rounded-xl border-t border-zinc-800/50 bg-zinc-900/80 backdrop-blur-md">
+        <div class="flex items-center justify-between">
+          <ProfileButton onClick={() => setCurrentPopover(PopoverList.Settings)}>
+            <SettingsIcon />
+          </ProfileButton>
+          <ProfileButton onClick={() => setCurrentPopover(PopoverList.Profile)}>{company.name}</ProfileButton>
         </div>
       </div>
+
       <Presence exitBeforeEnter>
         <Show when={currentPopover() === PopoverList.Profile}>
           <Popover onClose={() => setCurrentPopover(null)} title="Profile">

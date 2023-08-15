@@ -7,8 +7,8 @@ const Overview: Component = () => {
   } = useSelector();
 
   return (
-    <div>
-      <h1 class="text-4xl font-bold">Overview, {company.name}!</h1>
+    <div class="">
+      <h1 class="">Overview, {company.name}!</h1>
     </div>
   );
 };
