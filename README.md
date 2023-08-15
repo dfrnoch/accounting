@@ -81,7 +81,6 @@ Pull requests are welcome! Feel free to open issues to discuss new features or i
 
 Accounting is licensed under [GPL-3.0 license](./LICENSE).
 
-
 ## Project Analytics
 
 ![Alt](https://repobeats.axiom.co/api/embed/d93a104357975a3d30a2e4d93b388c6fec7c9cf2.svg "Repobeats analytics image")
