@@ -36,22 +36,22 @@ const TitleBar: Component = () => {
   });
 
   return (
-    <div class="fixed top-0 left-0 w-screen h-30px z-98 flex flex-row ">
-      <div class="flex items-center w-1/5 bg-green h-full lg:max-w-220px min-w-140px shrink-0" data-tauri-drag-region />
-      <div class="flex items-center w-4/5 lg:w-full bg-yellow h-full" data-tauri-drag-region>
-        <div class="flex items-center h-full gap-2">
+    <div class="flex fixed top-0 left-0 flex-row w-screen h-30px z-98">
+      <div class="flex items-center w-1/5 h-full bg-green lg:max-w-220px min-w-140px shrink-0" data-tauri-drag-region />
+      <div class="flex items-center w-4/5 h-full lg:w-full bg-yellow" data-tauri-drag-region>
+        <div class="flex gap-2 items-center h-full">
           <For each={matchPathname(location.pathname)}>
             {(item, index) => (
               <Show
                 when={index() === matchPathname(location.pathname).length - 1}
                 fallback={
                   <>
-                    <span class="text-md font-bold text-gray-400">{item}</span>
-                    <span class="text-md font-bold text-gray-400">/</span>
+                    <span class="font-bold text-gray-400 text-md">{item}</span>
+                    <span class="font-bold text-gray-400 text-md">/</span>
                   </>
                 }
               >
-                <span class="text-md font-bold text-black">{item}</span>
+                <span class="font-bold text-black text-md">{item}</span>
               </Show>
             )}
           </For>

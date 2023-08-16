@@ -1,16 +1,14 @@
 import { A } from "@solidjs/router";
 import { ParentComponent } from "solid-js";
 
-interface IMenuButtonProps {
+const SidebarButton: ParentComponent<{
   target: string;
-}
-
-const SidebarButton: ParentComponent<IMenuButtonProps> = (props) => {
+}> = (props) => {
   return (
     <A
       href={props.target}
       end={true}
-      class="flex items-center ml-2 bg-gray transition-all hover:bg-gray-100 gap-4 hover:cursor-pointer rounded-md px-2"
+      class="flex gap-4 items-center px-2 ml-2 rounded-md transition-all bg-gray hover:bg-gray-100 hover:cursor-pointer"
       activeClass="bg-gray-100"
     >
       {props.children}

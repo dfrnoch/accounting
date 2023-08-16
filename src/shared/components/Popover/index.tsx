@@ -13,7 +13,7 @@ const Popup: ParentComponent<IPopoverProps> = (props) => {
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.1, easing: "ease-in-out" }}
-      class="z-99 fixed top-0 left-0 w-screen h-screen bg-gray-300/40 backdrop-blur flex items-center justify-center transition-all"
+      class="flex fixed top-0 left-0 justify-center items-center w-screen h-screen backdrop-blur transition-all z-99 bg-gray-300/40"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           props.onClose();
@@ -27,7 +27,7 @@ const Popup: ParentComponent<IPopoverProps> = (props) => {
         class="bg-white p-8 w-[80%] lg:w-[45%] rounded-md max-h-[80%] overflow-x-auto"
       >
         <div class="flex justify-between">
-          <h1 class="text-xl font-bold uppercase text-gray-700">{props.title}</h1>
+          <h1 class="text-xl font-bold text-gray-700 uppercase">{props.title}</h1>
           <button onClick={props.onClose} class="text-red-500 hover:text-red-700" type="button">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <title>Zavrit</title>

@@ -35,9 +35,9 @@ const Dashboard: Component = () => {
   return (
     <>
       <TitleBar />
-      <div class="flex flex-row w-screen items-start">
+      <div class="flex flex-row items-start w-screen">
         <Sidebar />
-        <div class="w-full h-screen pt-10 container mx-auto px-4">
+        <div class="container px-4 pt-10 mx-auto w-full h-screen">
           <Routes>
             <Route path="/" element={<Overview />} />
             <Route path="/sales/invoices" element={<Invoices />} />
