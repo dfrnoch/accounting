@@ -31,6 +31,7 @@ dependencies = [
  "tauri-plugin-updater",
  "tauri-plugin-window",
  "tokio",
+ "window-vibrancy",
 ]
 
 [[package]]
@@ -7702,6 +7703,17 @@ dependencies = [
  "md5",
  "rand 0.7.3",
  "winapi",
+]
+
+[[package]]
+name = "window-vibrancy"
+version = "0.4.0"
+source = "git+https://github.com/tauri-apps/window-vibrancy?branch=dev#98dc472a7f96bfba595c74b009073bd2c7b28339"
+dependencies = [
+ "cocoa 0.25.0",
+ "objc",
+ "raw-window-handle",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]

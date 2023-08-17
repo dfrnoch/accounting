@@ -2,6 +2,7 @@ import { Component, For, Show, createEffect, createSignal } from "solid-js";
 import { Platform, platform } from "@tauri-apps/plugin-os";
 import { useLocation } from "@solidjs/router";
 import { useI18n } from "@/i18n";
+import { FiBell, FiSearch, FiSettings, FiSidebar } from "solid-icons/fi";
 
 const TitleBar: Component = () => {
   const [os, setOs] = createSignal<Platform | null>(null);
@@ -36,12 +37,14 @@ const TitleBar: Component = () => {
   });
 
   return (
-    <div class="flex fixed top-0 left-0 flex-row w-screen h-[30px] z-50 ">
+    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50 cursor-default select-none border-b border-black/10">
       <div
-        class="flex items-center w-1/5 h-full bg-green-500 lg:max-w-[220px] min-w-[140px] shrink-0"
+        class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[140px] shrink-0 px-2"
         data-tauri-drag-region
-      />
-      <div class="flex items-center w-4/5 h-full lg:w-full bg-yellow-500" data-tauri-drag-region>
+      >
+        <FiSidebar />
+      </div>
+      <div class="flex justify-between items-center px-5 w-4/5 h-full lg:px-8 lg:w-full" data-tauri-drag-region>
         <div class="flex gap-2 items-center h-full">
           <For each={matchPathname(location.pathname)}>
             {(item, index) => (
@@ -58,6 +61,16 @@ const TitleBar: Component = () => {
               </Show>
             )}
           </For>
+        </div>
+        <div class="flex flex-row gap-5 items-center py-1 h-full">
+          {/* search bar */}
+          <div class="flex justify-between items-center px-3 ml-16 w-72 h-full text-gray-500 bg-gray-200 rounded-lg">
+            <div class="flex gap-2 items-center">
+              <FiSearch /> Hledat
+            </div>
+          </div>
+          <FiSettings />
+          <FiBell />
         </div>
       </div>
     </div>

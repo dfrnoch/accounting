@@ -38,10 +38,10 @@
         "fullscreen": false,
         "resizable": true,
         "title": "accounting",
-        "width": 800,
+        "width": 900,
         "height": 600,
         "minWidth": 800,
-        "minHeight": 600,
+        "minHeight": 550,
         "titleBarStyle": "Overlay",
         "hiddenTitle": true
       }

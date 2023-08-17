@@ -1,16 +1,24 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+#[cfg(target_os = "macos")]
+extern crate objc;
+
+#[cfg(target_os = "macos")]
+mod window_ext;
+
 #[allow(warnings, unused)]
 mod db;
 
 use db::*;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
+use window_ext::{ToolbarThickness, WindowExt};
 // use specta::{collect_types, Type};
 use std::sync::Arc;
 use tauri::{Manager, State};
 use tauri_plugin_autostart::MacosLauncher;
+use window_vibrancy::{apply_mica, apply_vibrancy, NSVisualEffectMaterial};
 // use tauri_specta::ts;
 
 #[derive(Clone, serde::Serialize)]
@@ -93,6 +101,20 @@ async fn main() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_window::init())
+        .setup(|app| {
+            let window = app.get_window("main").unwrap();
+            window.set_transparent_titlebar(ToolbarThickness::Thick);
+
+            #[cfg(target_os = "macos")]
+            apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
+                .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
+
+            #[cfg(target_os = "windows")]
+            apply_mica(&window, Some(true))
+                .expect("Unsupported platform! 'apply_mica' is only supported on Windows");
+
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![check_db, get_company, create_post])
         .manage(Arc::new(db))
         .run(tauri::generate_context!())

@@ -10,6 +10,7 @@ export const dict = {
     sidebar_button_clients: "Clients",
     sidebar_button_expenses: "Expenses",
     sidebar_button_reports: "Reports",
+    sidebar_settings: "Settings",
 
     sidebar_section_sales: "Sales",
     sidebar_section_purchase: "Purchase",
@@ -27,6 +28,7 @@ export const dict = {
     sidebar_button_clients: "Klienti",
     sidebar_button_expenses: "Výdaje",
     sidebar_button_reports: "Reporty",
+    sidebar_settings: "Nastavení",
 
     sidebar_section_sales: "Prodej",
     sidebar_section_purchase: "Nákup",
