@@ -20,19 +20,16 @@ impl<R: Runtime> WindowExt for Window<R> {
         unsafe {
             let id = self.ns_window().unwrap() as cocoa::base::id;
 
-            id.setTitlebarAppearsTransparent_(cocoa::base::YES);
-
             match thickness {
                 ToolbarThickness::Thick => {
                     self.set_title("").expect("Title wasn't set to ''");
                     make_toolbar(id);
                 }
                 ToolbarThickness::Medium => {
-                    id.setTitleVisibility_(NSWindowTitleVisibility::NSWindowTitleHidden);
                     make_toolbar(id);
                 }
                 ToolbarThickness::Thin => {
-                    id.setTitleVisibility_(NSWindowTitleVisibility::NSWindowTitleHidden);
+                    // todo
                 }
             }
         }

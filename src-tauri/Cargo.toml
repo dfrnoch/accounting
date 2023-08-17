@@ -23,7 +23,6 @@ prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust
     "sqlite",
     "migrations",
     "mocking",
-    "specta",
 ] }
 # specta = "1.0"
 # tauri-specta = { git = "https://github.com/oscartbeaumont/tauri-specta", features = [
