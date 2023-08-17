@@ -36,9 +36,12 @@ const TitleBar: Component = () => {
   });
 
   return (
-    <div class="flex fixed top-0 left-0 flex-row w-screen h-30px z-98">
-      <div class="flex items-center w-1/5 h-full bg-green lg:max-w-220px min-w-140px shrink-0" data-tauri-drag-region />
-      <div class="flex items-center w-4/5 h-full lg:w-full bg-yellow" data-tauri-drag-region>
+    <div class="flex fixed top-0 left-0 flex-row w-screen h-[30px] z-50 ">
+      <div
+        class="flex items-center w-1/5 h-full bg-green-500 lg:max-w-[220px] min-w-[140px] shrink-0"
+        data-tauri-drag-region
+      />
+      <div class="flex items-center w-4/5 h-full lg:w-full bg-yellow-500" data-tauri-drag-region>
         <div class="flex gap-2 items-center h-full">
           <For each={matchPathname(location.pathname)}>
             {(item, index) => (

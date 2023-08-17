@@ -1,12 +1,11 @@
 import { defineConfig } from "vite";
-import UnoCSS from "unocss/vite";
 import solidPlugin from "vite-plugin-solid";
 import path from "path";
 
 // https://vitejs.dev/config/
 // @ts-ignore
 export default defineConfig(async () => ({
-  plugins: [solidPlugin(), UnoCSS()],
+  plugins: [solidPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

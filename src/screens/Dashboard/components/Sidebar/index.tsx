@@ -22,7 +22,7 @@ const Sidebar: Component = () => {
   } = useSelector();
 
   return (
-    <div class="flex relative flex-col justify-between px-4 pt-10 pb-4 w-1/5 h-screen lg:max-w-220px min-w-140px bg-gray shrink-0">
+    <div class="flex relative flex-col justify-between px-4 pt-10 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] bg-gray shrink-0">
       <div>
         <SidebarButton target="/">{t.sidebar_button_overview()}</SidebarButton>
 
@@ -40,7 +40,7 @@ const Sidebar: Component = () => {
 
       {/* profile */}
       <div class="flex flex-row gap-3 justify-start items-center">
-        <div class="w-5 h-5 lg:(w-10 h10) rounded-full bg-gray-300 flex items-center justify-center">
+        <div class="w-5 h-5 lg:w-10 lg:h-10 rounded-full bg-gray-300 flex items-center justify-center">
           <SettingsIcon />
         </div>
         <div class="flex flex-col leading-4">

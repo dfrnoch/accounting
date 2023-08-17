@@ -13,7 +13,7 @@ const Popup: ParentComponent<IPopoverProps> = (props) => {
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.1, easing: "ease-in-out" }}
-      class="flex fixed top-0 left-0 justify-center items-center w-screen h-screen backdrop-blur transition-all z-99 bg-gray-300/40"
+      class="flex fixed top-0 left-0 justify-center items-center w-screen h-screen backdrop-blur transition-all z-[99] bg-gray-300/40"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           props.onClose();

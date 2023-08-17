@@ -25,7 +25,6 @@
     "@tauri-apps/plugin-process": "github:tauri-apps/tauri-plugin-process#v2",
     "@tauri-apps/plugin-updater": "^2.0.0-alpha.1",
     "@tauri-apps/plugin-window": "2.0.0-alpha.1",
-    "@unocss/reset": "^0.55",
     "solid-headless": "^0.13.1",
     "solid-js": "^1.7",
     "solid-toast": "^0.5.0"
@@ -33,9 +32,10 @@
   "devDependencies": {
     "@tauri-apps/cli": "2.0.0-alpha.11",
     "@types/node": "^20.5",
-    "@unocss/transformer-variant-group": "^0.55",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.28",
+    "tailwindcss": "^3.3.3",
     "typescript": "^5.1",
-    "unocss": "^0.55",
     "vite": "4.4",
     "vite-plugin-solid": "^2.7.0"
   }
