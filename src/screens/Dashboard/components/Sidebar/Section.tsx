@@ -6,7 +6,7 @@ interface ISidebarSectionProps {
 
 const SidebarSection: ParentComponent<ISidebarSectionProps> = (props) => {
   return (
-    <div class="mt-5">
+    <div class="mt-5 cursor-default select-none">
       <div class="text-sm font-semibold text-black">{props.title}</div>
       <div class="">{props.children}</div>
     </div>

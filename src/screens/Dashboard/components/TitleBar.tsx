@@ -39,32 +39,38 @@ const TitleBar: Component = () => {
   return (
     <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50 cursor-default select-none border-b border-black/10">
       <div
-        class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[140px] shrink-0 px-2"
+        class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[140px] shrink-0 px-2.5 lg:px-4"
         data-tauri-drag-region
       >
-        <FiSidebar />
+        <FiSidebar class="cursor-pointer" />
       </div>
-      <div class="flex justify-between items-center px-5 w-4/5 h-full lg:px-8 lg:w-full" data-tauri-drag-region>
-        <div class="flex gap-2 items-center h-full">
+      <div class="flex justify-between items-center px-3 w-4/5 h-full lg:px-6 lg:w-full" data-tauri-drag-region>
+        <div class="flex gap-1 items-center h-full text-sm" data-tauri-drag-region>
           <For each={matchPathname(location.pathname)}>
             {(item, index) => (
               <Show
                 when={index() === matchPathname(location.pathname).length - 1}
                 fallback={
                   <>
-                    <span class="font-bold text-gray-400 text-md">{item}</span>
-                    <span class="font-bold text-gray-400 text-md">/</span>
+                    <span class="text-gray-400" data-tauri-drag-region>
+                      {item}
+                    </span>
+                    <span class="text-gray-400" data-tauri-drag-region>
+                      /
+                    </span>
                   </>
                 }
               >
-                <span class="font-bold text-black text-md">{item}</span>
+                <span class="text-black" data-tauri-drag-region>
+                  {item}
+                </span>
               </Show>
             )}
           </For>
         </div>
         <div class="flex flex-row gap-5 items-center py-1 h-full">
           {/* search bar */}
-          <div class="flex justify-between items-center px-3 ml-16 w-72 h-full text-gray-500 bg-gray-200 rounded-lg">
+          <div class="flex justify-between items-center px-3 ml-16 w-60 h-full text-gray-500 bg-gray-200 rounded-lg lg:w-72">
             <div class="flex gap-2 items-center">
               <FiSearch /> Hledat
             </div>
