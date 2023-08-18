@@ -10,10 +10,10 @@ const SidebarButton: ParentComponent<{
     <A
       href={props.target}
       end={true}
-      class={`flex text-gray-600 gap-1.5 items-center px-2 py-0.5 mt-1 rounded-md transition-all bg-gray hover:bg-gray-100 hover:cursor-pointer ${
+      class={`text-sm flex gap-[7px] items-center px-2 py-[3px] mt-1 rounded-[5px] transition-all bg-gray hover:bg-gray-100/30 hover:cursor-pointer ${
         !props.notInSection ? "ml-2" : ""
       }`}
-      activeClass="bg-gray-100"
+      activeClass="bg-gray-100/20"
     >
       {props.icon}
       {props.children}

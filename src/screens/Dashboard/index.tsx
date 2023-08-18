@@ -37,13 +37,15 @@ const Dashboard: Component = () => {
       <TitleBar />
       <div class="flex flex-row items-start w-screen">
         <Sidebar />
-        <div class="container px-4 pt-14 mx-auto w-full h-screen">
-          <Routes>
-            <Route path="/" element={<Overview />} />
-            <Route path="/sales/invoices" element={<Invoices />} />
-            <Route path="/directory/clients" element={<Clients />} />
-            <Route path="/purchase/expenses" element={<Expenses />} />
-          </Routes>
+        <div class="px-4 pt-14 mx-auto w-full h-screen bg-white">
+          <div class="container">
+            <Routes>
+              <Route path="/" element={<Overview />} />
+              <Route path="/sales/invoices" element={<Invoices />} />
+              <Route path="/directory/clients" element={<Clients />} />
+              <Route path="/purchase/expenses" element={<Expenses />} />
+            </Routes>
+          </div>
         </div>
       </div>
     </>

@@ -103,7 +103,7 @@ async fn main() {
         .plugin(tauri_plugin_window::init())
         .setup(|app| {
             let window = app.get_window("main").unwrap();
-            window.set_transparent_titlebar(ToolbarThickness::Thick);
+            window.set_thickness(ToolbarThickness::Thick);
 
             #[cfg(target_os = "macos")]
             apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)

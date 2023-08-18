@@ -39,7 +39,7 @@ const TitleBar: Component = () => {
   return (
     <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50 cursor-default select-none border-b border-black/10">
       <div
-        class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[140px] shrink-0 px-2.5 lg:px-4"
+        class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[140px] shrink-0 px-2.5 lg:px-4 text-[#DFDFDF]"
         data-tauri-drag-region
       >
         <FiSidebar class="cursor-pointer" />

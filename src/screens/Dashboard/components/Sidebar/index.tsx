@@ -17,7 +17,7 @@ const Sidebar: Component = () => {
   } = useSelector();
 
   return (
-    <div class="flex relative flex-col justify-between px-2.5 lg:px-4 pt-14 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] bg-gray-400 shrink-0">
+    <div class="flex relative flex-col justify-between px-2.5 lg:px-4 pt-14 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] shrink-0 text-[#DFDFDF]">
       <div>
         <SidebarButton notInSection target="/" icon={<FiFigma />}>
           {t.sidebar_button_overview()}
@@ -43,12 +43,16 @@ const Sidebar: Component = () => {
 
       {/* profile  */}
       <div class="flex flex-row gap-2.5 justify-start items-center lg:gap-4">
-        <div class="flex justify-center items-center w-8 h-8 bg-gray-300 rounded-full lg:w-10 lg:h-10">
-          <FiSettings />
+        <div class="flex justify-center items-center w-8 h-8 lg:w-10 lg:h-10">
+          <img
+            src="https://cdn.discordapp.com/avatars/724579978921902114/a71691117b6ea1d85fd2cd2b21506f63.webp?size=4096"
+            alt="pfp"
+            class="rounded-full"
+          />
         </div>
         <div class="flex flex-col">
           <span class="text-sm leading-3 lg:text-md lg:leading-5 lg:text-base">{company.name}</span>
-          <span class="text-sm text-gray-700">{company.email}</span>
+          <span class="text-sm text-gray-400">{company.email}</span>
         </div>
       </div>
 
