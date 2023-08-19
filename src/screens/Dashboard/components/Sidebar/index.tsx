@@ -17,7 +17,7 @@ const Sidebar: Component = () => {
   } = useSelector();
 
   return (
-    <div class="flex relative flex-col justify-between px-2.5 lg:px-4 pt-14 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] shrink-0 text-[#DFDFDF]">
+    <div class="flex relative flex-col justify-between px-2.5 lg:px-4 pt-14 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] shrink-0 text-primary">
       <div>
         <SidebarButton notInSection target="/" icon={<FiFigma />}>
           {t.sidebar_button_overview()}

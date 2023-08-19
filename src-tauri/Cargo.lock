@@ -22,6 +22,7 @@ dependencies = [
  "tauri-plugin-os",
  "tauri-plugin-process",
  "tauri-plugin-single-instance",
+ "tauri-plugin-store",
  "tauri-plugin-updater",
  "tauri-plugin-window",
  "tokio",
@@ -6404,7 +6405,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-app"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "tauri",
 ]
@@ -6412,7 +6413,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-autostart"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "auto-launch",
  "log",
@@ -6425,7 +6426,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-clipboard-manager"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "arboard",
  "log",
@@ -6439,7 +6440,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-dialog"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "glib",
  "log",
@@ -6456,7 +6457,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-fs"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "anyhow",
  "glob",
@@ -6468,8 +6469,8 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-http"
-version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+version = "2.0.0-alpha.2"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "data-url",
  "glob",
@@ -6486,7 +6487,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-os"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "gethostname 0.4.3",
  "log",
@@ -6502,7 +6503,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-process"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "tauri",
 ]
@@ -6510,7 +6511,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-single-instance"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "log",
  "serde",
@@ -6522,9 +6523,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "tauri-plugin-store"
+version = "2.0.0-alpha.1"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
+ "tauri",
+ "thiserror",
+]
+
+[[package]]
 name = "tauri-plugin-updater"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "base64 0.21.2",
  "dirs-next",
@@ -6549,7 +6562,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-window"
 version = "2.0.0-alpha.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#553c87bde0b1fe49a8dec0bad1ea67c20a12fba9"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#319de692bf5f50775fd3bb1d6722cb03304fd6ab"
 dependencies = [
  "serde",
  "tauri",
@@ -7148,7 +7161,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
  "cfg-if",
- "rand 0.8.5",
+ "rand 0.4.6",
  "static_assertions",
 ]
 
