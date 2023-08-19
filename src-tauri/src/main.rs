@@ -16,7 +16,7 @@ use serde::Deserialize;
 use window_ext::{ToolbarThickness, WindowExt};
 // use specta::{collect_types, Type};
 use std::sync::Arc;
-use tauri::{Manager, State};
+use tauri::{Manager, State, Theme};
 use tauri_plugin_autostart::MacosLauncher;
 use window_vibrancy::{apply_mica, apply_vibrancy, NSVisualEffectMaterial};
 // use tauri_specta::ts;
@@ -65,6 +65,11 @@ async fn create_post(db: DbState<'_>, data: CreateCompanyData) -> Result<test::D
         .exec()
         .await
         .map_err(|_| ())
+}
+
+#[tauri::command]
+fn get_theme(window: tauri::Window) -> Theme {
+    window.theme().unwrap_or(Theme::Light)
 }
 
 #[tokio::main]
@@ -116,7 +121,12 @@ async fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![check_db, get_company, create_post])
+        .invoke_handler(tauri::generate_handler![
+            check_db,
+            get_company,
+            create_post,
+            get_theme
+        ])
         .manage(Arc::new(db))
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -4,7 +4,6 @@ import { Toaster } from "solid-toast";
 import { Show, createEffect, createSignal, lazy } from "solid-js";
 import { checkDb } from "@/bindings";
 import { StoreProvider } from "@/store";
-import { getCurrent } from "@tauri-apps/plugin-window";
 
 const Dashboard = lazy(() => import("./screens/Dashboard"));
 const SetupWizard = lazy(() => import("./screens/Setup/Setup"));
@@ -19,12 +18,6 @@ const App: Component = () => {
   const [screen, setScreen] = createSignal<Screen>(Screen.Loading);
 
   const startup = async () => {
-    // const theme = await getCurrent().theme();
-    // console.log(theme);
-    // if (theme === "dark") {
-    document.documentElement.classList.add("dark");
-    // }
-
     const data = await checkDb();
 
     if (data) {
