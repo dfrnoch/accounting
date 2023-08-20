@@ -37,14 +37,17 @@ const TitleBar: Component = () => {
   });
 
   return (
-    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50 border-b border-black/10">
+    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50 ">
       <div
         class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[140px] shrink-0 px-2.5 lg:px-4 text-primary"
         data-tauri-drag-region
       >
         <FiSidebar class="cursor-pointer" />
       </div>
-      <div class="flex justify-between items-center px-3 w-4/5 h-full lg:px-6 lg:w-full" data-tauri-drag-region>
+      <div
+        class="flex justify-between items-center px-3 w-4/5 h-full border-b shadow-md lg:px-6 lg:w-full bg-secondary shadow-secondary border-black/20"
+        data-tauri-drag-region
+      >
         <div class="flex gap-1 items-center h-full text-sm" data-tauri-drag-region>
           <For each={matchPathname(location.pathname)}>
             {(item, index) => (
@@ -68,15 +71,12 @@ const TitleBar: Component = () => {
             )}
           </For>
         </div>
-        <div class="flex flex-row gap-5 items-center py-1 h-full text-primary">
-          {/* search bar */}
-          <div class="flex justify-between items-center px-3 ml-16 w-60 h-full rounded-lg border border-black text-primary lg:w-72">
-            <div class="flex gap-2 items-center">
-              <FiSearch /> Hledat
-            </div>
+        <div class="flex flex-row gap-10 items-center py-1 h-full text-primary">
+          <div class="flex flex-row gap-4 items-center">
+            <FiSearch />
+            <FiBell />
           </div>
           <FiSettings />
-          <FiBell />
         </div>
       </div>
     </div>

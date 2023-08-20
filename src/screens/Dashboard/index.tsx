@@ -6,7 +6,7 @@ import TitleBar from "./components/TitleBar";
 import Sidebar from "./components/Sidebar";
 import { useSelector } from "@/store";
 
-const Overview = lazy(() => import("./pages/Overview/Overview"));
+const Overview = lazy(() => import("./pages/Overview"));
 const Invoices = lazy(() => import("./pages/Sales/Invoices/Invoices"));
 const Expenses = lazy(() => import("./pages/Purchase/Expenses/Expenses"));
 const Clients = lazy(() => import("./pages/Directory/Clients/Clients"));
@@ -37,7 +37,7 @@ const Dashboard: Component = () => {
       <TitleBar />
       <div class="flex flex-row items-start w-screen">
         <Sidebar />
-        <div class="px-4 pt-14 mx-auto w-full h-screen bg-secondary">
+        <div class="overflow-y-auto px-4 pt-14 mx-auto w-full h-screen no-scrollbar bg-secondary text-primary">
           <div class="container">
             <Routes>
               <Route path="/" element={<Overview />} />

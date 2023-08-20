@@ -21,7 +21,7 @@ body {
     :root.light {
         --color-primary: #1D1D1D;
         --color-secondary: #E3E3E3;
-        --color-grey: theme(colors.slate.400);
+        --color-grey: theme(colors.zinc.600);
         --color-lightgrey: theme(colors.gray.200);
         --color-danger: theme(colors.red.700);
         --color-warning: theme(colors.orange.500);
@@ -31,12 +31,30 @@ body {
 
     :root.dark {
         --color-primary: #E3E3E3;
-        --color-secondary: #1D1D1D;
+        --color-secondary: theme(colors.neutral.800);
         --color-grey: theme(colors.zinc.400);
         --color-lightgrey: theme(colors.gray.200);
         --color-danger: theme(colors.red.400);
         --color-warning: theme(colors.orange.400);
         --color-success: theme(colors.green.400);
         --color-info: theme(colors.sky.400);
+    }
+}
+
+@layer utilities {
+    @variants responsive {
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
     }
 }

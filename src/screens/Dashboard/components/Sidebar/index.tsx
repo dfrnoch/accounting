@@ -6,7 +6,7 @@ import { useI18n } from "@/i18n";
 import Popover from "@/shared/components/Popover";
 //@ts-expect-error
 import { Presence } from "@motionone/solid";
-import { FiDollarSign, FiFigma, FiFileText, FiSettings, FiUsers } from "solid-icons/fi";
+import { FiDollarSign, FiFigma, FiFileText, FiUsers } from "solid-icons/fi";
 
 const Sidebar: Component = () => {
   const [t] = useI18n();
@@ -17,7 +17,7 @@ const Sidebar: Component = () => {
   } = useSelector();
 
   return (
-    <div class="flex relative flex-col justify-between px-2.5 lg:px-4 pt-14 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] shrink-0 text-primary">
+    <div class="flex relative flex-col justify-between px-2.5 lg:px-4 pt-14 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] shrink-0 text-primary border-r dark:border-black/90 border-zinc-400/70">
       <div>
         <SidebarButton notInSection target="/" icon={<FiFigma />}>
           {t.sidebar_button_overview()}
@@ -52,7 +52,7 @@ const Sidebar: Component = () => {
         </div>
         <div class="flex flex-col">
           <span class="text-sm leading-3 lg:text-md lg:leading-5 lg:text-base">{company.name}</span>
-          <span class="text-sm text-gray-400">{company.email}</span>
+          <span class="text-sm text-grey">{company.email}</span>
         </div>
       </div>
 
