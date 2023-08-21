@@ -3,14 +3,13 @@ import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useSelector } from "@/store";
 import { useI18n } from "@/i18n";
-import Popover from "@/shared/components/Popover";
+import Popover from "@/shared/components/Popup";
 //@ts-expect-error
 import { Presence } from "@motionone/solid";
-import { FiDollarSign, FiFileText, FiHome, FiUsers } from "solid-icons/fi";
+import { FiDollarSign, FiFileText, FiHome, FiSettings, FiUsers } from "solid-icons/fi";
 
 const Sidebar: Component = () => {
   const [t] = useI18n();
-  const [settingsOpen, setSettingsOpen] = createSignal(false);
 
   const {
     companyService: { company },
@@ -42,27 +41,25 @@ const Sidebar: Component = () => {
       </div>
 
       {/* profile  */}
-      <div class="flex flex-row gap-2.5 justify-start items-center lg:gap-4">
-        <div class="flex justify-center items-center w-8 h-8 lg:w-10 lg:h-10">
-          <img
-            src="https://cdn.discordapp.com/avatars/724579978921902114/a71691117b6ea1d85fd2cd2b21506f63.webp?size=4096"
-            alt="pfp"
-            class="rounded-full"
-          />
-        </div>
-        <div class="flex flex-col">
-          <span class="text-sm leading-3 lg:text-md lg:leading-5 lg:text-base">{company.name}</span>
-          <span class="text-sm text-grey">{company.email}</span>
+      <div class="flex flex-col gap-4">
+        <SidebarButton target="/settings" icon={<FiSettings />} notInSection>
+          {t.sidebar_button_settings()}
+        </SidebarButton>
+        <hr class="border-black/10" />
+        <div class="flex flex-row gap-2.5 justify-start items-center lg:gap-4">
+          <div class="flex justify-center items-center w-8 h-8 lg:w-10 lg:h-10">
+            <img
+              src="https://cdn.discordapp.com/avatars/724579978921902114/a71691117b6ea1d85fd2cd2b21506f63.webp?size=4096"
+              alt="pfp"
+              class="rounded-full"
+            />
+          </div>
+          <div class="flex flex-col">
+            <span class="text-sm leading-3 lg:text-md lg:leading-5 lg:text-base">{company.name}</span>
+            <span class="text-sm text-grey">{company.email}</span>
+          </div>
         </div>
       </div>
-
-      <Presence exitBeforeEnter>
-        <Show when={settingsOpen()}>
-          <Popover onClose={() => setSettingsOpen} title="Settings">
-            Nastaveni
-          </Popover>
-        </Show>
-      </Presence>
     </div>
   );
 };

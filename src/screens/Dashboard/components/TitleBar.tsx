@@ -27,6 +27,8 @@ const TitleBar: Component = () => {
         return [t.sidebar_section_purchase(), t.sidebar_button_expenses()];
       case "/directory/clients":
         return [t.sidebar_section_directory(), t.sidebar_button_clients()];
+      case "/settings":
+        return [t.sidebar_button_settings()];
       default:
         return [];
     }
@@ -71,12 +73,9 @@ const TitleBar: Component = () => {
             )}
           </For>
         </div>
-        <div class="flex flex-row gap-10 items-center py-1 h-full text-primary">
-          <div class="flex flex-row gap-4 items-center">
-            <FiSearch />
-            <FiBell />
-          </div>
-          <FiSettings />
+        <div class="flex flex-row gap-4 items-center py-1 h-full text-primary">
+          <FiSearch />
+          <FiBell />
         </div>
       </div>
     </div>

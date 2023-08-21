@@ -10,6 +10,7 @@ const Overview = lazy(() => import("./pages/Overview"));
 const Invoices = lazy(() => import("./pages/Sales/Invoices/Invoices"));
 const Expenses = lazy(() => import("./pages/Purchase/Expenses/Expenses"));
 const Clients = lazy(() => import("./pages/Directory/Clients/Clients"));
+const Settings = lazy(() => import("./pages/Settings"));
 
 const Dashboard: Component = () => {
   const {
@@ -44,6 +45,8 @@ const Dashboard: Component = () => {
               <Route path="/sales/invoices" element={<Invoices />} />
               <Route path="/directory/clients" element={<Clients />} />
               <Route path="/purchase/expenses" element={<Expenses />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<Overview />} />
             </Routes>
           </div>
         </div>

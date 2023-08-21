@@ -13,7 +13,7 @@ const Popup: ParentComponent<IPopoverProps> = (props) => {
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.1, easing: "ease-in-out" }}
-      class="flex fixed top-0 left-0 justify-center items-center w-screen h-screen backdrop-blur transition-all z-[99] bg-gray-300/40"
+      class="flex fixed top-0 left-0 justify-center items-center w-screen h-screen backdrop-blur-sm transition-all z-[99] bg-neutral-500/20"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           props.onClose();
@@ -24,7 +24,7 @@ const Popup: ParentComponent<IPopoverProps> = (props) => {
         exit={{ scale: 0.5 }}
         animate={{ scale: [0.8, 1] }}
         transition={{ duration: 0.1, easing: "ease-in-out" }}
-        class="bg-white p-8 w-[80%] lg:w-[45%] rounded-md max-h-[80%] overflow-x-auto"
+        class="bg-secondary p-8 w-[80%] lg:w-[45%] rounded-md max-h-[80%] overflow-x-auto shadow-md"
       >
         <div class="flex justify-between">
           <h1 class="text-xl font-bold text-gray-700 uppercase">{props.title}</h1>
