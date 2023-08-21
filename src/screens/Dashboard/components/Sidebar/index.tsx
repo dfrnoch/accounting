@@ -1,11 +1,8 @@
-import { Component, Show, createSignal } from "solid-js";
+import { Component } from "solid-js";
 import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useSelector } from "@/store";
 import { useI18n } from "@/i18n";
-import Popover from "@/shared/components/Popup";
-//@ts-expect-error
-import { Presence } from "@motionone/solid";
 import { FiDollarSign, FiFileText, FiHome, FiSettings, FiUsers } from "solid-icons/fi";
 
 const Sidebar: Component = () => {

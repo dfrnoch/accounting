@@ -2,7 +2,7 @@ import { Component, For, Show, createEffect, createSignal } from "solid-js";
 import { Platform, platform } from "@tauri-apps/plugin-os";
 import { useLocation } from "@solidjs/router";
 import { useI18n } from "@/i18n";
-import { FiBell, FiSearch, FiSettings, FiSidebar } from "solid-icons/fi";
+import { FiBell, FiSearch, FiSidebar } from "solid-icons/fi";
 
 const TitleBar: Component = () => {
   const [os, setOs] = createSignal<Platform | null>(null);
