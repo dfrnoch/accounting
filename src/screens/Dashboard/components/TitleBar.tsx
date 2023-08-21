@@ -45,7 +45,7 @@ const TitleBar: Component = () => {
         <FiSidebar class="cursor-pointer" />
       </div>
       <div
-        class="flex justify-between items-center px-3 w-4/5 h-full border-b shadow-md lg:px-6 lg:w-full bg-secondary shadow-secondary border-black/20"
+        class="flex justify-between items-center px-3 w-4/5 h-full border-b lg:px-6 lg:w-full bg-secondary border-black/20"
         data-tauri-drag-region
       >
         <div class="flex gap-1 items-center h-full text-sm" data-tauri-drag-region>
