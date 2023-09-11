@@ -16,7 +16,7 @@ members = ["prisma-cli"]
 tauri-build = { version = "2.0.0-alpha.8", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-alpha.11", features = ["macos-private-api"] }
+tauri = { version = "2.0.0-alpha.13", features = ["macos-private-api"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.8", features = [

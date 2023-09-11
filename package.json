@@ -14,7 +14,7 @@
     "@motionone/solid": "^10.16",
     "@solid-primitives/i18n": "^1.4.1",
     "@solidjs/router": "^0.8.3",
-    "@tauri-apps/api": "2.0.0-alpha.6",
+    "@tauri-apps/api": "2.0.0-alpha.7",
     "@tauri-apps/plugin-app": "github:tauri-apps/tauri-plugin-app#v2",
     "@tauri-apps/plugin-autostart": "github:tauri-apps/tauri-plugin-autostart#v2",
     "@tauri-apps/plugin-clipboard-manager": "github:tauri-apps/tauri-plugin-clipboard-manager#v2",
@@ -32,7 +32,7 @@
     "solid-toast": "^0.5.0"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "2.0.0-alpha.11",
+    "@tauri-apps/cli": "2.0.0-alpha.13",
     "@types/node": "^20.5",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.28",
