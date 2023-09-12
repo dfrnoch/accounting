@@ -1,6 +1,6 @@
 import { ParentComponent } from "solid-js";
 //@ts-expect-error
-import { Motion } from "@motionone/solid";
+import { Motion } from "motionone/packages/solid";
 
 interface IPopoverProps {
   title: string;
@@ -14,7 +14,7 @@ const Popup: ParentComponent<IPopoverProps> = (props) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.1, easing: "ease-in-out" }}
       class="flex fixed top-0 left-0 justify-center items-center w-screen h-screen backdrop-blur-sm transition-all z-[99] bg-neutral-500/20"
-      onClick={(e) => {
+      onClick={(e: MouseEvent) => {
         if (e.target === e.currentTarget) {
           props.onClose();
         }
