@@ -13,13 +13,19 @@ mod db;
 use db::*;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
-use window_ext::{ToolbarThickness, WindowExt};
-// use specta::{collect_types, Type};
 use std::sync::Arc;
 use tauri::{Manager, State, Theme};
 use tauri_plugin_autostart::MacosLauncher;
-use window_vibrancy::{apply_mica, apply_vibrancy, NSVisualEffectMaterial};
+use window_ext::{ToolbarThickness, WindowExt};
+use window_vibrancy::NSVisualEffectMaterial;
+
+#[cfg(target_os = "windows")]
+use window_vibrancy::apply_mica;
+#[cfg(target_os = "macos")]
+use window_vibrancy::apply_vibrancy;
+
 // use tauri_specta::ts;
+// use specta::{collect_types, Type};
 
 #[derive(Clone, serde::Serialize)]
 struct Payload {
