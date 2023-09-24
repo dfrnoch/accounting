@@ -16,6 +16,10 @@ export const dict = {
     sidebar_section_purchase: "Purchase",
     sidebar_section_reports: "Reports",
     sidebar_section_directory: "Directory",
+
+    home_stats_sales: "Sales",
+    home_stats_purchase: "Purchase",
+    home_stats_tax: "Taxes",
   },
   cs: {
     hello: "Ahoj",
@@ -34,5 +38,9 @@ export const dict = {
     sidebar_section_purchase: "Nákup",
     sidebar_section_reports: "Reporty",
     sidebar_section_directory: "Adresář",
+
+    home_stats_sales: "Prodej",
+    home_stats_purchase: "Nákup",
+    home_stats_tax: "Daně",
   },
 };
