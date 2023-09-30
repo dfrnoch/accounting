@@ -1,13 +1,21 @@
-import { createChainedI18nContext } from "@solid-primitives/i18n";
-import { dict } from "./dict";
+import { createContextProvider } from "@solid-primitives/context";
+import * as i18n from "@solid-primitives/i18n";
+import { makePersisted } from "@solid-primitives/storage";
+import { createSignal } from "solid-js";
+import { LANG } from "@/constants";
+import dict, { Dict } from "./dict";
 
-export const [I18nProvider, useI18nContext] = createChainedI18nContext({
-  dictionaries: dict,
-  locale: "cs",
-});
+export const [locale, setLocale] = makePersisted(
+  createSignal<LANG>(Reflect.has(dict, navigator.language) ? (navigator.language as LANG) : LANG.EN),
+  {
+    name: "lang",
+    storage: localStorage,
+  },
+);
 
-export const useI18n = () => {
-  const context = useI18nContext();
-  if (!context) throw new Error("useI18n must be used within an I18nProvider");
-  return context;
-};
+export const [I18nProvider, useMaybeI18n] = createContextProvider<[i18n.Translator<Dict>], { locale: LANG }>(
+  (props) => [i18n.translator(() => i18n.flatten(dict[props.locale]), i18n.resolveTemplate)],
+);
+
+// biome-ignore lint/style/noNonNullAssertion: burger
+export const useI18n = () => useMaybeI18n()!;

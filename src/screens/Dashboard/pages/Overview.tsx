@@ -16,9 +16,9 @@ const Overview: Component = () => {
       <div class="col-span-3">
         <Box>
           <div class="flex flex-row gap-4 justify-between items-center px-2 w-full h-full">
-            <StatBox title={t.home_stats_purchase()} value="100$" />
-            <StatBox title={t.home_stats_sales()} value="100$" />
-            <StatBox title={t.home_stats_tax()} value="69$" />
+            <StatBox title={t("home.stats.purchase")} value="100$" />
+            <StatBox title={t("home.stats.sales")} value="100$" />
+            <StatBox title={t("home.stats.tax")} value="69$" />
           </div>
         </Box>
       </div>

@@ -1,0 +1,31 @@
+{
+  "hello": "Hello",
+  "world": "World",
+  "setup": {
+    "welcome": "Welcome to the app",
+    "get_started": "Get started"
+  },
+  "sidebar": {
+    "button": {
+      "overview": "Overview",
+      "invoices": "Invoices",
+      "clients": "Clients",
+      "expenses": "Expenses",
+      "reports": "Reports",
+      "settings": "Settings"
+    },
+    "section": {
+      "sales": "Sales",
+      "purchase": "Purchase",
+      "reports": "Reports",
+      "directory": "Directory"
+    }
+  },
+  "home": {
+    "stats": {
+      "sales": "Sales",
+      "purchase": "Purchase",
+      "tax": "Taxes"
+    }
+  }
+}

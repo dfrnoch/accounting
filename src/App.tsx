@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { I18nProvider } from "@/i18n";
+import { I18nProvider, locale } from "@/i18n";
 import { Toaster } from "solid-toast";
 import { Show, createEffect, createSignal, lazy } from "solid-js";
 import { checkDb } from "@/bindings";
@@ -31,7 +31,7 @@ const App: Component = () => {
   });
 
   return (
-    <I18nProvider>
+    <I18nProvider locale={locale()}>
       <Show when={screen() === Screen.Dashboard}>
         <StoreProvider>
           <Dashboard />

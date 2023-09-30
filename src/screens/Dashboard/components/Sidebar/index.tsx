@@ -16,23 +16,23 @@ const Sidebar: Component = () => {
     <div class="flex relative flex-col justify-between px-2.5 lg:px-4 pt-14 pb-4 w-1/5 h-screen lg:max-w-[220px] min-w-[140px] shrink-0 text-primary border-r dark:border-black/90 border-zinc-400/70">
       <div>
         <SidebarButton notInSection target="/" icon={<FiHome />}>
-          {t.sidebar_button_overview()}
+          {t("sidebar.button.overview")}
         </SidebarButton>
 
-        <SidebarSection title={t.sidebar_section_sales()}>
+        <SidebarSection title={t("sidebar.section.sales")}>
           <SidebarButton target="sales/invoices" icon={<FiFileText />}>
-            {t.sidebar_button_invoices()}
+            {t("sidebar.button.invoices")}
           </SidebarButton>
         </SidebarSection>
-        <SidebarSection title={t.sidebar_section_purchase()}>
+        <SidebarSection title={t("sidebar.section.purchase")}>
           <SidebarButton target="/purchase/expenses" icon={<FiDollarSign />}>
-            {t.sidebar_button_expenses()}
+            {t("sidebar.button.expenses")}
           </SidebarButton>
         </SidebarSection>
 
-        <SidebarSection title={t.sidebar_section_directory()}>
+        <SidebarSection title={t("sidebar.section.directory")}>
           <SidebarButton target="/directory/clients" icon={<FiUsers />}>
-            {t.sidebar_button_clients()}
+            {t("sidebar.button.clients")}
           </SidebarButton>
         </SidebarSection>
       </div>
@@ -40,7 +40,7 @@ const Sidebar: Component = () => {
       {/* profile  */}
       <div class="flex flex-col gap-4">
         <SidebarButton target="/settings" icon={<FiSettings />} notInSection>
-          {t.sidebar_button_settings()}
+          {t("sidebar.button.settings")}
         </SidebarButton>
         <hr class="border-black/10" />
         <div class="flex flex-row gap-2.5 justify-start items-center lg:gap-4">

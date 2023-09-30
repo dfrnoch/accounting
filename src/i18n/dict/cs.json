@@ -1,0 +1,31 @@
+{
+  "hello": "Ahoj",
+  "world": "Světe",
+  "setup": {
+    "welcome": "Vítejte",
+    "get_started": "Začít"
+  },
+  "sidebar": {
+    "button": {
+      "overview": "Přehled",
+      "invoices": "Faktury",
+      "clients": "Klienti",
+      "expenses": "Výdaje",
+      "reports": "Reporty",
+      "settings": "Nastavení"
+    },
+    "section": {
+      "sales": "Prodej",
+      "purchase": "Nákup",
+      "reports": "Reporty",
+      "directory": "Adresář"
+    }
+  },
+  "home": {
+    "stats": {
+      "sales": "Prodej",
+      "purchase": "Nákup",
+      "tax": "Daň"
+    }
+  }
+}
