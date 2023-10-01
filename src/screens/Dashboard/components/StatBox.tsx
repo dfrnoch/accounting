@@ -1,16 +1,15 @@
-import { Component, Show, createSignal } from "solid-js";
-import { Platform } from "@tauri-apps/plugin-os";
+import { Component, Show } from "solid-js";
+// import { Platform } from "@tauri-apps/plugin-os";
 
 const StatBox: Component<{
   title: string;
   value: string;
   last?: number;
 }> = (props) => {
-  const [os, setOs] = createSignal<Platform | null>(null);
+  // const [os, setOs] = createSignal<Platform | null>(null);
 
   return (
     <div class="p-2.5 rounded-lg border bg-[#E6E6E6] border-[#dddddd] dark:bg-[#282828] dark:border-neutral-600 h-full w-full relative overflow-hidden">
-      {/* blurred green at top right */}
       <div class="absolute top-0 right-0 w-14 h-8 rounded-lg bg-green-500/30 blur-md" />
       <div class="flex flex-col justify-between items-stretch w-full h-full">
         <div class="flex flex-row justify-between items-start">
