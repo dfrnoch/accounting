@@ -12,15 +12,13 @@ const Overview: Component = () => {
   const [t] = useI18n();
 
   return (
-    <div class="grid grid-cols-3 grid-rows-5 gap-4 w-full h-screen">
+    <div class="grid grid-cols-3 grid-rows-5 gap-3 lg:gap-4 w-full h-screen">
       <div class="col-span-3">
-        <Box>
-          <div class="flex flex-row gap-4 justify-between items-center px-2 w-full h-full">
-            <StatBox title={t("home.stats.purchase")} value="100$" />
-            <StatBox title={t("home.stats.sales")} value="100$" />
-            <StatBox title={t("home.stats.tax")} value="69$" />
-          </div>
-        </Box>
+        <div class="flex flex-row gap-3 lg:gap-4 justify-between items-center w-full h-full">
+          <StatBox title={t("home.stats.purchase")} value="$8657.32" last={6804.52} />
+          <StatBox title={t("home.stats.sales")} value="100$" />
+          <StatBox title={t("home.stats.tax")} value="69$" />
+        </div>
       </div>
       <div class="col-span-2 row-span-2 row-start-2">
         <Box>
