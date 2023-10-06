@@ -3,7 +3,7 @@ import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useSelector } from "@/store";
 import { useI18n } from "@/i18n";
-import { FiDollarSign, FiFileText, FiHome, FiSettings, FiUsers } from "solid-icons/fi";
+import { FiDollarSign, FiFileText, FiHome, FiPaperclip, FiSettings, FiUsers } from "solid-icons/fi";
 
 const Sidebar: Component = () => {
   const [t] = useI18n();
@@ -30,9 +30,12 @@ const Sidebar: Component = () => {
           </SidebarButton>
         </SidebarSection>
 
-        <SidebarSection title={t("sidebar.section.directory")}>
-          <SidebarButton target="/directory/clients" icon={<FiUsers />}>
+        <SidebarSection title={t("sidebar.section.other")}>
+          <SidebarButton target="/other/clients" icon={<FiUsers />}>
             {t("sidebar.button.clients")}
+          </SidebarButton>
+          <SidebarButton target="/other/reports" icon={<FiPaperclip />}>
+            {t("sidebar.button.reports")}
           </SidebarButton>
         </SidebarSection>
       </div>

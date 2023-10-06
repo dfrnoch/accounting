@@ -9,7 +9,8 @@ import { useSelector } from "@/store";
 const Overview = lazy(() => import("./pages/Overview"));
 const Invoices = lazy(() => import("./pages/Sales/Invoices/Invoices"));
 const Expenses = lazy(() => import("./pages/Purchase/Expenses/Expenses"));
-const Clients = lazy(() => import("./pages/Directory/Clients/Clients"));
+const Clients = lazy(() => import("./pages/Other/Clients/Clients"));
+const Reports = lazy(() => import("./pages/Other/Reports"));
 const Settings = lazy(() => import("./pages/Settings"));
 
 const Dashboard: Component = () => {
@@ -43,7 +44,8 @@ const Dashboard: Component = () => {
             <Routes>
               <Route path="/" element={<Overview />} />
               <Route path="/sales/invoices" element={<Invoices />} />
-              <Route path="/directory/clients" element={<Clients />} />
+              <Route path="/other/clients" element={<Clients />} />
+              <Route path="/other/reports" element={<Reports />} />
               <Route path="/purchase/expenses" element={<Expenses />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<Overview />} />

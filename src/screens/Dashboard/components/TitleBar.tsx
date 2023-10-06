@@ -25,8 +25,10 @@ const TitleBar: Component = () => {
         return [t("sidebar.section.sales"), t("sidebar.button.invoices")];
       case "/purchase/expenses":
         return [t("sidebar.section.purchase"), t("sidebar.button.expenses")];
-      case "/directory/clients":
-        return [t("sidebar.section.directory"), t("sidebar.button.clients")];
+      case "/other/clients":
+        return [t("sidebar.section.other"), t("sidebar.button.clients")];
+      case "/other/reports":
+        return [t("sidebar.section.other"), t("sidebar.button.reports")];
       case "/settings":
         return [t("sidebar.button.settings")];
       default:
