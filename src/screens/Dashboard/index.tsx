@@ -11,7 +11,7 @@ const Invoices = lazy(() => import("./pages/Sales/Invoices/Invoices"));
 const Expenses = lazy(() => import("./pages/Purchase/Expenses/Expenses"));
 const Clients = lazy(() => import("./pages/Other/Clients/Clients"));
 const Reports = lazy(() => import("./pages/Other/Reports"));
-const Settings = lazy(() => import("./pages/Settings"));
+const Settings = lazy(() => import("./pages/Settings/Settings"));
 
 const Dashboard: Component = () => {
   const {
