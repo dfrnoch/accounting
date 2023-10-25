@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import Toolbar from "./components/ToolBar";
+import Toolbar from "./components/Toolbar";
 import { FiSettings } from "solid-icons/fi";
 
 const Settings: Component = () => {
@@ -13,6 +13,7 @@ const Settings: Component = () => {
         <Toolbar text="Nastavení" icon={<FiSettings />} />
         <Toolbar text="Nastavení" icon={<FiSettings />} />
       </div>
+      <div class="w-full h-full px-20">aaa</div>
     </div>
   );
 };
