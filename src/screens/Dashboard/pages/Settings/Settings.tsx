@@ -1,8 +1,10 @@
-import { Component } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import Toolbar from "./components/Toolbar";
 import { FiSettings } from "solid-icons/fi";
 
 const Settings: Component = () => {
+  const [currentSection, setCurrentSection] = createSignal(0);
+
   return (
     <div class="">
       <div class="w-full h-20 gap-2 flex justify-center items-center border-b border-black">
