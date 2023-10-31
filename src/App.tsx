@@ -20,7 +20,7 @@ const App: Component = () => {
   const startup = async () => {
     const data = await checkDb();
 
-    if (data) {
+    if (data === 200) {
       return setScreen(Screen.Dashboard);
     }
     return setScreen(Screen.Setup);

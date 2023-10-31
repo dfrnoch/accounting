@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/primitives";
 
 export function checkDb() {
-  return invoke<boolean>("check_db");
+  return invoke<200 | 400>("check_db");
 }
 
 export function getCompany(id: number | null) {
@@ -11,11 +11,7 @@ export function getCompany(id: number | null) {
 export function createPost(data: CreateCompanyData) {
   return invoke<number>("create_company", data);
 }
-export function getTheme() {
-  return invoke<Theme>("get_theme");
-}
 
-export type Theme = "light" | "dark";
 export type CreateCompanyData = { name: string };
 export type Test = { id: number; name: string };
 export type Company = {

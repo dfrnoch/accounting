@@ -4,5 +4,5 @@ dist
 
 # Rust
 target
-db.rs
+prisma.rs
 src-tauri/dev.db 
