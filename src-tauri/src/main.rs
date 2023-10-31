@@ -8,9 +8,15 @@ extern crate objc;
 mod window_ext;
 
 #[allow(warnings, unused)]
-mod db;
+mod prisma;
 
-use db::*;
+mod error;
+mod migrator;
+mod util;
+
+use error::{CommandResult, CoreError};
+use migrator::new_client;
+use prisma::*;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
 use std::sync::Arc;
@@ -24,9 +30,6 @@ use window_vibrancy::apply_mica;
 #[cfg(target_os = "macos")]
 use window_vibrancy::apply_vibrancy;
 
-// use tauri_specta::ts;
-// use specta::{collect_types, Type};
-
 #[derive(Clone, serde::Serialize)]
 struct Payload {
     args: Vec<String>,
@@ -37,22 +40,40 @@ type DbState<'a> = State<'a, Arc<PrismaClient>>;
 
 // #[specta::specta]
 #[tauri::command]
-async fn check_db(db: DbState<'_>) -> Result<bool, ()> {
-    db.company()
-        .count(vec![])
-        .exec()
-        .await
-        .map_err(|_| ())
-        .map(|x| x > 0)
+async fn check_db(client: DbState<'_>) -> CommandResult<i16> {
+    let company_count = client.company().count(vec![]).exec().await;
+
+    match company_count {
+        Ok(_) => {
+            // Query succeeded, return 200
+            Ok(200)
+        }
+        Err(_) => {
+            // Query failed, return 400
+            Ok(400)
+        }
+    }
+}
+
+#[tauri::command]
+async fn migrate_and_populate(client: DbState<'_>) -> CommandResult<()> {
+    #[cfg(debug_assertions)]
+    client._db_push().await?;
+
+    #[cfg(not(debug_assertions))]
+    client._migrate_deploy().unwrap();
+
+    Ok(())
 }
 
 // #[specta::specta]
 #[tauri::command]
 async fn get_company(
-    db: DbState<'_>,
+    client: DbState<'_>,
     id: Option<i32>,
 ) -> Result<Option<company::Data>, QueryError> {
-    db.company()
+    client
+        .company()
         .find_first(vec![company::id::equals(id.unwrap_or(1))])
         .exec()
         .await
@@ -65,22 +86,21 @@ struct CreateCompanyData {
 
 // #[specta::specta]
 #[tauri::command]
-async fn create_post(db: DbState<'_>, data: CreateCompanyData) -> Result<test::Data, ()> {
-    db.test()
+async fn create_post(client: DbState<'_>, data: CreateCompanyData) -> Result<test::Data, ()> {
+    client
+        .test()
         .create(data.name, vec![])
         .exec()
         .await
         .map_err(|_| ())
 }
 
-#[tauri::command]
-fn get_theme(window: tauri::Window) -> Theme {
-    window.theme().unwrap_or(Theme::Light)
-}
-
 #[tokio::main]
 async fn main() {
-    let db = PrismaClient::_builder().build().await.unwrap();
+    std::env::set_var("RUST_LOG", "debug");
+    pretty_env_logger::init();
+
+    let client = new_client().await.unwrap();
 
     // #[cfg(debug_assertions)]
     // ts::export(
@@ -89,10 +109,6 @@ async fn main() {
     // )
     // .unwrap();
 
-    //TODO: enable only in release mode
-    // #[cfg(debug_assertions)]
-    // db.db_push().await.unwrap();
-
     tauri::Builder::default()
         .plugin(tauri_plugin_autostart::init(
             MacosLauncher::LaunchAgent,
@@ -100,7 +116,7 @@ async fn main() {
         ))
         .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
             println!("{}, {argv:?}, {cwd}", app.package_info().name);
-            app.emit_all("single-instance", Payload { args: argv, cwd })
+            app.emit("single-instance", Payload { args: argv, cwd })
                 .unwrap();
         }))
         .plugin(tauri_plugin_updater::Builder::new().build())
@@ -108,7 +124,6 @@ async fn main() {
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_clipboard_manager::init())
-        .plugin(tauri_plugin_app::init())
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_store::Builder::default().build())
@@ -129,10 +144,10 @@ async fn main() {
         .invoke_handler(tauri::generate_handler![
             check_db,
             get_company,
+            migrate_and_populate,
             create_post,
-            get_theme
         ])
-        .manage(Arc::new(db))
+        .manage(Arc::new(client))
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

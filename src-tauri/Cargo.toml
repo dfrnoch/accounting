@@ -13,17 +13,17 @@ members = ["prisma-cli"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-alpha.10", features = [] }
+tauri-build = { version = "2.0.0-alpha.11", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-alpha.16", features = ["macos-private-api"] }
+tauri = { version = "2.0.0-alpha.17", features = ["macos-private-api"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.9", features = [
     "sqlite",
     "migrations",
     "mocking",
-] }
+], default-features = false }
 tokio = { version = "1.33.0", features = ["macros"] }
 window-vibrancy = { git = "https://github.com/tauri-apps/window-vibrancy", branch = "dev" }
 tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
@@ -33,10 +33,14 @@ tauri-plugin-dialog = { git = "https://github.com/tauri-apps/plugins-workspace",
 tauri-plugin-http = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 tauri-plugin-fs = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 tauri-plugin-clipboard-manager = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
-tauri-plugin-app = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 tauri-plugin-process = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 tauri-plugin-os = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
+pretty_env_logger = "0.5.0"
+log = "0.4"
+thiserror = "1.0.50"
+platform-dirs = "0.3.0"
+anyhow = "1.0.75"
 # tauri-specta = { version = "=2.0.0-rc.2", features = ["typescript"] }
 # specta = "=2.0.0-rc.5"
 
