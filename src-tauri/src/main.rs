@@ -1,6 +1,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+extern crate pretty_env_logger;
+#[macro_use]
+extern crate log;
+
 #[cfg(target_os = "macos")]
 extern crate objc;
 
@@ -43,15 +47,16 @@ type DbState<'a> = State<'a, Arc<PrismaClient>>;
 async fn check_db(client: DbState<'_>) -> CommandResult<i16> {
     let company_count = client.company().count(vec![]).exec().await;
 
+    info!("Checking DB");
     match company_count {
         Ok(_) => {
-            // Query succeeded, return 200
-            Ok(200)
+            if company_count.unwrap() == 0 {
+                return Ok(400);
+            } else {
+                return Ok(200);
+            }
         }
-        Err(_) => {
-            // Query failed, return 400
-            Ok(400)
-        }
+        Err(_) => Ok(400),
     }
 }
 

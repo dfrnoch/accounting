@@ -12,6 +12,10 @@ export function createPost(data: CreateCompanyData) {
   return invoke<number>("create_company", data);
 }
 
+export function migrateAndPopulate() {
+  return invoke("migrate_and_populate");
+}
+
 export type CreateCompanyData = { name: string };
 export type Test = { id: number; name: string };
 export type Company = {
