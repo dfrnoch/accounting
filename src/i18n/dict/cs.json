@@ -3,7 +3,11 @@
   "world": "Světe",
   "setup": {
     "welcome": "Vítejte",
-    "get_started": "Začít"
+    "get_started": "Začít",
+
+    "step1": {
+      "create_company": "Pojďme vytvořit firmu"
+    }
   },
   "sidebar": {
     "button": {

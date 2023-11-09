@@ -2,7 +2,7 @@ import type { Component } from "solid-js";
 
 const Loading: Component = () => {
   return (
-    <div class="flex justify-center items-center w-screen h-screen bg-red">
+    <div class="flex justify-center items-center w-screen h-screen ">
       {/* loading spinner */}
       <div role="status">
         <svg

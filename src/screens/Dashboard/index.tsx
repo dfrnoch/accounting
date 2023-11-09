@@ -6,12 +6,12 @@ import TitleBar from "./components/TitleBar";
 import Sidebar from "./components/Sidebar";
 import { useSelector } from "@/store";
 
-const Overview = lazy(() => import("./pages/Overview"));
-const Invoices = lazy(() => import("./pages/Sales/Invoices/Invoices"));
-const Expenses = lazy(() => import("./pages/Purchase/Expenses/Expenses"));
-const Clients = lazy(() => import("./pages/Other/Clients/Clients"));
-const Reports = lazy(() => import("./pages/Other/Reports"));
-const Settings = lazy(() => import("./pages/Settings/Settings"));
+const Overview = lazy(() => import("./pages"));
+const Invoices = lazy(() => import("./pages/Sales/Invoices"));
+const Expenses = lazy(() => import("./pages/Purchase/Expenses"));
+const Clients = lazy(() => import("./pages/Other/Clients"));
+const Reports = lazy(() => import("./pages/Other"));
+const Settings = lazy(() => import("./pages/Settings"));
 
 const Dashboard: Component = () => {
   const {

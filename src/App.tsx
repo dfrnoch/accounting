@@ -6,7 +6,7 @@ import { checkDb } from "@/bindings";
 import { StoreProvider } from "@/store";
 
 const Dashboard = lazy(() => import("./screens/Dashboard"));
-const SetupWizard = lazy(() => import("./screens/Setup/Setup"));
+const SetupWizard = lazy(() => import("./screens/Setup"));
 
 enum Screen {
   Dashboard = "dashboard",

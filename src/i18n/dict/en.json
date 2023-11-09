@@ -3,7 +3,11 @@
   "world": "World",
   "setup": {
     "welcome": "Welcome to the app",
-    "get_started": "Get started"
+    "get_started": "Get started",
+
+    "step1": {
+      "create_company": "Let's create your company"
+    }
   },
   "sidebar": {
     "button": {
