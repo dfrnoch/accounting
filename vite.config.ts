@@ -1,11 +1,12 @@
 import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
+import UnocssPlugin from "@unocss/vite";
 import path from "path";
 
 // https://vitejs.dev/config/
 // @ts-ignore
 export default defineConfig(async () => ({
-  plugins: [solidPlugin()],
+  plugins: [solidPlugin(), UnocssPlugin({})],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -30,7 +31,7 @@ export default defineConfig(async () => ({
   envPrefix: ["VITE_", "TAURI_"],
   build: {
     // Tauri supports es2021
-    // rome-ignore lint/suspicious/noDoubleEquals: <explanation>
+    // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
     target: process.env.TAURI_PLATFORM == "windows" ? "chrome105" : "safari13",
     // don't minify for debug builds
     minify: !process.env.TAURI_DEBUG ? "esbuild" : false,

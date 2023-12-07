@@ -5,7 +5,6 @@ const Input: Component<{
   label?: string;
   placeholder?: string;
   class?: string;
-  // icon?: JSX.Element;
 }> = (props) => {
   return (
     <div class={`flex flex-col gap-1 ${props.class}`}>

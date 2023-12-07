@@ -43,7 +43,7 @@ const App: Component = () => {
       <Show when={screen() === Screen.Loading}>
         <div class="flex justify-center items-center h-screen">
           <div class="flex flex-col justify-center items-center">
-            <h1 class="text-4xl font-bold text-red">Loading...</h1>
+            <h1 class="text-4xl font-bold">Loading...</h1>
           </div>
         </div>
       </Show>

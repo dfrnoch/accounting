@@ -2,11 +2,6 @@
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 /* @import url('https://github.com/vercel/geist-font/raw/main/packages/next/dist/fonts/geist-sans/Geist-Variable.woff2'); */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
 body {
     letter-spacing: .3px;
     font-family: 'SF Pro Display', sans-serif;
@@ -18,44 +13,40 @@ body {
     scroll-behavior: smooth;
 }
 
-@layer base {
 
-    :root,
-    :root.light {
-        --color-primary: #1D1D1D;
-        --color-secondary: #E3E3E3;
-        --color-grey: theme(colors.zinc.600);
-        --color-lightgrey: theme(colors.gray.200);
-        --color-danger: theme(colors.red.700);
-        --color-warning: theme(colors.orange.500);
-        --color-success: theme(colors.green.700);
-        --color-info: theme(colors.sky.700);
-    }
-
-    :root.dark {
-        --color-primary: #E3E3E3;
-        --color-secondary: theme(colors.neutral.800);
-        --color-grey: theme(colors.zinc.400);
-        --color-lightgrey: theme(colors.gray.200);
-        --color-danger: theme(colors.red.400);
-        --color-warning: theme(colors.orange.400);
-        --color-success: theme(colors.green.400);
-        --color-info: theme(colors.sky.400);
-    }
+:root,
+:root.light {
+    --color-primary: #1D1D1D;
+    --color-secondary: #E3E3E3;
+    --color-grey: #52525b;
+    --color-lightgrey: #e5e7eb;
+    --color-danger: #b91c1c;
+    --color-warning: #f97316;
+    --color-success: #15803d;
+    --color-info: #1d4ed8;
 }
 
-@layer utilities {
+:root.dark {
+    --color-primary: #E3E3E3;
+    --color-secondary: #262626;
+    --color-grey: #a1a1aa;
+    --color-lightgrey: #e5e7eb;
+    --color-danger: #f87171;
+    --color-warning: #facc15;
+    --color-success: #4ade80;
+    --color-info: #38bdf8;
+}
 
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
 
-    /* Hide scrollbar for IE, Edge and Firefox */
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        /* IE and Edge */
-        scrollbar-width: none;
-        /* Firefox */
-    }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }

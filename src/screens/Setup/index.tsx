@@ -9,7 +9,7 @@ const SetupWizard: Component = () => {
   const [currentStep, setCurrentStep] = createSignal(0);
 
   return (
-    <div class="flex justify-center items-center w-screen h-screen bg-red" data-tauri-drag-region>
+    <div class="flex justify-center items-center w-screen h-screen" data-tauri-drag-region>
       <div class="px-8 py-6 w-2/3 h-2/3 bg-secondary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative">
         <ProgressDots count={5} active={currentStep()} />
         <Show when={currentStep() === 0}>
@@ -34,7 +34,7 @@ const SetupWizard: Component = () => {
             <Input id="company_name" label={"Tvoje jemno"} />
           </div>
           <button class="py-2 px-4 bg-primary rounded-lg text-secondary font-medium" type="button">
-            pokra4ovat
+            pokračovat
           </button>
         </Show>
       </div>
