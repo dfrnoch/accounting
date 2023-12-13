@@ -87,11 +87,12 @@ async fn get_company(
 #[derive(Deserialize)]
 struct CreateCompanyData {
     name: String,
+    cin: Option<String>,
 }
 
 // #[specta::specta]
 #[tauri::command]
-async fn create_post(client: DbState<'_>, data: CreateCompanyData) -> Result<test::Data, ()> {
+async fn create_company(client: DbState<'_>, data: CreateCompanyData) -> Result<test::Data, ()> {
     client
         .test()
         .create(data.name, vec![])
@@ -130,6 +131,7 @@ async fn main() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
@@ -150,7 +152,7 @@ async fn main() {
             check_db,
             get_company,
             migrate_and_populate,
-            create_post,
+            create_company,
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

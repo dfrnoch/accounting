@@ -1,4 +1,4 @@
-import { Route, Routes } from "@solidjs/router";
+import { Route, Router } from "@solidjs/router";
 import type { Component } from "solid-js";
 import { createEffect, lazy } from "solid-js";
 import { getCompany } from "../../bindings";
@@ -41,15 +41,15 @@ const Dashboard: Component = () => {
         <Sidebar />
         <div class="overflow-y-auto px-4 pt-14 mx-auto w-full h-screen no-scrollbar bg-secondary text-primary">
           <div class="container">
-            <Routes>
-              <Route path="/" element={<Overview />} />
-              <Route path="/sales/invoices" element={<Invoices />} />
-              <Route path="/other/clients" element={<Clients />} />
-              <Route path="/other/reports" element={<Reports />} />
-              <Route path="/purchase/expenses" element={<Expenses />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<Overview />} />
-            </Routes>
+            <Router>
+              <Route path="/" component={Overview} />
+              <Route path="/sales/invoices" component={Invoices} />
+              <Route path="/other/clients" component={Clients} />
+              <Route path="/other/reports" component={Reports} />
+              <Route path="/purchase/expenses" component={Expenses} />
+              <Route path="/settings" component={Settings} />
+              <Route path="*" component={Overview} />
+            </Router>
           </div>
         </div>
       </div>

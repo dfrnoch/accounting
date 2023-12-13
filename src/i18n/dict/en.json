@@ -4,9 +4,16 @@
   "setup": {
     "welcome": "Welcome to the app",
     "get_started": "Get started",
-
+    "continue": "Continue",
     "step1": {
-      "create_company": "Let's create your company"
+      "select_language": "Select your language",
+      "select_currency": "Select your currency",
+      "improve": "Help us improve"
+    },
+    "step2": {
+      "create_company": "Let's create your company",
+      "company_name": "Company name",
+      "CIN": "CIN"
     }
   },
   "sidebar": {

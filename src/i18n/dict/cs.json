@@ -4,9 +4,16 @@
   "setup": {
     "welcome": "Vítejte",
     "get_started": "Začít",
-
+    "continue": "Pokračovat",
     "step1": {
-      "create_company": "Pojďme vytvořit firmu"
+      "select_language": "Vyberte jazyk",
+      "select_currency": "Vyberte měnu",
+      "improve": "Pomozte nám zlepšit"
+    },
+    "step2": {
+      "create_company": "Pojďme vytvořit firmu",
+      "company_name": "Název firmy / podnikatele",
+      "CIN": "IČO"
     }
   },
   "sidebar": {
