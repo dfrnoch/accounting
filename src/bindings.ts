@@ -8,25 +8,33 @@ export function getCompany(id: number | null) {
   return invoke<Company | null>("get_company", { id });
 }
 
-export function createPost(data: CreateCompanyData) {
-  return invoke<number>("create_company", data);
+export function createCompany(data: CreateCompanyData) {
+  return invoke<number>("create_company", { data });
 }
 
 export function migrateAndPopulate() {
   return invoke("migrate_and_populate");
 }
 
-export type CreateCompanyData = { name: string };
-export type Test = { id: number; name: string };
-export type Company = {
-  id: number;
+export type CreateCompanyData = {
   name: string;
-  email: string;
-  cin: string | null;
-  vatId: string | null;
+  cin: string;
+  vatId: string;
   streetAddress: string;
   city: string;
   postalCode: string;
+  phoneNumber: string;
+  email: string;
+};
+
+export type Company = {
+  id: number;
+  name: string;
+  cin: string | null;
+  vatId: string | null;
+  street: string;
+  city: string;
+  postalCode: string;
   phoneNumber: string | null;
-  website: string | null;
+  email: string | null;
 };

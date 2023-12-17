@@ -1,43 +1,70 @@
 import { locale, setLocale, useI18n } from "@/i18n";
-import { createSignal, type Component, Show } from "solid-js";
+import { createSignal, type Component, Show, createEffect } from "solid-js";
 import ProgressDots from "./components/Progress";
-import { migrateAndPopulate } from "@/bindings";
-import Input from "@/shared/components/Input";
+import { createCompany, migrateAndPopulate } from "@/bindings";
+import Input from "@/shared/components/Menu/Input";
 import { createStore } from "solid-js/store";
 import LangaugeBox from "./components/LanguageBox";
 import { LANG } from "@/constants";
 import { open } from "@tauri-apps/plugin-shell";
+import { getDataByCIN } from "@/utils/getDataByCIN";
+import InputList from "@/shared/components/Menu/InputList";
+import { Hr } from "@/shared/components/Menu/Hr";
+import { Button } from "./components/Button";
+import { Title } from "./components/Title";
 
 const SetupWizard: Component = () => {
   const [t] = useI18n();
   const [currentStep, setCurrentStep] = createSignal(0);
   const [userData, setUserData] = createStore({
     companyName: "",
-    companyEmail: "",
+    cin: "",
+    vatID: "",
     userName: "",
     userEmail: "",
+    contact: {
+      email: "",
+      phone: "",
+    },
+    address: {
+      street: "",
+      city: "",
+      zip: "",
+    },
   });
 
+  createEffect(() => {
+    if (userData.cin.length === 8) {
+      getDataByCIN(userData.cin).then((data) => {
+        if (data) {
+          console.log(data);
+          setUserData({
+            companyName: data.company,
+            vatID: data.dic,
+          });
+        }
+      });
+    }
+  }, [userData.cin]);
+
   return (
-    <div class="flex justify-center items-center w-screen h-screen" data-tauri-drag-region>
-      <div class="px-8 py-6 w-3/4 h-5/7 bg-secondary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative">
+    <div class="flex justify-center items-center w-screen h-screen " data-tauri-drag-region>
+      <div class="w-3/4 h-5/7 bg-secondary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative ">
         <ProgressDots count={5} active={currentStep()} />
         <Show when={currentStep() === 0}>
-          <h1 class="text-4xl font-bold text-primary">{t("setup.welcome")}</h1>
-          <button
-            class="py-2 px-4 bg-primary rounded-lg text-secondary font-medium"
-            type="button"
+          <Title>{t("setup.welcome")}</Title>
+          <Button
             onClick={() => {
               setCurrentStep(1);
               migrateAndPopulate();
             }}
           >
             {t("setup.get_started")}
-          </button>
+          </Button>
         </Show>
 
         <Show when={currentStep() === 1}>
-          <h1 class="text-4xl font-bold text-primary">{t("setup.step1.select_language")}</h1>
+          <Title>{t("setup.step1.select_language")}</Title>
           <div>
             <div class="flex gap-4">
               <LangaugeBox onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS}>
@@ -48,7 +75,7 @@ const SetupWizard: Component = () => {
               </LangaugeBox>
             </div>
             <p
-              class="text-primary underline"
+              class="text-primary text-center cursor-pointer text-lightgrey mt-2"
               onClick={() => {
                 open("https://github.com");
               }}
@@ -56,60 +83,85 @@ const SetupWizard: Component = () => {
               {t("setup.step1.improve")}
             </p>
           </div>
-          <button
-            class="py-2 px-4 bg-primary rounded-lg text-secondary font-medium"
-            type="button"
-            onClick={() => setCurrentStep(2)}
-          >
-            {t("setup.continue")}
-          </button>
+          <Button onClick={() => setCurrentStep(2)}>{t("setup.continue")}</Button>
         </Show>
 
         <Show when={currentStep() === 2}>
-          <h1 class="text-4xl font-bold text-primary">{t("setup.step2.create_company")}</h1>
-          <div class="flex gap-4 w-full justify-around h-50">
-            <div class="w-30 flex flex-col items-center justify-center ">
-              <h2 class="text-2xl font-bold text-primary">Automaticke</h2>
-              <Input
-                id="CIN"
-                // label={t("setup.step2.CIN")}
-                class="col-span-2"
-                onChange={(e) => setUserData("companyEmail", e.target?.value)}
-              />
-            </div>
-            <div class="flex flex-row justify-center items-center gap-3">
-              <div class="w-1px h-full bg-red" />
-            </div>
-            <div class="w-30 flex items-center justify-center">
-              <h2 class="text-2xl font-bold text-primary">Manualne</h2>
-              <button class="py-2 px-4 bg-primary rounded-lg text-secondary font-medium" type="button">
-                Manualne
-              </button>
+          <div class="w-full h-full overflow-y-auto ">
+            <div class="w-full flex items-center justify-center flex-col ">
+              <Title class="mt-12 mb-8">{t("setup.step2.create_company")}</Title>
+              <InputList>
+                <Input
+                  id="companme"
+                  label={t("setup.step2.company_name")}
+                  class="col-span-2"
+                  onChange={(e) => setUserData("companyName", e.target.value)}
+                />
+                <Input
+                  id="CIN"
+                  label={t("setup.step2.CIN")}
+                  info={t("setup.step2.help.retrieve_by_cin")}
+                  onChange={(e) => setUserData("cin", e.target.value)}
+                />
+                <Input
+                  id="vatID"
+                  label={t("setup.step2.vatID")}
+                  onChange={(e) => setUserData("vatID", e.target.value)}
+                />
+                <Hr />
+                <Input
+                  id="address"
+                  label={t("setup.step2.street")}
+                  onChange={(e) => setUserData("address", "street", e.target.value)}
+                />
+                <Input
+                  id="city"
+                  label={t("setup.step2.city")}
+                  onChange={(e) => setUserData("address", "city", e.target.value)}
+                />
+                <Input
+                  id="zip"
+                  label={t("setup.step2.zip")}
+                  onChange={(e) => setUserData("address", "zip", e.target.value)}
+                />
+                <Hr />
+                <Input
+                  id="email"
+                  label={t("setup.step2.email")}
+                  onChange={(e) => setUserData("contact", "email", e.target.value)}
+                />
+                <Input
+                  id="phone"
+                  label={t("setup.step2.phone")}
+                  onChange={(e) => setUserData("contact", "phone", e.target.value)}
+                />
+              </InputList>
+              <Button
+                class="my-8"
+                onClick={async () => {
+                  try {
+                    console.log(userData.address);
+                    await createCompany({
+                      cin: userData.cin,
+                      name: userData.companyName,
+                      vatId: userData.vatID,
+                      email: userData.contact.email,
+                      phoneNumber: userData.contact.phone,
+                      city: userData.address.city,
+                      postalCode: userData.address.zip,
+                      streetAddress: "ahoj",
+                    });
+
+                    window.location.reload();
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+              >
+                {t("setup.finalize")}
+              </Button>
             </div>
           </div>
-          {/* <div class="grid grid-cols-5 grid-rows-3 gap-3 mx-15">
-            <Input
-              id="companme"
-              label={t("setup.step2.company_name")}
-              class="col-span-3"
-              onChange={(e) => setUserData("companyName", e.target?.value)}
-            />
-            <Input
-              id="CIN"
-              label={t("setup.step2.CIN")}
-              class="col-span-2"
-              onChange={(e) => setUserData("companyEmail", e.target?.value)}
-            />
-            <Input
-              id="user_lave"
-              label="Tvoje jemno"
-              class="col-span-2"
-              onChange={(e) => setUserData("userName", e.target?.value)}
-            />
-          </div> */}
-          {/* <button class="py-2 px-4 bg-primary rounded-lg text-secondary font-medium" type="button">
-            {t("setup.continue")}
-          </button> */}
         </Show>
       </div>
     </div>

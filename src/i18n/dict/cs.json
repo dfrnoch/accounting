@@ -5,6 +5,7 @@
     "welcome": "Vítejte",
     "get_started": "Začít",
     "continue": "Pokračovat",
+    "finalize": "Dokončit",
     "step1": {
       "select_language": "Vyberte jazyk",
       "select_currency": "Vyberte měnu",
@@ -13,7 +14,16 @@
     "step2": {
       "create_company": "Pojďme vytvořit firmu",
       "company_name": "Název firmy / podnikatele",
-      "CIN": "IČO"
+      "CIN": "IČO",
+      "vatID": "DIČ",
+      "street": "Ulice",
+      "city": "Město",
+      "zip": "PSČ",
+      "email": "Email",
+      "phone": "Telefon",
+      "help": {
+        "retrieve_by_cin": "Po zadání správného IČA se načte zbytek údajů automaticky"
+      }
     }
   },
   "sidebar": {

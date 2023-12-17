@@ -13,7 +13,7 @@ const Overview: Component = () => {
 
   return (
     <div class="grid grid-cols-3 grid-rows-5 gap-3 lg:gap-4 w-full h-screen">
-      <div class="col-span-3">
+      <div class="col-span-2">
         <div class="flex flex-row gap-3 lg:gap-4 justify-between items-center w-full h-full">
           <StatBox title={t("home.stats.purchase")} value="$8657.32" last={6804.52} />
           <StatBox title={t("home.stats.sales")} value="100$" />

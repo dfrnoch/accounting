@@ -6,10 +6,10 @@ interface ISidebarSectionProps {
 
 const SidebarSection: ParentComponent<ISidebarSectionProps> = (props) => {
   return (
-    <div class="mt-5">
-      <div class="text-xs font-medium text-grey">{props.title}</div>
+    <>
+      <div class="mt-4 text-xs font-medium text-grey">{props.title}</div>
       <div class="">{props.children}</div>
-    </div>
+    </>
   );
 };
 
