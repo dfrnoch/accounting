@@ -23,9 +23,11 @@ use migrator::new_client;
 use prisma::*;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
+// use specta::collect_types;
 use std::sync::Arc;
 use tauri::{Manager, State, Theme};
 use tauri_plugin_autostart::MacosLauncher;
+// use tauri_specta::ts;
 use window_ext::{ToolbarThickness, WindowExt};
 use window_vibrancy::NSVisualEffectMaterial;
 
@@ -60,6 +62,7 @@ async fn check_db(client: DbState<'_>) -> CommandResult<i16> {
     }
 }
 
+// #[specta::specta]
 #[tauri::command]
 async fn migrate_and_populate(client: DbState<'_>) -> CommandResult<()> {
     #[cfg(debug_assertions)]
@@ -70,6 +73,13 @@ async fn migrate_and_populate(client: DbState<'_>) -> CommandResult<()> {
 
     Ok(())
 }
+
+// #[tauri::command]
+// pub async fn fetch(url: String) -> Result<serde_json::Value, String> {
+//     // call map_err to convert the error to a string
+//     let resp = reqwest::get(&url).await.map_err(|e| e.to_string())?;
+//     Ok(resp)
+// }
 
 // #[specta::specta]
 #[tauri::command]
@@ -83,19 +93,45 @@ async fn get_company(
         .exec()
         .await
 }
-
-#[derive(Deserialize)]
+// export type CreateCompanyData = {
+//   name: string;
+//   cin: string;
+//   vatId: string;
+//   streetAddress: string;
+//   city: string;
+//   postalCode: string;
+//   phoneNumber: string;
+// };
+#[derive(Deserialize, Debug)]
 struct CreateCompanyData {
     name: String,
-    cin: Option<String>,
+    cin: String,
+    vat_id: Option<String>,
+    // street_adress: String,
+    city: String,
+    // postal_code: String,
+    phone_number: Option<String>,
+    email: Option<String>,
 }
 
 // #[specta::specta]
+
 #[tauri::command]
-async fn create_company(client: DbState<'_>, data: CreateCompanyData) -> Result<test::Data, ()> {
+async fn create_company(client: DbState<'_>, data: CreateCompanyData) -> Result<company::Data, ()> {
+    debug!("Creating company {:?}", data);
     client
-        .test()
-        .create(data.name, vec![])
+        .company()
+        .create(
+            data.name,
+            data.cin,
+            "cus".to_string(),
+            data.city,
+            "aaaa".to_string(),
+            vec![
+                company::vat_id::set(data.vat_id),
+                company::phone_number::set(data.phone_number),
+            ],
+        )
         .exec()
         .await
         .map_err(|_| ())
@@ -103,17 +139,24 @@ async fn create_company(client: DbState<'_>, data: CreateCompanyData) -> Result<
 
 #[tokio::main]
 async fn main() {
-    std::env::set_var("RUST_LOG", "debug");
+    std::env::set_var("RUST_LOG", "trace");
     pretty_env_logger::init();
 
     let client = new_client().await.unwrap();
 
-    // #[cfg(debug_assertions)]
-    // ts::export(
-    //     collect_types![check_db, get_company, create_post],
-    //     "../src/bindings.ts",
-    // )
-    // .unwrap();
+    // let specta_builder = {
+    //     let specta_builder = tauri_specta::ts::builder().commands(tauri_specta::collect_commands![
+    //         get_company,
+    //         create_company,
+    //         migrate_and_populate,
+    //         check_db
+    //     ]);
+
+    //     #[cfg(debug_assertions)] // <- Only export on non-release builds
+    //     let specta_builder = specta_builder.path("../src/bindings.ts");
+
+    //     specta_builder.into_plugin()
+    // };
 
     tauri::Builder::default()
         .plugin(tauri_plugin_autostart::init(
@@ -125,6 +168,7 @@ async fn main() {
             app.emit("single-instance", Payload { args: argv, cwd })
                 .unwrap();
         }))
+        // .plugin(specta_builder)
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_http::init())
@@ -153,6 +197,7 @@ async fn main() {
             get_company,
             migrate_and_populate,
             create_company,
+            // fetch,
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

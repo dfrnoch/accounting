@@ -12,10 +12,9 @@ generator client {
 model Company {
     id       Int       @id @default(autoincrement())
     name     String
-    email    String
     invoices Invoice[]
 
-    cin   String? @unique // IČO
+    cin   String  @unique // IČO
     vatId String? @unique // DIČ
 
     // Adress
@@ -25,12 +24,7 @@ model Company {
 
     // Additional fields
     phoneNumber String?
-    website     String?
-}
-
-model Test {
-    id   Int    @id @default(autoincrement())
-    name String
+    email       String?
 }
 
 model Client {

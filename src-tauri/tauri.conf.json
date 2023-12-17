@@ -11,6 +11,11 @@
     "version": "0.0.0"
   },
   "plugins": {
+    "http": {
+      "all": true,
+      "request": true,
+      "scope": ["https://*", "http://*"]
+    },
     "updater": {
       "endpoints": [
         "https://google.com/{{target}}/{{arch}}/{{current_version}}"
