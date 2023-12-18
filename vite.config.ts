@@ -4,7 +4,7 @@ import UnocssPlugin from "@unocss/vite";
 import path from "path";
 
 // https://vitejs.dev/config/
-// @ts-ignore
+// @ts-expect-error
 export default defineConfig(async () => ({
   plugins: [solidPlugin(), UnocssPlugin({})],
   resolve: {
