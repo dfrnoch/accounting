@@ -8,7 +8,7 @@ const Settings: Component = () => {
   return (
     <div class="">
       <div class="w-full h-20 gap-2 flex justify-center items-center border-b border-black">
-        <Toolbar text="Nastavení" icon={<FiSettings />} active={true} />
+        <Toolbar text="Nastavení" icon={<FiSettings />} active />
         <Toolbar text="Nastavení" icon={<FiSettings />} />
         <Toolbar text="Nastavení" icon={<FiSettings />} />
         <Toolbar text="Nastavení" icon={<FiSettings />} />
