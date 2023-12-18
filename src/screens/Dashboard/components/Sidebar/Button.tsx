@@ -9,7 +9,7 @@ const SidebarButton: ParentComponent<{
   return (
     <A
       href={props.target}
-      end={true}
+      end
       class={`text-sm flex gap-[7px] items-center px-2 py-[3px] mt-1 rounded-[5px] transition-all  dark:hover:bg-neutral-100/25  hover:bg-neutral-100/40 hover:cursor-pointer ${
         !props.notInSection ? "ml-2" : ""
       }`}
