@@ -6,7 +6,7 @@ const Info: ParentComponent<{
 }> = (props) => {
   return (
     <div
-      classList={{ "flex gap-1.5 text-info text-xs items-center": true, "cursor-pointer": !!props.onClick }}
+      classList={{ "flex gap-1.5 text-info text-xs items-center": true, "cursor-pointer": Boolean(props.onClick) }}
       onClick={props.onClick}
     >
       <FiInfo />
