@@ -1,14 +1,16 @@
-import type { ParentComponent } from "solid-js";
+import type { Component } from "solid-js";
 import { checkDb } from "@/bindings";
 import { useNavigate } from "@solidjs/router";
 
-const Loader: ParentComponent = (props) => {
+const Loader: Component = () => {
+  console.log("Loader");
   const navigate = useNavigate();
+
   const startup = async () => {
     const data = await checkDb();
 
     if (data === 200) {
-      navigate("/setup");
+      navigate("/dashboard");
       return;
     }
     navigate("/setup");

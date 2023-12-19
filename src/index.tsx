@@ -13,11 +13,12 @@ const Settings = lazy(() => import("./screens/Dashboard/pages/Settings"));
 const Dashboard = lazy(() => import("./screens/Dashboard"));
 const Setup = lazy(() => import("./screens/Setup"));
 const App = lazy(() => import("./App"));
+const Loader = lazy(() => import("./Loader"));
 
 import { render } from "solid-js/web";
 
 import { Theme, getTheme, setTheme } from "./utils/theme";
-import { Navigate, Route, Router } from "@solidjs/router";
+import { Route, Router } from "@solidjs/router";
 
 setTheme(getTheme());
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => e.matches && setTheme(Theme.Dark));
@@ -28,8 +29,7 @@ window
 render(
   () => (
     <Router root={App}>
-      <Route path="/" component={() => <Navigate href={"/setup"} />} />
-      <Route path="/loader" component={App} />
+      <Route path="/" component={Loader} />
       <Route path="/setup" component={Setup} />
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/" component={Overview} />

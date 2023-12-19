@@ -12,10 +12,12 @@ import InputList from "@/shared/components/Menu/InputList";
 import { Hr } from "@/shared/components/Menu/Hr";
 import { Button } from "./components/Button";
 import { Title } from "./components/Title";
+import { useNavigate } from "@solidjs/router";
 
 const SetupWizard: Component = () => {
   const [t] = useI18n();
   const [currentStep, setCurrentStep] = createSignal(0);
+  const navigate = useNavigate();
   const [userData, setUserData] = createStore({
     companyName: "",
     cin: "",
@@ -152,7 +154,7 @@ const SetupWizard: Component = () => {
                       streetAddress: "ahoj",
                     });
 
-                    window.location.reload();
+                    navigate("/loader");
                   } catch (error) {
                     console.log(error);
                   }
