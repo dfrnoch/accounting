@@ -42,11 +42,70 @@
       "other": "Other"
     }
   },
-  "home": {
+  "overview": {
     "stats": {
       "sales": "Sales",
       "purchase": "Purchase",
       "tax": "Taxes"
+    }
+  },
+  "settings": {
+    "general": {
+      "title": "General",
+      "language": "Language",
+      "currency": "Currency",
+      "timezone": "Timezone",
+      "date_format": "Date format",
+      "number_format": "Number format",
+      "decimal_separator": "Decimal separator",
+      "thousand_separator": "Thousand separator",
+      "currency_placement": "Currency placement",
+      "currency_placement_before": "Before amount",
+      "currency_placement_after": "After amount",
+      "tax": "Tax",
+      "tax_included": "Tax included",
+      "tax_excluded": "Tax excluded",
+      "tax_rate": "Tax rate",
+      "tax_name": "Tax name",
+      "tax_number": "Tax number",
+      "tax_number_help": "Tax number is used on invoices and other documents.",
+      "tax_number_placeholder": "Tax number",
+      "tax_number_example": "Tax number",
+      "tax_number_example_help": "Example: 1234567890",
+      "tax_number_example_placeholder": "1234567890",
+      "company": "Company",
+      "company_name": "Company name",
+      "company_name_help": "Company name is used on invoices and other documents.",
+      "company_name_placeholder": "Company name",
+      "company_address": "Address",
+      "company_address_help": "Company address is used on invoices and other documents.",
+      "company_address_placeholder": "Company address",
+      "email": "Email",
+      "email_help": "Email is used for communication and sending invoices.",
+      "email_placeholder": "Email",
+      "phone": "Phone",
+      "phone_help": "Phone is used on invoices and other documents.",
+      "phone_placeholder": "Phone",
+      "country": "Country",
+      "country_help": "Country is used on invoices and other documents.",
+      "country_placeholder": "Country",
+      "city": "City",
+      "city_help": "City is used on invoices and other documents.",
+      "city_placeholder": "City",
+      "zip": "ZIP",
+      "zip_help": "ZIP is used on invoices and other documents.",
+      "zip_placeholder": "ZIP",
+      "street": "Street",
+      "street_help": "Street is used on invoices and other documents.",
+      "street_placeholder": "Street"
+    },
+    "invoice": {
+      "title": "Invoice",
+      "invoice_number": "Invoice number prefix",
+      "invoice_number_help": "Define prefix for invoice numbers. Year will be automatically appended to the prefix.",
+      "invoice_number_placeholder": "Invoice prefix",
+      "invoice_number_example": "2018-",
+      "invoice_number_example_help": "Result: 2018-0001"
     }
   }
 }

@@ -52,7 +52,7 @@ const Sidebar: Component = () => {
             <img
               src="https://cdn.discordapp.com/avatars/724579978921902114/a0050fed75bf9ecbdc3dbcc23ecb6d8e.webp?size=2048"
               alt="pfp"
-              class="rounded"
+              class="rounded-full"
             />
           </div>
           <div class="flex flex-col">

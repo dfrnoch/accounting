@@ -32,7 +32,7 @@ const Input: Component<{
           onMouseLeave={() => setShowInfo(false)}
           class="relative ml-3 w-3 h-3"
         >
-          <FiInfo class="text-white w-4 h-4 " />
+          <FiInfo class="text-white w-4 h-4" />
           <Show when={showInfo()}>
             <div class="absolute top-(-2) left-(-2) bg-neutral-900 text-primary p-2 rounded-md shadow-md text-sm w-50 flex gap-2 items-baseline justify-start ">
               <FiInfo class="text-white w-4 h-4" />

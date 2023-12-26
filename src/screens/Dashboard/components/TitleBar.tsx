@@ -19,17 +19,17 @@ const TitleBar: Component = () => {
 
   const matchPathname = (pathname: string) => {
     switch (pathname) {
-      case "/":
+      case "/dashboard/":
         return [t("sidebar.button.overview")];
-      case "/sales/invoices":
+      case "/dashboard/sales/invoices":
         return [t("sidebar.section.sales"), t("sidebar.button.invoices")];
-      case "/purchase/expenses":
+      case "/dashboard/purchase/expenses":
         return [t("sidebar.section.purchase"), t("sidebar.button.expenses")];
-      case "/other/clients":
+      case "/dashboard/other/clients":
         return [t("sidebar.section.other"), t("sidebar.button.clients")];
-      case "/other/reports":
+      case "/dashboard/other/reports":
         return [t("sidebar.section.other"), t("sidebar.button.reports")];
-      case "/settings":
+      case "/dashboard/settings":
         return [t("sidebar.button.settings")];
       default:
         return [];

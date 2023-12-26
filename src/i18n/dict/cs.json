@@ -1,6 +1,4 @@
 {
-  "hello": "Ahoj",
-  "world": "Světe",
   "setup": {
     "welcome": "Vítejte",
     "get_started": "Začít",
@@ -42,11 +40,64 @@
       "other": "Ostatní"
     }
   },
-  "home": {
+  "overview": {
     "stats": {
       "sales": "Prodej",
       "purchase": "Nákup",
       "tax": "Daň"
+    }
+  },
+  "settings": {
+    "general": {
+      "title": "Obecné",
+      "language": "Jazyk",
+      "currency": "Měna",
+      "timezone": "Časová zóna",
+      "date_format": "Formát data",
+      "number_format": "Formát čísla",
+      "decimal_separator": "Oddělovač desetinných míst",
+      "thousand_separator": "Oddělovač tisíců",
+      "currency_placement": "Umístění měny",
+      "currency_placement_before": "Před částkou",
+      "currency_placement_after": "Za částkou",
+      "tax": "Daň",
+      "tax_included": "Daň zahrnuta",
+      "tax_excluded": "Daň nezahrnuta",
+      "tax_rate": "Sazba daně",
+      "tax_name": "Název daně",
+      "tax_number": "DIČ",
+      "tax_number_help": "DIČ se používá na fakturách a dalších dokumentech.",
+      "tax_number_placeholder": "DIČ",
+      "company": "Firma",
+      "company_name": "Název firmy",
+      "company_name_help": "Název firmy se používá na fakturách a dalších dokumentech.",
+      "company_name_placeholder": "Název firmy",
+      "company_address": "Adresa",
+      "company_address_help": "Adresa firmy se používá na fakturách a dalších dokumentech.",
+      "company_address_placeholder": "Adresa firmy",
+      "email": "Email",
+      "email_help": "Email se používá pro komunikaci a odesílání faktur.",
+      "email_placeholder": "Email",
+      "phone": "Telefon",
+      "phone_help": "Telefon se používá na fakturách a dalších dokumentech.",
+      "phone_placeholder": "Telefon",
+      "country": "Země",
+      "country_help": "Země se používá na fakturách a dalších dokumentech.",
+      "country_placeholder": "Země",
+      "city": "Město",
+      "city_help": "Město se používá na fakturách a dalších dokumentech.",
+      "city_placeholder": "Město",
+      "zip": "PSČ",
+      "zip_help": "PSČ se používá na fakturách a dalších dokumentech.",
+      "zip_placeholder": "PSČ",
+      "street": "Ulice",
+      "street_help": "Ulice se používá na fakturách a dalších dokumentech.",
+      "street_placeholder": "Ulice"
+    },
+    "invoice": {
+      "title": "Faktura",
+      "invoice_number": "Prefix čísla faktury",
+      "invoice_number_help": "Prefix čísla faktury. Rok bude automaticky přidán za prefix."
     }
   }
 }
