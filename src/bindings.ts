@@ -1,7 +1,11 @@
-import { invoke } from "@tauri-apps/api/primitives";
+import { invoke } from "@tauri-apps/api/core";
 
 export function checkDb() {
   return invoke<200 | 400>("check_db");
+}
+
+export function getInvoices(companyId: number) {
+  return invoke<Invoice[]>("get_invoices");
 }
 
 export function getCompany(id: number | null) {
@@ -26,6 +30,8 @@ export type CreateCompanyData = {
   phoneNumber: string;
   email: string;
 };
+
+export type Invoice = {};
 
 export type Company = {
   id: number;

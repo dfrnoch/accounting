@@ -83,6 +83,18 @@ async fn migrate_and_populate(client: DbState<'_>) -> CommandResult<()> {
 
 // #[specta::specta]
 #[tauri::command]
+async fn get_invoices(
+    client: DbState<'_>,
+    company_id: Option<i32>,
+) -> Result<Vec<invoice::Data>, QueryError> {
+    client
+        .invoice()
+        .find_many(vec![invoice::company_id::equals(company_id.unwrap_or(1))])
+        .exec()
+        .await
+}
+
+#[tauri::command]
 async fn get_company(
     client: DbState<'_>,
     id: Option<i32>,
@@ -136,6 +148,7 @@ async fn create_company(client: DbState<'_>, data: CreateCompanyData) -> Result<
         .await
         .map_err(|_| ())
 }
+
 
 #[tokio::main]
 async fn main() {
@@ -197,6 +210,7 @@ async fn main() {
             get_company,
             migrate_and_populate,
             create_company,
+            get_invoices,
             // fetch,
         ])
         .manage(Arc::new(client))

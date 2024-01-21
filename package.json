@@ -17,7 +17,8 @@
     "@solid-primitives/i18n": "^2",
     "@solid-primitives/storage": "^2.1.1",
     "@solidjs/router": "^0.10",
-    "@tauri-apps/api": "2.0.0-alpha.13",
+    "@tanstack/solid-table": "^8.11.7",
+    "@tauri-apps/api": "2.0.0-alpha.14",
     "@tauri-apps/plugin-autostart": "github:tauri-apps/tauri-plugin-autostart#v2",
     "@tauri-apps/plugin-clipboard-manager": "github:tauri-apps/tauri-plugin-clipboard-manager#v2",
     "@tauri-apps/plugin-dialog": "github:tauri-apps/tauri-plugin-dialog#v2",
@@ -39,7 +40,7 @@
   "devDependencies": {
     "@types/xml2js": "^0.4.14",
     "@biomejs/biome": "1.4",
-    "@tauri-apps/cli": "2.0.0-alpha.20",
+    "@tauri-apps/cli": "2.0.0-alpha.21",
     "@types/node": "^20.10",
     "@unocss/preset-uno": "^0.58.0",
     "@unocss/transformer-variant-group": "^0.58.0",

@@ -56,3 +56,14 @@ body {
     scrollbar-width: none;
     /* Firefox */
 }
+
+/* TODO: mozna pak  */
+tr:first-child td:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+tr:first-child td:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
