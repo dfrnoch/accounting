@@ -30,7 +30,7 @@ dependencies = [
  "tauri-plugin-updater",
  "thiserror",
  "tokio",
- "window-vibrancy 0.4.2 (git+https://github.com/tauri-apps/window-vibrancy?branch=dev)",
+ "window-vibrancy 0.5.0",
 ]
 
 [[package]]
@@ -3838,7 +3838,7 @@ dependencies = [
  "jni-sys",
  "ndk-sys",
  "num_enum",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "thiserror",
 ]
 
@@ -5462,6 +5462,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f2ff9a1f06a88b01621b7ae906ef0211290d1c8a168a15542486a8f61c0833b9"
 
 [[package]]
+name = "raw-window-handle"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "42a9830a0e1b9fb145ebb365b8bc4ccd75f290f98c0247deafbbe2c75cefb544"
+
+[[package]]
 name = "rdrand"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5658,7 +5664,7 @@ dependencies = [
  "objc",
  "objc-foundation",
  "objc_id",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
@@ -6755,7 +6761,7 @@ dependencies = [
  "once_cell",
  "parking_lot 0.12.1",
  "png",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "scopeguard",
  "tao-macros",
  "unicode-segmentation",
@@ -6825,7 +6831,7 @@ dependencies = [
  "muda",
  "objc",
  "percent-encoding",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "reqwest",
  "serde",
  "serde_json",
@@ -6844,7 +6850,7 @@ dependencies = [
  "url",
  "webkit2gtk",
  "webview2-com",
- "window-vibrancy 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "window-vibrancy 0.4.2",
  "windows 0.52.0",
 ]
 
@@ -6943,7 +6949,7 @@ source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#387c2f9e
 dependencies = [
  "glib 0.16.9",
  "log",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "rfd",
  "serde",
  "serde_json",
@@ -7085,7 +7091,7 @@ dependencies = [
  "gtk",
  "http",
  "jni",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "serde",
  "serde_json",
  "tauri-utils",
@@ -7105,7 +7111,7 @@ dependencies = [
  "http",
  "jni",
  "percent-encoding",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "tao",
  "tauri-runtime",
  "tauri-utils",
@@ -8197,19 +8203,20 @@ checksum = "5931735e675b972fada30c7a402915d4d827aa5ef6c929c133d640c4b785e963"
 dependencies = [
  "cocoa",
  "objc",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "windows-sys 0.48.0",
 ]
 
 [[package]]
 name = "window-vibrancy"
-version = "0.4.2"
-source = "git+https://github.com/tauri-apps/window-vibrancy?branch=dev#451d9ff420ac31f1c8a5de9327865450d61da117"
+version = "0.5.0"
+source = "git+https://github.com/tauri-apps/window-vibrancy?branch=dev#7cf9442ebc977e5454a148d62deb3eabd6acf51f"
 dependencies = [
  "cocoa",
  "objc",
- "raw-window-handle",
- "windows-sys 0.48.0",
+ "raw-window-handle 0.6.0",
+ "windows-sys 0.52.0",
+ "windows-version",
 ]
 
 [[package]]
@@ -8546,7 +8553,7 @@ dependencies = [
  "objc",
  "objc_id",
  "once_cell",
- "raw-window-handle",
+ "raw-window-handle 0.5.2",
  "serde",
  "serde_json",
  "sha2 0.10.8",
