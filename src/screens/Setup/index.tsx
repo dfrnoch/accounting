@@ -154,7 +154,7 @@ const SetupWizard: Component = () => {
                       streetAddress: "ahoj",
                     });
 
-                    navigate("/loader");
+                    navigate("/");
                   } catch (error) {
                     console.log(error);
                   }
