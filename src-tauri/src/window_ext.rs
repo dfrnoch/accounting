@@ -1,4 +1,4 @@
-use tauri::{Runtime, Window};
+use tauri::{Runtime, WebviewWindow};
 
 #[allow(dead_code)]
 pub enum ToolbarThickness {
@@ -12,7 +12,7 @@ pub trait WindowExt {
     fn set_thickness(&self, thickness: ToolbarThickness);
 }
 
-impl<R: Runtime> WindowExt for Window<R> {
+impl<R: Runtime> WindowExt for WebviewWindow<R> {
     #[cfg(target_os = "macos")]
     fn set_thickness(&self, thickness: ToolbarThickness) {
         unsafe {

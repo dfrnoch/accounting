@@ -182,9 +182,9 @@ async fn main() {
                 .unwrap();
         }))
         // .plugin(specta_builder)
-        .plugin(tauri_plugin_updater::Builder::new().build())
+        // .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_dialog::init())
-        .plugin(tauri_plugin_http::init())
+        // .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_process::init())
@@ -192,7 +192,7 @@ async fn main() {
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
-            let window = app.get_window("main").unwrap();
+            let window = app.get_webview_window("main").unwrap();
             window.set_thickness(ToolbarThickness::Thick);
 
             #[cfg(target_os = "macos")]
