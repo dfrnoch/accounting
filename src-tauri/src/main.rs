@@ -54,9 +54,8 @@ async fn check_db(client: DbState<'_>) -> CommandResult<i16> {
         Ok(_) => {
             if company_count.unwrap() == 0 {
                 return Ok(400);
-            } else {
-                return Ok(200);
             }
+            return Ok(200);
         }
         Err(_) => Ok(400),
     }
@@ -148,7 +147,6 @@ async fn create_company(client: DbState<'_>, data: CreateCompanyData) -> Result<
         .await
         .map_err(|_| ())
 }
-
 
 #[tokio::main]
 async fn main() {
