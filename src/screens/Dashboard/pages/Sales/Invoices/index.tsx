@@ -6,9 +6,7 @@ import { FiActivity, FiTrash } from "solid-icons/fi";
 import { Component, createSignal } from "solid-js";
 
 const Invoices: Component = () => {
-  const {
-    companyService: { company },
-  } = useSelector();
+  const company = useSelector((state) => state.companyService.company);
   const [t] = useI18n();
   const [invoices, setInvoices] = createSignal([]);
 
@@ -16,7 +14,7 @@ const Invoices: Component = () => {
     console.log(company);
     const data = await getInvoices(company.id);
     console.log(data);
-    setInvoices(data);
+    // setInvoices(data);
   };
   fetchInvoices();
 

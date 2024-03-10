@@ -1,14 +1,10 @@
-import { useSelector } from "@/store";
+// import { useSelector } from "@/store";
 import { Component } from "solid-js";
 import Box from "../components/Box";
 import StatBox from "../components/StatBox";
 import { useI18n } from "@/i18n";
 
 const Overview: Component = () => {
-  const {
-    companyService: { company },
-  } = useSelector();
-
   const [t] = useI18n();
 
   return (

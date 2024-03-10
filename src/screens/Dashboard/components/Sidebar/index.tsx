@@ -8,9 +8,7 @@ import { Hr } from "@/shared/components/Menu/Hr";
 
 const Sidebar: Component = () => {
   const [t] = useI18n();
-  const {
-    companyService: { company },
-  } = useSelector();
+  const company = useSelector((state) => state.companyService.company);
 
   const sidebarSections = [
     {

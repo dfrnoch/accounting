@@ -2,9 +2,7 @@ import { useSelector } from "@/store";
 import { Component } from "solid-js";
 
 const Home: Component = () => {
-  const {
-    companyService: { company },
-  } = useSelector();
+  const company = useSelector((state) => state.companyService.company);
 
   return (
     <div class="flex flex-col items-center justify-center h-screen w-full">

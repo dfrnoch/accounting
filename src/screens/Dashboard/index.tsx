@@ -6,20 +6,19 @@ import Sidebar from "./components/Sidebar";
 import { useSelector } from "@/store";
 
 const Dashboard: ParentComponent = (props) => {
-  const {
-    companyService: { updateCompany },
-    stateService: { state, updateState },
-  } = useSelector();
+  const stateService = useSelector((state) => state.stateService);
+
+  const updateCompany = useSelector((state) => state.companyService.updateCompany);
 
   const fetchCompany = async () => {
-    const companyData = await getCompany(state.companyId || 1);
+    const companyData = await getCompany(stateService.state.companyId || 1);
     if (!companyData) {
-      updateState({ companyId: 1 });
+      stateService.updateState({ companyId: 1 });
       return;
     }
 
     updateCompany(companyData);
-    updateState({ companyId: companyData.id });
+    stateService.updateState({ companyId: companyData.id });
   };
 
   createEffect(() => {

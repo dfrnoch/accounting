@@ -1,4 +1,4 @@
-import { createContext, ParentComponent, useContext } from "solid-js";
+import { createContext, createSignal, ParentComponent, useContext } from "solid-js";
 import { CompanyService } from "./services/companyService";
 import { StateService } from "./services/stateService";
 
@@ -7,15 +7,28 @@ export type RootState = {
   stateService: ReturnType<typeof StateService>;
 };
 
-const rootState: RootState = {
-  companyService: CompanyService(),
-  stateService: StateService(),
+const createRootState = (): RootState => {
+  const [companyService] = createSignal(CompanyService());
+  const [stateService] = createSignal(StateService());
+
+  return {
+    companyService: companyService(),
+    stateService: stateService(),
+  };
 };
 
-const StoreContext = createContext<RootState>({} as RootState);
+const StoreContext = createContext<RootState>();
 
-export const useSelector = () => useContext(StoreContext);
+export const useSelector = <T,>(selector: (state: RootState) => T): T => {
+  const store = useContext(StoreContext);
+  if (!store) {
+    throw new Error("useSelector must be used within a StoreProvider");
+  }
+  return selector(store);
+};
 
 export const StoreProvider: ParentComponent = (props) => {
-  return <StoreContext.Provider value={rootState}>{props.children}</StoreContext.Provider>;
+  const store = createRootState();
+
+  return <StoreContext.Provider value={store}>{props.children}</StoreContext.Provider>;
 };
