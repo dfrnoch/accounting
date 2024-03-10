@@ -7,7 +7,7 @@ const Input: Component<{
   placeholder?: string;
   info?: string;
   class?: string;
-  onChange?: (e) => void;
+  onChange?: (e: Event) => void;
 }> = (props) => {
   const [showInfo, setShowInfo] = createSignal(false);
 

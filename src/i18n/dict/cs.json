@@ -99,5 +99,8 @@
       "invoice_number": "Prefix čísla faktury",
       "invoice_number_help": "Prefix čísla faktury. Rok bude automaticky přidán za prefix."
     }
+  },
+  "invoices": {
+    "title": "Faktury"
   }
 }

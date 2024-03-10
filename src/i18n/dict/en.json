@@ -107,5 +107,8 @@
       "invoice_number_example": "2018-",
       "invoice_number_example_help": "Result: 2018-0001"
     }
+  },
+  "invoices": {
+    "title": "Faktury"
   }
 }

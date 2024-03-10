@@ -1,7 +1,25 @@
-import { ParentComponent } from "solid-js";
+import { Component, For, Show } from "solid-js";
+import ActionButton from "./ActionButton";
 
-const Row: ParentComponent = (props) => {
-  return <tr class="p-2 border-b border-b-gray">{props.children}</tr>;
+interface TableRowProps<T> {
+  item: T;
+  columns: Array<{ field: keyof T; header: string }>;
+  rowActions?: Array<{ onClick: (item: T) => void; icon?: Component }>;
+}
+
+const TableRow = <T,>(props: TableRowProps<T>) => {
+  return (
+    <tr class="border-b border-gray-200">
+      <For each={props.columns}>{(column) => <td class="px-3 py-3">{String(props.item[column.field])}</td>}</For>
+      <Show when={props.rowActions}>
+        <td class="px-3 py-3 flex flex-row gap-2 items-center">
+          <For each={props.rowActions}>
+            {(action) => <ActionButton onClick={() => action.onClick(props.item)} icon={action.icon} />}
+          </For>
+        </td>
+      </Show>
+    </tr>
+  );
 };
 
-export default Row;
+export default TableRow;

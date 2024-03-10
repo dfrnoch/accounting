@@ -1,4 +1,4 @@
-import { Component, For, Show, createEffect, createSignal } from "solid-js";
+import { Component, For, Show, createEffect, createMemo, createSignal } from "solid-js";
 import { Platform, platform } from "@tauri-apps/plugin-os";
 import { useLocation } from "@solidjs/router";
 import { useI18n } from "@/i18n";
@@ -6,18 +6,16 @@ import { FiBell, FiSearch } from "solid-icons/fi";
 
 const TitleBar: Component = () => {
   const [os, setOs] = createSignal<Platform | null>(null);
-
   const location = useLocation();
-
   const [t] = useI18n();
 
   const getOs = async () => {
     const osPlatform = await platform();
     setOs(osPlatform);
-    console.log(osPlatform);
   };
 
-  const matchPathname = (pathname: string) => {
+  const matchPathname = createMemo(() => {
+    const { pathname } = location;
     switch (pathname) {
       case "/dashboard/":
         return [t("sidebar.button.overview")];
@@ -34,14 +32,14 @@ const TitleBar: Component = () => {
       default:
         return [];
     }
-  };
+  });
 
   createEffect(() => {
     getOs();
   });
 
   return (
-    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50 ">
+    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50">
       <div
         class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[140px] shrink-0 px-2.5 lg:px-4 text-primary"
         data-tauri-drag-region
@@ -51,10 +49,10 @@ const TitleBar: Component = () => {
         data-tauri-drag-region
       >
         <div class="flex gap-1 items-center h-full text-sm" data-tauri-drag-region>
-          <For each={matchPathname(location.pathname)}>
+          <For each={matchPathname()}>
             {(item, index) => (
               <Show
-                when={index() === matchPathname(location.pathname).length - 1}
+                when={index() === matchPathname().length - 1}
                 fallback={
                   <>
                     <span class="text-grey" data-tauri-drag-region>

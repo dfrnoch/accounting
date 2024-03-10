@@ -1,6 +1,5 @@
-import { Route, Router } from "@solidjs/router";
-import type { Component, ParentComponent } from "solid-js";
-import { createEffect, lazy } from "solid-js";
+import type { ParentComponent } from "solid-js";
+import { createEffect } from "solid-js";
 import { getCompany } from "../../bindings";
 import TitleBar from "./components/TitleBar";
 import Sidebar from "./components/Sidebar";
