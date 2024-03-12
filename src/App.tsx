@@ -8,7 +8,7 @@ const App: ParentComponent = (props) => {
     <I18nProvider locale={locale()}>
       {/* When in developement enviroment show text */}
       <Show when={import.meta.env.DEV}>
-        <div class="absolute bottom-0 right-0 p-2 text-danger text-xs font-medium ">Developement enviroment</div>
+        <div class="absolute bottom-0 right-0 p-2 text-danger text-xs font-medium">Developement enviroment</div>
       </Show>
       <StoreProvider>{props.children}</StoreProvider>
       <Toaster />

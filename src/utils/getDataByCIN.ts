@@ -1,21 +1,16 @@
-import xml2js from "xml2js";
-import { fetch } from "@tauri-apps/plugin-http";
+export async function getDataByCIN(ico: string) {
+  const response = await fetch(`https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${ico}`);
+  const data = await response.json();
+  console.log(data);
 
-export async function getDataByCIN(cin: string) {
-  const response = await fetch(`https://wwwinfo.mfcr.cz/cgi-bin/ares/darv_bas.cgi?ico=${cin}`);
-  const text = await response.text();
-  const parser = new xml2js.Parser();
-  let result = await parser.parseStringPromise(text);
-  result = result["are:Ares_odpovedi"]["are:Odpoved"][0]["D:VBAS"][0];
-  const dicValue = result["D:DIC"]?.[0] ? result["D:DIC"][0] : "";
+  const psc: string = data.sidlo.psc.toString();
 
-  const data = {
-    company: result["D:OF"][0]._ || "",
-    address: result["D:AD"][0]["D:UC"][0] || "",
-    city: result["D:AA"][0]["D:N"][0] || "",
-    zip: result["D:AA"][0]["D:PSC"][0] || "",
-    dic: dicValue,
+  return {
+    company: data.obchodniJmeno,
+    address: `${data.sidlo.nazevUlice || data.sidlo.nazevObce} ${data.sidlo.cisloDomovni}`,
+    city: data.sidlo.nazevObce,
+    // zip: data.sidlo.psc,
+    zip: `${psc.slice(0, 3)} ${psc.slice(3, 6)}`,
+    dic: data.dic,
   };
-
-  return data;
 }

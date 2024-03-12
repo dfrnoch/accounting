@@ -1,18 +1,11 @@
-import { Component, For, Show, createEffect, createMemo, createSignal } from "solid-js";
-import { Platform, platform } from "@tauri-apps/plugin-os";
+import { Component, For, Show, createMemo } from "solid-js";
 import { useLocation } from "@solidjs/router";
 import { useI18n } from "@/i18n";
 import { FiBell, FiSearch } from "solid-icons/fi";
 
 const TitleBar: Component = () => {
-  const [os, setOs] = createSignal<Platform | null>(null);
   const location = useLocation();
   const [t] = useI18n();
-
-  const getOs = async () => {
-    const osPlatform = await platform();
-    setOs(osPlatform);
-  };
 
   const matchPathname = createMemo(() => {
     const { pathname } = location;
@@ -32,10 +25,6 @@ const TitleBar: Component = () => {
       default:
         return [];
     }
-  });
-
-  createEffect(() => {
-    getOs();
   });
 
   return (

@@ -5,7 +5,7 @@ export function checkDb() {
 }
 
 export function getInvoices(companyId: number) {
-  return invoke<Invoice[]>("get_invoices");
+  return invoke<Invoice[]>("get_invoices", { companyId });
 }
 
 export function getCompany(id: number | null) {

@@ -30,7 +30,7 @@ const Invoices: Component = () => {
     { field: "id", header: "ID" },
     { field: "title", header: "Title" },
     { field: "author", header: "Author" },
-    { field: "year", header: "Publication Year" },
+    { field: "year", header: "Year" },
   ];
 
   interface Book {

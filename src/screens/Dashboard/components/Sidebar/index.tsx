@@ -36,7 +36,6 @@ const Sidebar: Component = () => {
         <SidebarButton notInSection target="/dashboard/" icon={<FiHome />}>
           {t("sidebar.button.overview")}
         </SidebarButton>
-
         <For each={sidebarSections}>
           {(section) => (
             <SidebarSection title={section.title}>
@@ -51,7 +50,6 @@ const Sidebar: Component = () => {
           )}
         </For>
       </div>
-
       <div class="flex flex-col gap-4">
         <SidebarButton target="/dashboard/settings" icon={<FiSettings />} notInSection>
           {t("sidebar.button.settings")}

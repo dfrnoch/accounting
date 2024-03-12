@@ -3,17 +3,11 @@ import { checkDb } from "@/bindings";
 import { useNavigate } from "@solidjs/router";
 
 const Loader: Component = () => {
-  console.log("Loader");
   const navigate = useNavigate();
 
   const startup = async () => {
     const data = await checkDb();
-
-    if (data === 200) {
-      navigate("/dashboard");
-      return;
-    }
-    navigate("/setup");
+    navigate(data === 200 ? "/dashboard" : "/setup");
   };
 
   startup();

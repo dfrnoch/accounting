@@ -1,5 +1,4 @@
 import { lazy } from "solid-js";
-
 import "./styles/index.css";
 import "@unocss/reset/tailwind-compat.css";
 import "uno.css";
@@ -16,15 +15,14 @@ const App = lazy(() => import("./App"));
 const Loader = lazy(() => import("./Loader"));
 
 import { render } from "solid-js/web";
-
 import { Theme, getTheme, setTheme } from "./utils/theme";
 import { Route, Router } from "@solidjs/router";
 
 setTheme(getTheme());
-window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => e.matches && setTheme(Theme.Dark));
-window
-  .matchMedia("(prefers-color-scheme: light)")
-  .addEventListener("change", (e) => e.matches && setTheme(Theme.Light));
+
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+  setTheme(e.matches ? Theme.Dark : Theme.Light);
+});
 
 render(
   () => (
