@@ -13,7 +13,11 @@ const Sidebar: Component = () => {
   const sidebarSections = [
     {
       title: t("sidebar.section.sales"),
-      buttons: [{ target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") }],
+      buttons: [
+        { target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") },
+        { target: "/dashboard/sales/templates", icon: <FiFileText />, label: t("sidebar.button.invoices") },
+        { target: "/dashboard/sales/schedules", icon: <FiFileText />, label: t("sidebar.button.invoices") },
+      ],
     },
     {
       title: t("sidebar.section.purchase"),
