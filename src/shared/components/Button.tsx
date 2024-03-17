@@ -3,7 +3,9 @@ import { ParentComponent } from "solid-js";
 export const Button: ParentComponent<{ onClick?: (e: MouseEvent) => void; class?: string }> = (props) => {
   return (
     <button
-      class={`py-1.5 px-8 bg-primary rounded-md text-secondary font-medium text-sm ${props.class}`}
+      class={
+        "rounded py-0.5 px-2 text-sm shadow-md shadow-default/20 text-white bg-default  bg-gradient-to-b from-transparent-white to-transparent active:from-transparent-black"
+      }
       type="button"
       onClick={props.onClick}
     >

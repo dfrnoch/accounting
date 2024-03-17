@@ -22,8 +22,10 @@ const Pagination: Component<PaginationProps> = (props) => {
           <button
             type="button"
             class={`px-3 py-1 ${
-              props.currentPage === number ? "text-white bg-blue-500" : "text-blue-500"
-            } hover:bg-blue-700 rounded`}
+              props.currentPage === number
+                ? "text-white bg-default shadow-md shadow-default/20"
+                : "text-primary bg-secondary"
+            } rounded`}
             onClick={() => props.onPageChange(number)}
           >
             {number}

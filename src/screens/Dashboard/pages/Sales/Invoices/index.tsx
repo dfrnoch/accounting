@@ -1,6 +1,8 @@
 import { getInvoices } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
+import { Button } from "@/shared/components/Button";
+import { SegmentedControl } from "@/shared/components/SegmentedControl";
 import { useSelector } from "@/store";
 import { FiActivity, FiTrash } from "solid-icons/fi";
 import { Component, createSignal } from "solid-js";
@@ -172,31 +174,18 @@ const Invoices: Component = () => {
         loadPage={loadPage}
         rowActions={rowActions}
         extraContent={
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New</button>
+          <div class="flex flex-row gap-2 items-center">
+            <Button onClick={() => console.log("Create new invoice")}>Create new invoice</Button>
+            <SegmentedControl
+              onChange={(value) => console.log("Filter invoices by:", value)}
+              options={[
+                { id: "all", label: "All" },
+                { id: "unpaid", label: "Unpaid" },
+              ]}
+            />
+          </div>
         }
       />
-
-      {/* <table class="w-full ">
-        <tbody>
-          <TableHeader>
-            <td class="">ID</td>
-            <td>Castka</td>
-            <td>Ahoj,</td>
-          </TableHeader>
-          <Row>
-            <td>
-              <Badge color="danger">Cuspic</Badge>{" "}
-            </td>
-            <td>Centro </td>
-            <td>Centro </td>
-          </Row>
-          <Row>
-            <td>Centro </td>
-            <td>Centro </td>
-            <td>Centro </td>
-          </Row>
-        </tbody>
-      </table> */}
     </div>
   );
 };

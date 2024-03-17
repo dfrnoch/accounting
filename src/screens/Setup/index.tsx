@@ -10,7 +10,7 @@ import { open } from "@tauri-apps/plugin-shell";
 import { getDataByCIN } from "@/utils/getDataByCIN";
 import InputList from "@/shared/components/Menu/InputList";
 import { Hr } from "@/shared/components/Menu/Hr";
-import { Button } from "./components/Button";
+import { Button } from "@/shared/components/Button";
 import { Title } from "./components/Title";
 import { useNavigate } from "@solidjs/router";
 

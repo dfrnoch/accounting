@@ -31,7 +31,9 @@
       "clients": "Klienti",
       "expenses": "Výdaje",
       "reports": "Reporty",
-      "settings": "Nastavení"
+      "settings": "Nastavení",
+      "templates": "Šablony",
+      "schedules": "Opakované platby"
     },
     "section": {
       "sales": "Prodej",
@@ -102,5 +104,8 @@
   },
   "invoices": {
     "title": "Faktury"
+  },
+  "components": {
+    "search": "Hledat"
   }
 }

@@ -1,5 +1,6 @@
-import { Accessor, Component, For } from "solid-js";
+import { Component, For } from "solid-js";
 
+// https://macos-tailwind.netlify.app/?path=/docs/controls-progress-bar--docs
 const ProgressDots: Component<{ count: number; active: number }> = (props) => {
   return (
     // add blur and

@@ -33,7 +33,9 @@
       "clients": "Clients",
       "expenses": "Expenses",
       "reports": "Reports",
-      "settings": "Settings"
+      "settings": "Settings",
+      "templates": "Templates",
+      "schedules": "Schedules"
     },
     "section": {
       "sales": "Sales",
@@ -110,5 +112,8 @@
   },
   "invoices": {
     "title": "Faktury"
+  },
+  "components": {
+    "search": "Search"
   }
 }

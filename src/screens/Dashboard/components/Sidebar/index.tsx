@@ -3,7 +3,7 @@ import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useSelector } from "@/store";
 import { useI18n } from "@/i18n";
-import { FiDollarSign, FiFileText, FiHome, FiPaperclip, FiSettings, FiUsers } from "solid-icons/fi";
+import { FiClock, FiDollarSign, FiFileText, FiHome, FiPaperclip, FiSave, FiSettings, FiUsers } from "solid-icons/fi";
 import { Hr } from "@/shared/components/Menu/Hr";
 
 const Sidebar: Component = () => {
@@ -15,8 +15,8 @@ const Sidebar: Component = () => {
       title: t("sidebar.section.sales"),
       buttons: [
         { target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") },
-        { target: "/dashboard/sales/templates", icon: <FiFileText />, label: t("sidebar.button.invoices") },
-        { target: "/dashboard/sales/schedules", icon: <FiFileText />, label: t("sidebar.button.invoices") },
+        { target: "/dashboard/sales/templates", icon: <FiSave />, label: t("sidebar.button.templates") },
+        { target: "/dashboard/sales/schedules", icon: <FiClock />, label: t("sidebar.button.schedules") },
       ],
     },
     {
@@ -35,7 +35,7 @@ const Sidebar: Component = () => {
   ];
 
   return (
-    <div class="text-primary relative flex h-screen w-1/5 min-w-[140px] shrink-0 flex-col justify-between border-r border-zinc-400/70 px-2.5 pb-4 pt-14 lg:max-w-[220px] lg:px-4 dark:border-black/90">
+    <div class="text-primary relative flex h-screen w-1/5 min-w-[200px] shrink-0 flex-col justify-between border-r border-zinc-400/70 px-2.5 pb-4 pt-14 lg:max-w-[220px] lg:px-4 dark:border-black/90">
       <div>
         <SidebarButton notInSection target="/dashboard/" icon={<FiHome />}>
           {t("sidebar.button.overview")}

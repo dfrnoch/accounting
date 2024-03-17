@@ -8,7 +8,7 @@ const StatBox: Component<{
 }> = (props) => {
   const percentageChange = (current: number, last?: number) => {
     if (!last) return 0;
-    return ((current - last) / last) * 100;
+    return (((current - last) / last) * 100).toFixed(2);
   };
 
   return (

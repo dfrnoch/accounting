@@ -2,6 +2,7 @@ import { createSignal, createEffect, For, JSX, Component } from "solid-js";
 import Pagination from "./Pagination";
 import TableHead from "./TableHeader";
 import TableRow from "./Row";
+import { Search } from "@/shared/components/Search";
 
 interface TableProps<T extends Record<string, unknown>> {
   data: T[];
@@ -42,13 +43,7 @@ const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
     <div class="w-full">
       <div class="rounded-lg">
         <div class="flex flex-row justify-between mb-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm()}
-            onInput={(e) => setSearchTerm(e.currentTarget.value)}
-            class="border px-2 h-8 rounded"
-          />
+          <Search onInput={(e) => setSearchTerm(e.currentTarget.value)} />
           <div>{props.extraContent}</div>
         </div>
         <table class="min-w-full leading-normal">
