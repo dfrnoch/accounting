@@ -23,15 +23,16 @@ body {
 :root,
 :root.light {
     --color-primary: #232323;
-    --color-secondary: #E3E3E3;
+    --color-secondary: #EAEAEB;
     --color-grey: #52525b;
-    --color-lightgrey: #e5e7eb;
+    --color-lightgrey: #E5E7E7;
     --color-danger: #b91c1c;
     --color-warning: #f97316;
     --color-success: #15803d;
     --color-info: #1d4ed8;
     --color-default: #989899;
-    --vibrat: #0070F5;
+
+    --color-border: #D9D9DA;
 
     --text-opaque-1: rgb(0 0 0 / 0.85);
     --text-opaque-2: rgb(0 0 0 / 0.50);
@@ -43,13 +44,14 @@ body {
     --color-primary: #E3E3E3;
     --color-secondary: #262626;
     --color-grey: #a1a1aa;
-    --color-lightgrey: #e5e7eb;
+    --color-lightgrey: #E5E7E7;
     --color-danger: #f87171;
     --color-warning: #facc15;
     --color-success: #4ade80;
     --color-info: #38bdf8;
     --color-default: #8C8C8C;
-    --vibrant: #148EFF;
+
+    --color-border: #49494A;
 
     --text-opaque-1: rgb(255 255 255 / 0.85);
     --text-opaque-2: rgb(255 255 255 / 0.55);

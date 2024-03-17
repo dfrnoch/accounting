@@ -4,8 +4,9 @@ import Table from "@/screens/Dashboard/components/Table";
 import { Button } from "@/shared/components/Button";
 import { SegmentedControl } from "@/shared/components/SegmentedControl";
 import { useSelector } from "@/store";
-import { FiActivity, FiTrash } from "solid-icons/fi";
+import { FiActivity, FiDownload, FiEdit, FiTrash } from "solid-icons/fi";
 import { Component, createSignal } from "solid-js";
+import MyComponent from "./cmp";
 
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
@@ -150,12 +151,21 @@ const Invoices: Component = () => {
     console.log("Delete:", item);
     // Handle delete action
   };
+  const handleDownload = (item: Book) => {
+    // Handle download action
+    window.print();
+  };
 
   const rowActions = [
     {
+      label: "Download",
+      onClick: handleDownload,
+      icon: FiDownload,
+    },
+    {
       label: "Edit",
       onClick: handleEdit,
-      icon: FiActivity,
+      icon: FiEdit,
     },
     {
       label: "Delete",
@@ -166,7 +176,6 @@ const Invoices: Component = () => {
 
   return (
     <div class="">
-      <h1 class="text-3xl font-bold">{t("invoices.title")}</h1>
       <Table
         data={[]}
         columns={columns}

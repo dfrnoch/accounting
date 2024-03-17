@@ -8,7 +8,7 @@ interface ActionButtonProps {
 
 const ActionButton: Component<ActionButtonProps> = (props) => {
   return (
-    <button type="button" class="text-red  w-5 h-5 bg-red/0" onClick={props.onClick}>
+    <button type="button" class="text-default w-5 h-5 bg-red/0" onClick={props.onClick}>
       <Dynamic component={props.icon} />
     </button>
   );

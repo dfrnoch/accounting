@@ -13,10 +13,10 @@ members = ["prisma-cli"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-beta.6", features = [] }
+tauri-build = { version = "2.0.0-beta.9", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-beta.10", features = ["macos-private-api"] }
+tauri = { version = "2.0.0-beta.11", features = ["macos-private-api"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.11", features = [
@@ -39,9 +39,9 @@ tauri-plugin-shell = { git = "https://github.com/tauri-apps/plugins-workspace", 
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 pretty_env_logger = "0.5.0"
 log = "0.4"
-thiserror = "1.0.57"
+thiserror = "1.0.58"
 platform-dirs = "0.3.0"
-anyhow = "1.0.75"
+anyhow = "1.0.81"
 # tauri-specta = { git = "https://github.com/oscartbeaumont/tauri-specta", branch = "tauri2-alpha18", features = [
 #     "typescript",
 # ] }

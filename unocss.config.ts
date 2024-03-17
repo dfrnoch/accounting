@@ -8,6 +8,7 @@ export default defineConfig({
     colors: {
       primary: "var(--color-primary)",
       secondary: "var(--color-secondary)",
+      border: "var(--color-border)",
       grey: "var(--color-grey)",
       lightgrey: "var(--color-lightgrey)",
       danger: "var(--color-danger)",

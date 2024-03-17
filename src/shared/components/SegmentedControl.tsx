@@ -28,7 +28,7 @@ export const SegmentedControl: ParentComponent<SegmentedControlProps> = (props) 
             name="segmented-control"
             checked={selectedValue() === option.id}
             onChange={handleChange}
-            class="transition-all w-100px appearance-none relative h-[22px] flex-1 rounded dark:(checked:bg-[#636366] active:bg-[#636366] active:opacity-100) active:opacity-50 active:bg-white checked:bg-white checked:shadow-sm checked:before:hidden first:before:hidden before:absolute before:z-[-1] before:left-[-1px] before:top-[5px] before:w-[1px] before:h-[10px] before:bg-fills-opaque-4 before:rounded"
+            class="transition-all w-100px appearance-none relative h-[22px] flex-1 rounded dark:(checked:bg-[#636366] active:bg-[#636366] active:opacity-100) active-(opacity-50 bg-white) checked-(bg-white shadow-sm before:hidden) first:before:hidden before:absolute before:z-[-1] before:left-[-1px] before:top-[5px] before:w-[1px] before:h-[10px] before:bg-fills-opaque-4 before:rounded"
           />
         )}
       </For>
