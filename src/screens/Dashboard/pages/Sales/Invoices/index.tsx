@@ -6,7 +6,7 @@ import { SegmentedControl } from "@/shared/components/SegmentedControl";
 import { useSelector } from "@/store";
 import { FiActivity, FiDownload, FiEdit, FiTrash } from "solid-icons/fi";
 import { Component, createSignal } from "solid-js";
-import MyComponent from "./cmp";
+import Popover from "@/shared/components/Popover";
 
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
@@ -141,6 +141,7 @@ const Invoices: Component = () => {
       pages: 179,
     },
   ];
+  const [invoicePopover, setInvoicePopover] = createSignal(false);
 
   const handleEdit = (item: Book) => {
     console.log("Edit:", item);
@@ -184,7 +185,7 @@ const Invoices: Component = () => {
         rowActions={rowActions}
         extraContent={
           <div class="flex flex-row gap-2 items-center">
-            <Button onClick={() => console.log("Create new invoice")}>Create new invoice</Button>
+            <Button onClick={() => setInvoicePopover(true)}>Create new invoice</Button>
             <SegmentedControl
               onChange={(value) => console.log("Filter invoices by:", value)}
               options={[
@@ -195,6 +196,9 @@ const Invoices: Component = () => {
           </div>
         }
       />
+      <Popover show={invoicePopover()} onClose={() => setInvoicePopover(false)} title="Create Invoice">
+        <div>cuspoic</div>
+      </Popover>
     </div>
   );
 };
