@@ -14,6 +14,8 @@ mod window_ext;
 #[allow(warnings, unused)]
 mod prisma;
 
+use prisma_client_rust::not;
+
 mod error;
 mod migrator;
 mod util;
@@ -91,6 +93,22 @@ async fn get_invoices(
         .find_many(vec![invoice::company_id::equals(company_id.unwrap_or(1))])
         .exec()
         .await
+}
+
+#[tauri::command]
+async fn get_companies(
+    client: DbState<'_>,
+    exclude: Option<i32>,
+) -> Result<Vec<company::Data>, QueryError> {
+    println!("Getting companies, exluding {:?}", exclude);
+    let data = client
+        .company()
+        .find_many(vec![not![company::id::equals(exclude.unwrap_or(999))]])
+        .exec()
+        .await;
+
+    println!("{:?}", data);
+    data
 }
 
 #[tauri::command]
@@ -208,6 +226,7 @@ async fn main() {
             get_company,
             migrate_and_populate,
             create_company,
+            get_companies,
             get_invoices,
             // fetch,
         ])

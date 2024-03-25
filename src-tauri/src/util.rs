@@ -12,7 +12,8 @@ pub fn get_app_dir() -> PathBuf {
 
     // check if in dev mode
     if cfg!(debug_assertions) {
-        data_dir.push("dev");
+        // set the dir to ./
+        data_dir = PathBuf::from("./");
     }
 
     data_dir

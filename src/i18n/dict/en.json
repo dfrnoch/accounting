@@ -35,7 +35,10 @@
       "reports": "Reports",
       "settings": "Settings",
       "templates": "Templates",
-      "schedules": "Schedules"
+      "schedules": "Schedules",
+      "company": {
+        "create": "Create company"
+      }
     },
     "section": {
       "sales": "Sales",

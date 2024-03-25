@@ -33,7 +33,10 @@
       "reports": "Reporty",
       "settings": "Nastavení",
       "templates": "Šablony",
-      "schedules": "Opakované platby"
+      "schedules": "Opakované platby",
+      "company": {
+        "create": "Vytvořit firmu"
+      }
     },
     "section": {
       "sales": "Prodej",

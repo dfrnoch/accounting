@@ -19,6 +19,9 @@ export function createCompany(data: CreateCompanyData) {
 export function migrateAndPopulate() {
   return invoke("migrate_and_populate");
 }
+export async function getCompanies(exclude?: number) {
+  return await invoke<Company[]>("get_companies", { exclude });
+}
 
 export type CreateCompanyData = {
   name: string;

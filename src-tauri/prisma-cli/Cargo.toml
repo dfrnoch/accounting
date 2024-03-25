@@ -7,4 +7,4 @@ version = "0.0.1"
 [dependencies]
 prisma-client-rust-cli = { git = "https://github.com/Brendonovich/prisma-client-rust", features = [
     "migrations",
-], tag = "0.6.8" }
+], tag = "0.6.11" }

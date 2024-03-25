@@ -6,6 +6,7 @@ dist
 target
 prisma.rs
 src-tauri/dev.db 
+src-tauri/app.db 
 
 
 .signore
