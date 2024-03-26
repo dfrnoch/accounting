@@ -1,4 +1,4 @@
-import { createContext, createSignal, ParentComponent, useContext } from "solid-js";
+import { createContext, createSignal, type ParentComponent, useContext } from "solid-js";
 import { CompanyService } from "./services/companyService";
 import { StateService } from "./services/stateService";
 

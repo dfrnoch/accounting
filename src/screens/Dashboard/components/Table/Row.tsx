@@ -1,4 +1,4 @@
-import { Component, For, Show } from "solid-js";
+import { type Component, For, Show } from "solid-js";
 import ActionButton from "./ActionButton";
 
 interface TableRowProps<T> {

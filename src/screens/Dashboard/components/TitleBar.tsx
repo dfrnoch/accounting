@@ -1,4 +1,4 @@
-import { Component, For, Show, createMemo } from "solid-js";
+import { type Component, For, Show, createMemo } from "solid-js";
 import { useLocation } from "@solidjs/router";
 import { useI18n } from "@/i18n";
 import { FiBell, FiSearch } from "solid-icons/fi";

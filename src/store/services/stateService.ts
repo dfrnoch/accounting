@@ -1,5 +1,5 @@
 import { onMount } from "solid-js";
-import { StoreSetter, createStore } from "solid-js/store";
+import { type StoreSetter, createStore } from "solid-js/store";
 // import { Store } from "@tauri-apps/plugin-store";
 
 interface StateService {

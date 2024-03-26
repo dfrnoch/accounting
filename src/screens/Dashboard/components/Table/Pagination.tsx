@@ -1,4 +1,4 @@
-import { For, Component } from "solid-js";
+import { For, type Component } from "solid-js";
 
 interface PaginationProps {
   currentPage: number;

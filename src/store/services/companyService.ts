@@ -1,4 +1,4 @@
-import { Company } from "@/bindings";
+import type { Company } from "@/bindings";
 import { onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 

@@ -13,7 +13,7 @@ export function getCompany(id: number | null) {
 }
 
 export function createCompany(data: CreateCompanyData) {
-  return invoke<number>("create_company", { data });
+  return invoke<Company>("create_company", { data });
 }
 
 export function migrateAndPopulate() {

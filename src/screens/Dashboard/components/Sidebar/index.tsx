@@ -18,20 +18,39 @@ import {
 import { Hr } from "@/shared/components/Menu/Hr";
 import { DisclosureStateChild, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from "terracotta";
 import { type Company, getCompanies } from "@/bindings";
+import { useNavigate } from "@solidjs/router";
+
+interface SidebarButtonData {
+  target: string;
+  icon: JSX.Element;
+  label: string;
+}
+
+interface SidebarSectionData {
+  title: string;
+  buttons: SidebarButtonData[];
+}
 
 const Sidebar: Component = () => {
   const [t] = useI18n();
+  const navigate = useNavigate();
   const company = useSelector((state) => state.companyService.company);
-  const [companies, setCompanies] = createSignal<Company[]>([company]);
+  const stateService = useSelector((state) => state.stateService);
+
+  const [companies, setCompanies] = createSignal<Company[]>([]);
+  const [selected, setSelected] = createSignal<Company>(company);
 
   onMount(async () => {
-    const data = await getCompanies(company.id);
-    setCompanies((prev) => [...prev, ...data]);
+    const data = await getCompanies(stateService.state.companyId || undefined);
+    setCompanies([company, ...data]);
   });
 
-  const [selected, setSelected] = createSignal(companies()[0]);
+  const setCompany = (company: Company) => {
+    stateService.updateState({ companyId: company.id });
+    navigate("/");
+  };
 
-  const sidebarSections = [
+  const sidebarSections: SidebarSectionData[] = [
     {
       title: t("sidebar.section.sales"),
       buttons: [
@@ -80,7 +99,7 @@ const Sidebar: Component = () => {
           {t("sidebar.button.settings")}
         </SidebarButton>
         <Hr />
-        <Listbox defaultOpen={false} value={selected()} onSelectChange={setSelected}>
+        <Listbox value={selected()} onSelectChange={setSelected} defaultOpen={false}>
           <ListboxButton class="text-sm flex flex-row items-center justify-start gap-2.5 lg:gap-4 hover:bg-neutral-100/40 dark:hover:bg-neutral-100/25 bg-transparent rounded-[5px] px-2 py-[3px] w-full">
             <div class="flex h-8 w-8 items-center justify-center lg:h-10 lg:w-10 rounded-full">
               <img
@@ -89,14 +108,7 @@ const Sidebar: Component = () => {
                 class="rounded-full"
               />
             </div>
-            <span
-              class="block truncate"
-              onClick={() => {
-                console.log(companies());
-              }}
-            >
-              {company.name}
-            </span>
+            <span class="block truncate">{company.name}</span>
           </ListboxButton>
           <div class="flex flex-col w-full">
             <div class="relative">
@@ -117,7 +129,11 @@ const Sidebar: Component = () => {
                     >
                       <For each={companies()}>
                         {(company): JSX.Element => (
-                          <ListboxOption class="focus:outline-none group" value={company}>
+                          <ListboxOption
+                            class="focus:outline-none group"
+                            value={company}
+                            onClick={() => setCompany(company)}
+                          >
                             {({ isActive, isSelected }): JSX.Element => (
                               <div
                                 classList={{
@@ -136,7 +152,7 @@ const Sidebar: Component = () => {
                                 >
                                   {company.name}
                                 </span>
-                                {isSelected() ? (
+                                {isSelected() && (
                                   <span
                                     classList={{
                                       "text-primary": isActive(),
@@ -146,19 +162,14 @@ const Sidebar: Component = () => {
                                   >
                                     <FiCheck aria-hidden="true" />
                                   </span>
-                                ) : null}
+                                )}
                               </div>
                             )}
                           </ListboxOption>
                         )}
                       </For>
-                      {/* Option to create company */}
-                      <ListboxOption
-                        value={""}
-                        class="focus:outline-none group"
-                        onclick={() => console.log("create company")}
-                      >
-                        {({ isActive, isSelected }): JSX.Element => (
+                      <ListboxOption value={""} class="focus:outline-none group" onClick={() => navigate("/setup")}>
+                        {({ isActive }): JSX.Element => (
                           <div
                             classList={{
                               "text-primary bg-material-selection": isActive(),
@@ -176,15 +187,7 @@ const Sidebar: Component = () => {
                             >
                               <FiPlus />
                             </span>
-                            <span
-                              classList={{
-                                "font-medium": isSelected(),
-                                "font-normal": !isSelected(),
-                                "block truncate": true,
-                              }}
-                            >
-                              {t("sidebar.button.company.create")}
-                            </span>
+                            <span class="block truncate">{t("sidebar.button.company.create")}</span>
                           </div>
                         )}
                       </ListboxOption>

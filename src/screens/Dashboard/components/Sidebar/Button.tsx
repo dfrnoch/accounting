@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import { JSX, ParentComponent } from "solid-js";
+import type { JSX, ParentComponent } from "solid-js";
 
 const SidebarButton: ParentComponent<{
   icon?: JSX.Element;

@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For, JSX, Component } from "solid-js";
+import { createSignal, createEffect, For, type JSX, type Component } from "solid-js";
 import Pagination from "./Pagination";
 import TableHead from "./TableHeader";
 import TableRow from "./Row";
