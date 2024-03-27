@@ -4,14 +4,16 @@ import Table from "@/screens/Dashboard/components/Table";
 import { Button } from "@/shared/components/Button";
 import { SegmentedControl } from "@/shared/components/SegmentedControl";
 import { useSelector } from "@/store";
-import { FiActivity, FiDownload, FiEdit, FiTrash } from "solid-icons/fi";
-import { Component, createSignal } from "solid-js";
+import { FiDownload, FiEdit, FiTrash } from "solid-icons/fi";
+import { type Component, createSignal } from "solid-js";
 import Popover from "@/shared/components/Popover";
+import { useNavigate } from "@solidjs/router";
 
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
   const [t] = useI18n();
   const [invoices, setInvoices] = createSignal([]);
+  const navigate = useNavigate();
 
   const fetchInvoices = async () => {
     console.log(company);
@@ -185,7 +187,7 @@ const Invoices: Component = () => {
         rowActions={rowActions}
         extraContent={
           <div class="flex flex-row gap-2 items-center">
-            <Button onClick={() => setInvoicePopover(true)}>Create new invoice</Button>
+            <Button onClick={() => navigate("new")}>Create new invoice</Button>
             <SegmentedControl
               onChange={(value) => console.log("Filter invoices by:", value)}
               options={[

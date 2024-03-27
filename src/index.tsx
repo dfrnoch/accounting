@@ -5,6 +5,7 @@ import "uno.css";
 
 const Overview = lazy(() => import("./screens/Dashboard/pages"));
 const Invoices = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices"));
+const createinvoice = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices/createInvoice.tsx"));
 const Templates = lazy(() => import("./screens/Dashboard/pages/Sales/Templates"));
 const Schedules = lazy(() => import("./screens/Dashboard/pages/Sales/Schedules"));
 const Expenses = lazy(() => import("./screens/Dashboard/pages/Purchase/Expenses"));
@@ -34,7 +35,10 @@ render(
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/" component={Overview} />
         <Route path="/sales">
-          <Route path="/invoices" component={Invoices} />
+          <Route path="/invoices">
+            <Route path="/" component={Invoices} />
+            <Route path="/new" component={createinvoice} />
+          </Route>
           <Route path="/templates" component={Templates} />
           <Route path="/schedules" component={Schedules} />
         </Route>
