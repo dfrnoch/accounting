@@ -146,8 +146,7 @@ const Invoices: Component = () => {
   const [invoicePopover, setInvoicePopover] = createSignal(false);
 
   const handleEdit = (item: Book) => {
-    console.log("Edit:", item);
-    // Handle edit action
+    navigate(`${item.id}`);
   };
 
   const handleDelete = (item: Book) => {

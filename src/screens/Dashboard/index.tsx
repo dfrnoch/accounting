@@ -30,7 +30,7 @@ const Dashboard: ParentComponent = (props) => {
       <TitleBar />
       <div class="flex flex-row items-start w-screen">
         <Sidebar />
-        <div class="overflow-y-auto px-4 pt-14 mx-auto w-full h-screen no-scrollbar bg-secondary text-primary">
+        <div class="overflow-y-auto px-4 pt-14 mx-auto w-full h-screen no-scrollbar bg-primary text-primary">
           <div class="container">{props.children}</div>
         </div>
       </div>

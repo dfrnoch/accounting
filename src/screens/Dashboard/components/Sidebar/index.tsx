@@ -125,7 +125,7 @@ const Sidebar: Component = () => {
                   >
                     <ListboxOptions
                       unmount={false}
-                      class="absolute bottom-full w-full py-1 mb-1 overflow-auto text-base bg-secondary rounded-md shadow-menu max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                      class="absolute bottom-full w-full py-1 mb-1 overflow-auto text-base bg-primary rounded-md shadow-menu max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                     >
                       <For each={companies()}>
                         {(company): JSX.Element => (

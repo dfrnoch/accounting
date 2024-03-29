@@ -1,17 +1,24 @@
-import { type Component, For, Show, createMemo, createSignal } from "solid-js";
+import { type Component, For, Show, createMemo } from "solid-js";
 import { useLocation, useNavigate } from "@solidjs/router";
 import { useI18n } from "@/i18n";
-import { FiArrowLeft, FiArrowRight, FiBell, FiChevronLeft, FiChevronRight, FiSearch } from "solid-icons/fi";
+import { FiBell, FiChevronLeft, FiChevronRight, FiSearch } from "solid-icons/fi";
 
 const TitleBar: Component = () => {
   const location = useLocation();
   const [t] = useI18n();
   const navigate = useNavigate();
 
+  const matchDynamicRoute = (route: string) => {
+    const dynamicRoute = route.replace(/\{.*?\}/g, "(.+)");
+    const regex = new RegExp(`^${dynamicRoute}$`);
+    const match = location.pathname.match(regex);
+    return match ? [route.split("/").slice(-1)[0], match[1]] : null;
+  };
+
   const matchPathname = createMemo(() => {
     const { pathname } = location;
-    switch (pathname) {
-      case "/dashboard/":
+    switch (pathname.replace(/\/$/, "")) {
+      case "/dashboard":
         return [t("sidebar.button.overview")];
 
       case "/dashboard/sales/invoices":
@@ -31,8 +38,18 @@ const TitleBar: Component = () => {
         return [t("sidebar.section.other"), t("sidebar.button.reports")];
       case "/dashboard/settings":
         return [t("sidebar.button.settings")];
-      default:
+      default: {
+        const clientMatch = matchDynamicRoute("/dashboard/other/clients/{id}");
+        const invoiceMatch = matchDynamicRoute("/dashboard/sales/invoices/{id}");
+        if (clientMatch) {
+          return [t("sidebar.section.other"), t("sidebar.button.clients"), clientMatch[1]];
+        }
+        if (invoiceMatch) {
+          return [t("sidebar.section.sales"), t("sidebar.button.invoices"), invoiceMatch[1]];
+        }
+
         return [];
+      }
     }
   });
 
@@ -74,10 +91,10 @@ const TitleBar: Component = () => {
                   when={index() === matchPathname().length - 1}
                   fallback={
                     <>
-                      <span class="text-grey" data-tauri-drag-region>
+                      <span class="text-secondary" data-tauri-drag-region>
                         {item}
                       </span>
-                      <span class="text-grey" data-tauri-drag-region>
+                      <span class="text-secondary" data-tauri-drag-region>
                         /
                       </span>
                     </>

@@ -23,8 +23,8 @@ body {
 :root,
 :root.light {
     --color-primary: #232323;
-    --color-secondary: #EAEAEB;
-    --color-grey: #52525b;
+    --color-secondary: #52525b;
+    --bg-primary: #EAEAEB;
     --color-lightgrey: #E5E7E7;
     --color-danger: #b91c1c;
     --color-warning: #f97316;
@@ -42,8 +42,8 @@ body {
 
 :root.dark {
     --color-primary: #E3E3E3;
-    --color-secondary: #262626;
-    --color-grey: #a1a1aa;
+    --color-secondary: #a1a1aa;
+    --bg-primary: #262626;
     --color-lightgrey: #E5E7E7;
     --color-danger: #f87171;
     --color-warning: #facc15;

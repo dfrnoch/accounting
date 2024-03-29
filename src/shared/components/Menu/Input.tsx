@@ -1,5 +1,5 @@
 import { FiInfo } from "solid-icons/fi";
-import { Component, Show, createSignal } from "solid-js";
+import { type Component, Show, createSignal } from "solid-js";
 
 const Input: Component<{
   id: string;
@@ -20,7 +20,7 @@ const Input: Component<{
         id={props.id}
         type="text"
         classList={{
-          "ml-5 w-60 h-8 py-1 text-sm border text-primary border-neutral-900 rounded-md shadow-inner bg-neutral-900 px-2 focus:outline-none focus:border-primary bg-secondary": true,
+          "ml-5 w-60 h-8 py-1 text-sm border text-primary border-neutral-900 rounded-md shadow-inner bg-neutral-900 px-2 focus:outline-none focus:border-primary bg-primary": true,
           "mr-6": !props.info,
         }}
         placeholder={props.placeholder}

@@ -19,7 +19,7 @@ const StatBox: Component<{
           <p class="text-xs font-medium">{props.title}</p>
           <div class="text-green-600 text-sm">{percentageChange(props.value, props.last)}%</div>
         </div>
-        <div class="flex flex-col justify-between text-grey gap-1">
+        <div class="flex flex-col justify-between text-secondary gap-1">
           <p class="text-xl font-medium text-primary">{props.value}</p>
           <Show when={props.last}>
             <p class="text-xs font-normal">${props.last} Previous period</p>

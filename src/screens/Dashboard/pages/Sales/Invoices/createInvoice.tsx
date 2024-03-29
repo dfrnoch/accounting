@@ -4,8 +4,9 @@ import type { Component } from "solid-js";
 const createInvoice: Component = (props) => {
   return (
     <div class="flex flex-col lg:flex-row w-full gap-5 ">
-      <div class="w-full lg:w-1/2 bg-green">
-        <div class="flex items">cuspus</div>
+      <div class="w-full lg:w-1/2 flex flex-col">
+        <div class="flex items h-full bg-green">cuspus</div>
+        <div class="h-20 bg-green-300">cuspus</div>
       </div>
 
       <div class="w-full lg:w-1/2 bg-red rounded-xl gap-4 flex flex-col p-4">

@@ -1,13 +1,13 @@
-node_modules
-dist
+node_modules/
+dist/
 
 
 # Rust
-target
+target/
 prisma.rs
 src-tauri/dev.db 
 src-tauri/app.db 
+src-tauri/gen/
 
 
 .signore
-

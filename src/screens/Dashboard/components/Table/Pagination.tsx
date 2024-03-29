@@ -24,7 +24,7 @@ const Pagination: Component<PaginationProps> = (props) => {
             class={`px-3 py-1 ${
               props.currentPage === number
                 ? "text-white bg-default shadow-md shadow-default/20"
-                : "text-primary bg-secondary"
+                : "text-primary bg-primary"
             } rounded`}
             onClick={() => props.onPageChange(number)}
           >

@@ -7,7 +7,7 @@ const LangaugeBox: ParentComponent<{ onClick: () => void; active?: boolean }> = 
       classList={{
         "py-4 text-3xl border text-primary border-neutral-900 rounded-md shadow-inner bg-neutral-900 px-10  transition cursor-pointer": true,
         "bg-pimary": props.active,
-        "bg-secondary": !props.active,
+        "bg-primary": !props.active,
       }}
     >
       {props.children}

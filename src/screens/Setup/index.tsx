@@ -88,7 +88,7 @@ const SetupWizard: Component = () => {
 
   return (
     <div class="flex justify-center items-center w-screen h-screen" data-tauri-drag-region>
-      <div class="w-3/4 h-5/7 bg-secondary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative">
+      <div class="w-3/4 h-5/7 bg-primary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative">
         <ProgressDots count={5} active={currentStep()} />
         <Show when={currentStep() === 0}>
           <Title>{t("setup.welcome")}</Title>

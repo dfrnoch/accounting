@@ -9,7 +9,6 @@ export default defineConfig({
       primary: "var(--color-primary)",
       secondary: "var(--color-secondary)",
       border: "var(--color-border)",
-      grey: "var(--color-grey)",
       lightgrey: "var(--color-lightgrey)",
       danger: "var(--color-danger)",
       warning: "var(--color-warning)",
@@ -30,6 +29,7 @@ export default defineConfig({
       },
     },
     backgroundColor: {
+      primary: "var(--bg-primary)",
       default: "var(--color-default)",
       fills: {
         opaque: {
