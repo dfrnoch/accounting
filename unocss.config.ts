@@ -8,7 +8,6 @@ export default defineConfig({
     colors: {
       primary: "var(--color-primary)",
       secondary: "var(--color-secondary)",
-      border: "var(--color-border)",
       lightgrey: "var(--color-lightgrey)",
       danger: "var(--color-danger)",
       warning: "var(--color-warning)",
@@ -27,6 +26,9 @@ export default defineConfig({
         tooltip: "rgb(246 246 246 / .6)",
         selection: "rgb(10 130 255 / 0.75)",
       },
+    },
+    borderColor: {
+      default: "var(--color-border)",
     },
     backgroundColor: {
       primary: "var(--bg-primary)",

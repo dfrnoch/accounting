@@ -1,7 +1,9 @@
-import { Component, createSignal } from "solid-js";
+import { type Component, createSignal } from "solid-js";
 import Toolbar from "./components/Toolbar";
 import { FiFileText, FiSettings } from "solid-icons/fi";
 import { useI18n } from "@/i18n";
+import Input from "@/shared/components/Menu/Input";
+import Dropdown from "@/shared/components/Menu/Dropdown";
 
 const Settings: Component = () => {
   const [t] = useI18n();
@@ -32,7 +34,10 @@ const Settings: Component = () => {
         <Toolbar text="Nastavení" icon={<FiSettings />} />
         <Toolbar text="Nastavení" icon={<FiSettings />} />
       </div>
-      <div class="w-full h-full px-20">aaa</div>
+      <div class="w-full h-full px-20">
+        <Input label="Název" id="name" placeholder="Název" />
+        <Dropdown />
+      </div>
     </div>
   );
 };

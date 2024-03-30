@@ -34,6 +34,7 @@ render(
   () => (
     <Router root={App}>
       <Route path="/" component={Loader} />
+      <Route path="/print/:id" component={App} />
       <Route path="/setup" component={Setup} />
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/" component={Overview} />

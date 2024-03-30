@@ -1,5 +1,5 @@
 import { useI18n } from "@/i18n";
-import Dropdown from "@/shared/components/Dropdown";
+import Dropdown from "@/shared/components/Menu/Dropdown";
 import { useSelector } from "@/store";
 import { getInitializedPrintWindow } from "@/utils/savePDF";
 import type { Component } from "solid-js";

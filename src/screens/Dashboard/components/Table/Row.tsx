@@ -9,7 +9,7 @@ interface TableRowProps<T> {
 
 const TableRow = <T,>(props: TableRowProps<T>) => {
   return (
-    <tr class="border-b border-border">
+    <tr class="border-b border-default">
       <For each={props.columns}>{(column) => <td class="px-3 py-2">{String(props.item[column.field])}</td>}</For>
       <Show when={props.rowActions}>
         <td class="px-3 py-2 flex flex-row gap-2 items-center">

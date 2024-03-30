@@ -18,7 +18,7 @@ const Dropdown: Component<{}> = (props) => {
 
   return (
     <div class="w-full">
-      <Listbox defaultOpen value={selected()} onSelectChange={setSelected}>
+      <Listbox defaultOpen={false} value={selected()} onSelectChange={setSelected}>
         <div class="relative mt-1">
           <ListboxButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
             <span class="block truncate">{selected().name}</span>
@@ -66,7 +66,7 @@ const Dropdown: Component<{}> = (props) => {
                               <span
                                 classList={{
                                   "text-amber-600": isActive(),
-                                  "text-amber-600": !isActive(),
+                                  // "text-amber-600": !isActive(),
                                   "group-hover:text-amber-600": true,
                                   "absolute inset-y-0 left-0 flex items-center pl-3": true,
                                 }}
