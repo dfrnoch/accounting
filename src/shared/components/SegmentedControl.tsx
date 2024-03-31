@@ -1,4 +1,4 @@
-import { For, ParentComponent, createSignal } from "solid-js";
+import { For, type ParentComponent, createSignal } from "solid-js";
 
 interface SegmentedControlProps {
   options: {
@@ -18,7 +18,7 @@ export const SegmentedControl: ParentComponent<SegmentedControlProps> = (props) 
   };
 
   return (
-    <fieldset class="relative p-[1px] h-auto flex items-stretch overflow-hidden rounded-[6px] shadow-segmented-control bg-fills-opaque-5 dark:bg-[#1C1C1F] ">
+    <fieldset class="text-primary relative p-[1px] h-auto flex items-stretch overflow-hidden rounded-[6px] shadow-segmented-control bg-fills-opaque-5 dark:bg-[#1C1C1F] ">
       <For each={props.options}>
         {(option) => (
           <input
@@ -28,7 +28,7 @@ export const SegmentedControl: ParentComponent<SegmentedControlProps> = (props) 
             name="segmented-control"
             checked={selectedValue() === option.id}
             onChange={handleChange}
-            class="transition-all w-100px appearance-none relative h-[22px] flex-1 rounded dark:(checked:bg-[#636366] active:bg-[#636366] active:opacity-100) active-(opacity-50 bg-white) checked-(bg-white shadow-sm before:hidden) first:before:hidden before:absolute before:z-[-1] before:left-[-1px] before:top-[5px] before:w-[1px] before:h-[10px] before:bg-fills-opaque-4 before:rounded"
+            class="transition-all appearance-none relative h-[22px] flex-1 rounded dark:(checked:bg-[#636366] active:bg-[#636366] active:opacity-100) active-(opacity-50 bg-white) checked-(bg-white shadow-sm before:hidden) first:before:hidden before:absolute before:z-[-1] before:left-[-1px] before:top-[5px] before:w-[1px] before:h-[10px] before:bg-fills-opaque-4 before:rounded"
           />
         )}
       </For>

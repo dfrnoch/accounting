@@ -4,14 +4,14 @@ import { FiChevronLeft, FiChevronRight } from "solid-icons/fi";
 
 interface PageHeaderProps {
   title: string[];
-  action?: JSX.Element[];
+  actionElements?: JSX.Element[];
 }
 
 const PageHeader: Component<PageHeaderProps> = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50 ">
+    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50">
       <div
         class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[200px] shrink-0 px-2.5 lg:px-4 text-primary"
         data-tauri-drag-region
@@ -21,10 +21,7 @@ const PageHeader: Component<PageHeaderProps> = (props) => {
         data-tauri-drag-region
       >
         <div class="flex flex-row h-full">
-          <div
-            class="flex items-center justify-center text-white gap-3 text-sm font-semibold mr-5"
-            data-tauri-drag-region
-          >
+          <div class="flex items-center justify-center  gap-3 text-sm font-semibold mr-5" data-tauri-drag-region>
             <button
               class="rounded hover:bg-fills-opaque-4 bg-transparent transition-all p-1 flex items-center justify-center text-primary"
               type="button"
@@ -65,7 +62,9 @@ const PageHeader: Component<PageHeaderProps> = (props) => {
             </For>
           </div>
         </div>
-        <div class="flex flex-row gap-4 items-center py-1 h-full text-primary">{props.action?.map((item) => item)}</div>
+        <div class="flex flex-row gap-4 items-center py-1.5 h-full text-primary">
+          {props.actionElements?.reverse().map((item) => item)}
+        </div>
       </div>
     </div>
   );

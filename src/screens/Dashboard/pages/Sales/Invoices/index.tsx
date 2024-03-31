@@ -1,14 +1,13 @@
 import { getInvoices } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
-import { Button } from "@/shared/components/Button";
-import { SegmentedControl } from "@/shared/components/SegmentedControl";
 import { useSelector } from "@/store";
-import { FiDownload, FiEdit, FiTrash } from "solid-icons/fi";
+import { FiDownload, FiEdit, FiPlus, FiTrash } from "solid-icons/fi";
 import { type Component, createSignal } from "solid-js";
 import Popover from "@/shared/components/Popover";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
+import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
@@ -24,11 +23,8 @@ const Invoices: Component = () => {
   };
   fetchInvoices();
 
-  const loadPage = async (page: number, pageSize: number) => {
-    // Simulating an API call to fetch data for the specified page
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const data = books.slice(startIndex, endIndex);
+  const loadPage = async (indices: { start: number; end: number }) => {
+    const data = books.slice(indices.start, indices.end);
     return data;
   };
 
@@ -179,26 +175,16 @@ const Invoices: Component = () => {
 
   return (
     <>
-      <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.invoices")]} />
-      <Table
-        data={[]}
-        columns={columns}
-        totalItems={books.length}
-        loadPage={loadPage}
-        rowActions={rowActions}
-        // extraContent={
-        //   <div class="flex flex-row gap-2 items-center">
-        //     <Button onClick={() => navigate("new")}>Create new invoice</Button>
-        //     <SegmentedControl
-        //       onChange={(value) => console.log("Filter invoices by:", value)}
-        //       options={[
-        //         { id: "all", label: "All" },
-        //         { id: "unpaid", label: "Unpaid" },
-        //       ]}
-        //     />
-        //   </div>
-        // }
+      <PageHeader
+        title={[t("sidebar.section.sales"), t("sidebar.button.invoices")]}
+        actionElements={[
+          <HeaderButton onClick={() => setInvoicePopover(true)} buttonType="primary">
+            <FiPlus class="stroke-2" />
+          </HeaderButton>,
+          <HeaderButton>Export</HeaderButton>,
+        ]}
       />
+      <Table columns={columns} totalItems={books.length} loadPage={loadPage} rowActions={rowActions} />
       <Popover show={invoicePopover()} onClose={() => setInvoicePopover(false)} title="Create Invoice">
         <div>cuspoic</div>
       </Popover>

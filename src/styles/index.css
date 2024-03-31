@@ -20,11 +20,23 @@ body {
     /* Standard syntax */
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 :root,
 :root.light {
     --color-primary: #232323;
     --color-secondary: #52525b;
     --bg-primary: #EAEAEB;
+    --bg-secondary: #FFFFFF;
     --color-lightgrey: #E5E7E7;
     --color-danger: #b91c1c;
     --color-warning: #f97316;
@@ -44,6 +56,7 @@ body {
     --color-primary: #E3E3E3;
     --color-secondary: #a1a1aa;
     --bg-primary: #262626;
+    --bg-secondary: #636366;
     --color-lightgrey: #E5E7E7;
     --color-danger: #f87171;
     --color-warning: #facc15;

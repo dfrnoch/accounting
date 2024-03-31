@@ -26,6 +26,9 @@
       }
     }
   },
+  "table": {
+    "all": "All"
+  },
   "sidebar": {
     "button": {
       "overview": "Overview",

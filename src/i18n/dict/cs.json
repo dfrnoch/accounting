@@ -24,6 +24,9 @@
       }
     }
   },
+  "table": {
+    "all": "Vše"
+  },
   "sidebar": {
     "button": {
       "overview": "Přehled",

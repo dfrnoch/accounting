@@ -1,53 +1,35 @@
-import { createSignal, createEffect, For, type Component } from "solid-js";
+// Table.tsx
+import { createSignal, onMount, For, type Component } from "solid-js";
 import Pagination from "./Pagination";
 import TableHead from "./TableHeader";
 import TableRow from "./Row";
-import { Search } from "@/shared/components/Search";
 
 interface TableProps<T extends Record<string, unknown>> {
-  data: T[];
   columns: Array<{ field: keyof T; header: string }>;
   rowActions?: Array<{ label: string; onClick: (item: T) => void; icon?: Component }>;
-  loadPage: (page: number, pageSize: number) => Promise<T[]>;
+  loadPage: (indices: { start: number; end: number }) => Promise<T[]>;
   totalItems: number;
+  allowedCounts?: number[];
 }
 
 const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
-  const [data, setData] = createSignal(props.data);
-  const [currentPage, setCurrentPage] = createSignal(1);
-  const [itemsPerPage] = createSignal(10);
-  const [searchTerm, setSearchTerm] = createSignal("");
-  const [filteredData, setFilteredData] = createSignal<T[]>([]);
+  const [data, setData] = createSignal<T[]>([]);
 
-  createEffect(() => {
-    const filtered = data().filter((item) =>
-      Object.values(item).some((value) => String(value).toLowerCase().includes(searchTerm().toLowerCase())),
-    );
-    setFilteredData(filtered);
-  });
-
-  const totalPages = () => Math.ceil(props.totalItems / itemsPerPage());
-
-  const loadPage = async (page: number) => {
-    const data = await props.loadPage(page, itemsPerPage());
-    setData(data);
-    setCurrentPage(page);
+  const loadData = async (indices: { start: number; end: number }) => {
+    const newData = await props.loadPage(indices);
+    setData(newData);
   };
 
-  createEffect(() => {
-    loadPage(currentPage());
+  onMount(async () => {
+    await loadData({ start: 0, end: 10 });
   });
 
   return (
     <div class="flex h-full flex-col justify-between">
-      {/* <div class="flex flex-row justify-between mb-4"> */}
-      {/* <Search onInput={(e) => setSearchTerm(e.currentTarget.value)} /> */}
-      {/* <div>{props.extraContent}</div> */}
-      {/* </div> */}
       <table class="min-w-full leading-normal">
         <TableHead columns={props.columns} hasActions={!!props.rowActions} />
         <tbody class="overflow-y-auto">
-          <For each={filteredData()}>
+          <For each={data()}>
             {(item) => (
               <TableRow
                 item={item}
@@ -61,7 +43,7 @@ const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
           </For>
         </tbody>
       </table>
-      <Pagination currentPage={currentPage()} totalPages={totalPages()} onPageChange={loadPage} />
+      <Pagination allowedCounts={props.allowedCounts} itemCount={props.totalItems} onIndexChange={loadData} />
     </div>
   );
 };
