@@ -1,7 +1,6 @@
 import type { ParentComponent } from "solid-js";
 import { createEffect } from "solid-js";
 import { getCompany } from "../../bindings";
-import TitleBar from "./components/TitleBar";
 import Sidebar from "./components/Sidebar";
 import { useSelector } from "@/store";
 
@@ -27,11 +26,10 @@ const Dashboard: ParentComponent = (props) => {
 
   return (
     <>
-      <TitleBar />
       <div class="flex flex-row items-start w-screen">
         <Sidebar />
-        <div class="overflow-y-auto px-4 pt-14 mx-auto w-full h-screen no-scrollbar bg-primary text-primary">
-          <div class="container">{props.children}</div>
+        <div class="overflow-y-auto px-4 mx-auto w-full h-screen pt-50px no-scrollbar bg-primary text-primary">
+          {props.children}
         </div>
       </div>
     </>

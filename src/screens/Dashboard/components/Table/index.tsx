@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For, type JSX, type Component } from "solid-js";
+import { createSignal, createEffect, For, type Component } from "solid-js";
 import Pagination from "./Pagination";
 import TableHead from "./TableHeader";
 import TableRow from "./Row";
@@ -7,7 +7,6 @@ import { Search } from "@/shared/components/Search";
 interface TableProps<T extends Record<string, unknown>> {
   data: T[];
   columns: Array<{ field: keyof T; header: string }>;
-  extraContent?: JSX.Element;
   rowActions?: Array<{ label: string; onClick: (item: T) => void; icon?: Component }>;
   loadPage: (page: number, pageSize: number) => Promise<T[]>;
   totalItems: number;
@@ -40,31 +39,29 @@ const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
   });
 
   return (
-    <div class="w-full">
-      <div class="rounded-lg">
-        <div class="flex flex-row justify-between mb-4">
-          <Search onInput={(e) => setSearchTerm(e.currentTarget.value)} />
-          <div>{props.extraContent}</div>
-        </div>
-        <table class="min-w-full leading-normal">
-          <TableHead columns={props.columns} hasActions={!!props.rowActions} />
-          <tbody>
-            <For each={filteredData()}>
-              {(item) => (
-                <TableRow
-                  item={item}
-                  columns={props.columns}
-                  rowActions={props.rowActions?.map((action) => ({
-                    onClick: () => action.onClick(item),
-                    icon: action.icon,
-                  }))}
-                />
-              )}
-            </For>
-          </tbody>
-        </table>
-        <Pagination currentPage={currentPage()} totalPages={totalPages()} onPageChange={loadPage} />
-      </div>
+    <div class="flex h-full flex-col justify-between">
+      {/* <div class="flex flex-row justify-between mb-4"> */}
+      {/* <Search onInput={(e) => setSearchTerm(e.currentTarget.value)} /> */}
+      {/* <div>{props.extraContent}</div> */}
+      {/* </div> */}
+      <table class="min-w-full leading-normal">
+        <TableHead columns={props.columns} hasActions={!!props.rowActions} />
+        <tbody class="overflow-y-auto">
+          <For each={filteredData()}>
+            {(item) => (
+              <TableRow
+                item={item}
+                columns={props.columns}
+                rowActions={props.rowActions?.map((action) => ({
+                  onClick: () => action.onClick(item),
+                  icon: action.icon,
+                }))}
+              />
+            )}
+          </For>
+        </tbody>
+      </table>
+      <Pagination currentPage={currentPage()} totalPages={totalPages()} onPageChange={loadPage} />
     </div>
   );
 };

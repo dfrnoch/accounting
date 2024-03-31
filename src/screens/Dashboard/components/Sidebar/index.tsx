@@ -5,6 +5,7 @@ import { useSelector } from "@/store";
 import { useI18n } from "@/i18n";
 import {
   FiCheck,
+  FiClipboard,
   FiClock,
   FiDollarSign,
   FiFileText,
@@ -13,6 +14,7 @@ import {
   FiPlus,
   FiSave,
   FiSettings,
+  FiTruck,
   FiUsers,
 } from "solid-icons/fi";
 import { Hr } from "@/shared/components/Menu/Hr";
@@ -63,6 +65,7 @@ const Sidebar: Component = () => {
       title: t("sidebar.section.purchase"),
       buttons: [
         { target: "/dashboard/purchase/expenses", icon: <FiDollarSign />, label: t("sidebar.button.expenses") },
+        { target: "/dashboard/purchase/suppliers", icon: <FiTruck />, label: t("sidebar.button.suppliers") },
       ],
     },
     {
@@ -70,6 +73,7 @@ const Sidebar: Component = () => {
       buttons: [
         { target: "/dashboard/other/clients", icon: <FiUsers />, label: t("sidebar.button.clients") },
         { target: "/dashboard/other/reports", icon: <FiPaperclip />, label: t("sidebar.button.reports") },
+        { target: "/dashboard/other/templates", icon: <FiClipboard />, label: t("sidebar.button.templates") },
       ],
     },
   ];

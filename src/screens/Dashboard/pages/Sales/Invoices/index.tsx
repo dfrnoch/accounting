@@ -8,6 +8,7 @@ import { FiDownload, FiEdit, FiTrash } from "solid-icons/fi";
 import { type Component, createSignal } from "solid-js";
 import Popover from "@/shared/components/Popover";
 import { useNavigate } from "@solidjs/router";
+import PageHeader from "@/screens/Dashboard/components/PageHeader";
 
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
@@ -177,30 +178,31 @@ const Invoices: Component = () => {
   ];
 
   return (
-    <div class="">
+    <>
+      <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.invoices")]} />
       <Table
         data={[]}
         columns={columns}
         totalItems={books.length}
         loadPage={loadPage}
         rowActions={rowActions}
-        extraContent={
-          <div class="flex flex-row gap-2 items-center">
-            <Button onClick={() => navigate("new")}>Create new invoice</Button>
-            <SegmentedControl
-              onChange={(value) => console.log("Filter invoices by:", value)}
-              options={[
-                { id: "all", label: "All" },
-                { id: "unpaid", label: "Unpaid" },
-              ]}
-            />
-          </div>
-        }
+        // extraContent={
+        //   <div class="flex flex-row gap-2 items-center">
+        //     <Button onClick={() => navigate("new")}>Create new invoice</Button>
+        //     <SegmentedControl
+        //       onChange={(value) => console.log("Filter invoices by:", value)}
+        //       options={[
+        //         { id: "all", label: "All" },
+        //         { id: "unpaid", label: "Unpaid" },
+        //       ]}
+        //     />
+        //   </div>
+        // }
       />
       <Popover show={invoicePopover()} onClose={() => setInvoicePopover(false)} title="Create Invoice">
         <div>cuspoic</div>
       </Popover>
-    </div>
+    </>
   );
 };
 

@@ -49,8 +49,11 @@ model Client {
 model Invoice {
     id       Int    @id @default(autoincrement())
     number   String @unique
+
     client   Client @relation(fields: [clientId], references: [id])
     clientId Int
+    templateId String 
+
 
     issueDate DateTime
     taxDate   DateTime // Datum zdanitelného plnění
@@ -63,6 +66,15 @@ model Invoice {
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int
 }
+
+
+model Template {
+    id String @id @default(cuid())
+
+    html String
+    type String // ENUM = INVOICE, CREDIT_NOTE todo!
+}
+
 
 model InvoiceItem {
     id        Int     @id @default(autoincrement())
