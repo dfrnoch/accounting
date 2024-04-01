@@ -14,22 +14,16 @@ mod window_ext;
 #[allow(warnings, unused)]
 mod prisma;
 
-use prisma_client_rust::not;
-
+mod commands;
 mod error;
 mod migrator;
 mod util;
 
-use error::{CommandResult, CoreError};
 use migrator::new_client;
 use prisma::*;
-use prisma_client_rust::QueryError;
-use serde::Deserialize;
-// use specta::collect_types;
 use std::sync::Arc;
-use tauri::{Manager, State, Theme};
+use tauri::{Manager, State};
 use tauri_plugin_autostart::MacosLauncher;
-// use tauri_specta::ts;
 use window_ext::{ToolbarThickness, WindowExt};
 use window_vibrancy::NSVisualEffectMaterial;
 
@@ -45,126 +39,6 @@ struct Payload {
 }
 
 type DbState<'a> = State<'a, Arc<PrismaClient>>;
-
-// #[specta::specta]
-#[tauri::command]
-async fn check_db(client: DbState<'_>) -> CommandResult<i16> {
-    let company_count = client.company().count(vec![]).exec().await;
-
-    info!("Checking DB");
-    match company_count {
-        Ok(_) => {
-            if company_count.unwrap() == 0 {
-                return Ok(400);
-            }
-            return Ok(200);
-        }
-        Err(_) => Ok(400),
-    }
-}
-
-// #[specta::specta]
-#[tauri::command]
-async fn migrate_and_populate(client: DbState<'_>) -> CommandResult<()> {
-    #[cfg(debug_assertions)]
-    client._db_push().await?;
-
-    #[cfg(not(debug_assertions))]
-    client._migrate_deploy().unwrap();
-
-    Ok(())
-}
-
-// #[tauri::command]
-// pub async fn fetch(url: String) -> Result<serde_json::Value, String> {
-//     // call map_err to convert the error to a string
-//     let resp = reqwest::get(&url).await.map_err(|e| e.to_string())?;
-//     Ok(resp)
-// }
-
-// #[specta::specta]
-#[tauri::command]
-async fn get_invoices(
-    client: DbState<'_>,
-    company_id: Option<i32>,
-) -> Result<Vec<invoice::Data>, QueryError> {
-    client
-        .invoice()
-        .find_many(vec![invoice::company_id::equals(company_id.unwrap_or(1))])
-        .exec()
-        .await
-}
-
-#[tauri::command]
-async fn get_companies(
-    client: DbState<'_>,
-    exclude: Option<i32>,
-) -> Result<Vec<company::Data>, QueryError> {
-    println!("Getting companies, exluding {:?}", exclude);
-    let data = client
-        .company()
-        .find_many(vec![not![company::id::equals(exclude.unwrap_or(999))]])
-        .exec()
-        .await;
-
-    println!("{:?}", data);
-    data
-}
-
-#[tauri::command]
-async fn get_company(
-    client: DbState<'_>,
-    id: Option<i32>,
-) -> Result<Option<company::Data>, QueryError> {
-    client
-        .company()
-        .find_first(vec![company::id::equals(id.unwrap_or(1))])
-        .exec()
-        .await
-}
-// export type CreateCompanyData = {
-//   name: string;
-//   cin: string;
-//   vatId: string;
-//   streetAddress: string;
-//   city: string;
-//   postalCode: string;
-//   phoneNumber: string;
-// };
-#[derive(Deserialize, Debug)]
-struct CreateCompanyData {
-    name: String,
-    cin: String,
-    vat_id: Option<String>,
-    // street_adress: String,
-    city: String,
-    // postal_code: String,
-    phone_number: Option<String>,
-    email: Option<String>,
-}
-
-// #[specta::specta]
-
-#[tauri::command]
-async fn create_company(client: DbState<'_>, data: CreateCompanyData) -> Result<company::Data, ()> {
-    debug!("Creating company {:?}", data);
-    client
-        .company()
-        .create(
-            data.name,
-            data.cin,
-            "cus".to_string(),
-            data.city,
-            "aaaa".to_string(),
-            vec![
-                company::vat_id::set(data.vat_id),
-                company::phone_number::set(data.phone_number),
-            ],
-        )
-        .exec()
-        .await
-        .map_err(|_| ())
-}
 
 #[tokio::main]
 async fn main() {
@@ -200,7 +74,6 @@ async fn main() {
         // .plugin(specta_builder)
         // .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_dialog::init())
-        // .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_process::init())
@@ -222,13 +95,15 @@ async fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            check_db,
-            get_company,
-            migrate_and_populate,
-            create_company,
-            get_companies,
-            get_invoices,
-            // fetch,
+            commands::db::check_db,
+            commands::db::migrate_and_populate,
+            commands::company::get_company,
+            commands::company::create_company,
+            commands::company::get_companies,
+            commands::invoice::get_invoices,
+            commands::template::get_templates,
+            commands::template::get_template,
+            // commands::template::create_template
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

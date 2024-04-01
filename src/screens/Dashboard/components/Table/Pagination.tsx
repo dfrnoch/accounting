@@ -2,11 +2,12 @@ import { useI18n } from "@/i18n";
 import { SegmentedControl } from "@/shared/components/SegmentedControl";
 import { FiChevronLeft, FiChevronRight } from "solid-icons/fi";
 import { createSignal } from "solid-js";
+import type { Indicies } from ".";
 
 interface PaginationProps {
   itemCount: number;
   allowedCounts?: number[];
-  onIndexChange: (indices: { start: number; end: number }) => void;
+  onIndexChange: (indices: Indicies) => void;
 }
 
 const Pagination = (props: PaginationProps) => {
@@ -57,9 +58,9 @@ const Pagination = (props: PaginationProps) => {
   };
 
   const getSliceIndices = () => {
-    const start = (pageNo() - 1) * count();
-    const end = pageNo() * count();
-    return { start, end };
+    const skip = (pageNo() - 1) * count();
+    const take = count();
+    return { skip, take };
   };
 
   return (

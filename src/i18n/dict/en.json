@@ -29,6 +29,10 @@
   "table": {
     "all": "All"
   },
+  "pageHeaader": {
+    "search": "Search",
+    "new": "New"
+  },
   "sidebar": {
     "button": {
       "overview": "Overview",

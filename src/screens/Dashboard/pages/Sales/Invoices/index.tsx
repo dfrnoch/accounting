@@ -1,6 +1,6 @@
 import { getInvoices } from "@/bindings";
 import { useI18n } from "@/i18n";
-import Table from "@/screens/Dashboard/components/Table";
+import Table, { Indicies } from "@/screens/Dashboard/components/Table";
 import { useSelector } from "@/store";
 import { FiDownload, FiEdit, FiPlus, FiTrash } from "solid-icons/fi";
 import { type Component, createSignal } from "solid-js";
@@ -12,7 +12,6 @@ import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
   const [t] = useI18n();
-  const [invoices, setInvoices] = createSignal([]);
   const navigate = useNavigate();
 
   const fetchInvoices = async () => {
@@ -23,8 +22,8 @@ const Invoices: Component = () => {
   };
   fetchInvoices();
 
-  const loadPage = async (indices: { start: number; end: number }) => {
-    const data = books.slice(indices.start, indices.end);
+  const loadPage = async (indices: Indicies) => {
+    const data = books.slice(indices.skip, indices.skip + indices.take);
     return data;
   };
 
@@ -178,7 +177,7 @@ const Invoices: Component = () => {
       <PageHeader
         title={[t("sidebar.section.sales"), t("sidebar.button.invoices")]}
         actionElements={[
-          <HeaderButton onClick={() => setInvoicePopover(true)} buttonType="primary">
+          <HeaderButton onClick={() => navigate("new")} buttonType="primary">
             <FiPlus class="stroke-2" />
           </HeaderButton>,
           <HeaderButton>Export</HeaderButton>,

@@ -13,6 +13,7 @@ model Company {
     id       Int       @id @default(autoincrement())
     name     String
     invoices Invoice[]
+    templates Template[]
 
     cin   String  @unique // IČO
     vatId String? @unique // DIČ
@@ -69,10 +70,13 @@ model Invoice {
 
 
 model Template {
-    id String @id @default(cuid())
+    id Int @id @default(autoincrement())
 
     html String
-    type String // ENUM = INVOICE, CREDIT_NOTE todo!
+    type String  @default("INVOICE")// ENUM = INVOICE, CREDIT_NOTE todo!
+
+    company   Company @relation(fields: [companyId], references: [id])
+    companyId Int
 }
 
 

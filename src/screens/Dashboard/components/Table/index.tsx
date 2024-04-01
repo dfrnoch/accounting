@@ -1,13 +1,17 @@
-// Table.tsx
 import { createSignal, onMount, For, type Component } from "solid-js";
 import Pagination from "./Pagination";
 import TableHead from "./TableHeader";
 import TableRow from "./Row";
 
+export interface Indicies {
+  skip: number;
+  take: number;
+}
+
 interface TableProps<T extends Record<string, unknown>> {
   columns: Array<{ field: keyof T; header: string }>;
   rowActions?: Array<{ label: string; onClick: (item: T) => void; icon?: Component }>;
-  loadPage: (indices: { start: number; end: number }) => Promise<T[]>;
+  loadPage: (indices: Indicies) => Promise<T[]>;
   totalItems: number;
   allowedCounts?: number[];
 }
@@ -15,13 +19,13 @@ interface TableProps<T extends Record<string, unknown>> {
 const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
   const [data, setData] = createSignal<T[]>([]);
 
-  const loadData = async (indices: { start: number; end: number }) => {
+  const loadData = async (indices: { skip: number; take: number }) => {
     const newData = await props.loadPage(indices);
     setData(newData);
   };
 
   onMount(async () => {
-    await loadData({ start: 0, end: 10 });
+    await loadData({ skip: 0, take: props.allowedCounts?.[0] || 10 });
   });
 
   return (

@@ -3,6 +3,7 @@ import { createEffect } from "solid-js";
 import { getCompany } from "../../bindings";
 import Sidebar from "./components/Sidebar";
 import { useSelector } from "@/store";
+import toast, { Toaster } from "solid-toast";
 
 const Dashboard: ParentComponent = (props) => {
   const stateService = useSelector((state) => state.stateService);
@@ -28,6 +29,7 @@ const Dashboard: ParentComponent = (props) => {
     <>
       <div class="flex flex-row items-start w-screen">
         <Sidebar />
+        <Toaster position="bottom-right" gutter={8} />
         <div class="overflow-y-auto px-4 mx-auto w-full h-screen pt-50px no-scrollbar bg-primary text-primary">
           {props.children}
         </div>

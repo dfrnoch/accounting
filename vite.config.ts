@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
 import UnocssPlugin from "@unocss/vite";
-import path from "path";
+import path from "node:path";
 
 // https://vitejs.dev/config/
 // @ts-expect-error
@@ -17,7 +17,10 @@ export default defineConfig(async () => ({
       // "@i18n": path.resolve(__dirname, "./src/i18n"),
     },
   },
-
+  optimizeDeps: {
+    // Add both @codemirror/state and @codemirror/view to included deps to optimize
+    include: ["@codemirror/state", "@codemirror/view"],
+  },
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors
   clearScreen: false,

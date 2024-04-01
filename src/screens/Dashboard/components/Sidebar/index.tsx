@@ -21,6 +21,7 @@ import { Hr } from "@/shared/components/Menu/Hr";
 import { DisclosureStateChild, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from "terracotta";
 import { type Company, getCompanies } from "@/bindings";
 import { useNavigate } from "@solidjs/router";
+import toast from "solid-toast";
 
 interface SidebarButtonData {
   target: string;
@@ -49,6 +50,7 @@ const Sidebar: Component = () => {
 
   const setCompany = (company: Company) => {
     stateService.updateState({ companyId: company.id });
+    toast.success("Cuspic kamarade");
     navigate("/");
   };
 
@@ -57,6 +59,7 @@ const Sidebar: Component = () => {
       title: t("sidebar.section.sales"),
       buttons: [
         { target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") },
+        { target: "/dashboard/sales/clients", icon: <FiUsers />, label: t("sidebar.button.clients") },
         { target: "/dashboard/sales/templates", icon: <FiSave />, label: t("sidebar.button.templates") },
         { target: "/dashboard/sales/schedules", icon: <FiClock />, label: t("sidebar.button.schedules") },
       ],
@@ -71,7 +74,6 @@ const Sidebar: Component = () => {
     {
       title: t("sidebar.section.other"),
       buttons: [
-        { target: "/dashboard/other/clients", icon: <FiUsers />, label: t("sidebar.button.clients") },
         { target: "/dashboard/other/reports", icon: <FiPaperclip />, label: t("sidebar.button.reports") },
         { target: "/dashboard/other/templates", icon: <FiClipboard />, label: t("sidebar.button.templates") },
       ],
@@ -134,7 +136,7 @@ const Sidebar: Component = () => {
                       <For each={companies()}>
                         {(company): JSX.Element => (
                           <ListboxOption
-                            class="focus:outline-none group"
+                            class="focus:outline-none group px-1"
                             value={company}
                             onClick={() => setCompany(company)}
                           >
@@ -144,7 +146,7 @@ const Sidebar: Component = () => {
                                   "text-primary bg-material-selection": isActive(),
                                   "text-opaque-1": !isActive(),
                                   "group-hover:text-primary group-hover:bg-material-selection": true,
-                                  "cursor-default select-none relative py-2 pl-10 pr-4": true,
+                                  "cursor-default select-none relative py-2 pl-10 pr-4 rounded": true,
                                 }}
                               >
                                 <span
@@ -172,14 +174,18 @@ const Sidebar: Component = () => {
                           </ListboxOption>
                         )}
                       </For>
-                      <ListboxOption value={""} class="focus:outline-none group" onClick={() => navigate("/setup")}>
+                      <ListboxOption
+                        value={""}
+                        class="focus:outline-none group px-1"
+                        onClick={() => navigate("/setup")}
+                      >
                         {({ isActive }): JSX.Element => (
                           <div
                             classList={{
                               "text-primary bg-material-selection": isActive(),
                               "text-opaque-1": !isActive(),
                               "group-hover:text-primary group-hover:bg-material-selection": true,
-                              "cursor-default select-none relative py-2 pl-10 pr-4": true,
+                              "cursor-default select-none relative py-2 pl-10 pr-4 rounded": true,
                             }}
                           >
                             <span

@@ -41,6 +41,11 @@ render(
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/" component={Overview} />
         <Route path="/sales">
+          <Route path="/clients">
+            <Route path="/" component={Clients} />
+            <Route path="/:id" component={ClientDetail} />
+            <Route path="/new" component={CreateClient} />
+          </Route>
           <Route path="/invoices">
             <Route path="/" component={Invoices} />
             <Route path="/:id" component={InvoiceDetail} />
@@ -50,11 +55,6 @@ render(
           <Route path="/schedules" component={Schedules} />
         </Route>
         <Route path="/other">
-          <Route path="/clients">
-            <Route path="/" component={Clients} />
-            <Route path="/:id" component={ClientDetail} />
-            <Route path="/new" component={CreateClient} />
-          </Route>
           <Route path="/reports" component={Reports} />
           <Route path="/templates" component={Templates} />
         </Route>

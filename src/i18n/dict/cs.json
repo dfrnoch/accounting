@@ -27,6 +27,10 @@
   "table": {
     "all": "Vše"
   },
+  "pageHeaader": {
+    "search": "Hledat",
+    "new": "Nový"
+  },
   "sidebar": {
     "button": {
       "overview": "Přehled",
