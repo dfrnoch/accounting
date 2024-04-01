@@ -53,7 +53,28 @@ export type CreateCompanyData = {
   email: string;
 };
 
-export type Invoice = {};
+export interface Invoice {
+  id: number;
+  number: string;
+  clientId: number;
+  templateId: string;
+  currency: string;
+  issueDate: Date;
+  taxDate: Date;
+  dueDate: Date;
+  status: string;
+  items: InvoiceItem[];
+  companyId: number;
+}
+
+export interface InvoiceItem {
+  id: number;
+  invoiceId: number;
+  description: string;
+  quantity: number;
+  price: number;
+  tax: number;
+}
 
 export type Company = {
   id: number;

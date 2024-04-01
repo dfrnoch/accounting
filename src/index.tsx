@@ -5,7 +5,7 @@ import "uno.css";
 
 const Overview = lazy(() => import("./screens/Dashboard/pages"));
 const Invoices = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices"));
-const CreateInvoice = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices/CreateInvoice"));
+const ManageInvoice = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices/ManageInvoice"));
 const InvoiceTemplates = lazy(() => import("./screens/Dashboard/pages/Sales/Templates"));
 const Templates = lazy(() => import("./screens/Dashboard/pages/Other/Templates"));
 const Schedules = lazy(() => import("./screens/Dashboard/pages/Sales/Schedules"));
@@ -14,7 +14,6 @@ const Clients = lazy(() => import("./screens/Dashboard/pages/Other/Clients"));
 const Suppliers = lazy(() => import("./screens/Dashboard/pages/Purchase/Suppliers"));
 const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ClientDetail"));
 const CreateClient = lazy(() => import("./screens/Dashboard/pages/Other/Clients/CreateClient"));
-const InvoiceDetail = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices/InvoiceDetail"));
 const Reports = lazy(() => import("./screens/Dashboard/pages/Other/Reports"));
 const Settings = lazy(() => import("./screens/Dashboard/pages/Settings"));
 const Dashboard = lazy(() => import("./screens/Dashboard"));
@@ -24,7 +23,7 @@ const Loader = lazy(() => import("./Loader"));
 
 import { render } from "solid-js/web";
 import { Theme, getTheme, setTheme } from "./utils/theme";
-import { Route, Router } from "@solidjs/router";
+import { Navigate, Route, Router } from "@solidjs/router";
 
 setTheme(getTheme());
 
@@ -48,8 +47,7 @@ render(
           </Route>
           <Route path="/invoices">
             <Route path="/" component={Invoices} />
-            <Route path="/:id" component={InvoiceDetail} />
-            <Route path="/new" component={CreateInvoice} />
+            <Route path="/:id" component={ManageInvoice} />
           </Route>
           <Route path="/templates" component={InvoiceTemplates} />
           <Route path="/schedules" component={Schedules} />
@@ -63,7 +61,7 @@ render(
           <Route path="/suppliers" component={Suppliers} />
         </Route>
         <Route path="/settings" component={Settings} />
-        <Route path="*" component={Overview} />
+        <Route path="*" component={() => <Navigate href={"/dashboard"} />} />
       </Route>
     </Router>
   ),

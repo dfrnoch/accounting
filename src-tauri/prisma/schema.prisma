@@ -54,13 +54,13 @@ model Invoice {
     client   Client @relation(fields: [clientId], references: [id])
     clientId Int
     templateId String 
+    currency   String 
 
 
     issueDate DateTime
     taxDate   DateTime // Datum zdanitelného plnění
     dueDate   DateTime
 
-    total  Float
     status String        @default("DRAFT") // ENUM = DRAFT, SENT, PAID, CANCELLED, OVERDUE
     items  InvoiceItem[]
 
