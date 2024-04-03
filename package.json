@@ -51,7 +51,7 @@
     "@unocss/transformer-variant-group": "^0.58.6",
     "@unocss/vite": "^0.58.6",
     "typescript": "^5.4.3",
-    "vite": "5.1.4",
+    "vite": "5.1.7",
     "vite-plugin-solid": "^2.10.2"
   }
 }
