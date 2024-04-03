@@ -7,6 +7,7 @@ import { useI18n } from "@/i18n";
 import { useParams } from "@solidjs/router";
 import Form from "@/screens/Dashboard/components/Form";
 import type { Invoice } from "@/bindings";
+import Container from "@/screens/Dashboard/components/Container";
 
 const ManageInvoice: Component = () => {
   const params = useParams<{ readonly id?: string }>();
@@ -45,7 +46,7 @@ const ManageInvoice: Component = () => {
 `;
 
   return (
-    <>
+    <Container>
       <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.invoices"), t("pageHeaader.new")]} />
       <div class="flex flex-col lg:flex-row w-full gap-5 ">
         <div class="w-full lg:w-1/2 flex flex-col">
@@ -293,7 +294,7 @@ const ManageInvoice: Component = () => {
           <TemplateRenderer template={template} data={{ email: "joe@aa.cz", phone: "12122212" }} />
         </div>
       </div>
-    </>
+    </Container>
   );
 };
 

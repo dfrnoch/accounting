@@ -1,9 +1,11 @@
 import { getInvoices } from "@/bindings";
 import { useI18n } from "@/i18n";
+import Container from "@/screens/Dashboard/components/Container";
+import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import Table from "@/screens/Dashboard/components/Table";
 import { useSelector } from "@/store";
 import { FiActivity, FiTrash } from "solid-icons/fi";
-import { Component, createSignal } from "solid-js";
+import { type Component, createSignal } from "solid-js";
 
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
@@ -163,8 +165,8 @@ const Invoices: Component = () => {
   ];
 
   return (
-    <div class="">
-      <h1 class="text-3xl font-bold">{t("invoices.title")}</h1>
+    <Container>
+      <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.schedules")]} />
       <Table
         data={[]}
         columns={columns}
@@ -197,7 +199,7 @@ const Invoices: Component = () => {
           </Row>
         </tbody>
       </table> */}
-    </div>
+    </Container>
   );
 };
 

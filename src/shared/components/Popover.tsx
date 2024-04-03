@@ -1,4 +1,4 @@
-import { ParentComponent, Show } from "solid-js";
+import { type ParentComponent, Show } from "solid-js";
 import { Motion } from "solid-motionone";
 
 interface IPopoverProps {

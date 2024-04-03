@@ -1,4 +1,6 @@
 import { useI18n } from "@/i18n";
+import Container from "@/screens/Dashboard/components/Container";
+import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import Dropdown from "@/shared/components/Menu/Dropdown";
 import { useSelector } from "@/store";
 import { getInitializedPrintWindow } from "@/utils/savePDF";
@@ -8,8 +10,8 @@ const Invoices: Component = () => {
   const [t] = useI18n();
 
   return (
-    <div class="">
-      <h1 class="text-3xl font-bold">{t("invoices.title")}</h1>
+    <Container>
+      <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.templates")]} />
 
       <button
         type="button"
@@ -42,7 +44,7 @@ const Invoices: Component = () => {
           </Row>
         </tbody>
       </table> */}
-    </div>
+    </Container>
   );
 };
 

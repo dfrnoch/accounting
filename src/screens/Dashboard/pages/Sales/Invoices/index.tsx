@@ -1,6 +1,6 @@
 import { getInvoices } from "@/bindings";
 import { useI18n } from "@/i18n";
-import Table, { Indicies } from "@/screens/Dashboard/components/Table";
+import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
 import { useSelector } from "@/store";
 import { FiDownload, FiEdit, FiPlus, FiTrash } from "solid-icons/fi";
 import { type Component, createSignal } from "solid-js";
@@ -8,6 +8,7 @@ import Popover from "@/shared/components/Popover";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
+import Container from "@/screens/Dashboard/components/Container";
 
 const Invoices: Component = () => {
   const company = useSelector((state) => state.companyService.company);
@@ -173,7 +174,7 @@ const Invoices: Component = () => {
   ];
 
   return (
-    <>
+    <Container>
       <PageHeader
         title={[t("sidebar.section.sales"), t("sidebar.button.invoices")]}
         actionElements={[
@@ -187,7 +188,7 @@ const Invoices: Component = () => {
       <Popover show={invoicePopover()} onClose={() => setInvoicePopover(false)} title="Create Invoice">
         <div>cuspoic</div>
       </Popover>
-    </>
+    </Container>
   );
 };
 

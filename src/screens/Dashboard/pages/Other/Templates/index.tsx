@@ -6,6 +6,7 @@ import type { Component } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
+import Container from "@/screens/Dashboard/components/Container";
 
 const Templates: Component = () => {
   const [t] = useI18n();
@@ -46,7 +47,7 @@ const Templates: Component = () => {
   ];
 
   return (
-    <>
+    <Container>
       <PageHeader
         title={[t("sidebar.section.other"), t("sidebar.button.templates")]}
         actionElements={[
@@ -56,7 +57,7 @@ const Templates: Component = () => {
         ]}
       />
       <Table columns={columns} totalItems={10} loadPage={loadPage} rowActions={rowActions} />
-    </>
+    </Container>
   );
 };
 

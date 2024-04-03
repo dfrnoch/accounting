@@ -3,12 +3,13 @@ import Box from "../components/Box";
 import StatBox from "../components/StatBox";
 import { useI18n } from "@/i18n";
 import PageHeader from "../components/PageHeader";
+import Container from "../components/Container";
 
 const Overview: Component = () => {
   const [t] = useI18n();
 
   return (
-    <>
+    <Container>
       <PageHeader title={[t("sidebar.button.overview")]} />
       <div class="grid grid-cols-2 grid-rows-5 gap-3 lg:(gap-4 grid-cols-3) w-full h-screen">
         <div class="col-span-2">
@@ -39,7 +40,7 @@ const Overview: Component = () => {
           </Box>
         </div>
       </div>
-    </>
+    </Container>
   );
 };
 
