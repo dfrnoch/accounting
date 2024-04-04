@@ -1,3 +1,4 @@
+use crate::company;
 use crate::template;
 use crate::DbState;
 use prisma_client_rust::QueryError;
@@ -40,18 +41,50 @@ pub async fn get_template(
         .await
 }
 
+#[derive(Deserialize, Debug)]
+pub struct CreateTemplateData {
+    html: String,
+    name: String,
+    company_id: i32,
+    template_type: String,
+}
+#[tauri::command]
+pub async fn create_template(
+    client: DbState<'_>,
+    data: CreateTemplateData,
+) -> Result<template::Data, QueryError> {
+    debug!("Creating template");
+    client
+        .template()
+        .create(
+            data.name,
+            data.html,
+            company::id::equals(data.company_id),
+            vec![template::template_type::set(data.template_type)],
+        )
+        .exec()
+        .await
+}
+
+#[tauri::command]
+pub async fn update_template(
+    client: DbState<'_>,
+    id: i32,
+    html: String,
+) -> Result<template::Data, QueryError> {
+    debug!("Updating template");
+    client
+        .template()
+        .update(template::id::equals(id), vec![template::html::set(html)])
+        .exec()
+        .await
+}
+
 // #[derive(Debug)]
 // pub enum TemplateType {
 //     Invoice,
 //     Estimate,
 //     Receipt,
-// }
-
-// #[derive(Deserialize, Debug)]
-// pub struct CreateTemplateData {
-//     html: String,
-//     company_id: i32,
-//     template_type: TemplateType,
 // }
 
 // #[tauri::command]

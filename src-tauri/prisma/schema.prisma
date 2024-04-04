@@ -72,8 +72,9 @@ model Invoice {
 model Template {
     id Int @id @default(autoincrement())
 
+    name String
     html String
-    type String  @default("INVOICE")// ENUM = INVOICE, CREDIT_NOTE todo!
+    templateType String  @default("INVOICE")// ENUM = INVOICE, CREDIT_NOTE todo!
 
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int

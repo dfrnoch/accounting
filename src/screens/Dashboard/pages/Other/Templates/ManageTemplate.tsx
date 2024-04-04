@@ -1,6 +1,6 @@
 import TemplateRenderer from "@/shared/components/PdfRenderer";
 import { Hr } from "@/shared/components/Menu/Hr";
-import { Show, createEffect, createSignal, on, onMount, type Component } from "solid-js";
+import { createEffect, createSignal, on, onMount, type Component } from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import { useI18n } from "@/i18n";
 import { useParams } from "@solidjs/router";
@@ -11,15 +11,14 @@ import type { Extension } from "@codemirror/state";
 import { liquid } from "@codemirror/lang-liquid";
 import { material } from "@uiw/codemirror-theme-material";
 import Popover from "@/shared/components/Popover";
+import { createTemplate, getTemplate, updateTemplate } from "@/bindings";
 
-const ManageInvoice: Component = () => {
+const ManageTemplate: Component = () => {
   const params = useParams<{ readonly id?: string }>();
   const [t] = useI18n();
   const [showRender, setShowRender] = createSignal(false);
 
-  onMount(async () => {});
-
-  const [template, setTemplate] = createSignal(`
+  const [templateCode, setTemplateCode] = createSignal(`
   {% assign people = "alice, bob, carol" | split: ", " -%}
 
   <ul>
@@ -34,6 +33,14 @@ const ManageInvoice: Component = () => {
   
 `);
 
+  onMount(async () => {
+    if (params.id) {
+      const data = await getTemplate(Number(params.id));
+      setTemplateCode(data.html);
+      console.log(data);
+    }
+  });
+
   return (
     <>
       <PageHeader
@@ -43,7 +50,17 @@ const ManageInvoice: Component = () => {
           params.id ? params.id : t("pageHeaader.new"),
         ]}
         actionElements={[
-          <HeaderButton onClick={() => {}} buttonType="primary">
+          <HeaderButton
+            onClick={async () => {
+              if (params.id) {
+                await updateTemplate(Number(params.id), templateCode());
+              } else {
+                console.log("Create");
+                await createTemplate({ type: "INVOICE", html: templateCode(), name: "Cus" });
+              }
+            }}
+            buttonType="primary"
+          >
             Save
           </HeaderButton>,
           <HeaderButton onClick={() => setShowRender(!showRender())} buttonType="secondary">
@@ -52,20 +69,20 @@ const ManageInvoice: Component = () => {
         ]}
       />
 
-      <Editor defaultValue={template()} onValueChange={(value) => setTemplate(value)} />
+      <Editor defaultValue={templateCode()} onValueChange={(value) => setTemplateCode(value)} />
 
       <Popover show={showRender()} onClose={() => setShowRender(false)} title="cus">
         <div class="w-full lg:w-1/2 bg-red rounded-xl gap-4 flex flex-col p-4">
           <h1 class="text-xl font-bold">Preview</h1>
           <Hr />
-          <TemplateRenderer template={template()} data={{ email: "joe@aa.cz", phone: "12122212" }} />
+          <TemplateRenderer template={templateCode()} data={{ email: "joe@aa.cz", phone: "12122212" }} />
         </div>
       </Popover>
     </>
   );
 };
 
-export default ManageInvoice;
+export default ManageTemplate;
 
 const Editor: Component<{ onValueChange: (value: string) => void; defaultValue: string }> = (props) => {
   const {

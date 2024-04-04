@@ -103,7 +103,8 @@ async fn main() {
             commands::invoice::get_invoices,
             commands::template::get_templates,
             commands::template::get_template,
-            // commands::template::create_template
+            commands::template::create_template,
+            commands::template::update_template,
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

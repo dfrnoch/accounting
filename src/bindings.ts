@@ -2,17 +2,12 @@ import { invoke } from "@tauri-apps/api/core";
 import type { Indicies } from "./screens/Dashboard/components/Table";
 import { StateService } from "./store/services/stateService";
 
-const currentCompany = () => {
-  const state = StateService();
-  return state.state.companyId;
-};
-
 export function checkDb() {
   return invoke<200 | 400>("check_db");
 }
 
 export function getInvoices(indicies: Indicies) {
-  return invoke<Invoice[]>("get_invoices", { companyId: currentCompany(), indicies });
+  return invoke<Invoice[]>("get_invoices", { companyId: StateService().state.companyId, indicies });
 }
 
 export function getCompany(id: number | null) {
@@ -40,6 +35,28 @@ export async function saveTemplate(template: Template) {
 
 export async function getTemplate(id: number) {
   return await invoke<Template>("get_template", { id });
+}
+
+// TODO
+export async function deleteTemplate(id: number) {
+  return await invoke("delete_template", { id });
+}
+
+export async function createTemplate(template: {
+  type: "INVOICE" | "ESTIMATE" | "RECEIPT";
+  html: string;
+  name: string;
+}) {
+  return await invoke<Template>("create_template", { companyId: StateService().state.companyId, template });
+}
+
+export async function updateTemplate(id: number, html: string) {
+  return await invoke<BasicResponse>("update_template", { id, html });
+}
+
+export interface BasicResponse {
+  status: "success" | "error";
+  message?: string;
 }
 
 export type CreateCompanyData = {
@@ -88,14 +105,9 @@ export type Company = {
   email: string | null;
 };
 
-export enum TemplateType {
-  Invoice = 0,
-  Estimate = 1,
-  Receipt = 2,
-}
-
 export type Template = {
   id: number;
-  type: TemplateType;
+  type: "INVOICE" | "ESTIMATE" | "RECEIPT";
   html: string;
+  companyId: number;
 };

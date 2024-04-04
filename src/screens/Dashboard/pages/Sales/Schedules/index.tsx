@@ -2,7 +2,7 @@ import { getInvoices } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
-import Table from "@/screens/Dashboard/components/Table";
+import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
 import { useSelector } from "@/store";
 import { FiActivity, FiTrash } from "solid-icons/fi";
 import { type Component, createSignal } from "solid-js";
@@ -20,10 +20,10 @@ const Invoices: Component = () => {
   };
   fetchInvoices();
 
-  const loadPage = async (page: number, pageSize: number) => {
+  const loadPage = async (indicies: Indicies) => {
     // Simulating an API call to fetch data for the specified page
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
+    const startIndex = indicies.skip;
+    const endIndex = startIndex + indicies.take;
     const data = books.slice(startIndex, endIndex);
     return data;
   };
@@ -168,7 +168,6 @@ const Invoices: Component = () => {
     <Container>
       <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.schedules")]} />
       <Table
-        data={[]}
         columns={columns}
         totalItems={books.length}
         loadPage={loadPage}

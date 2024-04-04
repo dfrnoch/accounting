@@ -15,9 +15,9 @@ const Invoices: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
 
-  const fetchInvoices = async () => {
+  const fetchInvoices = async (indicies: Indicies) => {
     console.log(company);
-    const data = await getInvoices(company.id);
+    const data = await getInvoices(indicies);
     console.log(data);
     // setInvoices(data);
   };

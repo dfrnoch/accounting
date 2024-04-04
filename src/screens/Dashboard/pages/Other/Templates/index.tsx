@@ -20,7 +20,6 @@ const Templates: Component = () => {
 
   const columns = [
     { field: "id", header: "ID" },
-    { field: "name", header: "name" },
     { field: "type", header: "Type" },
   ];
 
