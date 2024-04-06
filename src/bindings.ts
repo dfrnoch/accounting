@@ -102,7 +102,7 @@ export type Company = {
 
 export type Template = {
   id: number;
-  type: "INVOICE" | "ESTIMATE" | "RECEIPT";
+  templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
   html: string;
   companyId: number;
 };

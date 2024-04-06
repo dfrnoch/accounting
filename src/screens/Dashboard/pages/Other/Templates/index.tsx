@@ -18,12 +18,6 @@ const Templates: Component = () => {
     return data;
   };
 
-  const columns = [
-    { field: "id", header: "ID" },
-    { field: "name", header: "Name" },
-    { field: "templateType", header: "Type" },
-  ];
-
   const handleEdit = (item: Template) => {
     navigate(`${item.id}`);
   };
@@ -56,7 +50,16 @@ const Templates: Component = () => {
           </HeaderButton>,
         ]}
       />
-      <Table columns={columns} totalItems={10} loadPage={loadPage} rowActions={rowActions} />
+      <Table
+        columns={[
+          { field: "id", header: "ID" },
+          { field: "name", header: "Name" },
+          { field: "templateType", header: "Type" },
+        ]}
+        totalItems={10}
+        loadPage={loadPage}
+        rowActions={rowActions}
+      />
     </Container>
   );
 };
