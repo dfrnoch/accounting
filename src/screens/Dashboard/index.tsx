@@ -3,7 +3,7 @@ import { createEffect } from "solid-js";
 import { getCompany } from "../../bindings";
 import Sidebar from "./components/Sidebar";
 import { useSelector } from "@/store";
-import toast, { Toaster } from "solid-toast";
+import { Toaster } from "solid-toast";
 
 const Dashboard: ParentComponent = (props) => {
   const stateService = useSelector((state) => state.stateService);

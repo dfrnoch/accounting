@@ -26,7 +26,7 @@ export async function getCompanies(exclude?: number) {
 }
 
 export async function getTemplates(indicies: Indicies) {
-  return await invoke<Template[]>("get_templates", { companyId: 1, indicies });
+  return await invoke<Template[]>("get_templates", { companyId: StateService().state.companyId, indicies });
 }
 
 export async function saveTemplate(template: Template) {
@@ -43,20 +43,15 @@ export async function deleteTemplate(id: number) {
 }
 
 export async function createTemplate(template: {
-  type: "INVOICE" | "ESTIMATE" | "RECEIPT";
+  templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
   html: string;
   name: string;
 }) {
-  return await invoke<Template>("create_template", { companyId: StateService().state.companyId, template });
+  return await invoke("create_template", { companyId: StateService().state.companyId, data: template });
 }
 
 export async function updateTemplate(id: number, html: string) {
-  return await invoke<BasicResponse>("update_template", { id, html });
-}
-
-export interface BasicResponse {
-  status: "success" | "error";
-  message?: string;
+  return await invoke("update_template", { id, html });
 }
 
 export type CreateCompanyData = {

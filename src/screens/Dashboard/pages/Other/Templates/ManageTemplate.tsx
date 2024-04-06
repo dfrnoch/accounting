@@ -1,9 +1,9 @@
 import TemplateRenderer from "@/shared/components/PdfRenderer";
 import { Hr } from "@/shared/components/Menu/Hr";
-import { Accessor, createEffect, createSignal, on, onMount, type Component } from "solid-js";
+import { type Accessor, type Setter, createEffect, createSignal, on, onMount, type Component, Show } from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import { useI18n } from "@/i18n";
-import { useParams } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import { createCodeMirror, createEditorControlledValue } from "solid-codemirror";
 import { highlightActiveLineGutter, lineNumbers } from "@codemirror/view";
@@ -12,11 +12,15 @@ import { liquid } from "@codemirror/lang-liquid";
 import { material } from "@uiw/codemirror-theme-material";
 import Popover from "@/shared/components/Popover";
 import { createTemplate, getTemplate, updateTemplate } from "@/bindings";
+import { FiSettings } from "solid-icons/fi";
+import toast from "solid-toast";
 
 const ManageTemplate: Component = () => {
   const params = useParams<{ readonly id?: string }>();
+  const navigate = useNavigate();
   const [t] = useI18n();
   const [showRender, setShowRender] = createSignal(false);
+  const [showSettings, setShowSettings] = createSignal(false);
 
   const [templateCode, setTemplateCode] = createSignal(`
   {% assign people = "alice, bob, carol" | split: ", " -%}
@@ -37,7 +41,6 @@ const ManageTemplate: Component = () => {
     if (params.id) {
       const data = await getTemplate(Number(params.id));
       setTemplateCode(data.html);
-      console.log(data);
     }
   });
 
@@ -53,10 +56,21 @@ const ManageTemplate: Component = () => {
           <HeaderButton
             onClick={async () => {
               if (params.id) {
-                await updateTemplate(Number(params.id), templateCode());
+                try {
+                  await updateTemplate(Number(params.id), templateCode());
+                  toast.success("Template updated"); // TODO: i18n
+                  navigate("/dashboard/other/templates");
+                } catch (e) {
+                  toast.error(e as string);
+                }
               } else {
-                console.log("Create");
-                await createTemplate({ type: "INVOICE", html: templateCode(), name: "Cus" });
+                try {
+                  await createTemplate({ templateType: "INVOICE", html: templateCode(), name: "Cus" });
+                  toast.success("Template created"); // TODO: i18n
+                  navigate("/dashboard/other/templates");
+                } catch (e) {
+                  toast.error(e as string);
+                }
               }
             }}
             buttonType="primary"
@@ -66,10 +80,21 @@ const ManageTemplate: Component = () => {
           <HeaderButton onClick={() => setShowRender(!showRender())} buttonType="secondary">
             {showRender() ? "Edit" : "Preview"}
           </HeaderButton>,
+          <HeaderButton buttonType="secondary" onClick={() => setShowSettings(!showSettings())}>
+            <FiSettings />
+          </HeaderButton>,
         ]}
       />
 
-      <Editor code={templateCode} onValueChange={(value) => setTemplateCode(value)} />
+      <div class="relative h-full">
+        <Editor code={templateCode} onValueChange={setTemplateCode} />
+        <Show when={showSettings()}>
+          <div class="absolute top-0 left-0 w-full  h-full grid grid-cols-6 grid-rows-1 justify-between z-999">
+            <div class="bg-black bg-opacity-20 w-full col-span-4" onClick={() => setShowSettings(false)} />
+            <div class="bg-red col-span-2">dada</div>
+          </div>
+        </Show>
+      </div>
 
       <Popover show={showRender()} onClose={() => setShowRender(false)} title="cus">
         <div class="w-full lg:w-1/2 bg-red rounded-xl gap-4 flex flex-col p-4">
@@ -84,7 +109,7 @@ const ManageTemplate: Component = () => {
 
 export default ManageTemplate;
 
-const Editor: Component<{ onValueChange: (value: string) => void; code: Accessor<string> }> = (props) => {
+const Editor: Component<{ onValueChange: Setter<string>; code: Accessor<string> }> = (props) => {
   const {
     editorView,
     ref: editorRef,
@@ -98,7 +123,6 @@ const Editor: Component<{ onValueChange: (value: string) => void; code: Accessor
      * Fired whenever the editor code value changes.
      */
     onValueChange: (value) => {
-      console.log("value changed", value);
       props.onValueChange(value);
     },
   });

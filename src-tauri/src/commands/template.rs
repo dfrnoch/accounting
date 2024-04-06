@@ -42,42 +42,49 @@ pub async fn get_template(
 }
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateTemplateData {
     html: String,
     name: String,
-    company_id: i32,
     template_type: String,
 }
 #[tauri::command]
 pub async fn create_template(
     client: DbState<'_>,
+    company_id: i32,
     data: CreateTemplateData,
-) -> Result<template::Data, QueryError> {
+) -> Result<(), String> {
     debug!("Creating template");
-    client
+    let data = client
         .template()
         .create(
             data.name,
             data.html,
-            company::id::equals(data.company_id),
+            company::id::equals(company_id),
             vec![template::template_type::set(data.template_type)],
         )
         .exec()
-        .await
+        .await;
+
+    match data {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
 }
 
 #[tauri::command]
-pub async fn update_template(
-    client: DbState<'_>,
-    id: i32,
-    html: String,
-) -> Result<template::Data, QueryError> {
+pub async fn update_template(client: DbState<'_>, id: i32, html: String) -> Result<(), String> {
     debug!("Updating template");
-    client
+    let data = client
         .template()
         .update(template::id::equals(id), vec![template::html::set(html)])
         .exec()
-        .await
+        .await;
+
+    match data {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
 }
 
 // #[derive(Debug)]

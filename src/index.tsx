@@ -57,6 +57,7 @@ render(
           <Route path="/reports" component={Reports} />
           <Route path="/templates">
             <Route path="/" component={Templates} />
+            <Route path="/new" component={ManageTemplates} />
             <Route path="/:id" component={ManageTemplates} />
           </Route>
         </Route>
