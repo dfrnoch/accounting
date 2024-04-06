@@ -19,12 +19,6 @@ const Clients: Component = () => {
     return data;
   };
 
-  const columns = [
-    { field: "id", header: "ID" },
-    { field: "name", header: "Name" },
-    { field: "templateType", header: "Type" },
-  ];
-
   const handleEdit = (item: Template) => {
     navigate(`${item.id}`);
   };
@@ -59,7 +53,16 @@ const Clients: Component = () => {
       />
       <Button onClick={() => navigate("new")}>Přidat klienta</Button>
       <Button onClick={() => navigate("1")}>Detail klienta</Button>
-      <Table columns={columns} totalItems={10} loadPage={loadPage} rowActions={rowActions} />
+      <Table
+        columns={[
+          { field: "id", header: "ID" },
+          { field: "name", header: "Name" },
+          { field: "templateType", header: "Type" },
+        ]}
+        totalItems={10}
+        loadPage={loadPage}
+        rowActions={rowActions}
+      />
     </Container>
   );
 };

@@ -6,8 +6,18 @@ export function checkDb() {
   return invoke<200 | 400>("check_db");
 }
 
+export type GetInvoiceData = {
+  id: number;
+  number: string;
+  clientId: number;
+  templateId: string;
+  currency: string;
+  issueDate: Date;
+  status: string;
+};
+
 export function getInvoices(indicies: Indicies) {
-  return invoke<Invoice[]>("get_invoices", { companyId: StateService().state.companyId, indicies });
+  return invoke<GetInvoiceData[]>("get_invoices", { companyId: StateService().state.companyId, indicies });
 }
 
 export function getCompany(id: number | null) {
@@ -103,6 +113,7 @@ export type Company = {
 export type Template = {
   id: number;
   templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
+  name: string;
   html: string;
   companyId: number;
 };
