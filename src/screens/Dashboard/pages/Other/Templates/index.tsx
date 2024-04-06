@@ -20,7 +20,8 @@ const Templates: Component = () => {
 
   const columns = [
     { field: "id", header: "ID" },
-    { field: "type", header: "Type" },
+    { field: "name", header: "Name" },
+    { field: "templateType", header: "Type" },
   ];
 
   const handleEdit = (item: Template) => {

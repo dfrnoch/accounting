@@ -1,11 +1,11 @@
 import TemplateRenderer from "@/shared/components/PdfRenderer";
 import { Hr } from "@/shared/components/Menu/Hr";
-import { createEffect, createSignal, on, onMount, type Component } from "solid-js";
+import { Accessor, createEffect, createSignal, on, onMount, type Component } from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import { useI18n } from "@/i18n";
 import { useParams } from "@solidjs/router";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
-import { createCodeMirror } from "solid-codemirror";
+import { createCodeMirror, createEditorControlledValue } from "solid-codemirror";
 import { highlightActiveLineGutter, lineNumbers } from "@codemirror/view";
 import type { Extension } from "@codemirror/state";
 import { liquid } from "@codemirror/lang-liquid";
@@ -69,7 +69,7 @@ const ManageTemplate: Component = () => {
         ]}
       />
 
-      <Editor defaultValue={templateCode()} onValueChange={(value) => setTemplateCode(value)} />
+      <Editor code={templateCode} onValueChange={(value) => setTemplateCode(value)} />
 
       <Popover show={showRender()} onClose={() => setShowRender(false)} title="cus">
         <div class="w-full lg:w-1/2 bg-red rounded-xl gap-4 flex flex-col p-4">
@@ -84,16 +84,16 @@ const ManageTemplate: Component = () => {
 
 export default ManageTemplate;
 
-const Editor: Component<{ onValueChange: (value: string) => void; defaultValue: string }> = (props) => {
+const Editor: Component<{ onValueChange: (value: string) => void; code: Accessor<string> }> = (props) => {
   const {
-    // editorView,
+    editorView,
     ref: editorRef,
     createExtension,
   } = createCodeMirror({
     /**
      * The initial value of the editor
      */
-    value: props.defaultValue,
+    value: props.code(),
     /**
      * Fired whenever the editor code value changes.
      */
@@ -105,6 +105,8 @@ const Editor: Component<{ onValueChange: (value: string) => void; defaultValue: 
   const extensions = (): Extension => {
     return [lineNumbers(), highlightActiveLineGutter(), liquid(), material];
   };
+
+  createEditorControlledValue(editorView, props.code);
 
   createEffect(on(extensions, (extensions) => reconfigure(extensions)));
 
