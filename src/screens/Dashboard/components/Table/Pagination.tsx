@@ -18,19 +18,7 @@ const Pagination = (props: PaginationProps) => {
   const maxPages = () => Math.ceil(props.itemCount / count());
 
   const filteredCounts = () => {
-    return (props.allowedCounts || [10, 14, 50, -1]).filter(filterCount);
-  };
-
-  const filterCount = (c: number) => {
-    if (c !== -1 && props.itemCount < c) {
-      return false;
-    }
-
-    if (c === -1 && props.itemCount < (props.allowedCounts?.[0] || 10)) {
-      return false;
-    }
-
-    return true;
+    return props.allowedCounts || [10, 20, 50, -1];
   };
 
   const setPageNoHandler = (value: number) => {

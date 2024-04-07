@@ -47,9 +47,12 @@ export async function getTemplate(id: number) {
   return await invoke<Template>("get_template", { id });
 }
 
-// TODO
 export async function deleteTemplate(id: number) {
   return await invoke("delete_template", { id });
+}
+
+export async function templateCount() {
+  return await invoke<number>("template_count", { companyId: StateService().state.companyId });
 }
 
 export async function createTemplate(template: {

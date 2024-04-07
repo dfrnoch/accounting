@@ -11,8 +11,8 @@ import type { Extension } from "@codemirror/state";
 import { liquid } from "@codemirror/lang-liquid";
 import { material } from "@uiw/codemirror-theme-material";
 import Popover from "@/shared/components/Popover";
-import { createTemplate, getTemplate, updateTemplate } from "@/bindings";
-import { FiSettings } from "solid-icons/fi";
+import { createTemplate, deleteTemplate, getTemplate, updateTemplate } from "@/bindings";
+import { FiSettings, FiTrash } from "solid-icons/fi";
 import toast from "solid-toast";
 
 const ManageTemplate: Component = () => {
@@ -83,6 +83,22 @@ const ManageTemplate: Component = () => {
           <HeaderButton buttonType="secondary" onClick={() => setShowSettings(!showSettings())}>
             <FiSettings />
           </HeaderButton>,
+          <Show when={params.id}>
+            <HeaderButton
+              buttonType="secondary"
+              onClick={async () => {
+                try {
+                  await deleteTemplate(Number(params.id));
+                  toast.success("Template deleted"); // TODO: i18n
+                  navigate("/dashboard/other/templates");
+                } catch (e) {
+                  toast.error(e as string);
+                }
+              }}
+            >
+              <FiTrash />
+            </HeaderButton>
+          </Show>,
         ]}
       />
 

@@ -8,9 +8,14 @@ export interface Indicies {
   take: number;
 }
 
+export interface RowAction<T> {
+  onClick: (item: T) => void;
+  icon?: Component;
+}
+
 interface TableProps<T extends Record<string, unknown>> {
   columns: Array<{ field: keyof T; header: string }>;
-  rowActions?: Array<{ label: string; onClick: (item: T) => void; icon?: Component }>;
+  rowActions?: Array<RowAction<T>>;
   loadPage: (indices: Indicies) => Promise<T[]>;
   totalItems: number;
   allowedCounts?: number[];
@@ -39,8 +44,8 @@ const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
                 item={item}
                 columns={props.columns}
                 rowActions={props.rowActions?.map((action) => ({
+                  ...action,
                   onClick: () => action.onClick(item),
-                  icon: action.icon,
                 }))}
               />
             )}

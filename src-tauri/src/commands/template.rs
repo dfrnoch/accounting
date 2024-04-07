@@ -20,8 +20,8 @@ pub async fn get_templates(
     let data = client
         .template()
         .find_many(vec![template::company_id::equals(company_id)])
-        .skip(0)
-        .take(100)
+        .skip(indicies.skip)
+        .take(indicies.take)
         .exec()
         .await;
 
@@ -106,3 +106,28 @@ pub async fn update_template(client: DbState<'_>, id: i32, html: String) -> Resu
 //         .exec()
 //         .await
 // }
+
+#[tauri::command]
+pub async fn delete_template(client: DbState<'_>, id: i32) -> Result<(), String> {
+    debug!("Deleting template");
+    let data = client
+        .template()
+        .delete(template::id::equals(id))
+        .exec()
+        .await;
+
+    match data {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
+}
+
+#[tauri::command]
+pub async fn template_count(client: DbState<'_>, company_id: i32) -> Result<i64, QueryError> {
+    debug!("Getting template count");
+    client
+        .template()
+        .count(vec![template::company_id::equals(company_id)])
+        .exec()
+        .await
+}

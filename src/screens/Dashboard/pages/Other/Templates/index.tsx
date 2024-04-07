@@ -1,8 +1,8 @@
-import { type Template, getTemplates } from "@/bindings";
+import { type Template, getTemplates, templateCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
-import { FiEdit, FiPlus, FiTrash } from "solid-icons/fi";
-import type { Component } from "solid-js";
+import { FiEdit, FiPlus } from "solid-icons/fi";
+import { createSignal, onMount, type Component } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
@@ -11,10 +11,10 @@ import Container from "@/screens/Dashboard/components/Container";
 const Templates: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
+  const [count, setCount] = createSignal(10);
 
   const loadPage = async (indices: Indicies) => {
     const data = await getTemplates(indices);
-    console.log(data);
     return data;
   };
 
@@ -22,23 +22,12 @@ const Templates: Component = () => {
     navigate(`${item.id}`);
   };
 
-  const handleDelete = (item: Template) => {
-    console.log("Delete:", item);
-    // Handle delete action
+  const getCount = async () => {
+    const data = await templateCount();
+    setCount(data);
   };
 
-  const rowActions = [
-    {
-      label: "Edit",
-      onClick: handleEdit,
-      icon: FiEdit,
-    },
-    {
-      label: "Delete",
-      onClick: handleDelete,
-      icon: FiTrash,
-    },
-  ];
+  onMount(getCount);
 
   return (
     <Container>
@@ -56,9 +45,14 @@ const Templates: Component = () => {
           { field: "name", header: "Name" },
           { field: "templateType", header: "Type" },
         ]}
-        totalItems={10}
+        totalItems={count()}
         loadPage={loadPage}
-        rowActions={rowActions}
+        rowActions={[
+          {
+            onClick: handleEdit,
+            icon: FiEdit,
+          },
+        ]}
       />
     </Container>
   );

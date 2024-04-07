@@ -1,10 +1,11 @@
-import { type Component, For, Show } from "solid-js";
+import { For, Show } from "solid-js";
 import ActionButton from "./ActionButton";
+import type { RowAction } from ".";
 
 interface TableRowProps<T> {
   item: T;
   columns: Array<{ field: keyof T; header: string }>;
-  rowActions?: Array<{ onClick: (item: T) => void; icon?: Component }>;
+  rowActions?: Array<RowAction<T>>;
 }
 
 const TableRow = <T,>(props: TableRowProps<T>) => {
