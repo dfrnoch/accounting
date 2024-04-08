@@ -1,3 +1,4 @@
+pub mod clients;
 pub mod company;
 pub mod db;
 pub mod invoice;
