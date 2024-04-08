@@ -1,4 +1,4 @@
-import { createSignal, onMount, For, type Component } from "solid-js";
+import { createSignal, onMount, For, type Component, type JSX } from "solid-js";
 import Pagination from "./Pagination";
 import TableHead from "./TableHeader";
 import TableRow from "./Row";
@@ -14,7 +14,7 @@ export interface RowAction<T> {
 }
 
 interface TableProps<T extends Record<string, unknown>> {
-  columns: Array<{ field: keyof T; header: string }>;
+  columns: Array<{ field: keyof T; header: string; component?: (item: T) => JSX.Element }>;
   rowActions?: Array<RowAction<T>>;
   loadPage: (indices: Indicies) => Promise<T[]>;
   totalItems: number;

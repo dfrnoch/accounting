@@ -20,7 +20,7 @@ const Clients: Component = () => {
   };
 
   const handleEdit = (item: Template) => {
-    navigate(`${item.id}`);
+    navigate(`detail/${item.id}`);
   };
 
   const handleDelete = (item: Template) => {
@@ -51,8 +51,6 @@ const Clients: Component = () => {
           </HeaderButton>,
         ]}
       />
-      <Button onClick={() => navigate("new")}>Přidat klienta</Button>
-      <Button onClick={() => navigate("1")}>Detail klienta</Button>
       <Table
         columns={[
           { field: "id", header: "ID" },

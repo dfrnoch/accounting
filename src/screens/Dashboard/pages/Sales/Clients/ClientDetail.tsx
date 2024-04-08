@@ -1,21 +1,35 @@
 import { useI18n } from "@/i18n";
+import Box from "@/screens/Dashboard/components/Box";
 import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
+import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import StatBox from "@/screens/Dashboard/components/StatBox";
-import { useParams } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import type { Component } from "solid-js";
 
 const ClientDetail: Component = () => {
   const params = useParams<{ readonly id: string }>();
+  const navigate = useNavigate();
   const [t] = useI18n();
 
   return (
     <Container>
-      <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.clients"), params.id]} />
+      <PageHeader
+        title={[t("sidebar.section.sales"), t("sidebar.button.clients"), params.id]}
+        actionElements={[
+          <HeaderButton onClick={() => navigate(`/dashboard/sales/clients/${params.id}`)} buttonType="primary">
+            Edit
+          </HeaderButton>,
+        ]}
+      />
       <div class="flex flex-row gap-3 lg:gap-4 justify-between items-center w-full ">
         <StatBox title={t("overview.stats.purchase")} value={1654.43} last={6804.52} />
         <StatBox title={t("overview.stats.sales")} value={100} />
         <StatBox title={t("overview.stats.tax")} value={120} />
+      </div>
+      <div class="grid grid-cols-6 h-full mt-4 gap-4">
+        <div class="bg-red col-span-4"></div>
+        <Box class="col-span-2">ddd</Box>
       </div>
     </Container>
   );

@@ -11,10 +11,10 @@ const Templates = lazy(() => import("./screens/Dashboard/pages/Other/Templates")
 const ManageTemplates = lazy(() => import("./screens/Dashboard/pages/Other/Templates/ManageTemplate"));
 const Schedules = lazy(() => import("./screens/Dashboard/pages/Sales/Schedules"));
 const Expenses = lazy(() => import("./screens/Dashboard/pages/Purchase/Expenses"));
-const Clients = lazy(() => import("./screens/Dashboard/pages/Other/Clients"));
+const Clients = lazy(() => import("./screens/Dashboard/pages/Sales/Clients"));
 const Suppliers = lazy(() => import("./screens/Dashboard/pages/Purchase/Suppliers"));
-const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ClientDetail"));
-const CreateClient = lazy(() => import("./screens/Dashboard/pages/Other/Clients/CreateClient"));
+const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Sales/Clients/ClientDetail"));
+const ManageClient = lazy(() => import("./screens/Dashboard/pages/Sales/Clients/ManageClient"));
 const Reports = lazy(() => import("./screens/Dashboard/pages/Other/Reports"));
 const Settings = lazy(() => import("./screens/Dashboard/pages/Settings"));
 const Dashboard = lazy(() => import("./screens/Dashboard"));
@@ -43,8 +43,9 @@ render(
         <Route path="/sales">
           <Route path="/clients">
             <Route path="/" component={Clients} />
-            <Route path="/:id" component={ClientDetail} />
-            <Route path="/new" component={CreateClient} />
+            <Route path="/detail/:id" component={ClientDetail} />
+            <Route path="/new" component={ManageClient} />
+            <Route path="/:id" component={ManageClient} />
           </Route>
           <Route path="/invoices">
             <Route path="/" component={Invoices} />
