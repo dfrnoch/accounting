@@ -17,6 +17,7 @@ mod prisma;
 mod commands;
 mod error;
 mod migrator;
+mod types;
 mod util;
 
 use migrator::new_client;

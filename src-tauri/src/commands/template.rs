@@ -1,14 +1,9 @@
 use crate::company;
 use crate::template;
+use crate::types::Indicies;
 use crate::DbState;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
-
-#[derive(Deserialize, Debug)]
-pub struct Indicies {
-    skip: i64,
-    take: i64,
-}
 
 #[tauri::command]
 pub async fn get_templates(

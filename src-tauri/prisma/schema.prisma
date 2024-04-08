@@ -61,7 +61,7 @@ model Invoice {
     taxDate   DateTime // Datum zdanitelného plnění
     dueDate   DateTime
 
-    status String        @default("DRAFT") // ENUM = DRAFT, SENT, PAID, CANCELLED, OVERDUE
+    status String        @default("DRAFT") // ENUM = DRAFT, PENDING, PAID, CANCELLED, OVERDUE
     items  InvoiceItem[]
 
     company   Company @relation(fields: [companyId], references: [id])

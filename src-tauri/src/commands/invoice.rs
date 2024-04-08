@@ -1,13 +1,14 @@
 use crate::invoice;
+use crate::types::Indicies;
 use crate::DbState;
 use prisma_client_rust::QueryError;
 
 #[tauri::command]
-pub async fn get_invoice(
+pub async fn get_invoices(
     client: DbState<'_>,
     company_id: i32,
     indicies: Indicies,
-) -> Result<Vec<template::Data>, QueryError> {
+) -> Result<Vec<invoice::Data>, QueryError> {
     debug!(
         "Getting invoices from {} with indicies {:?}",
         company_id, indicies
