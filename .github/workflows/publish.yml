@@ -1,0 +1,60 @@
+name: 'Publish'
+on: workflow_dispatch
+
+env:
+  CARGO_INCREMENTAL: 0
+  RUST_BACKTRACE: short
+  RUSTFLAGS: '-W unreachable-pub -W rust-2021-compatibility'
+
+jobs:
+  publish-tauri:
+    strategy:
+      fail-fast: false
+      matrix:
+        settings:
+          - platform: 'macos-latest'
+            args: '--target universal-apple-darwin'
+          - platform: 'ubuntu-22.04'
+            args: ''
+          - platform: 'windows-latest'
+            args: '--target x86_64-pc-windows-msvc'
+    runs-on: ${{ matrix.settings.platform }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+      - name: install dependencies (ubuntu only)
+        if: matrix.settings.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libssl-dev javascriptcoregtk-4.1 libayatana-appindicator3-dev libsoup-3.0-dev libgtk-3-dev libwebkit2gtk-4.1-dev webkit2gtk-4.1 librsvg2-dev patchelf
+      - name: Install bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: Setup node and cache for package data
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'bun'
+          cache-dependency-path: bun.lockb
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - run: bun install
+      - uses: tauri-apps/tauri-action@dev
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: 'v__VERSION__'
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.settings.args }}
+          includeDebug: false

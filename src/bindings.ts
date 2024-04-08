@@ -16,8 +16,19 @@ export type GetInvoiceData = {
   status: string;
 };
 
+export type GetClientData = {
+  id: number;
+  name: string;
+  email: string;
+  phoneNumber: string;
+};
+
 export function getInvoices(indicies: Indicies) {
   return invoke<GetInvoiceData[]>("get_invoices", { companyId: StateService().state.companyId, indicies });
+}
+
+export function getClients(indicies: Indicies) {
+  return invoke<GetClientData[]>("get_clients", { companyId: StateService().state.companyId, indicies });
 }
 
 export function getCompany(id: number | null) {
@@ -31,6 +42,7 @@ export function createCompany(data: CreateCompanyData) {
 export function migrateAndPopulate() {
   return invoke("migrate_and_populate");
 }
+
 export async function getCompanies(exclude?: number) {
   return await invoke<Company[]>("get_companies", { exclude });
 }

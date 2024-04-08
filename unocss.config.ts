@@ -32,6 +32,7 @@ export default defineConfig({
     },
     backgroundColor: {
       primary: "var(--bg-primary)",
+      element: "var(--bg-element)",
       secondary: "var(--bg-secondary)",
       default: "var(--color-default)",
       fills: {

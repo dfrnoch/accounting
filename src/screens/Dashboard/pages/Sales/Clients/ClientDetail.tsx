@@ -4,6 +4,7 @@ import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import StatBox from "@/screens/Dashboard/components/StatBox";
+import Table from "@/screens/Dashboard/components/Table";
 import { useNavigate, useParams } from "@solidjs/router";
 import type { Component } from "solid-js";
 
@@ -28,7 +29,16 @@ const ClientDetail: Component = () => {
         <StatBox title={t("overview.stats.tax")} value={120} />
       </div>
       <div class="grid grid-cols-6 h-full mt-4 gap-4">
-        <div class="bg-red col-span-4"></div>
+        <div class="bg-red col-span-4">
+          <Table
+            columns={[
+              { field: "id", header: "ID" },
+              { field: "name", header: "Name" },
+            ]}
+            totalItems={10}
+            loadPage={() => {}}
+          />
+        </div>
         <Box class="col-span-2">ddd</Box>
       </div>
     </Container>

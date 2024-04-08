@@ -8,6 +8,8 @@ import { useParams } from "@solidjs/router";
 import Form from "@/screens/Dashboard/components/Form";
 import type { Invoice } from "@/bindings";
 import Container from "@/screens/Dashboard/components/Container";
+import Input from "@/screens/Dashboard/components/Form/Input";
+import Dropdown from "@/screens/Dashboard/components/Form/Dropdown";
 
 const ManageInvoice: Component = () => {
   const params = useParams<{ readonly id?: string }>();
@@ -54,33 +56,24 @@ const ManageInvoice: Component = () => {
           <Form form={form}>
             <form.Field name="number">
               {(field) => (
-                <div>
-                  <label>
-                    <div>Invoice Number</div>
-                    <input
-                      value={field().state.value}
-                      onInput={(e) => {
-                        field().handleChange(e.currentTarget.value);
-                      }}
-                    />
-                  </label>
-                </div>
+                <Input
+                  type="text"
+                  label="Number"
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                />
               )}
             </form.Field>
             <form.Field name="clientId">
               {(field) => (
-                <div>
-                  <label>
-                    <div>Client ID</div>
-                    <input
-                      type="number"
-                      value={field().state.value}
-                      onInput={(e) => {
-                        field().handleChange(Number(e.currentTarget.value));
-                      }}
-                    />
-                  </label>
-                </div>
+                <Dropdown
+                  data={[
+                    { name: "Alice", id: 1 },
+                    { name: "Bob", id: 2 },
+                    { name: "Carol", id: 3 },
+                  ]}
+                  onSelect={(data) => field().handleChange(data.id)}
+                />
               )}
             </form.Field>
             <form.Field name="templateId">
