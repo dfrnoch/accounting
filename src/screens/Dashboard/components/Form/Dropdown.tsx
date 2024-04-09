@@ -24,71 +24,67 @@ const Dropdown: Component<DropdownProps> = (props) => {
   };
 
   return (
-    <div class="w-full">
-      <Listbox defaultOpen={false} value={selected()} onSelectChange={handleSelect}>
-        <div class="relative mt-1">
-          <ListboxButton class="relative w-full py-2 pl-3 pr-10 text-left bg-element border-default border-1 rounded-lg cursor-default focus:outline-none sm:text-sm">
-            <span class="block truncate">{selected().name}</span>
-            <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-              <TbSelector class="w-5 h-5 text-primary" aria-hidden="true" />
-            </span>
-          </ListboxButton>
-          <DisclosureStateChild>
-            {({ isOpen }): JSX.Element => (
-              <Transition
-                show={isOpen()}
-                enter="transition ease-in duration-100"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition ease-out duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <ListboxOptions
-                  unmount={false}
-                  class="absolute w-full py-1 mt-1 overflow-auto text-base bg-element border-default border-1 rounded-md shadow-lg max-h-60 focus:outline-none sm:text-sm"
-                >
-                  <For each={props.data}>
-                    {(item): JSX.Element => (
-                      <ListboxOption class="focus:outline-none group" value={item}>
-                        {({ isActive, isSelected }): JSX.Element => (
-                          <div
+    <Listbox defaultOpen={false} value={selected()} onSelectChange={handleSelect}>
+      <ListboxButton class="relative w-full py-1.5 pl-3 pr-10 text-left bg-element border-default border-1 rounded-lg cursor-default focus:outline-none text-sm">
+        <span class="block truncate">{selected().name}</span>
+        <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+          <TbSelector class="w-5 h-5 text-primary" aria-hidden="true" />
+        </span>
+      </ListboxButton>
+      <DisclosureStateChild>
+        {({ isOpen }): JSX.Element => (
+          <Transition
+            show={isOpen()}
+            enter="transition ease-in duration-100"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition ease-out duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <ListboxOptions
+              unmount={false}
+              class="absolute w-full py-1 mt-1 overflow-auto text-base bg-element border-default border-1 rounded-md shadow-lg max-h-60 focus:outline-none sm:text-sm"
+            >
+              <For each={props.data}>
+                {(item): JSX.Element => (
+                  <ListboxOption class="focus:outline-none group" value={item}>
+                    {({ isActive, isSelected }): JSX.Element => (
+                      <div
+                        classList={{
+                          "bg-default": isActive(),
+                          "cursor-default select-none relative py-2 pl-10 pr-4": true,
+                        }}
+                      >
+                        <span
+                          classList={{
+                            "font-medium": isSelected(),
+                            "font-normal": !isSelected(),
+                            "block truncate": true,
+                          }}
+                        >
+                          {item.name}
+                        </span>
+                        {isSelected() ? (
+                          <span
                             classList={{
-                              "bg-default": isActive(),
-                              "cursor-default select-none relative py-2 pl-10 pr-4": true,
+                              "text-primary": true,
+                              "absolute inset-y-0 left-0 flex items-center pl-3": true,
                             }}
                           >
-                            <span
-                              classList={{
-                                "font-medium": isSelected(),
-                                "font-normal": !isSelected(),
-                                "block truncate": true,
-                              }}
-                            >
-                              {item.name}
-                            </span>
-                            {isSelected() ? (
-                              <span
-                                classList={{
-                                  "text-primary": true,
-                                  "absolute inset-y-0 left-0 flex items-center pl-3": true,
-                                }}
-                              >
-                                <FiCheck class="w-5 h-5" />
-                              </span>
-                            ) : null}
-                          </div>
-                        )}
-                      </ListboxOption>
+                            <FiCheck class="w-5 h-5" />
+                          </span>
+                        ) : null}
+                      </div>
                     )}
-                  </For>
-                </ListboxOptions>
-              </Transition>
-            )}
-          </DisclosureStateChild>
-        </div>
-      </Listbox>
-    </div>
+                  </ListboxOption>
+                )}
+              </For>
+            </ListboxOptions>
+          </Transition>
+        )}
+      </DisclosureStateChild>
+    </Listbox>
   );
 };
 

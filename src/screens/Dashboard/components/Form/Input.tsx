@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 
 type TextInputProps = {
-  type: "text" | "date";
+  type: "text" | "date" | "email" | "tel";
   onChange: (value: string) => void;
   label: string;
   defaultValue?: string;
@@ -29,7 +29,7 @@ const Input: Component<InputProps> = (props) => {
   return (
     <input
       type={props.type}
-      class="w-full px-2 py-1 border border-default rounded-lg bg-element border-default"
+      class="w-full px-2 py-1.5 border border-default rounded-lg bg-element text-sm border-default"
       onInput={handleInput}
       placeholder={props.label}
       value={props.defaultValue}

@@ -3,9 +3,10 @@ import type { ParentComponent } from "solid-js";
 
 // TODO: View
 // biome-ignore lint/suspicious/noExplicitAny: idk what the form type is
-const Form: ParentComponent<{ form: FormApi<any, undefined> }> = (props) => {
+const Form: ParentComponent<{ form: FormApi<any, undefined>; class?: string }> = (props) => {
   return (
     <form
+      class={props.class}
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();

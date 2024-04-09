@@ -132,3 +132,17 @@ export type Template = {
   html: string;
   companyId: number;
 };
+
+export interface Client {
+  id: number;
+  name: string;
+  cin?: string;
+  vatId?: string;
+  streetAddress: string;
+  city: string;
+  postalCode: string;
+  email?: string;
+  phoneNumber?: string;
+  invoices?: Invoice[];
+  companyId: number;
+}
