@@ -37,12 +37,6 @@ jobs:
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - name: Setup node and cache for package data
-        uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          cache: 'bun'
-          cache-dependency-path: bun.lockb
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true

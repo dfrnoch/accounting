@@ -12,7 +12,7 @@ const ManageTemplates = lazy(() => import("./screens/Dashboard/pages/Other/Templ
 const Schedules = lazy(() => import("./screens/Dashboard/pages/Sales/Schedules"));
 const Expenses = lazy(() => import("./screens/Dashboard/pages/Purchase/Expenses"));
 const Clients = lazy(() => import("./screens/Dashboard/pages/Other/Clients"));
-const Suppliers = lazy(() => import("./screens/Dashboard/pages/Purchase/Suppliers"));
+const RecievedInvoices = lazy(() => import("./screens/Dashboard/pages/Purchase/ReceivedInvoices"));
 const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ClientDetail"));
 const ManageClient = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ManageClient"));
 const Reports = lazy(() => import("./screens/Dashboard/pages/Other/Reports"));
@@ -64,7 +64,7 @@ render(
         </Route>
         <Route path="/purchase/">
           <Route path="/expenses" component={Expenses} />
-          <Route path="/suppliers" component={Suppliers} />
+          <Route path="/recieved" component={RecievedInvoices} />
         </Route>
         <Route path="/settings" component={Settings} />
         <Route path="*" component={() => <Navigate href={"/dashboard"} />} />
