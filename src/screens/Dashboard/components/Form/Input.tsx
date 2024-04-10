@@ -4,6 +4,7 @@ type TextInputProps = {
   type: "text" | "date" | "email" | "tel";
   onChange: (value: string) => void;
   label: string;
+  placeholder?: string;
   defaultValue?: string;
 };
 
@@ -11,6 +12,7 @@ type NumberInputProps = {
   type: "number";
   onChange: (value: number) => void;
   label: string;
+  placeholder?: string;
   defaultValue?: number;
 };
 
@@ -27,13 +29,16 @@ const Input: Component<InputProps> = (props) => {
   };
 
   return (
-    <input
-      type={props.type}
-      class="w-full px-2 py-1.5 border border-default rounded-lg bg-element text-sm border-default"
-      onInput={handleInput}
-      placeholder={props.label}
-      value={props.defaultValue}
-    />
+    <label class="flex flex-col gap-1">
+      <span class="text-xs text-secondary">{props.label}</span>
+      <input
+        type={props.type}
+        class="w-full px-2 py-1.5 border border-default rounded-md bg-element text-sm border-default"
+        onInput={handleInput}
+        placeholder={props.placeholder}
+        value={props.defaultValue}
+      />
+    </label>
   );
 };
 

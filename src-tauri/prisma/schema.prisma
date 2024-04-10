@@ -10,57 +10,56 @@ generator client {
 }
 
 model Company {
-    id       Int       @id @default(autoincrement())
-    name     String
-    invoices Invoice[]
+    id        Int        @id @default(autoincrement())
+    name      String
+    invoices  Invoice[]
     templates Template[]
-    clients Client[]
+    clients   Client[]
+    settings  Settings?
 
     cin   String  @unique // IČO
     vatId String? @unique // DIČ
 
     // Adress
-    streetAddress String
-    city          String
-    postalCode    String
+    address String
+    city    String
+    zip     String
 
     // Additional fields
-    phoneNumber String?
-    email       String?
+    phone String?
+    email String?
 }
 
 model Client {
-    id Int @id @default(autoincrement())
+    id         Int    @id @default(autoincrement())
+    clientType String @default("BOTH") // ENUM = SUPPLIER, CUSTOMER, BOTH
 
     name  String
-    cin   String? @unique // IČO
+    cin   String  @unique // IČO
     vatId String?
 
-    // Adress
-    streetAddress String
-    city          String
-    postalCode    String
+    address String
+    city    String
+    zip     String
 
     //Contact info
-    email       String?
-    phoneNumber String?
+    email String?
+    phone String?
 
     invoices Invoice[]
-
 
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int
 }
 
 model Invoice {
-    id       Int    @id @default(autoincrement())
-    number   String @unique
+    id     Int    @id @default(autoincrement())
+    number String @unique
 
-    client   Client @relation(fields: [clientId], references: [id])
-    clientId Int
-    templateId String 
-    currency   String 
-
+    client     Client @relation(fields: [clientId], references: [id])
+    clientId   Int
+    templateId String
+    currency   String
 
     issueDate DateTime
     taxDate   DateTime // Datum zdanitelného plnění
@@ -73,18 +72,16 @@ model Invoice {
     companyId Int
 }
 
-
 model Template {
     id Int @id @default(autoincrement())
 
-    name String
-    html String
-    templateType String  @default("INVOICE")// ENUM = INVOICE, CREDIT_NOTE todo!
+    name         String
+    html         String
+    templateType String @default("INVOICE") // ENUM = INVOICE, CREDIT_NOTE todo!
 
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int
 }
-
 
 model InvoiceItem {
     id        Int     @id @default(autoincrement())
@@ -95,4 +92,14 @@ model InvoiceItem {
     quantity    Int
     price       Float
     tax         Float
+}
+
+model Settings {
+    id Int @id @default(autoincrement())
+
+    company   Company @relation(fields: [companyId], references: [id])
+    companyId Int     @unique
+
+    currency String
+    tax      Float
 }

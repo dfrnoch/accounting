@@ -59,7 +59,6 @@ const Sidebar: Component = () => {
       title: t("sidebar.section.sales"),
       buttons: [
         { target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") },
-        { target: "/dashboard/sales/clients", icon: <FiUsers />, label: t("sidebar.button.clients") },
         { target: "/dashboard/sales/templates", icon: <FiSave />, label: t("sidebar.button.templates") },
         { target: "/dashboard/sales/schedules", icon: <FiClock />, label: t("sidebar.button.schedules") },
       ],
@@ -74,6 +73,7 @@ const Sidebar: Component = () => {
     {
       title: t("sidebar.section.other"),
       buttons: [
+        { target: "/dashboard/other/clients", icon: <FiUsers />, label: t("sidebar.button.clients") },
         { target: "/dashboard/other/reports", icon: <FiPaperclip />, label: t("sidebar.button.reports") },
         { target: "/dashboard/other/templates", icon: <FiClipboard />, label: t("sidebar.button.templates") },
       ],

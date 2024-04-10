@@ -20,7 +20,7 @@ export type GetClientData = {
   id: number;
   name: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
 };
 
 export function getInvoices(indicies: Indicies) {
@@ -37,6 +37,23 @@ export function getCompany(id: number | null) {
 
 export function createCompany(data: CreateCompanyData) {
   return invoke<Company>("create_company", { data });
+}
+
+type ManageClientData = {
+  id?: number;
+  name: string;
+  cin: string;
+  vatId?: string;
+  address: string;
+  city: string;
+  clientType: "SUPPLIER" | "CUSTOMER" | "BOTH";
+  zip: string;
+  email?: string;
+  phone?: string;
+};
+
+export function createClient(data: ManageClientData) {
+  return invoke("create_client", { data: { ...data, companyId: StateService().state.companyId } });
 }
 
 export function migrateAndPopulate() {
@@ -133,16 +150,16 @@ export type Template = {
   companyId: number;
 };
 
-export interface Client {
+export type Client = {
   id: number;
   name: string;
-  cin?: string;
+  cin: string;
   vatId?: string;
-  streetAddress: string;
+  address: string;
   city: string;
-  postalCode: string;
+  clientType: "SUPPLIER" | "CUSTOMER" | "BOTH";
+  zip: string;
   email?: string;
-  phoneNumber?: string;
+  phone?: string;
   invoices?: Invoice[];
-  companyId: number;
-}
+};

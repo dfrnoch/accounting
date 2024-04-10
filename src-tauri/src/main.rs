@@ -109,6 +109,8 @@ async fn main() {
             commands::template::delete_template,
             commands::template::template_count,
             commands::clients::get_clients,
+            commands::clients::get_client,
+            commands::clients::create_client,
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

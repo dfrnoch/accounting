@@ -60,7 +60,7 @@ pub async fn create_company(
             "aaaa".to_string(),
             vec![
                 company::vat_id::set(data.vat_id),
-                company::phone_number::set(data.phone_number),
+                company::phone::set(data.phone_number),
             ],
         )
         .exec()

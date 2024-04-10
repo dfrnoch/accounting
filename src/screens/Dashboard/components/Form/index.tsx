@@ -6,11 +6,11 @@ import type { ParentComponent } from "solid-js";
 const Form: ParentComponent<{ form: FormApi<any, undefined>; class?: string }> = (props) => {
   return (
     <form
-      class={props.class}
+      class={`flex flex-col gap-8 ${props.class}`}
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        void props.form.handleSubmit();
+        // void props.form.handleSubmit();
       }}
     >
       {props.children}

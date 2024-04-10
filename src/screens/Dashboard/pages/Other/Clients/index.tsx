@@ -31,7 +31,7 @@ const Clients: Component = () => {
   return (
     <Container>
       <PageHeader
-        title={[t("sidebar.section.sales"), t("sidebar.button.clients")]}
+        title={[t("sidebar.section.other"), t("sidebar.button.clients")]}
         actionElements={[
           <HeaderButton onClick={() => navigate("new")} buttonType="primary">
             <FiPlus class="stroke-2" />
@@ -43,7 +43,7 @@ const Clients: Component = () => {
           { field: "id", header: "ID" },
           { field: "name", header: "Name" },
           { field: "email", header: "Email" },
-          { field: "phoneNumber", header: "Phone" },
+          { field: "phone", header: "Phone" },
         ]}
         totalItems={10}
         loadPage={loadPage}
