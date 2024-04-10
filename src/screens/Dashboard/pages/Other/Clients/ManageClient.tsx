@@ -3,14 +3,15 @@ import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import { useNavigate, useParams } from "@solidjs/router";
-import type { Component } from "solid-js";
+import { Show, onMount, type Component } from "solid-js";
 import { createForm } from "@tanstack/solid-form";
 import Input from "@/screens/Dashboard/components/Form/Input";
 import Dropdown from "@/screens/Dashboard/components/Form/Dropdown";
-import { createClient, type Client } from "@/bindings";
+import { createClient, deleteClient, getClient, updateClient, type Client } from "@/bindings";
 import Form from "@/screens/Dashboard/components/Form";
 import Section from "@/screens/Dashboard/components/Form/Section";
 import toast from "solid-toast";
+import { FiTrash } from "solid-icons/fi";
 
 const ManageClient: Component = () => {
   const params = useParams<{ readonly id?: string }>();
@@ -18,7 +19,7 @@ const ManageClient: Component = () => {
   const navigate = useNavigate();
   const form = createForm<Client>(() => ({
     defaultValues: {
-      id: params.id ? Number.parseInt(params.id) : 0,
+      id: 0,
       name: "",
       clientType: "BOTH",
       email: "",
@@ -30,9 +31,15 @@ const ManageClient: Component = () => {
       phone: "",
     },
     onSubmit: async (client) => {
+      console.log(client.value);
       try {
-        await createClient(client.value);
-        toast.success("Client saved");
+        if (client.value.id > 0) {
+          await updateClient(client.value);
+          toast.success("Client updated");
+        } else {
+          await createClient(client.value);
+          toast.success("Client saved");
+        }
         navigate("/dashboard/other/clients");
       } catch (e) {
         toast.error("Failed to save client");
@@ -40,6 +47,14 @@ const ManageClient: Component = () => {
       }
     },
   }));
+
+  onMount(async () => {
+    if (params.id) {
+      const client = await getClient(Number.parseInt(params.id));
+      form.update({ ...form.options, defaultValues: client });
+      console.log(form.state.values);
+    }
+  });
 
   return (
     <Container>
@@ -49,6 +64,22 @@ const ManageClient: Component = () => {
           <HeaderButton onClick={() => form.handleSubmit()} buttonType="primary">
             Save
           </HeaderButton>,
+          <Show when={params.id}>
+            <HeaderButton
+              onClick={async () => {
+                try {
+                  await deleteClient(Number.parseInt(params.id as string));
+                  toast.success("Client deleted");
+                  navigate("/dashboard/other/clients");
+                } catch (e) {
+                  toast.error(e as string);
+                }
+              }}
+              buttonType="secondary"
+            >
+              <FiTrash />
+            </HeaderButton>
+          </Show>,
         ]}
       />
       <Form form={form}>
@@ -76,6 +107,7 @@ const ManageClient: Component = () => {
           <form.Field name="clientType">
             {(field) => (
               <Dropdown
+                defaultValueId={field().state.value}
                 label="Client Type"
                 data={[
                   { id: "BOTH", label: "Both" },

@@ -12,7 +12,7 @@ generator client {
 model Company {
     id        Int        @id @default(autoincrement())
     name      String
-    invoices  Invoice[]
+    documents Document[]
     templates Template[]
     clients   Client[]
     settings  Settings?
@@ -28,6 +28,23 @@ model Company {
     // Additional fields
     phone String?
     email String?
+    web   String?
+
+    // Bank account
+    bankAccount String?
+    bankCode    String?
+    bankName    String?
+    bankIBAN    String?
+
+    // Document counter and info
+    invoicePrefix  String @default("I")
+    invoiceCounter Int    @default(1)
+
+    proformaPrefix  String @default("P")
+    proformaCounter Int    @default(1)
+
+    recievePrefix  String @default("R")
+    recieveCounter Int    @default(1)
 }
 
 model Client {
@@ -46,27 +63,31 @@ model Client {
     email String?
     phone String?
 
-    invoices Invoice[]
+    documents Document[]
 
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int
 }
 
-model Invoice {
-    id     Int    @id @default(autoincrement())
-    number String @unique
+model Document {
+    id           Int    @id @default(autoincrement())
+    number       String @unique
+    documentType String // ENUM = INVOICE, PROFORMA, RECIEVE
 
-    client     Client @relation(fields: [clientId], references: [id])
-    clientId   Int
-    templateId String
-    currency   String
+    client   Client @relation(fields: [clientId], references: [id])
+    clientId Int
+
+    template   Template @relation(fields: [templateId], references: [id])
+    templateId Int
+
+    currency String
 
     issueDate DateTime
     taxDate   DateTime // Datum zdanitelného plnění
     dueDate   DateTime
 
-    status String        @default("DRAFT") // ENUM = DRAFT, PENDING, PAID, CANCELLED, OVERDUE
-    items  InvoiceItem[]
+    status String         @default("DRAFT") // ENUM = DRAFT, PENDING, PAID, CANCELLED, OVERDUE
+    items  DocumentItem[]
 
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int
@@ -77,16 +98,18 @@ model Template {
 
     name         String
     html         String
-    templateType String @default("INVOICE") // ENUM = INVOICE, CREDIT_NOTE todo!
+    templateType String     @default("INVOICE") // ENUM = INVOICE, CREDIT_NOTE todo!
+    documents    Document[]
 
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int
 }
 
-model InvoiceItem {
-    id        Int     @id @default(autoincrement())
-    invoice   Invoice @relation(fields: [invoiceId], references: [id])
-    invoiceId Int
+model DocumentItem {
+    id Int @id @default(autoincrement())
+
+    document   Document @relation(fields: [documentId], references: [id])
+    documentId Int
 
     description String
     quantity    Int

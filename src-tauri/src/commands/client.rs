@@ -52,11 +52,49 @@ pub async fn create_client(client: DbState<'_>, data: client::Data) -> Result<()
             ],
         )
         .exec()
-        .await
-        .map_err(|e| e.to_string());
+        .await;
 
     match data {
         Ok(_) => Ok(()),
-        Err(e) => Err(e),
+        Err(e) => Err(e.to_string()),
+    }
+}
+
+#[tauri::command]
+pub async fn update_client(client: DbState<'_>, data: client::Data) -> Result<(), String> {
+    debug!("Updating client");
+    let data = client
+        .client()
+        .update(
+            client::id::equals(data.id),
+            vec![
+                client::name::set(data.name),
+                client::phone::set(data.phone),
+                client::email::set(data.email),
+                client::cin::set(data.cin),
+                client::vat_id::set(data.vat_id),
+                client::client_type::set(data.client_type),
+                client::address::set(data.address),
+                client::city::set(data.city),
+                client::zip::set(data.zip),
+            ],
+        )
+        .exec()
+        .await;
+
+    match data {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
+}
+
+#[tauri::command]
+pub async fn delete_client(client: DbState<'_>, id: i32) -> Result<(), String> {
+    debug!("Deleting client");
+    let data = client.client().delete(client::id::equals(id)).exec().await;
+
+    match data {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
     }
 }

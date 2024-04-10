@@ -1,5 +1,5 @@
-pub mod clients;
+pub mod client;
 pub mod company;
 pub mod db;
-pub mod invoice;
+pub mod document;
 pub mod template;

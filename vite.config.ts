@@ -18,7 +18,6 @@ export default defineConfig(async () => ({
     },
   },
   optimizeDeps: {
-    // Add both @codemirror/state and @codemirror/view to included deps to optimize
     include: ["@codemirror/state", "@codemirror/view"],
   },
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`

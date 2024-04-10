@@ -6,7 +6,7 @@ export function checkDb() {
   return invoke<200 | 400>("check_db");
 }
 
-export type GetInvoiceData = {
+export type GetDocumentData = {
   id: number;
   number: string;
   clientId: number;
@@ -23,12 +23,47 @@ export type GetClientData = {
   phone: string;
 };
 
-export function getInvoices(indicies: Indicies) {
-  return invoke<GetInvoiceData[]>("get_invoices", { companyId: StateService().state.companyId, indicies });
+export enum DocumentType {
+  INVOICE = "INVOICE",
+  PROFORMA = "PROFORMA",
+  RECIEVE = "RECIEVE",
+}
+
+export function getDocuments(documentType: DocumentType, indicies: Indicies) {
+  return invoke<GetDocumentData[]>("get_documents", {
+    companyId: StateService().state.companyId,
+    documentType,
+    indicies,
+  });
+}
+export function getDocument(id: number) {
+  return invoke<Document>("get_document", { id });
+}
+
+export function updateDocument(data: Document) {
+  return invoke<Document>("update_document", { data });
+}
+
+export function deleteDocument(id: number) {
+  return invoke("delete_document", { id });
+}
+
+export function createDocument(data: Document) {
+  return invoke("create_document", { data });
 }
 
 export function getClients(indicies: Indicies) {
   return invoke<GetClientData[]>("get_clients", { companyId: StateService().state.companyId, indicies });
+}
+
+export function getClient(id: number) {
+  return invoke<Client>("get_client", { id });
+}
+export function updateClient(data: Client) {
+  return invoke<Client>("update_client", { data });
+}
+export function deleteClient(id: number) {
+  return invoke("delete_client", { id });
 }
 
 export function getCompany(id: number | null) {
@@ -107,7 +142,7 @@ export type CreateCompanyData = {
   email: string;
 };
 
-export interface Invoice {
+export interface Document {
   id: number;
   number: string;
   clientId: number;
@@ -117,17 +152,17 @@ export interface Invoice {
   taxDate: Date;
   dueDate: Date;
   status: string;
-  items: InvoiceItem[];
+  items: DocumentItem[];
   companyId: number;
 }
 
-export interface InvoiceItem {
-  id: number;
-  invoiceId: number;
+export interface DocumentItem {
+  id?: number;
+  documentId?: number;
   description: string;
   quantity: number;
   price: number;
-  tax: number;
+  tax?: number;
 }
 
 export type Company = {
@@ -161,5 +196,5 @@ export type Client = {
   zip: string;
   email?: string;
   phone?: string;
-  invoices?: Invoice[];
+  invoices?: Document[];
 };

@@ -18,7 +18,7 @@ const ClientDetail: Component = () => {
       <PageHeader
         title={[t("sidebar.section.sales"), t("sidebar.button.clients"), params.id]}
         actionElements={[
-          <HeaderButton onClick={() => navigate(`/dashboard/sales/clients/${params.id}`)} buttonType="primary">
+          <HeaderButton onClick={() => navigate(`/dashboard/other/clients/${params.id}`)} buttonType="primary">
             Edit
           </HeaderButton>,
         ]}

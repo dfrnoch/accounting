@@ -1,4 +1,4 @@
-import { getInvoices, type GetInvoiceData } from "@/bindings";
+import { DocumentType, getDocuments, type GetDocumentData } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
 import { FiDownload, FiEdit, FiPlus, FiTrash } from "solid-icons/fi";
@@ -14,21 +14,21 @@ const Invoices: Component = () => {
   const navigate = useNavigate();
   const [invoicePopover, setInvoicePopover] = createSignal(false);
 
-  const handleEdit = (item: GetInvoiceData) => {
+  const handleEdit = (item: GetDocumentData) => {
     navigate(`${item.id}`);
   };
 
-  const handleDelete = (item: GetInvoiceData) => {
+  const handleDelete = (item: GetDocumentData) => {
     console.log("Delete:", item);
     // Handle delete action
   };
-  const handleDownload = (item: GetInvoiceData) => {
+  const handleDownload = (item: GetDocumentData) => {
     // Handle download action
     window.print();
   };
 
   const fetchInvoices = async (indices: Indicies) => {
-    return await getInvoices(indices);
+    return await getDocuments(DocumentType.INVOICE, indices);
   };
 
   const rowActions = [

@@ -11,7 +11,7 @@ const PageHeader: Component<PageHeaderProps> = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-50">
+    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-9999">
       <div
         class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[200px] shrink-0 px-2.5 lg:px-4 text-primary"
         data-tauri-drag-region

@@ -1,5 +1,5 @@
 import type { Component, JSX } from "solid-js";
-import { For, createSignal } from "solid-js";
+import { For, createEffect, createSignal } from "solid-js";
 import { DisclosureStateChild, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from "terracotta";
 import { TbSelector } from "solid-icons/tb";
 import { FiCheck } from "solid-icons/fi";
@@ -13,10 +13,15 @@ interface DropdownProps {
   data: DropdownItem[];
   onSelect: (value: DropdownItem) => void;
   label: string;
+  defaultValueId?: number | string;
 }
 
 const Dropdown: Component<DropdownProps> = (props) => {
-  const [selected, setSelected] = createSignal(props.data[0]);
+  const [selected, setSelected] = createSignal<DropdownItem>(props.data[0]);
+
+  createEffect(() => {
+    if (props.defaultValueId) setSelected(props.data.find((item) => item.id === props.defaultValueId) || props.data[0]);
+  }, [props.defaultValueId]);
 
   const handleSelect = (value: DropdownItem | undefined) => {
     if (!value) return;
