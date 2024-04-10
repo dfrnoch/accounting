@@ -94,7 +94,6 @@
     "resources:default",
     "menu:default",
     "tray:default",
-    "updater:default",
     "shell:allow-execute",
     "shell:allow-kill",
     "shell:allow-open",

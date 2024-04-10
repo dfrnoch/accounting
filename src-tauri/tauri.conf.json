@@ -11,29 +11,85 @@
   "plugins": {
     "http": {
       "scope": "https://*"
-    },
-    "updater": {
-      "endpoints": [
-        "https://google.com/{{target}}/{{arch}}/{{current_version}}"
-      ]
     }
   },
+
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ]
+    "licenseFile": "../LICENSE",
+    "category": "Utility",
+    "publisher": "Lynx",
+    "linux": {
+      "appimage": {
+        "bundleMediaFramework": true,
+        "files": {}
+      },
+      "deb": {
+        "files": {}
+      },
+      "rpm": {
+        "epoch": 0,
+        "files": {},
+        "release": "1"
+      }
+    },
+    "macOS": {
+      "dmg": {
+        "appPosition": {
+          "x": 180,
+          "y": 170
+        },
+        "applicationFolderPosition": {
+          "x": 480,
+          "y": 170
+        },
+        "windowSize": {
+          "height": 400,
+          "width": 660
+        }
+      },
+      "files": {},
+      "minimumSystemVersion": "10.15"
+    },
+    "windows": {
+      "allowDowngrades": true,
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "nsis": null,
+      "timestampUrl": null,
+      "tsp": false,
+      "webviewFixedRuntimePath": null,
+      "webviewInstallMode": {
+        "silent": true,
+        "type": "downloadBootstrapper"
+      },
+      "wix": null
+    },
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"]
   },
   "app": {
     "macOSPrivateApi": true,
     "withGlobalTauri": true,
     "security": {
-      "csp": null
+      "csp": null,
+      "assetProtocol": {
+        "enable": true,
+        "scope": [
+          "$APPDATA/*",
+          "$DATA/*",
+          "$LOCALDATA/*",
+          "$DESKTOP/*",
+          "$DOCUMENT/*",
+          "$DOWNLOAD/*",
+          "$HOME/*",
+          "$PICTURE/*",
+          "$PUBLIC/*",
+          "$VIDEO/*",
+          "$APPCONFIG/*",
+          "$RESOURCE/*"
+        ]
+      }
     },
     "windows": [
       {

@@ -1,4 +1,3 @@
-import { getInvoices } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
@@ -12,13 +11,13 @@ const Invoices: Component = () => {
   const [t] = useI18n();
   const [invoices, setInvoices] = createSignal([]);
 
-  const fetchInvoices = async () => {
-    console.log(company);
-    const data = await getInvoices(company.id);
-    console.log(data);
-    // setInvoices(data);
-  };
-  fetchInvoices();
+  // const fetchInvoices = async () => {
+  //   console.log(company);
+  //   const data = await getInvoices(company.id);
+  //   console.log(data);
+  //   // setInvoices(data);
+  // };
+  // fetchInvoices();
 
   const loadPage = async (indicies: Indicies) => {
     // Simulating an API call to fetch data for the specified page
@@ -167,7 +166,7 @@ const Invoices: Component = () => {
   return (
     <Container>
       <PageHeader title={[t("sidebar.section.sales"), t("sidebar.button.schedules")]} />
-      <Table
+      {/* <Table
         columns={columns}
         totalItems={books.length}
         loadPage={loadPage}
@@ -175,7 +174,7 @@ const Invoices: Component = () => {
         extraContent={
           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New</button>
         }
-      />
+      /> */}
 
       {/* <table class="w-full ">
         <tbody>

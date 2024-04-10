@@ -26,7 +26,7 @@ pub async fn migrate_and_populate(client: DbState<'_>) -> CommandResult<()> {
     client._db_push().await?;
 
     #[cfg(not(debug_assertions))]
-    client._migrate_deploy().unwrap();
+    client._migrate_deploy().await.unwrap();
 
     Ok(())
 }
