@@ -1,4 +1,5 @@
-import type { Component } from "solid-js";
+import type { ValidationError } from "@tanstack/solid-form";
+import { For, Show, type Component } from "solid-js";
 
 type TextInputProps = {
   type: "text" | "date" | "email" | "tel";
@@ -6,6 +7,7 @@ type TextInputProps = {
   label: string;
   placeholder?: string;
   defaultValue?: string;
+  errors?: ValidationError[];
 };
 
 type NumberInputProps = {
@@ -14,6 +16,7 @@ type NumberInputProps = {
   label: string;
   placeholder?: string;
   defaultValue?: number;
+  errors?: ValidationError[];
 };
 
 type InputProps = TextInputProps | NumberInputProps;
@@ -33,11 +36,18 @@ const Input: Component<InputProps> = (props) => {
       <span class="text-xs text-secondary">{props.label}</span>
       <input
         type={props.type}
-        class="w-full px-2 py-1.5 border border-default rounded-md bg-element text-sm border-default"
+        class="w-full px-2 py-1.5 border rounded-md bg-element text-sm  transition-all"
+        classList={{
+          "border-danger ": props.errors ? props.errors.length > 0 : false,
+          "border-default": !props.errors || props.errors.length === 0,
+        }}
         onInput={handleInput}
         placeholder={props.placeholder}
         value={props.defaultValue}
       />
+      <Show when={props.errors}>
+        <For each={props.errors}>{(error) => <span class="text-xs text-danger">{error?.toString()}</span>}</For>
+      </Show>
     </label>
   );
 };

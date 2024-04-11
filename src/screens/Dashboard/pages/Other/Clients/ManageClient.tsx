@@ -3,21 +3,36 @@ import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import { useNavigate, useParams } from "@solidjs/router";
-import { Show, onMount, type Component } from "solid-js";
+import { For, Show, onMount, type Component } from "solid-js";
 import { createForm } from "@tanstack/solid-form";
 import Input from "@/screens/Dashboard/components/Form/Input";
 import Dropdown from "@/screens/Dashboard/components/Form/Dropdown";
-import { createClient, deleteClient, getClient, updateClient, type Client } from "@/bindings";
+import { type Client, createClient, deleteClient, getClient, updateClient } from "@/bindings";
 import Form from "@/screens/Dashboard/components/Form";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { z } from "zod";
 import Section from "@/screens/Dashboard/components/Form/Section";
 import toast from "solid-toast";
 import { FiTrash } from "solid-icons/fi";
+
+const schema = z.object({
+  id: z.number(),
+  name: z.string().min(20),
+  clientType: z.enum(["BOTH", "SUPPLIER", "CUSTOMER"]),
+  email: z.string().optional(),
+  cin: z.string(),
+  vatId: z.string(),
+  address: z.string(),
+  city: z.string(),
+  zip: z.string(),
+  phone: z.string(),
+});
 
 const ManageClient: Component = () => {
   const params = useParams<{ readonly id?: string }>();
   const [t] = useI18n();
   const navigate = useNavigate();
-  const form = createForm<Client>(() => ({
+  const form = createForm(() => ({
     defaultValues: {
       id: 0,
       name: "",
@@ -29,6 +44,13 @@ const ManageClient: Component = () => {
       city: "",
       zip: "",
       phone: "",
+    } as Client,
+    validatorAdapter: zodValidator,
+    validators: {
+      onSubmit: schema,
+    },
+    onSubmitInvalid: (e) => {
+      console.log("invalid", e.formApi.state.errors);
     },
     onSubmit: async (client) => {
       console.log(client.value);
@@ -84,23 +106,33 @@ const ManageClient: Component = () => {
       />
       <Form form={form}>
         <Section title="Client Information">
-          <form.Field name="name">
+          <form.Field name="name" validators={{ onChange: z.string().min(20), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
-              <Input
-                type="text"
-                label="Name"
-                defaultValue={field().state.value}
-                onChange={(data) => field().handleChange(data)}
-              />
+              <>
+                <Input
+                  type="text"
+                  label="Name"
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
+                />
+              </>
             )}
           </form.Field>
-          <form.Field name="email">
+          <form.Field
+            name="email"
+            validators={{
+              onChange: z.string().email().optional(),
+              onChangeAsyncDebounceMs: 500,
+            }}
+          >
             {(field) => (
               <Input
                 type="email"
                 label="Email"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>

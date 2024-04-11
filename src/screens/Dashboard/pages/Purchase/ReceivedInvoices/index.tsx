@@ -1,22 +1,54 @@
-import Popover from "@/shared/components/Popover";
-import { useSelector } from "@/store";
-import { type Component, createSignal } from "solid-js";
+import { getDocuments, DocumentType, type GetDocumentData } from "@/bindings";
+import { useI18n } from "@/i18n";
+import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
+import { FiEdit, FiPlus } from "solid-icons/fi";
+import type { Component } from "solid-js";
+import { useNavigate } from "@solidjs/router";
+import PageHeader from "@/screens/Dashboard/components/PageHeader";
+import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
+import Container from "@/screens/Dashboard/components/Container";
 
-const RecievedInvoices: Component = () => {
-  const company = useSelector((state) => state.companyService.company);
-  const [showPopup, setShowPopup] = createSignal(false);
+const Expenses: Component = () => {
+  const [t] = useI18n();
+  const navigate = useNavigate();
+
+  const loadPage = async (indices: Indicies) => {
+    return await getDocuments(DocumentType.RECIEVE, indices);
+  };
+
+  const handleEdit = (item: GetDocumentData) => {
+    navigate(`detail/${item.id}`);
+  };
+
+  const rowActions = [
+    {
+      label: "Edit",
+      onClick: handleEdit,
+      icon: FiEdit,
+    },
+  ];
 
   return (
-    <div class="flex flex-col items-center justify-center h-screen w-full">
-      <h1 class="text-4xl font-bold">Hello, world, {company.name}!</h1>
-      <button class="mt-4 bg-primary text-white px-4 py-2 rounded-md" onClick={() => setShowPopup(true)}>
-        popup
-      </button>
-      <Popover title="dd" show={showPopup()} onClose={() => setShowPopup(false)}>
-        <div>content</div>
-      </Popover>
-    </div>
+    <Container>
+      <PageHeader
+        title={[t("sidebar.section.purchase"), t("sidebar.button.recievedInvoices")]}
+        actionElements={[
+          <HeaderButton onClick={() => navigate("new")} buttonType="primary">
+            <FiPlus class="stroke-2" />
+          </HeaderButton>,
+        ]}
+      />
+      <Table
+        columns={[
+          { field: "number", header: "Number" },
+          { field: "status", header: "Status" },
+        ]}
+        totalItems={10}
+        loadPage={loadPage}
+        rowActions={rowActions}
+      />
+    </Container>
   );
 };
 
-export default RecievedInvoices;
+export default Expenses;
