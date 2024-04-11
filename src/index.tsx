@@ -43,6 +43,7 @@ render(
         <Route path="/sales">
           <Route path="/invoices">
             <Route path="/" component={Invoices} />
+            <Route path="/new" component={ManageInvoice} />
             <Route path="/:id" component={ManageInvoice} />
           </Route>
           <Route path="/templates" component={InvoiceTemplates} />

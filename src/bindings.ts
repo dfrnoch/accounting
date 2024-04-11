@@ -1,6 +1,8 @@
 import { invoke } from "@tauri-apps/api/core";
 import type { Indicies } from "./screens/Dashboard/components/Table";
-import { StateService } from "./store/services/stateService";
+import { stateStore } from "./store/services/stateService";
+
+const [state, _] = stateStore;
 
 export function checkDb() {
   return invoke<200 | 400>("check_db");
@@ -31,7 +33,7 @@ export enum DocumentType {
 
 export function getDocuments(documentType: DocumentType, indicies: Indicies) {
   return invoke<GetDocumentData[]>("get_documents", {
-    companyId: StateService().state.companyId,
+    companyId: state.companyId,
     documentType,
     indicies,
   });
@@ -49,11 +51,11 @@ export function deleteDocument(id: number) {
 }
 
 export function createDocument(data: Document) {
-  return invoke("create_document", { data });
+  return invoke("create_document", { data: { ...data, companyId: state.companyId } });
 }
 
 export function getClients(indicies: Indicies) {
-  return invoke<GetClientData[]>("get_clients", { companyId: StateService().state.companyId, indicies });
+  return invoke<GetClientData[]>("get_clients", { companyId: state.companyId, indicies });
 }
 
 export function getClient(id: number) {
@@ -88,7 +90,7 @@ type ManageClientData = {
 };
 
 export function createClient(data: ManageClientData) {
-  return invoke("create_client", { data: { ...data, companyId: StateService().state.companyId } });
+  return invoke("create_client", { data: { ...data, companyId: state.companyId } });
 }
 
 export function migrateAndPopulate() {
@@ -100,7 +102,7 @@ export async function getCompanies(exclude?: number) {
 }
 
 export async function getTemplates(indicies: Indicies) {
-  return await invoke<Template[]>("get_templates", { companyId: StateService().state.companyId, indicies });
+  return await invoke<Template[]>("get_templates", { companyId: state.companyId, indicies });
 }
 
 export async function saveTemplate(template: Template) {
@@ -116,7 +118,7 @@ export async function deleteTemplate(id: number) {
 }
 
 export async function templateCount() {
-  return await invoke<number>("template_count", { companyId: StateService().state.companyId });
+  return await invoke<number>("template_count", { companyId: state.companyId });
 }
 
 export async function createTemplate(template: {
@@ -124,7 +126,7 @@ export async function createTemplate(template: {
   html: string;
   name: string;
 }) {
-  return await invoke("create_template", { companyId: StateService().state.companyId, data: template });
+  return await invoke("create_template", { companyId: state.companyId, data: template });
 }
 
 export async function updateTemplate(id: number, html: string) {
@@ -153,7 +155,6 @@ export interface Document {
   dueDate: Date;
   status: string;
   items: DocumentItem[];
-  companyId: number;
 }
 
 export interface DocumentItem {

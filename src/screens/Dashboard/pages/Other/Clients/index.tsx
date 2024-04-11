@@ -1,4 +1,4 @@
-import { getClients } from "@/bindings";
+import { type GetClientData, getClients } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
 import { FiEdit, FiPlus } from "solid-icons/fi";
@@ -16,7 +16,7 @@ const Clients: Component = () => {
     return await getClients(indices);
   };
 
-  const handleEdit = (item) => {
+  const handleEdit = (item: GetClientData) => {
     navigate(`detail/${item.id}`);
   };
 

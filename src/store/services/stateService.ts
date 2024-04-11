@@ -2,12 +2,12 @@ import { onMount } from "solid-js";
 import { type StoreSetter, createStore } from "solid-js/store";
 // import { Store } from "@tauri-apps/plugin-store";
 
-interface StateService {
+export interface StateService {
   companyId: number | null;
   theme: "light" | "dark" | "auto";
 }
 
-const stateStore = createStore<StateService>({} as StateService);
+export const stateStore = createStore<StateService>({} as StateService);
 
 export const StateService = () => {
   const [state, setState] = stateStore;

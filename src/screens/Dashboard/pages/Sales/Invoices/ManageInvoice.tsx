@@ -29,7 +29,6 @@ const ManageInvoice: Component = () => {
       dueDate: new Date(),
       status: "DRAFT",
       items: [],
-      companyId: 0,
     },
     onSubmit: async (invoice) => {
       console.log(invoice.value);
@@ -173,16 +172,6 @@ const ManageInvoice: Component = () => {
                 onSelect={(data) =>
                   field().handleChange(data.id as "DRAFT" | "SENT" | "PAID" | "CANCELLED" | "OVERDUE")
                 }
-              />
-            )}
-          </form.Field>
-          <form.Field name="companyId">
-            {(field) => (
-              <Input
-                type="number"
-                label="Company ID"
-                defaultValue={field().state.value}
-                onChange={(data) => field().handleChange(Number(data))}
               />
             )}
           </form.Field>
