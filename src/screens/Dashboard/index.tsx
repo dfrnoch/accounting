@@ -30,7 +30,7 @@ const Dashboard: ParentComponent = (props) => {
       <div class="flex flex-row items-start w-screen">
         <Sidebar />
         {/* px 4 pt-50px */}
-        <div class="overflow-y-auto  mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary">
+        <div class="overflow-y-auto  mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary rounded">
           {props.children}
         </div>
       </div>

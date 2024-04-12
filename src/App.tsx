@@ -7,7 +7,7 @@ const App: ParentComponent = (props) => {
   return (
     <I18nProvider locale={locale()}>
       <StoreProvider>{props.children}</StoreProvider>
-      <Toaster />
+      <Toaster gutter={8} position="bottom-right" />
     </I18nProvider>
   );
 };
