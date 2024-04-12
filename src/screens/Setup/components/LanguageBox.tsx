@@ -1,4 +1,4 @@
-import { ParentComponent } from "solid-js";
+import type { ParentComponent } from "solid-js";
 
 const LangaugeBox: ParentComponent<{ onClick: () => void; active?: boolean }> = (props) => {
   return (

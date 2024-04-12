@@ -1,35 +1,31 @@
 import { locale, setLocale, useI18n } from "@/i18n";
-import { createSignal, type Component, Show, createEffect } from "solid-js";
+import { createSignal, type Component, Show, onMount } from "solid-js";
 import ProgressDots from "./components/Progress";
 import { createCompany, migrateAndPopulate } from "@/bindings";
-import Input from "@/shared/components/Menu/Input";
-import { createStore } from "solid-js/store";
-import LanguageBox from "./components/LanguageBox";
 import { LANG } from "@/constants";
 import { open } from "@tauri-apps/plugin-shell";
-import { getDataByCIN } from "@/utils/getDataByCIN";
-import InputList from "@/shared/components/Menu/InputList";
-import { Hr } from "@/shared/components/Menu/Hr";
-import { Button } from "@/shared/components/Button";
-import { Title } from "./components/Title";
 import { useNavigate } from "@solidjs/router";
 import { useSelector } from "@/store";
+import { createForm } from "@tanstack/solid-form";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import Form from "@/shared/components/Form";
+import Input from "@/shared/components/Form/Input";
+import LanguageBox from "./components/LanguageBox";
+import Button from "@/shared/components/Button";
+import { Title } from "./components/Title";
+import { z } from "zod";
+import toast from "solid-toast";
+import Section from "@/shared/components/Form/Section";
 
 interface UserData {
   companyName: string;
   cin: string;
   vatID: string;
-  userName: string;
-  userEmail: string;
-  contact: {
-    email: string;
-    phone: string;
-  };
-  address: {
-    street: string;
-    city: string;
-    zip: string;
-  };
+  email: string;
+  phone: string;
+  street: string;
+  city: string;
+  zip: string;
 }
 
 const SetupWizard: Component = () => {
@@ -37,148 +33,190 @@ const SetupWizard: Component = () => {
   const [currentStep, setCurrentStep] = createSignal(0);
   const stateService = useSelector((state) => state.stateService);
   const navigate = useNavigate();
-  const [userData, setUserData] = createStore<UserData>({
-    companyName: "",
-    cin: "",
-    vatID: "",
-    userName: "",
-    userEmail: "",
-    contact: {
+
+  const form = createForm(() => ({
+    defaultValues: {
+      companyName: "",
+      cin: "",
+      vatID: "",
       email: "",
       phone: "",
-    },
-    address: {
       street: "",
       city: "",
       zip: "",
+    } as UserData,
+    validatorAdapter: zodValidator,
+    onSubmitInvalid: (e) => {
+      console.log("invalid", e.formApi.state.errors);
     },
-  });
-
-  createEffect(async () => {
-    if (userData.cin.length === 8) {
-      const data = await getDataByCIN(userData.cin);
-      if (data) {
-        setUserData({
-          companyName: data.company,
-          vatID: data.dic,
+    onSubmit: async (userData) => {
+      try {
+        const result = await createCompany({
+          cin: userData.value.cin,
+          name: userData.value.companyName,
+          vatId: userData.value.vatID,
+          email: userData.value.email,
+          phoneNumber: userData.value.phone,
+          city: userData.value.city,
+          postalCode: userData.value.zip,
+          streetAddress: userData.value.street,
         });
+
+        stateService.updateState({ companyId: result.id });
+        toast.success(t("setup.company_created"));
+        navigate("/");
+      } catch (error) {
+        console.error("Error creating company:", error);
+        toast.error(t("setup.error_creating_ompany"));
       }
-    }
+    },
+  }));
+
+  onMount(() => {
+    migrateAndPopulate();
   });
-
-  const handleCreateCompany = async () => {
-    try {
-      const result = await createCompany({
-        cin: userData.cin,
-        name: userData.companyName,
-        vatId: userData.vatID,
-        email: userData.contact.email,
-        phoneNumber: userData.contact.phone,
-        city: userData.address.city,
-        postalCode: userData.address.zip,
-        streetAddress: userData.address.street,
-      });
-
-      stateService.updateState({ companyId: result.id });
-      navigate("/");
-    } catch (error) {
-      console.error("Error creating company:", error);
-    }
-  };
 
   return (
-    <div class="flex justify-center items-center w-screen h-screen" data-tauri-drag-region>
-      <div class="w-3/4 h-5/7 bg-primary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative">
-        <ProgressDots count={5} active={currentStep()} />
-        <Show when={currentStep() === 0}>
-          <Title>{t("setup.welcome")}</Title>
-          <Button
-            onClick={() => {
-              setCurrentStep(1);
-              migrateAndPopulate();
-            }}
-          >
-            {t("setup.get_started")}
-          </Button>
-        </Show>
+    <div class="flex justify-center items-end w-screen h-screen px-3 pt-37px pb-3" data-tauri-drag-region>
+      <div class="absolute top-0 left-0 w-full bg-transparent h-37px z-30 " data-tauri-drag-region>
+        <ProgressDots count={3} active={currentStep()} />
+      </div>
 
-        <Show when={currentStep() === 1}>
-          <Title>{t("setup.step1.select_language")}</Title>
-          <div>
-            <div class="flex gap-4">
-              <LanguageBox onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS}>
-                🇨🇿
-              </LanguageBox>
-              <LanguageBox onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN}>
-                🇬🇧
-              </LanguageBox>
+      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative">
+        <Form>
+          <Show when={currentStep() === 0}>
+            <Title>{t("setup.welcome")}</Title>
+            <Button onClick={() => setCurrentStep(1)}>{t("setup.get_started")}</Button>
+          </Show>
+
+          <Show when={currentStep() === 1}>
+            <Title>{t("setup.step1.select_language")}</Title>
+            <div>
+              <div class="flex gap-4">
+                <LanguageBox onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS}>
+                  🇨🇿
+                </LanguageBox>
+                <LanguageBox onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN}>
+                  🇬🇧
+                </LanguageBox>
+              </div>
+              <p
+                class="text-primary text-center cursor-pointer text-lightgrey mt-2"
+                onClick={() => open("https://github.com/dfrnoch/accounting")}
+              >
+                {t("setup.step1.improve")}
+              </p>
             </div>
-            <p
-              class="text-primary text-center cursor-pointer text-lightgrey mt-2"
-              onClick={() => open("https://github.com")}
-            >
-              {t("setup.step1.improve")}
-            </p>
-          </div>
-          <Button onClick={() => setCurrentStep(2)}>{t("setup.continue")}</Button>
-        </Show>
+            <Button onClick={() => setCurrentStep(2)}>{t("setup.continue")}</Button>
+          </Show>
 
-        <Show when={currentStep() === 2}>
-          <div class="w-full h-full overflow-y-auto">
-            <div class="w-full flex items-center justify-center flex-col">
+          <Show when={currentStep() === 2}>
+            <Section title="Ahoj">
               <Title class="mt-12 mb-8">{t("setup.step2.create_company")}</Title>
-              <InputList>
+              <form.Field
+                name="companyName"
+                validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}
+              >
+                {(field) => (
+                  <Input
+                    type="text"
+                    placeholder="Company Name"
+                    label={t("setup.step2.company_name")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+            </Section>
+            <form.Field name="cin" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              {(field) => (
                 <Input
-                  id="companyName"
-                  label={t("setup.step2.company_name")}
-                  class="col-span-2"
-                  onChange={(e) => setUserData("companyName", e.currentTarget.value)}
-                />
-                <Input
-                  id="cin"
+                  type="text"
                   label={t("setup.step2.CIN")}
-                  info={t("setup.step2.help.retrieve_by_cin")}
-                  onChange={(e) => setUserData("cin", e.currentTarget.value)}
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
                 />
+              )}
+            </form.Field>
+            <form.Field name="vatID" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              {(field) => (
                 <Input
-                  id="vatID"
+                  type="text"
                   label={t("setup.step2.vatID")}
-                  onChange={(e) => setUserData("vatID", e.currentTarget.value)}
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
                 />
-                <Hr />
+              )}
+            </form.Field>
+            <form.Field name="street" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              {(field) => (
                 <Input
-                  id="street"
+                  type="text"
                   label={t("setup.step2.street")}
-                  onChange={(e) => setUserData("address", "street", e.currentTarget.value)}
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
                 />
+              )}
+            </form.Field>
+            <form.Field name="city" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              {(field) => (
                 <Input
-                  id="city"
+                  type="text"
                   label={t("setup.step2.city")}
-                  onChange={(e) => setUserData("address", "city", e.currentTarget.value)}
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
                 />
+              )}
+            </form.Field>
+            <form.Field name="zip" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              {(field) => (
                 <Input
-                  id="zip"
+                  type="text"
                   label={t("setup.step2.zip")}
-                  onChange={(e) => setUserData("address", "zip", e.currentTarget.value)}
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
                 />
-                <Hr />
+              )}
+            </form.Field>
+            <form.Field
+              name="email"
+              validators={{
+                onChange: z.string().email().optional(),
+                onChangeAsyncDebounceMs: 500,
+              }}
+            >
+              {(field) => (
                 <Input
-                  id="email"
+                  type="email"
                   label={t("setup.step2.email")}
-                  onChange={(e) => setUserData("contact", "email", e.currentTarget.value)}
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
                 />
+              )}
+            </form.Field>
+            <form.Field name="phone" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              {(field) => (
                 <Input
-                  id="phone"
+                  type="tel"
                   label={t("setup.step2.phone")}
-                  onChange={(e) => setUserData("contact", "phone", e.currentTarget.value)}
+                  defaultValue={field().state.value}
+                  onChange={(data) => field().handleChange(data)}
+                  errors={field().state.meta.touchedErrors}
                 />
-              </InputList>
-              <Button class="my-8" onClick={handleCreateCompany}>
-                {t("setup.finalize")}
-              </Button>
-            </div>
-          </div>
-        </Show>
+              )}
+            </form.Field>
+            <Button class="my-8" onClick={form.handleSubmit}>
+              {t("setup.finalize")}
+            </Button>
+          </Show>
+        </Form>
       </div>
     </div>
   );

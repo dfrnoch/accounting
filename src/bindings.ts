@@ -29,6 +29,7 @@ export enum DocumentType {
   INVOICE = "INVOICE",
   PROFORMA = "PROFORMA",
   RECIEVE = "RECIEVE",
+  TEMPLATE = "TEMPLATE",
 }
 
 export function getDocuments(documentType: DocumentType, indicies: Indicies) {
@@ -38,6 +39,7 @@ export function getDocuments(documentType: DocumentType, indicies: Indicies) {
     indicies,
   });
 }
+
 export function getDocument(id: number) {
   return invoke<Document>("get_document", { id });
 }

@@ -22,7 +22,9 @@
       "help": {
         "retrieve_by_cin": "Po zadání správného IČA se načte zbytek údajů automaticky"
       }
-    }
+    },
+    "error_creating_ompany": "Při vytváření firmy došlo k chybě. Zkuste to prosím znovu.",
+    "company_created": "Firma byla úspěšně vytvořena"
   },
   "table": {
     "all": "Vše"

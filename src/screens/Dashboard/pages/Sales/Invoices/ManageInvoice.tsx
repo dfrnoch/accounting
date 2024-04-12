@@ -5,11 +5,11 @@ import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton
 import { useNavigate, useParams } from "@solidjs/router";
 import { For, Show, onMount, type Component } from "solid-js";
 import { createForm } from "@tanstack/solid-form";
-import Input from "@/screens/Dashboard/components/Form/Input";
-import Dropdown from "@/screens/Dashboard/components/Form/Dropdown";
+import Input from "@/shared/components/Form/Input";
+import Dropdown from "@/shared/components/Form/Dropdown";
 import { createDocument, deleteDocument, getDocument, updateDocument, type Document } from "@/bindings";
-import Form from "@/screens/Dashboard/components/Form";
-import Section from "@/screens/Dashboard/components/Form/Section";
+import Form from "@/shared/components/Form";
+import Section from "@/shared/components/Form/Section";
 import toast from "solid-toast";
 import { FiTrash } from "solid-icons/fi";
 

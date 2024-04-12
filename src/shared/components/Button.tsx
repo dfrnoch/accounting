@@ -13,3 +13,5 @@ export const Button: ParentComponent<{ onClick?: (e: MouseEvent) => void; class?
     </button>
   );
 };
+
+export default Button;

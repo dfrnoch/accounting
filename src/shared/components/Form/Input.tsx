@@ -36,7 +36,7 @@ const Input: Component<InputProps> = (props) => {
       <span class="text-xs text-secondary">{props.label}</span>
       <input
         type={props.type}
-        class="w-full px-2 py-1.5 border rounded-md bg-element text-sm  transition-all"
+        class="w-full px-2 py-1.5 border rounded-md bg-element text-sm text-primary transition-all"
         classList={{
           "border-danger ": props.errors ? props.errors.length > 0 : false,
           "border-default": !props.errors || props.errors.length === 0,

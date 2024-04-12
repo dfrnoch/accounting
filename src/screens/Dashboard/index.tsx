@@ -29,7 +29,6 @@ const Dashboard: ParentComponent = (props) => {
     <>
       <div class="flex flex-row items-start w-screen">
         <Sidebar />
-        <Toaster position="bottom-right" gutter={8} />
         {/* px 4 pt-50px */}
         <div class="overflow-y-auto  mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary">
           {props.children}

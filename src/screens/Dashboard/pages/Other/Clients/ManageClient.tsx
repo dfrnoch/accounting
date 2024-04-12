@@ -3,30 +3,17 @@ import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import { useNavigate, useParams } from "@solidjs/router";
-import { For, Show, onMount, type Component } from "solid-js";
+import { Show, onMount, type Component } from "solid-js";
 import { createForm } from "@tanstack/solid-form";
-import Input from "@/screens/Dashboard/components/Form/Input";
-import Dropdown from "@/screens/Dashboard/components/Form/Dropdown";
+import Input from "@/shared/components/Form/Input";
+import Dropdown from "@/shared/components/Form/Dropdown";
 import { type Client, createClient, deleteClient, getClient, updateClient } from "@/bindings";
-import Form from "@/screens/Dashboard/components/Form";
+import Form from "@/shared/components/Form";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
-import Section from "@/screens/Dashboard/components/Form/Section";
+import Section from "@/shared/components/Form/Section";
 import toast from "solid-toast";
 import { FiTrash } from "solid-icons/fi";
-
-const schema = z.object({
-  id: z.number(),
-  name: z.string().min(20),
-  clientType: z.enum(["BOTH", "SUPPLIER", "CUSTOMER"]),
-  email: z.string().optional(),
-  cin: z.string(),
-  vatId: z.string(),
-  address: z.string(),
-  city: z.string(),
-  zip: z.string(),
-  phone: z.string(),
-});
 
 const ManageClient: Component = () => {
   const params = useParams<{ readonly id?: string }>();
@@ -46,9 +33,6 @@ const ManageClient: Component = () => {
       phone: "",
     } as Client,
     validatorAdapter: zodValidator,
-    validators: {
-      onSubmit: schema,
-    },
     onSubmitInvalid: (e) => {
       console.log("invalid", e.formApi.state.errors);
     },
@@ -104,19 +88,17 @@ const ManageClient: Component = () => {
           </Show>,
         ]}
       />
-      <Form form={form}>
+      <Form>
         <Section title="Client Information">
-          <form.Field name="name" validators={{ onChange: z.string().min(20), onChangeAsyncDebounceMs: 500 }}>
+          <form.Field name="name" validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
-              <>
-                <Input
-                  type="text"
-                  label="Name"
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              </>
+              <Input
+                type="text"
+                label="Name"
+                defaultValue={field().state.value}
+                onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
+              />
             )}
           </form.Field>
           <form.Field
@@ -150,65 +132,71 @@ const ManageClient: Component = () => {
               />
             )}
           </form.Field>
-          <form.Field name="cin">
+          <form.Field name="cin" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
                 label="CIN"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>
-          <form.Field name="vatId">
+          <form.Field name="vatId" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
                 label="VAT ID"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>
         </Section>
-        <Section title="Adress">
-          <form.Field name="address">
+        <Section title="Address">
+          <form.Field name="address" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
                 label="Street Address"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>
-          <form.Field name="city">
+          <form.Field name="city" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
                 label="City"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>
-          <form.Field name="zip">
+          <form.Field name="zip" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
                 label="Postal Code"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>
-          <form.Field name="phone">
+          <form.Field name="phone" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="tel"
                 label="Phone Number"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>
