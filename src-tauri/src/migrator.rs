@@ -1,25 +1,35 @@
-use log::info;
-
-use crate::{
-    error::CoreError,
-    prisma::{_prisma::PrismaClient, new_client_with_url},
-    util::get_app_dir,
+use crate::util;
+use migration::{DbErr, Migrator, MigratorTrait};
+use sea_orm::{Database, DbConn};
+use std::{
+    fs::{self, OpenOptions},
+    path::Path,
 };
 
-pub async fn new_client() -> Result<PrismaClient, CoreError> {
-    let appdata_url = get_app_dir().join("app.db");
+pub async fn establish_connection() -> Result<DbConn, DbErr> {
+    let dir = util::get_app_dir();
+    let file = dir.join("rb_prod.sqlite");
+    fs::create_dir_all(dir).unwrap();
+    OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .open(file.clone())
+        .unwrap();
 
-    log::info!("Connecting to database at {}", appdata_url.display());
+    let database_url = if cfg!(debug_assertions) {
+        format!("sqlite://{}", "./rb-dev.sqlite?mode=rwc")
+    } else {
+        format!("sqlite://{}", file.into_os_string().into_string().unwrap())
+    };
 
-    tokio::fs::create_dir_all(appdata_url.parent().unwrap()).await?;
+    let db = Database::connect(&database_url)
+        .await
+        .expect("Failed to setup the database");
 
-    if !appdata_url.exists() {
-        tokio::fs::File::create(appdata_url.clone()).await?;
-        info!("Created database at {}", appdata_url.display());
-    }
+    Migrator::up(&db, None)
+        .await
+        .expect("Failed to run migrations for tests");
 
-    let client =
-        new_client_with_url(&("file:".to_string() + appdata_url.to_str().unwrap())).await?;
-
-    Ok(client)
+    Ok(db)
 }

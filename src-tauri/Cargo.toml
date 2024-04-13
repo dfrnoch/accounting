@@ -7,8 +7,6 @@ license = ""
 repository = ""
 edition = "2021"
 
-[workspace]
-members = ["prisma-cli"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -19,11 +17,11 @@ tauri-build = { version = "2.0.0-beta", features = [] }
 tauri = { version = "2.0.0-beta", features = [ "protocol-asset", "macos-private-api", "unstable"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.11", features = [
-    "sqlite",
-    "migrations",
-    "mocking",
-], default-features = false }
+# prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.11", features = [
+#     "sqlite",
+#     "migrations",
+#     "mocking",
+# ], default-features = false }
 tokio = { version = "1.37.0", features = ["macros"] }
 window-vibrancy = { git = "https://github.com/tauri-apps/window-vibrancy", branch = "dev" }
 tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
@@ -42,6 +40,7 @@ log = "0.4"
 thiserror = "1.0.58"
 platform-dirs = "0.3.0"
 anyhow = "1.0.81"
+entity = { path = "./entity" }
 # tauri-specta = { git = "https://github.com/oscartbeaumont/tauri-specta", branch = "tauri2-alpha18", features = [
 #     "typescript",
 # ] }
@@ -51,7 +50,16 @@ anyhow = "1.0.81"
 objc = "0.2.7"
 cocoa = "0.25.0"
 
+[dependencies.sea-orm]
+version = "0.12.6"
+features = ["sqlx-sqlite", "runtime-tokio-rustls", "macros"]
+default-features = false
+
+
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
 # DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
+
+[workspace]
+members = [".", "service", "entity", "migration"]

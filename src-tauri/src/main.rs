@@ -11,9 +11,6 @@ extern crate objc;
 #[cfg(target_os = "macos")]
 mod window_ext;
 
-#[allow(warnings, unused)]
-mod prisma;
-
 mod commands;
 mod error;
 mod migrator;
@@ -39,7 +36,7 @@ struct Payload {
     cwd: String,
 }
 
-type DbState<'a> = State<'a, Arc<PrismaClient>>;
+type DbState<'a> = State<'a, Arc>;
 
 #[tokio::main]
 async fn main() {
