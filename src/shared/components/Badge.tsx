@@ -1,5 +1,5 @@
 // import { FiInfo } from "solid-icons/fi";
-import { ParentComponent } from "solid-js";
+import type { ParentComponent } from "solid-js";
 
 const Badge: ParentComponent<{
   color: "success" | "danger" | "info" | "warning";

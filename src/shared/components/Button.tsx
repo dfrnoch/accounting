@@ -4,7 +4,7 @@ export const Button: ParentComponent<{ onClick?: (e: MouseEvent) => void; class?
   return (
     <button
       class={
-        "rounded py-0.5 px-2 text-sm shadow-md shadow-default/20 text-white bg-default  bg-gradient-to-b from-transparent-white to-transparent active:from-transparent-black"
+        "rounded py-0.5 px-2 text-sm shadow-md shadow-default/20 text-white bg-default max-w-30 bg-gradient-to-b from-transparent-white to-transparent active:from-transparent-black"
       }
       type="button"
       onClick={props.onClick}

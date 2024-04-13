@@ -82,14 +82,16 @@ const SetupWizard: Component = () => {
         <ProgressDots count={3} active={currentStep()} />
       </div>
 
-      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl flex items-center justify-center flex-col gap-8 relative">
-        <Form>
-          <Show when={currentStep() === 0}>
+      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative overflow-scroll mx-auto p-8 px-15% lg:px-23%">
+        <Show when={currentStep() === 0}>
+          <div class="flex justify-center items-center h-full flex-col gap-8">
             <Title>{t("setup.welcome")}</Title>
             <Button onClick={() => setCurrentStep(1)}>{t("setup.get_started")}</Button>
-          </Show>
+          </div>
+        </Show>
 
-          <Show when={currentStep() === 1}>
+        <Show when={currentStep() === 1}>
+          <div class="flex justify-center items-center h-full flex-col gap-8">
             <Title>{t("setup.step1.select_language")}</Title>
             <div>
               <div class="flex gap-4">
@@ -108,11 +110,13 @@ const SetupWizard: Component = () => {
               </p>
             </div>
             <Button onClick={() => setCurrentStep(2)}>{t("setup.continue")}</Button>
-          </Show>
+          </div>
+        </Show>
 
-          <Show when={currentStep() === 2}>
+        <Show when={currentStep() === 2}>
+          <Form>
+            <Title>{t("setup.step2.create_company")}</Title>
             <Section title="Ahoj">
-              <Title class="mt-12 mb-8">{t("setup.step2.create_company")}</Title>
               <form.Field
                 name="companyName"
                 validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}
@@ -128,95 +132,99 @@ const SetupWizard: Component = () => {
                   />
                 )}
               </form.Field>
+              <form.Field name="cin" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+                {(field) => (
+                  <Input
+                    type="text"
+                    label={t("setup.step2.CIN")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="vatID" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+                {(field) => (
+                  <Input
+                    type="text"
+                    label={t("setup.step2.vatID")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
             </Section>
-            <form.Field name="cin" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
-              {(field) => (
-                <Input
-                  type="text"
-                  label={t("setup.step2.CIN")}
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              )}
-            </form.Field>
-            <form.Field name="vatID" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
-              {(field) => (
-                <Input
-                  type="text"
-                  label={t("setup.step2.vatID")}
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              )}
-            </form.Field>
-            <form.Field name="street" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
-              {(field) => (
-                <Input
-                  type="text"
-                  label={t("setup.step2.street")}
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              )}
-            </form.Field>
-            <form.Field name="city" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
-              {(field) => (
-                <Input
-                  type="text"
-                  label={t("setup.step2.city")}
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              )}
-            </form.Field>
-            <form.Field name="zip" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
-              {(field) => (
-                <Input
-                  type="text"
-                  label={t("setup.step2.zip")}
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              )}
-            </form.Field>
-            <form.Field
-              name="email"
-              validators={{
-                onChange: z.string().email().optional(),
-                onChangeAsyncDebounceMs: 500,
-              }}
-            >
-              {(field) => (
-                <Input
-                  type="email"
-                  label={t("setup.step2.email")}
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              )}
-            </form.Field>
-            <form.Field name="phone" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
-              {(field) => (
-                <Input
-                  type="tel"
-                  label={t("setup.step2.phone")}
-                  defaultValue={field().state.value}
-                  onChange={(data) => field().handleChange(data)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              )}
-            </form.Field>
+            <Section title="Contact">
+              <form.Field name="street" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+                {(field) => (
+                  <Input
+                    type="text"
+                    label={t("setup.step2.street")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="city" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+                {(field) => (
+                  <Input
+                    type="text"
+                    label={t("setup.step2.city")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="zip" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+                {(field) => (
+                  <Input
+                    type="text"
+                    label={t("setup.step2.zip")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+            </Section>
+            <Section title="Contact">
+              <form.Field
+                name="email"
+                validators={{
+                  onChange: z.string().email().optional(),
+                  onChangeAsyncDebounceMs: 500,
+                }}
+              >
+                {(field) => (
+                  <Input
+                    type="email"
+                    label={t("setup.step2.email")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="phone" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+                {(field) => (
+                  <Input
+                    type="tel"
+                    label={t("setup.step2.phone")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+            </Section>
             <Button class="my-8" onClick={form.handleSubmit}>
               {t("setup.finalize")}
             </Button>
-          </Show>
-        </Form>
+          </Form>
+        </Show>
       </div>
     </div>
   );
