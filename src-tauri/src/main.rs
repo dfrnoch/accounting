@@ -48,20 +48,6 @@ async fn main() {
 
     let client = new_client().await.unwrap();
 
-    // let specta_builder = {
-    //     let specta_builder = tauri_specta::ts::builder().commands(tauri_specta::collect_commands![
-    //         get_company,
-    //         create_company,
-    //         migrate_and_populate,
-    //         check_db
-    //     ]);
-
-    //     #[cfg(debug_assertions)] // <- Only export on non-release builds
-    //     let specta_builder = specta_builder.path("../src/bindings.ts");
-
-    //     specta_builder.into_plugin()
-    // };
-
     tauri::Builder::default()
         .plugin(tauri_plugin_autostart::init(
             MacosLauncher::LaunchAgent,
