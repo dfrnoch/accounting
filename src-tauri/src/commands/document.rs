@@ -1,5 +1,6 @@
 use crate::client;
 use crate::company;
+use crate::currency;
 use crate::document;
 use crate::template;
 use crate::types::Indicies;
@@ -51,7 +52,7 @@ pub async fn create_document(client: DbState<'_>, data: document::Data) -> Resul
             data.document_type,
             client::id::equals(data.client_id),
             template::id::equals(data.template_id),
-            data.currency,
+            currency::id::equals(data.currency_id),
             data.issue_date,
             data.tax_date,
             data.due_date,
@@ -79,7 +80,7 @@ pub async fn update_document(client: DbState<'_>, data: document::Data) -> Resul
                 document::document_type::set(data.document_type),
                 document::client_id::set(data.client_id),
                 document::template_id::set(data.template_id),
-                document::currency::set(data.currency),
+                // document::currency::set(data.currency),
                 document::issue_date::set(data.issue_date),
                 document::tax_date::set(data.tax_date),
                 document::due_date::set(data.due_date),

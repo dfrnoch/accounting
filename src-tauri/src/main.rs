@@ -103,6 +103,9 @@ async fn main() {
             commands::client::update_client,
             commands::client::create_client,
             commands::client::delete_client,
+            commands::stats::get_sales,
+            commands::stats::get_expenses,
+            commands::stats::get_sales_and_expenses
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

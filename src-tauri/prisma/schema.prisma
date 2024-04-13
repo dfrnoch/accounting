@@ -10,12 +10,13 @@ generator client {
 }
 
 model Company {
-    id        Int        @id @default(autoincrement())
-    name      String
-    documents Document[]
-    templates Template[]
-    clients   Client[]
-    settings  Settings?
+    id         Int        @id @default(autoincrement())
+    name       String
+    documents  Document[]
+    templates  Template[]
+    currencies Currency[]
+    clients    Client[]
+    settings   Settings?
 
     cin   String  @unique // IČO
     vatId String? @unique // DIČ
@@ -80,7 +81,8 @@ model Document {
     template   Template @relation(fields: [templateId], references: [id])
     templateId Int
 
-    currency String
+    currency   Currency @relation(fields: [currencyId], references: [id])
+    currencyId String
 
     issueDate DateTime
     taxDate   DateTime // Datum zdanitelného plnění
@@ -101,8 +103,9 @@ model Template {
     templateType String     @default("INVOICE") // ENUM = INVOICE, CREDIT_NOTE todo!
     documents    Document[]
 
-    company   Company @relation(fields: [companyId], references: [id])
+    company   Company    @relation(fields: [companyId], references: [id])
     companyId Int
+    Settings  Settings[]
 }
 
 model DocumentItem {
@@ -123,6 +126,24 @@ model Settings {
     company   Company @relation(fields: [companyId], references: [id])
     companyId Int     @unique
 
-    currency String
-    tax      Float
+    defaultCurrency   Currency @relation(fields: [defaultCurrencyId], references: [id])
+    defaultCurrencyId String
+
+    defaultTemplate   Template @relation(fields: [defaultTemplateId], references: [id])
+    defaultTemplateId Int
+    tax               Float
+}
+
+model Currency {
+    id String @id @default(cuid())
+
+    name String
+    code String @unique
+    rate Float //Rate To EURO
+
+    company   Company    @relation(fields: [companyId], references: [id])
+    companyId Int
+    documents Document[]
+
+    settings Settings[]
 }
