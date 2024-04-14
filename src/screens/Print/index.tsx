@@ -1,26 +1,20 @@
-import { type Component, createSignal, onMount } from "solid-js";
-import { render } from "solid-js/web";
+import { getPrintDocument } from "@/bindings";
+import PdfRenderer from "@/shared/components/PdfRenderer";
+import { useParams } from "@solidjs/router";
+import { Show, Suspense, createResource, type Component } from "solid-js";
 
-interface PdfRendererProps {
-  template: string;
-}
+const Print: Component = () => {
+  const params = useParams<{ readonly id: string }>();
 
-const PdfRenderer: Component<PdfRendererProps> = (props) => {
-  const [pdfContent, setPdfContent] = createSignal("");
+  const [data] = createResource(Number(params.id), getPrintDocument);
 
-  onMount(() => {
-    const { template } = props;
-
-    // Replace placeholders in the template with actual data
-    // let content = template;
-    // Object.entries(data).forEach(([key, value]) => {
-    //   content = content.replace(new RegExp(`{{${key}}}`, "g"), String(value));
-    // });
-
-    setPdfContent(template);
-  });
-
-  return <div innerHTML={pdfContent()} />;
+  return (
+    <Suspense fallback="Loading...">
+      <Show when={!data.loading}>
+        <PdfRenderer data={data()} />
+      </Show>
+    </Suspense>
+  );
 };
 
-export default PdfRenderer;
+export default Print;

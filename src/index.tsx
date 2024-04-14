@@ -12,6 +12,7 @@ const ManageTemplates = lazy(() => import("./screens/Dashboard/pages/Other/Templ
 const Schedules = lazy(() => import("./screens/Dashboard/pages/Sales/Schedules"));
 const Expenses = lazy(() => import("./screens/Dashboard/pages/Purchase/Expenses"));
 const Clients = lazy(() => import("./screens/Dashboard/pages/Other/Clients"));
+const Print = lazy(() => import("./screens/Print"));
 const RecievedInvoices = lazy(() => import("./screens/Dashboard/pages/Purchase/ReceivedInvoices"));
 const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ClientDetail"));
 const ManageClient = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ManageClient"));
@@ -36,7 +37,7 @@ render(
   () => (
     <Router root={App}>
       <Route path="/" component={Loader} />
-      <Route path="/print/:id" component={App} />
+      <Route path="/print/:id" component={Print} />
       <Route path="/setup" component={Setup} />
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/" component={Overview} />

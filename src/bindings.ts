@@ -4,7 +4,7 @@ import { stateStore } from "./store/services/stateService";
 
 const [state, _] = stateStore;
 
-export function checkDb() {
+export async function checkDb() {
   return invoke<200 | 400>("check_db");
 }
 
@@ -12,7 +12,7 @@ export type GetDocumentData = {
   id: number;
   number: string;
   clientId: number;
-  templateId: string;
+  templateId: number;
   currency: string;
   issueDate: Date;
   status: string;
@@ -32,7 +32,7 @@ export enum DocumentType {
   TEMPLATE = "TEMPLATE",
 }
 
-export function getDocuments(documentType: DocumentType, indicies: Indicies) {
+export async function getDocuments(documentType: DocumentType, indicies: Indicies) {
   return invoke<GetDocumentData[]>("get_documents", {
     companyId: state.companyId,
     documentType,
@@ -40,42 +40,60 @@ export function getDocuments(documentType: DocumentType, indicies: Indicies) {
   });
 }
 
-export function getDocument(id: number) {
+export async function getDocument(id: number) {
   return invoke<Document>("get_document", { id });
 }
 
-export function updateDocument(data: Document) {
+export async function updateDocument(data: Document) {
   return invoke<Document>("update_document", { data });
 }
 
-export function deleteDocument(id: number) {
+export async function deleteDocument(id: number) {
   return invoke("delete_document", { id });
 }
 
-export function createDocument(data: Document) {
+export async function createDocument(data: Document) {
   return invoke("create_document", { data: { ...data, companyId: state.companyId } });
 }
 
-export function getClients(indicies: Indicies) {
+export async function getClients(indicies: Indicies) {
   return invoke<GetClientData[]>("get_clients", { companyId: state.companyId, indicies });
 }
 
-export function getClient(id: number) {
+export async function getClient(id: number) {
   return invoke<Client>("get_client", { id });
 }
-export function updateClient(data: Client) {
+export async function updateClient(data: Client) {
   return invoke<Client>("update_client", { data });
 }
-export function deleteClient(id: number) {
+export async function deleteClient(id: number) {
   return invoke("delete_client", { id });
 }
 
-export function getCompany(id: number | null) {
+export async function getCompany(id: number | null) {
   return invoke<Company | null>("get_company", { id });
 }
 
-export function createCompany(data: CreateCompanyData) {
+export async function createCompany(data: CreateCompanyData) {
   return invoke<Company>("create_company", { data });
+}
+
+export async function getSales(months: number) {
+  return invoke<number[]>("get_sales", { companyId: state.companyId, months });
+}
+
+export async function getExpenses(months: number) {
+  return invoke<number[]>("get_expenses", { companyId: state.companyId, months });
+}
+
+export async function getSalesAndExpenses(months: number) {
+  return invoke<number[]>("get_sales_and_expenses", { companyId: state.companyId, months });
+}
+
+export async function getModelCount(
+  model: "Invoice" | "Proforma" | "Recieve" | "Company" | "Client" | "Template" | "Currency",
+) {
+  return await invoke<number>("get_model_count", { companyId: state.companyId, model });
 }
 
 type ManageClientData = {
@@ -91,11 +109,11 @@ type ManageClientData = {
   phone?: string;
 };
 
-export function createClient(data: ManageClientData) {
+export async function createClient(data: ManageClientData) {
   return invoke("create_client", { data: { ...data, companyId: state.companyId } });
 }
 
-export function migrateAndPopulate() {
+export async function migrateAndPopulate() {
   return invoke("migrate_and_populate");
 }
 
@@ -134,6 +152,9 @@ export async function createTemplate(template: {
 export async function updateTemplate(id: number, html: string) {
   return await invoke("update_template", { id, html });
 }
+export async function getPrintDocument(id: number) {
+  return await invoke<GetPrintDocumentResult>("get_print_document", { id });
+}
 
 export type CreateCompanyData = {
   name: string;
@@ -150,7 +171,7 @@ export interface Document {
   id: number;
   number: string;
   clientId: number;
-  templateId: string;
+  templateId: number;
   currency: string;
   issueDate: Date;
   taxDate: Date;
@@ -200,4 +221,50 @@ export type Client = {
   email?: string;
   phone?: string;
   invoices?: Document[];
+};
+
+export type GetPrintDocumentResult = {
+  id: number;
+  number: string;
+  documentType: string;
+  client: {
+    id: number;
+    clientType: string;
+    name: string;
+    cin: string;
+    vatId: string | null;
+    address: string;
+    city: string;
+    zip: string;
+    email: string | null;
+    phone: string | null;
+    companyId: number;
+  };
+  template: {
+    id: number;
+    name: string;
+    html: string;
+    templateType: string;
+    companyId: number;
+  };
+  currency: {
+    id: string;
+    name: string;
+    code: string;
+    rate: number;
+    companyId: number;
+  };
+  issueDate: Date;
+  taxDate: Date;
+  dueDate: Date;
+  status: string;
+  items: {
+    id: number;
+    documentId: number;
+    description: string;
+    quantity: number;
+    price: number;
+    tax: number;
+  }[];
+  companyId: number;
 };

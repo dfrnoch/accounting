@@ -1,4 +1,4 @@
-import TemplateRenderer from "@/shared/components/PdfRenderer";
+import PdfRenderer from "@/shared/components/PdfRenderer";
 import { Hr } from "@/shared/components/Menu/Hr";
 import { type Accessor, type Setter, createEffect, createSignal, on, onMount, type Component, Show } from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
@@ -10,10 +10,10 @@ import { highlightActiveLineGutter, lineNumbers } from "@codemirror/view";
 import type { Extension } from "@codemirror/state";
 import { liquid } from "@codemirror/lang-liquid";
 import { material } from "@uiw/codemirror-theme-material";
-import Popover from "@/shared/components/Popover";
 import { createTemplate, deleteTemplate, getTemplate, updateTemplate } from "@/bindings";
 import { FiSettings, FiTrash } from "solid-icons/fi";
 import toast from "solid-toast";
+import TemplateHint from "@/screens/Dashboard/components/TemplateHint";
 
 const ManageTemplate: Component = () => {
   const params = useParams<{ readonly id?: string }>();
@@ -105,20 +105,15 @@ const ManageTemplate: Component = () => {
       <div class="relative h-full">
         <Editor code={templateCode} onValueChange={setTemplateCode} />
         <Show when={showSettings()}>
-          <div class="absolute top-0 left-0 w-full  h-full grid grid-cols-6 grid-rows-1 justify-between z-999">
+          <div class="fixed top-0 left-0 w-full h-full grid grid-cols-6 grid-rows-1 justify-between z-999">
             <div class="bg-black bg-opacity-20 w-full col-span-4" onClick={() => setShowSettings(false)} />
-            <div class="bg-red col-span-2">dada</div>
+            <div class="bg-primary col-span-2 p-4">
+              <h2 class="text-lg font-bold mb-4">Data Hints</h2>
+              <TemplateHint />
+            </div>
           </div>
         </Show>
       </div>
-
-      <Popover show={showRender()} onClose={() => setShowRender(false)} title="cus">
-        <div class="w-full lg:w-1/2 bg-red rounded-xl gap-4 flex flex-col p-4">
-          <h1 class="text-xl font-bold">Preview</h1>
-          <Hr />
-          <TemplateRenderer template={templateCode()} data={{ email: "joe@aa.cz", phone: "12122212" }} />
-        </div>
-      </Popover>
     </>
   );
 };

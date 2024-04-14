@@ -21,6 +21,7 @@ import {
   PieController,
 } from "chart.js";
 import { Line, Bar, Pie } from "solid-chartjs";
+import { getSales } from "@/bindings";
 
 const Overview: Component = () => {
   const [t] = useI18n();
@@ -125,6 +126,11 @@ const Overview: Component = () => {
       },
     },
   };
+
+  onMount(async () => {
+    const data = await getSales(3);
+    console.log(data);
+  });
 
   return (
     <Container>

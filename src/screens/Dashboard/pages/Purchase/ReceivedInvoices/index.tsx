@@ -1,4 +1,4 @@
-import { getDocuments, DocumentType, type GetDocumentData } from "@/bindings";
+import { getDocuments, DocumentType, type GetDocumentData, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
 import { FiEdit, FiPlus } from "solid-icons/fi";
@@ -43,7 +43,7 @@ const Expenses: Component = () => {
           { field: "number", header: "Number" },
           { field: "status", header: "Status" },
         ]}
-        totalItems={10}
+        totalItems={getModelCount("Recieve")}
         loadPage={loadPage}
         rowActions={rowActions}
       />

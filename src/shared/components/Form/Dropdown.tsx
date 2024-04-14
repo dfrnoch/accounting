@@ -33,7 +33,7 @@ const Dropdown: Component<DropdownProps> = (props) => {
     <div class="flex flex-col gap-1">
       <span class="text-xs text-secondary">{props.label}</span>
       <Listbox defaultOpen={false} value={selected()} onSelectChange={handleSelect} class="relative">
-        <ListboxButton class="relative w-full py-1.5 pl-3 pr-10 text-left bg-element border-default border-1 rounded-lg cursor-default focus:outline-none text-sm">
+        <ListboxButton class="relative w-full py-1.5 pl-3 pr-10 text-left bg-element border-default border-1 rounded-md h-9 cursor-default focus:outline-none text-sm">
           <span class="block truncate">{selected().label}</span>
           <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <TbSelector class="w-5 h-5 text-primary" aria-hidden="true" />

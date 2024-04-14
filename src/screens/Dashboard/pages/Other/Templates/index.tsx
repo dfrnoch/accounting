@@ -1,8 +1,8 @@
-import { type Template, getTemplates, templateCount } from "@/bindings";
+import { type Template, getTemplates, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
-import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
+import Table from "@/screens/Dashboard/components/Table";
 import { FiEdit, FiPlus } from "solid-icons/fi";
-import { createSignal, onMount, type Component } from "solid-js";
+import type { Component } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
@@ -12,23 +12,10 @@ import StatusIcon from "@/screens/Dashboard/components/StatusIcon";
 const Templates: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
-  const [count, setCount] = createSignal(10);
-
-  const loadPage = async (indices: Indicies) => {
-    const data = await getTemplates(indices);
-    return data;
-  };
 
   const handleEdit = (item: Template) => {
     navigate(`${item.id}`);
   };
-
-  const getCount = async () => {
-    const data = await templateCount();
-    setCount(data);
-  };
-
-  onMount(getCount);
 
   return (
     <Container>
@@ -50,8 +37,8 @@ const Templates: Component = () => {
             component: (item) => <StatusIcon>{item.templateType}</StatusIcon>,
           },
         ]}
-        totalItems={count()}
-        loadPage={loadPage}
+        totalItems={getModelCount("Template")}
+        loadPage={async (indices) => await getTemplates(indices)}
         rowActions={[
           {
             onClick: handleEdit,

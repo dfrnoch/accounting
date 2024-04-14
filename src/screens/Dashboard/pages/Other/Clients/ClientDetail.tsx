@@ -35,8 +35,8 @@ const ClientDetail: Component = () => {
               { field: "id", header: "ID" },
               { field: "name", header: "Name" },
             ]}
-            totalItems={10}
-            loadPage={() => {}}
+            totalItems={Promise.resolve(10)}
+            loadPage={}
           />
         </div>
         <Box class="col-span-2">ddd</Box>

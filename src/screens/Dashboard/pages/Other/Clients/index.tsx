@@ -1,4 +1,4 @@
-import { type GetClientData, getClients } from "@/bindings";
+import { type GetClientData, getClients, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
 import { FiEdit, FiPlus } from "solid-icons/fi";
@@ -45,7 +45,7 @@ const Clients: Component = () => {
           { field: "email", header: "Email" },
           { field: "phone", header: "Phone" },
         ]}
-        totalItems={10}
+        totalItems={getModelCount("Client")}
         loadPage={loadPage}
         rowActions={rowActions}
       />

@@ -1,19 +1,23 @@
 import { type Component, createSignal, onMount } from "solid-js";
 import { Liquid } from "liquidjs";
+import type { GetPrintDocumentResult } from "@/bindings";
 
 interface PdfRendererProps {
-  template: string;
-  data: Record<string, any>;
+  data: GetPrintDocumentResult | undefined;
 }
 
-const TemplateRenderer: Component<PdfRendererProps> = (props) => {
+const PdfRenderer: Component<PdfRendererProps> = (props) => {
   const [pdfContent, setPdfContent] = createSignal("");
 
   onMount(async () => {
-    const { template, data } = props;
+    const { data } = props;
+    console.log(data);
+    if (!data) {
+      return;
+    }
 
     const engine = new Liquid();
-    const renderedContent = await engine.parseAndRender(template, data);
+    const renderedContent = await engine.parseAndRender(data.template.html, data);
 
     setPdfContent(renderedContent);
   });
@@ -21,4 +25,4 @@ const TemplateRenderer: Component<PdfRendererProps> = (props) => {
   return <div innerHTML={pdfContent()} />;
 };
 
-export default TemplateRenderer;
+export default PdfRenderer;
