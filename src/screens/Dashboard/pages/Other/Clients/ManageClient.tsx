@@ -24,13 +24,13 @@ const ManageClient: Component = () => {
       id: 0,
       name: "",
       clientType: "BOTH",
-      email: "",
       cin: "",
-      vatId: "",
+      vatId: undefined,
       address: "",
       city: "",
       zip: "",
-      phone: "",
+      phone: undefined,
+      email: undefined,
     } as Client,
     validatorAdapter: zodValidator,
     onSubmitInvalid: (e) => {
@@ -182,7 +182,7 @@ const ManageClient: Component = () => {
             {(field) => (
               <Input
                 type="text"
-                label="Postal Code"
+                label="Zip Code"
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}

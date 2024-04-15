@@ -1,19 +1,23 @@
 import { createContext, createSignal, type ParentComponent, useContext } from "solid-js";
-import { CompanyService } from "./services/companyService";
+import { CompanyService } from "./services/CompanyService";
+import { SettingsService } from "./services/SettingsService";
 import { StateService } from "./services/stateService";
 
 export type RootState = {
   companyService: ReturnType<typeof CompanyService>;
+  settingsService: ReturnType<typeof SettingsService>;
   stateService: ReturnType<typeof StateService>;
 };
 
 const createRootState = (): RootState => {
   const [companyService] = createSignal(CompanyService());
+  const [settingsService] = createSignal(SettingsService());
   const [stateService] = createSignal(StateService());
 
   return {
     companyService: companyService(),
     stateService: stateService(),
+    settingsService: settingsService(),
   };
 };
 

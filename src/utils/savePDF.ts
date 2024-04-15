@@ -3,7 +3,7 @@ import { Webview } from "@tauri-apps/api/webview";
 
 export async function getInitializedPrintWindow(id: number) {
   const appWindow = new Window("invoice", {
-    visible: true,
+    visible: false,
     decorations: false,
     title: "Invoice",
   });

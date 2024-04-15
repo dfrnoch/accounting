@@ -13,6 +13,8 @@ const Schedules = lazy(() => import("./screens/Dashboard/pages/Sales/Schedules")
 const Expenses = lazy(() => import("./screens/Dashboard/pages/Purchase/Expenses"));
 const Clients = lazy(() => import("./screens/Dashboard/pages/Other/Clients"));
 const Print = lazy(() => import("./screens/Print"));
+const Currencies = lazy(() => import("./screens/Dashboard/pages/Other/Currencies"));
+const ManageCurrency = lazy(() => import("./screens/Dashboard/pages/Other/Currencies/ManageCurrency"));
 const RecievedInvoices = lazy(() => import("./screens/Dashboard/pages/Purchase/ReceivedInvoices"));
 const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ClientDetail"));
 const ManageClient = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ManageClient"));
@@ -56,6 +58,11 @@ render(
             <Route path="/detail/:id" component={ClientDetail} />
             <Route path="/new" component={ManageClient} />
             <Route path="/:id" component={ManageClient} />
+          </Route>
+          <Route path="/currencies">
+            <Route path="/" component={Currencies} />
+            <Route path="/new" component={ManageCurrency} />
+            <Route path="/:id" component={ManageCurrency} />
           </Route>
           <Route path="/reports" component={Reports} />
           <Route path="/templates">

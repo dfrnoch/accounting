@@ -46,6 +46,7 @@
       "settings": "Settings",
       "templates": "Templates",
       "schedules": "Schedules",
+      "currencies": "Currencies",
       "company": {
         "create": "Create company"
       }

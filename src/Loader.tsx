@@ -1,6 +1,7 @@
 import type { Component } from "solid-js";
 import { checkDb } from "@/bindings";
 import { useNavigate } from "@solidjs/router";
+import LoadingIcon from "./shared/components/LoadingIcon";
 
 const Loader: Component = () => {
   const navigate = useNavigate();
@@ -12,13 +13,7 @@ const Loader: Component = () => {
 
   startup();
 
-  return (
-    <div class="flex justify-center items-center h-screen">
-      <div class="flex flex-col justify-center items-center">
-        <h1 class="text-4xl font-bold">Loading...</h1>
-      </div>
-    </div>
-  );
+  return <LoadingIcon />;
 };
 
 export default Loader;

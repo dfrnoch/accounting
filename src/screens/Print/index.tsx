@@ -8,6 +8,10 @@ const Print: Component = () => {
 
   const [data] = createResource(Number(params.id), getPrintDocument);
 
+  setTimeout(() => {
+    window.print();
+  }, 1000);
+
   return (
     <Suspense fallback="Loading...">
       <Show when={!data.loading}>

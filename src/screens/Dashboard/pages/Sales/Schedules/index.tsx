@@ -2,12 +2,10 @@ import { useI18n } from "@/i18n";
 import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
-import { useSelector } from "@/store";
 import { FiActivity, FiTrash } from "solid-icons/fi";
 import { type Component, createSignal } from "solid-js";
 
 const Invoices: Component = () => {
-  const company = useSelector((state) => state.companyService.company);
   const [t] = useI18n();
   const [invoices, setInvoices] = createSignal([]);
 

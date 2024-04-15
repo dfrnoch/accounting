@@ -1,7 +1,6 @@
 import { type Component, For, type JSX, createSignal, onMount } from "solid-js";
 import SidebarButton from "./Button";
 import SidebarSection from "./Section";
-import { useSelector } from "@/store";
 import { useI18n } from "@/i18n";
 import {
   FiCheck,
@@ -22,6 +21,7 @@ import { DisclosureStateChild, Listbox, ListboxButton, ListboxOption, ListboxOpt
 import { type Company, getCompanies } from "@/bindings";
 import { useNavigate } from "@solidjs/router";
 import toast from "solid-toast";
+import { useSelector } from "@/store";
 
 interface SidebarButtonData {
   target: string;
@@ -76,6 +76,7 @@ const Sidebar: Component = () => {
         { target: "/dashboard/other/clients", icon: <FiUsers />, label: t("sidebar.button.clients") },
         { target: "/dashboard/other/reports", icon: <FiPaperclip />, label: t("sidebar.button.reports") },
         { target: "/dashboard/other/templates", icon: <FiClipboard />, label: t("sidebar.button.templates") },
+        { target: "/dashboard/other/currencies", icon: <FiDollarSign />, label: t("sidebar.button.currencies") },
       ],
     },
   ];

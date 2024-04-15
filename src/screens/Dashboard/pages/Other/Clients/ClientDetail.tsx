@@ -6,7 +6,7 @@ import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton
 import StatBox from "@/screens/Dashboard/components/StatBox";
 import Table from "@/screens/Dashboard/components/Table";
 import { useNavigate, useParams } from "@solidjs/router";
-import type { Component } from "solid-js";
+import { createResource, type Component } from "solid-js";
 
 const ClientDetail: Component = () => {
   const params = useParams<{ readonly id: string }>();

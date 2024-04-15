@@ -5,7 +5,6 @@ import { createCompany, migrateAndPopulate } from "@/bindings";
 import { LANG } from "@/constants";
 import { open } from "@tauri-apps/plugin-shell";
 import { useNavigate } from "@solidjs/router";
-import { useSelector } from "@/store";
 import { createForm } from "@tanstack/solid-form";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import Form from "@/shared/components/Form";
@@ -16,14 +15,15 @@ import { Title } from "./components/Title";
 import { z } from "zod";
 import toast from "solid-toast";
 import Section from "@/shared/components/Form/Section";
+import { useSelector } from "@/store";
 
 interface UserData {
-  companyName: string;
+  name: string;
   cin: string;
-  vatID: string;
-  email: string;
-  phone: string;
-  street: string;
+  vatID?: string;
+  email?: string;
+  phone?: string;
+  address: string;
   city: string;
   zip: string;
 }
@@ -31,17 +31,17 @@ interface UserData {
 const SetupWizard: Component = () => {
   const [t] = useI18n();
   const [currentStep, setCurrentStep] = createSignal(0);
-  const stateService = useSelector((state) => state.stateService);
   const navigate = useNavigate();
+  const updateState = useSelector((state) => state.stateService.updateState);
 
   const form = createForm(() => ({
     defaultValues: {
-      companyName: "",
+      name: "",
       cin: "",
-      vatID: "",
-      email: "",
-      phone: "",
-      street: "",
+      vatID: undefined,
+      email: undefined,
+      phone: undefined,
+      address: "",
       city: "",
       zip: "",
     } as UserData,
@@ -51,18 +51,9 @@ const SetupWizard: Component = () => {
     },
     onSubmit: async (userData) => {
       try {
-        const result = await createCompany({
-          cin: userData.value.cin,
-          name: userData.value.companyName,
-          vatId: userData.value.vatID,
-          email: userData.value.email,
-          phoneNumber: userData.value.phone,
-          city: userData.value.city,
-          postalCode: userData.value.zip,
-          streetAddress: userData.value.street,
-        });
+        const result = await createCompany(userData.value);
 
-        stateService.updateState({ companyId: result.id });
+        updateState({ companyId: result });
         toast.success(t("setup.company_created"));
         navigate("/");
       } catch (error) {
@@ -82,7 +73,7 @@ const SetupWizard: Component = () => {
         <ProgressDots count={3} active={currentStep()} />
       </div>
 
-      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative overflow-scroll mx-auto p-8 px-15% lg:px-23%">
+      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative overflow-auto mx-auto p-8 px-15% lg:px-23%">
         <Show when={currentStep() === 0}>
           <div class="flex justify-center items-center h-full flex-col gap-8">
             <Title>{t("setup.welcome")}</Title>
@@ -118,7 +109,7 @@ const SetupWizard: Component = () => {
             <Title>{t("setup.step2.create_company")}</Title>
             <Section title="Ahoj">
               <form.Field
-                name="companyName"
+                name="name"
                 validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}
               >
                 {(field) => (
@@ -132,7 +123,7 @@ const SetupWizard: Component = () => {
                   />
                 )}
               </form.Field>
-              <form.Field name="cin" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              <form.Field name="cin" validators={{ onChange: z.string().min(2), onChangeAsyncDebounceMs: 500 }}>
                 {(field) => (
                   <Input
                     type="text"
@@ -156,7 +147,10 @@ const SetupWizard: Component = () => {
               </form.Field>
             </Section>
             <Section title="Contact">
-              <form.Field name="street" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              <form.Field
+                name="address"
+                validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}
+              >
                 {(field) => (
                   <Input
                     type="text"
@@ -167,7 +161,7 @@ const SetupWizard: Component = () => {
                   />
                 )}
               </form.Field>
-              <form.Field name="city" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              <form.Field name="city" validators={{ onChange: z.string(), onChangeAsyncDebounceMs: 500 }}>
                 {(field) => (
                   <Input
                     type="text"
@@ -178,7 +172,7 @@ const SetupWizard: Component = () => {
                   />
                 )}
               </form.Field>
-              <form.Field name="zip" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              <form.Field name="zip" validators={{ onChange: z.string(), onChangeAsyncDebounceMs: 500 }}>
                 {(field) => (
                   <Input
                     type="text"

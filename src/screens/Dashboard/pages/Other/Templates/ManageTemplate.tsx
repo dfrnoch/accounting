@@ -105,9 +105,9 @@ const ManageTemplate: Component = () => {
       <div class="relative h-full">
         <Editor code={templateCode} onValueChange={setTemplateCode} />
         <Show when={showSettings()}>
-          <div class="fixed top-0 left-0 w-full h-full grid grid-cols-6 grid-rows-1 justify-between z-999">
+          <div class="fixed top-0 left-0 w-full h-full grid grid-cols-6 grid-rows-1 justify-between z-999 ">
             <div class="bg-black bg-opacity-20 w-full col-span-4" onClick={() => setShowSettings(false)} />
-            <div class="bg-primary col-span-2 p-4">
+            <div class="bg-primary col-span-2 p-4 overflow-scroll pt-44px">
               <h2 class="text-lg font-bold mb-4">Data Hints</h2>
               <TemplateHint />
             </div>

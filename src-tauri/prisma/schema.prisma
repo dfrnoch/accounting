@@ -36,16 +36,6 @@ model Company {
     bankCode    String?
     bankName    String?
     bankIBAN    String?
-
-    // Document counter and info
-    invoicePrefix  String @default("I")
-    invoiceCounter Int    @default(1)
-
-    proformaPrefix  String @default("P")
-    proformaCounter Int    @default(1)
-
-    recievePrefix  String @default("R")
-    recieveCounter Int    @default(1)
 }
 
 model Client {
@@ -132,13 +122,22 @@ model Settings {
     defaultTemplate   Template @relation(fields: [defaultTemplateId], references: [id])
     defaultTemplateId Int
     tax               Float
+
+    invoicePrefix  String @default("I")
+    invoiceCounter Int    @default(1)
+
+    proformaPrefix  String @default("P")
+    proformaCounter Int    @default(1)
+
+    recievePrefix  String @default("R")
+    recieveCounter Int    @default(1)
 }
 
 model Currency {
     id String @id @default(cuid())
 
     name String
-    code String @unique
+    code String
     rate Float //Rate To EURO
 
     company   Company    @relation(fields: [companyId], references: [id])

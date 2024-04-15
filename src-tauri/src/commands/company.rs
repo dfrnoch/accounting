@@ -1,4 +1,6 @@
 use crate::company;
+use crate::currency;
+use crate::template;
 use crate::DbState;
 use prisma_client_rust::not;
 use prisma_client_rust::QueryError;
@@ -37,10 +39,10 @@ pub struct CreateCompanyData {
     name: String,
     cin: String,
     vat_id: Option<String>,
-    // street_adress: String,
+    address: String,
     city: String,
-    // postal_code: String,
-    phone_number: Option<String>,
+    zip: String,
+    phone: Option<String>,
     email: Option<String>,
 }
 
@@ -48,22 +50,63 @@ pub struct CreateCompanyData {
 pub async fn create_company(
     client: DbState<'_>,
     data: CreateCompanyData,
-) -> Result<company::Data, ()> {
+) -> Result<i32, QueryError> {
     debug!("Creating company {:?}", data);
-    client
+    let company = client
         .company()
         .create(
             data.name,
             data.cin,
-            "cus".to_string(),
+            data.address,
             data.city,
-            "aaaa".to_string(),
+            data.zip,
             vec![
                 company::vat_id::set(data.vat_id),
-                company::phone::set(data.phone_number),
+                company::email::set(data.email),
+                company::phone::set(data.phone),
             ],
         )
         .exec()
         .await
-        .map_err(|_| ())
+        .unwrap();
+
+    let currency = client
+        .currency()
+        .create(
+            "Euro".to_string(),
+            "EUR".to_string(),
+            1.0,
+            company::id::equals(company.id),
+            vec![],
+        )
+        .exec()
+        .await
+        .unwrap();
+
+    let template = client
+        .template()
+        .create(
+            "Default Invoice".to_string(),
+            "<html><body><h1>Invoice</h1></body></html>".to_string(),
+            company::id::equals(company.id),
+            vec![],
+        )
+        .exec()
+        .await
+        .unwrap();
+
+    let _settings = client
+        .settings()
+        .create(
+            company::id::equals(company.id),
+            currency::id::equals(currency.id),
+            template::id::equals(template.id),
+            0.0,
+            vec![],
+        )
+        .exec()
+        .await
+        .unwrap();
+
+    Ok(company.id)
 }

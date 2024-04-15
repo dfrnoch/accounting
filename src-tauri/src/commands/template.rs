@@ -116,13 +116,3 @@ pub async fn delete_template(client: DbState<'_>, id: i32) -> Result<(), String>
         Err(e) => Err(e.to_string()),
     }
 }
-
-#[tauri::command]
-pub async fn template_count(client: DbState<'_>, company_id: i32) -> Result<i64, QueryError> {
-    debug!("Getting template count");
-    client
-        .template()
-        .count(vec![template::company_id::equals(company_id)])
-        .exec()
-        .await
-}

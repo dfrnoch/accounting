@@ -1,4 +1,4 @@
-import { type GetClientData, getClients, getModelCount } from "@/bindings";
+import { type Currency, getCurrencies, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
 import { FiEdit, FiPlus } from "solid-icons/fi";
@@ -8,18 +8,18 @@ import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import Container from "@/screens/Dashboard/components/Container";
 
-const Clients: Component = () => {
+const Currencies: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
 
-  const handleEdit = (item: GetClientData) => {
-    navigate(`detail/${item.id}`);
+  const handleEdit = (item: Currency) => {
+    navigate(item.id);
   };
 
   return (
     <Container>
       <PageHeader
-        title={[t("sidebar.section.other"), t("sidebar.button.clients")]}
+        title={[t("sidebar.section.other"), t("sidebar.button.currencies")]}
         actionElements={[
           <HeaderButton onClick={() => navigate("new")} buttonType="primary">
             <FiPlus class="stroke-2" />
@@ -28,13 +28,12 @@ const Clients: Component = () => {
       />
       <Table
         columns={[
-          { field: "id", header: "ID" },
           { field: "name", header: "Name" },
-          { field: "email", header: "Email" },
-          { field: "phone", header: "Phone" },
+          { field: "code", header: "Code" },
+          { field: "rate", header: "Rate" },
         ]}
-        totalItems={getModelCount("Client")}
-        loadPage={async (indicies) => await getClients(indicies)}
+        totalItems={getModelCount("Currency")}
+        loadPage={async (indicies) => await getCurrencies(indicies)}
         rowActions={[
           {
             onClick: handleEdit,
@@ -46,4 +45,4 @@ const Clients: Component = () => {
   );
 };
 
-export default Clients;
+export default Currencies;

@@ -70,12 +70,12 @@ export async function deleteClient(id: number) {
   return invoke("delete_client", { id });
 }
 
-export async function getCompany(id: number | null) {
-  return invoke<Company | null>("get_company", { id });
+export async function getCompany(id?: number) {
+  return invoke<Company>("get_company", { id: id ? id : state.companyId });
 }
 
 export async function createCompany(data: CreateCompanyData) {
-  return invoke<Company>("create_company", { data });
+  return invoke<number>("create_company", { data });
 }
 
 export async function getSales(months: number) {
@@ -137,10 +137,6 @@ export async function deleteTemplate(id: number) {
   return await invoke("delete_template", { id });
 }
 
-export async function templateCount() {
-  return await invoke<number>("template_count", { companyId: state.companyId });
-}
-
 export async function createTemplate(template: {
   templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
   html: string;
@@ -152,19 +148,68 @@ export async function createTemplate(template: {
 export async function updateTemplate(id: number, html: string) {
   return await invoke("update_template", { id, html });
 }
+
+export async function getCurrency(id: string) {
+  return await invoke<Currency>("get_currency", { id });
+}
+
+export async function getCurrencies(indicies: Indicies) {
+  return await invoke<Currency[]>("get_currencies", { companyId: state.companyId, indicies });
+}
+
+export async function createCurrency(data: { name: string; code: string; rate: number }) {
+  return await invoke("create_currency", { companyId: state.companyId, data });
+}
+
+export async function updateCurrency(id: string, data: { name: string; code: string; rate: number }) {
+  return await invoke("update_currency", { id, data });
+}
+
+export async function deleteCurrency(id: string) {
+  return await invoke("delete_currency", { id });
+}
+
+export async function getSettings(id?: number) {
+  return await invoke<Settings>("get_settings", { companyId: id ? id : state.companyId });
+}
+
 export async function getPrintDocument(id: number) {
   return await invoke<GetPrintDocumentResult>("get_print_document", { id });
 }
 
+export type Settings = {
+  id: number;
+  defaultCurrency: Currency;
+  defaultTemplate: Template;
+  tax: number;
+
+  invoicePrefix: string;
+  invoiceCounter: number;
+
+  proformaPrefix: string;
+  proformaCounter: number;
+
+  recievePrefix: string;
+  recieveCounter: number;
+};
+
+export type Currency = {
+  id: string;
+  name: string;
+  code: string;
+  rate: number;
+  companyId: number;
+};
+
 export type CreateCompanyData = {
   name: string;
   cin: string;
-  vatId: string;
-  streetAddress: string;
+  vatId?: string;
+  address: string;
   city: string;
-  postalCode: string;
-  phoneNumber: string;
-  email: string;
+  zip: string;
+  phone?: string;
+  email?: string;
 };
 
 export interface Document {
@@ -194,10 +239,10 @@ export type Company = {
   name: string;
   cin: string | null;
   vatId: string | null;
-  street: string;
+  address: string;
   city: string;
-  postalCode: string;
-  phoneNumber: string | null;
+  zip: string;
+  phone: string | null;
   email: string | null;
 };
 
@@ -238,7 +283,6 @@ export type GetPrintDocumentResult = {
     zip: string;
     email: string | null;
     phone: string | null;
-    companyId: number;
   };
   template: {
     id: number;
@@ -246,6 +290,16 @@ export type GetPrintDocumentResult = {
     html: string;
     templateType: string;
     companyId: number;
+  };
+  company: {
+    name: string;
+    cin: string;
+    vatId: string;
+    street: string;
+    city: string;
+    zip: string;
+    phoneNumber: string;
+    email: string;
   };
   currency: {
     id: string;

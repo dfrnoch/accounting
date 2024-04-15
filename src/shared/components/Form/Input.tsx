@@ -43,7 +43,7 @@ const Input: Component<InputProps> = (props) => {
         }}
         onInput={handleInput}
         placeholder={props.placeholder}
-        value={props.defaultValue}
+        value={props.defaultValue ? props.defaultValue : ""}
       />
       <Show when={props.errors}>
         <For each={props.errors}>{(error) => <span class="text-xs text-danger">{error?.toString()}</span>}</For>

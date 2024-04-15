@@ -92,6 +92,16 @@ const hints = {
   number: "INV-2024-001",
   documentType: "Invoice",
   client: {
+    name: "Client Name",
+    cin: "CIN",
+    vatId: "VAT",
+    address: "Address Line",
+    city: "City",
+    zip: "Zip Code",
+    email: "Email",
+    phone: "Phone",
+  },
+  company: {
     name: "Company Name",
     cin: "CIN",
     vatId: "VAT",

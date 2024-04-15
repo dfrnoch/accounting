@@ -97,7 +97,6 @@ async fn main() {
             commands::template::create_template,
             commands::template::update_template,
             commands::template::delete_template,
-            commands::template::template_count,
             commands::client::get_clients,
             commands::client::get_client,
             commands::client::update_client,
@@ -107,7 +106,13 @@ async fn main() {
             commands::stats::get_expenses,
             commands::stats::get_sales_and_expenses,
             commands::other::get_model_count,
-            commands::other::get_print_document
+            commands::other::get_print_document,
+            commands::currency::get_currencies,
+            commands::currency::get_currency,
+            commands::currency::create_currency,
+            commands::currency::update_currency,
+            commands::currency::delete_currency,
+            commands::settings::get_settings,
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

@@ -1,7 +1,6 @@
 import type { Component } from "solid-js";
 import { onMount } from "solid-js";
 import Box from "../components/Box";
-import StatBox from "../components/StatBox";
 import { useI18n } from "@/i18n";
 import PageHeader from "../components/PageHeader";
 import Container from "../components/Container";
@@ -22,6 +21,7 @@ import {
 } from "chart.js";
 import { Line, Bar, Pie } from "solid-chartjs";
 import { getSales } from "@/bindings";
+import StatBox from "../components/StatBox";
 
 const Overview: Component = () => {
   const [t] = useI18n();
@@ -128,7 +128,7 @@ const Overview: Component = () => {
   };
 
   onMount(async () => {
-    const data = await getSales(3);
+    const data = await getSales(2);
     console.log(data);
   });
 

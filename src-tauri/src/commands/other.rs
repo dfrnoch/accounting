@@ -80,6 +80,7 @@ pub async fn get_print_document(
         .with(document::currency::fetch())
         .with(document::client::fetch())
         .with(document::template::fetch())
+        .with(document::company::fetch())
         .exec()
         .await
 }

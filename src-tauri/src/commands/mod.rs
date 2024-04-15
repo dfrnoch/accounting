@@ -1,7 +1,9 @@
 pub mod client;
 pub mod company;
+pub mod currency;
 pub mod db;
 pub mod document;
 pub mod other;
+pub mod settings;
 pub mod stats;
 pub mod template;

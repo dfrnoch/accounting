@@ -1,5 +1,4 @@
-import type { Company } from "@/bindings";
-import { onMount } from "solid-js";
+import { getCompany, type Company } from "@/bindings";
 import { createStore } from "solid-js/store";
 
 const companyStore = createStore<Company>({} as Company);
@@ -7,12 +6,8 @@ const companyStore = createStore<Company>({} as Company);
 export const CompanyService = () => {
   const [company, setCompany] = companyStore;
 
-  onMount(() => {
-    setCompany(() => ({}) as Company);
-  });
-
-  const updateCompany = (company: Company) => {
-    setCompany(() => company);
+  const updateCompany = async () => {
+    setCompany(await getCompany());
   };
 
   return { company, updateCompany };
