@@ -19,10 +19,6 @@ const Invoices: Component = () => {
     navigate(`${item.id}`);
   };
 
-  const handleDelete = (item: GetDocumentData) => {
-    console.log("Delete:", item);
-    // Handle delete action
-  };
   const handleDownload = (item: GetDocumentData) => {
     getInitializedPrintWindow(item.id);
   };
@@ -41,6 +37,7 @@ const Invoices: Component = () => {
         columns={[{ field: "id", header: "ID" }]}
         totalItems={getModelCount("Invoice")}
         loadPage={async (indices) => await getDocuments(DocumentType.INVOICE, indices)}
+        onClickRow={(item) => navigate(`${item.id}`)}
         rowActions={[
           {
             onClick: handleDownload,
@@ -49,10 +46,6 @@ const Invoices: Component = () => {
           {
             onClick: handleEdit,
             icon: FiEdit,
-          },
-          {
-            onClick: handleDelete,
-            icon: FiTrash,
           },
         ]}
       />

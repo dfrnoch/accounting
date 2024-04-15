@@ -1,4 +1,4 @@
-import { createSignal, For, type Component, type JSX, Suspense, createResource } from "solid-js";
+import { createSignal, For, type JSX, Suspense, createResource } from "solid-js";
 import Pagination from "./Pagination";
 import TableHead from "./TableHeader";
 import TableRow from "./Row";
@@ -8,17 +8,12 @@ export interface Indicies {
   take: number;
 }
 
-export interface RowAction<T> {
-  onClick: (item: T) => void;
-  icon?: Component;
-}
-
 interface TableProps<T extends Record<string, unknown>> {
   columns: Array<{ field: keyof T; header: string; component?: (item: T) => JSX.Element }>;
-  rowActions?: Array<RowAction<T>>;
   loadPage: (indices: Indicies) => Promise<T[]>;
   totalItems: Promise<number>;
   allowedCounts?: number[];
+  onClickRow?: (item: T) => void;
 }
 
 const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
@@ -30,20 +25,11 @@ const Table = <T extends Record<string, unknown>>(props: TableProps<T>) => {
   return (
     <div class="flex h-full flex-col justify-between">
       <table class="min-w-full leading-normal">
-        <TableHead columns={props.columns} hasActions={!!props.rowActions} />
+        <TableHead columns={props.columns} />
         <tbody class="overflow-y-auto">
           <Suspense>
             <For each={data()}>
-              {(item) => (
-                <TableRow
-                  item={item}
-                  columns={props.columns}
-                  rowActions={props.rowActions?.map((action) => ({
-                    ...action,
-                    onClick: () => action.onClick(item),
-                  }))}
-                />
-              )}
+              {(item) => <TableRow item={item} columns={props.columns} onClick={props.onClickRow} />}
             </For>
           </Suspense>
         </tbody>

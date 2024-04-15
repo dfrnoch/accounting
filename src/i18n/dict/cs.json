@@ -56,7 +56,28 @@
       "other": "Ostatní"
     }
   },
+  "statbox": {
+    "lastMonth": "Minulý měsíc"
+  },
   "overview": {
+    "chart": {
+      "sales": "Prodej",
+      "expenses": "Výdaje"
+    },
+    "months": {
+      "january": "Leden",
+      "february": "Únor",
+      "march": "Březen",
+      "april": "Duben",
+      "may": "Květen",
+      "june": "Červen",
+      "july": "Červenec",
+      "august": "Srpen",
+      "september": "Září",
+      "october": "Říjen",
+      "november": "Listopad",
+      "december": "Prosinec"
+    },
     "stats": {
       "sales": "Prodej",
       "purchase": "Nákup",

@@ -12,10 +12,6 @@ const Currencies: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
 
-  const handleEdit = (item: Currency) => {
-    navigate(item.id);
-  };
-
   return (
     <Container>
       <PageHeader
@@ -34,12 +30,7 @@ const Currencies: Component = () => {
         ]}
         totalItems={getModelCount("Currency")}
         loadPage={async (indicies) => await getCurrencies(indicies)}
-        rowActions={[
-          {
-            onClick: handleEdit,
-            icon: FiEdit,
-          },
-        ]}
+        onClickRow={(item) => navigate(item.id)}
       />
     </Container>
   );

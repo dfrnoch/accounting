@@ -1,136 +1,61 @@
 import type { Component } from "solid-js";
-import { onMount } from "solid-js";
+import { Show, createResource, onMount } from "solid-js";
 import Box from "../components/Box";
 import { useI18n } from "@/i18n";
 import PageHeader from "../components/PageHeader";
 import Container from "../components/Container";
-import {
-  Chart,
-  LineController,
-  CategoryScale,
-  PointElement,
-  LineElement,
-  LinearScale,
-  Title,
-  Tooltip,
-  Legend,
-  BarController,
-  BarElement,
-  ArcElement,
-  PieController,
-} from "chart.js";
-import { Line, Bar, Pie } from "solid-chartjs";
-import { getSales } from "@/bindings";
+import { SolidApexCharts } from "solid-apexcharts";
+import { getExpenses, getSales } from "@/bindings";
 import StatBox from "../components/StatBox";
 
 const Overview: Component = () => {
   const [t] = useI18n();
+  const [sales] = createResource(6, getSales);
+  const [expenses] = createResource(6, getExpenses);
 
-  onMount(() => {
-    Chart.register(
-      LineController,
-      CategoryScale,
-      PointElement,
-      LineElement,
-      LinearScale,
-      Title,
-      Tooltip,
-      Legend,
-      BarController,
-      BarElement,
-      ArcElement,
-      PieController,
-    );
-  });
+  const getLastSixMonths = () => {
+    const months = [];
+    const currentDate = new Date();
 
-  const lineChartData = {
-    labels: ["January", "February", "March", "April", "May"],
-    datasets: [
-      {
-        label: "Sales",
-        data: [50, 60, 70, 80, 90],
-        fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-    ],
+    for (let i = 5; i >= 0; i--) {
+      const month = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+      const monthName = getMonthName(month.getMonth());
+      months.push(monthName);
+    }
+
+    return months.reverse();
   };
 
-  const lineChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      title: {
-        display: true,
-        text: "Sales Chart",
-      },
-    },
+  const getMonthName = (monthIndex: number) => {
+    switch (monthIndex) {
+      case 0:
+        return t("overview.months.january");
+      case 1:
+        return t("overview.months.february");
+      case 2:
+        return t("overview.months.march");
+      case 3:
+        return t("overview.months.april");
+      case 4:
+        return t("overview.months.may");
+      case 5:
+        return t("overview.months.june");
+      case 6:
+        return t("overview.months.july");
+      case 7:
+        return t("overview.months.august");
+      case 8:
+        return t("overview.months.september");
+      case 9:
+        return t("overview.months.october");
+      case 10:
+        return t("overview.months.november");
+      case 11:
+        return t("overview.months.december");
+      default:
+        return "";
+    }
   };
-
-  const pieChartData = {
-    labels: ["Red", "Blue", "Yellow"],
-    datasets: [
-      {
-        data: [30, 50, 20],
-        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
-        hoverOffset: 4,
-      },
-    ],
-  };
-
-  const pieChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      title: {
-        display: true,
-        text: "Pie Chart",
-      },
-    },
-  };
-
-  const barChartData = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const barChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      title: {
-        display: true,
-        text: "Bar Chart",
-      },
-    },
-  };
-
-  onMount(async () => {
-    const data = await getSales(2);
-    console.log(data);
-  });
 
   return (
     <Container>
@@ -138,14 +63,121 @@ const Overview: Component = () => {
       <div class="grid grid-cols-2 grid-rows-5 gap-3 lg:(gap-4 grid-cols-3) w-full h-screen">
         <div class="col-span-2">
           <div class="flex flex-row gap-3 lg:gap-4 justify-between items-center w-full h-full">
-            <StatBox title={t("overview.stats.purchase")} value={1654.43} last={6804.52} />
-            <StatBox title={t("overview.stats.sales")} value={100} />
-            <StatBox title={t("overview.stats.tax")} value={120} />
+            <Show when={!sales.loading || !expenses.loading}>
+              {/* <StatBox title={t("overview.stats.purchase")} value={sales()[0]} last={sales()[1]} /> */}
+              <StatBox title={t("overview.stats.sales")} value={100} />
+              <StatBox title={t("overview.stats.tax")} value={120} />
+            </Show>
           </div>
         </div>
         <div class="col-span-2 row-span-2 row-start-2">
-          <Box>
-            <Line data={lineChartData} options={lineChartOptions} width={500} height={300} />
+          <Box chart>
+            <Show when={sales() && expenses()}>
+              <SolidApexCharts
+                type="area"
+                options={{
+                  chart: {
+                    type: "area",
+                    toolbar: {
+                      show: false,
+                    },
+                    width: "100%",
+                    height: "100%",
+                  },
+                  dataLabels: {
+                    enabled: false,
+                  },
+                  stroke: {
+                    curve: "smooth",
+                  },
+                  xaxis: {
+                    categories: getLastSixMonths(),
+                    labels: {
+                      style: {
+                        colors: "var(--color-primary)",
+                        fontSize: "12px",
+                        fontWeight: 400,
+                        cssClass: "apexcharts-xaxis-label",
+                      },
+                    },
+                    axisBorder: {
+                      show: true,
+                      color: "var(--color-border)",
+                      offsetX: 0,
+                      offsetY: 0,
+                    },
+                    axisTicks: {
+                      show: true,
+                      borderType: "solid",
+                      color: "var(--color-border)",
+                      height: 6,
+                      offsetX: 0,
+                      offsetY: 0,
+                    },
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: "var(--color-primary)",
+                        fontSize: "12px",
+                        fontWeight: 400,
+                        cssClass: "apexcharts-yaxis-label",
+                      },
+                    },
+                  },
+                  grid: {
+                    show: true,
+                    borderColor: "var(--color-border)",
+                    strokeDashArray: 0,
+                    position: "back",
+                    xaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                    yaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                    row: {
+                      opacity: 0.5,
+                    },
+                    column: {
+                      opacity: 0.5,
+                    },
+                    padding: {
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      left: 20,
+                    },
+                  },
+                  tooltip: {
+                    theme: "dark",
+                    style: {
+                      fontSize: "12px",
+                    },
+                  },
+                  legend: {
+                    labels: {
+                      colors: "var(--color-primary)",
+                      useSeriesColors: false,
+                    },
+                  },
+                }}
+                series={[
+                  {
+                    name: t("overview.chart.sales"),
+                    data: sales(),
+                  },
+                  {
+                    name: t("overview.chart.expenses"),
+                    data: expenses(),
+                  },
+                ]}
+              />
+            </Show>
           </Box>
         </div>
         <div class="hidden lg:(block col-span-1)">
@@ -154,14 +186,10 @@ const Overview: Component = () => {
           </Box>
         </div>
         <div class="col-span-2 row-start-4">
-          <Box>
-            <Bar data={barChartData} options={barChartOptions} width={500} height={300} />
-          </Box>
+          <Box></Box>
         </div>
         <div class="lg:(col-start-3 row-span-2 block) hidden">
-          <Box>
-            <Pie data={pieChartData} options={pieChartOptions} width={500} height={300} />
-          </Box>
+          <Box></Box>
         </div>
       </div>
     </Container>

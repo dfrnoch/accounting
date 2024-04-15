@@ -1,7 +1,7 @@
-import { type GetClientData, getClients, getModelCount } from "@/bindings";
+import { getClients, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
-import { FiEdit, FiPlus } from "solid-icons/fi";
+import { FiPlus } from "solid-icons/fi";
 import type { Component } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
@@ -11,10 +11,6 @@ import Container from "@/screens/Dashboard/components/Container";
 const Clients: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
-
-  const handleEdit = (item: GetClientData) => {
-    navigate(`detail/${item.id}`);
-  };
 
   return (
     <Container>
@@ -34,13 +30,8 @@ const Clients: Component = () => {
           { field: "phone", header: "Phone" },
         ]}
         totalItems={getModelCount("Client")}
-        loadPage={async (indicies) => await getClients(indicies)}
-        rowActions={[
-          {
-            onClick: handleEdit,
-            icon: FiEdit,
-          },
-        ]}
+        loadPage={getClients}
+        onClickRow={(item) => navigate(`detail/${item.id}`)}
       />
     </Container>
   );

@@ -1,3 +1,4 @@
+import { useI18n } from "@/i18n";
 import { useSelector } from "@/store";
 import { type Component, Show } from "solid-js";
 
@@ -12,6 +13,7 @@ const StatBox: Component<{
     const percentage = ((current - last) / last) * 100;
     return Number(percentage.toFixed(2));
   };
+  const [t] = useI18n();
 
   const settings = useSelector((state) => state.settingsService.settings);
 
@@ -46,7 +48,7 @@ const StatBox: Component<{
           </p>
           <Show when={props.last}>
             <p class="text-xs font-normal">
-              {props.last} {settings.defaultCurrency.code} Previous period
+              {props.last} {settings.defaultCurrency.code} {t("statbox.lastMonth")}
             </p>
           </Show>
         </div>

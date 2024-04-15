@@ -1,7 +1,7 @@
 import { useI18n } from "@/i18n";
 import { SegmentedControl } from "@/shared/components/SegmentedControl";
 import { FiChevronLeft, FiChevronRight } from "solid-icons/fi";
-import { createSignal } from "solid-js";
+import { Show, createSignal } from "solid-js";
 import type { Indicies } from ".";
 
 interface PaginationProps {
@@ -84,14 +84,16 @@ const Pagination = (props: PaginationProps) => {
       </div>
 
       {/* Count Selector */}
-      <div class="justify-self-end">
-        <SegmentedControl
-          options={filteredCounts().map((c) => ({
-            id: String(c),
-            label: c === -1 ? t("table.all") : String(c),
-          }))}
-          onChange={(value) => setCountHandler(Number(value))}
-        />
+      <div class="justify-self-end w-full">
+        <Show when={filteredCounts().length > 1}>
+          <SegmentedControl
+            options={filteredCounts().map((c) => ({
+              id: String(c),
+              label: c === -1 ? t("table.all") : String(c),
+            }))}
+            onChange={(value) => setCountHandler(Number(value))}
+          />
+        </Show>
       </div>
     </div>
   );

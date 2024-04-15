@@ -11,30 +11,27 @@ fn get_month_ranges(months: i32) -> Vec<(DateTime<FixedOffset>, DateTime<FixedOf
     let mut month_ranges = Vec::new();
 
     for month_offset in 0..months {
-        let target_month = today_naive.month() as i32 - month_offset;
-        let year_adjustment = (target_month - 1) / 12;
+        let target_month = (today_naive.month() as i32 - month_offset - 1).rem_euclid(12) + 1;
+        let year_adjustment = (today_naive.month() as i32 - month_offset - 1) / 12;
         let adjusted_year = today_naive.year() + year_adjustment;
-        let adjusted_month = ((target_month - 1) % 12 + 1) as u32;
 
         let first_day_of_target_month = today_naive
             .with_year(adjusted_year)
             .unwrap()
-            .with_month(adjusted_month)
+            .with_month(target_month as u32)
             .unwrap()
             .with_day(1)
             .unwrap();
-        let last_day_of_target_month = if let Some(next_month_first_day) =
-            first_day_of_target_month.with_month(adjusted_month % 12 + 1)
-        {
-            next_month_first_day - Duration::days(1)
-        } else {
-            first_day_of_target_month
-                .with_month(1)
-                .unwrap()
-                .with_year(adjusted_year + 1)
-                .unwrap()
-                - Duration::days(1)
-        };
+        let last_day_of_target_month = first_day_of_target_month
+            .with_month((target_month % 12 + 1) as u32)
+            .unwrap_or_else(|| {
+                first_day_of_target_month
+                    .with_year(adjusted_year + 1)
+                    .unwrap()
+                    .with_month(1)
+                    .unwrap()
+            })
+            - Duration::days(1);
 
         let start_datetime = FixedOffset::east_opt(0)
             .unwrap()
@@ -49,7 +46,6 @@ fn get_month_ranges(months: i32) -> Vec<(DateTime<FixedOffset>, DateTime<FixedOf
     // month_ranges.reverse(); // Ensure the months are in ascending order
     month_ranges
 }
-
 async fn get_default_currency(client: &DbState<'_>, company_id: i32) -> currency::Data {
     let company_settings = client
         .settings()
@@ -113,6 +109,7 @@ pub async fn get_expenses(
     company_id: i32,
     months: i32,
 ) -> Result<Vec<f64>, QueryError> {
+    debug!("Getting expenses for company_id: {}", company_id);
     let month_ranges = get_month_ranges(months);
     let default_currency = get_default_currency(&client, company_id).await;
     let mut monthly_expenses = Vec::new();

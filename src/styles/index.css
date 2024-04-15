@@ -91,7 +91,7 @@ input[type=number] {
 }
 
 /* TODO: mozna pak  */
-tr td:first-child {
+/* tr td:first-child {
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
 }
@@ -99,4 +99,4 @@ tr td:first-child {
 tr td:last-child {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
-}
+} */

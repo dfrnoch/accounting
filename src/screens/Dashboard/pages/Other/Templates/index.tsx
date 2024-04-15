@@ -1,7 +1,7 @@
-import { type Template, getTemplates, getModelCount } from "@/bindings";
+import { getTemplates, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
-import { FiEdit, FiPlus } from "solid-icons/fi";
+import { FiPlus } from "solid-icons/fi";
 import type { Component } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
@@ -12,10 +12,6 @@ import StatusIcon from "@/screens/Dashboard/components/StatusIcon";
 const Templates: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
-
-  const handleEdit = (item: Template) => {
-    navigate(`${item.id}`);
-  };
 
   return (
     <Container>
@@ -38,13 +34,8 @@ const Templates: Component = () => {
           },
         ]}
         totalItems={getModelCount("Template")}
-        loadPage={async (indices) => await getTemplates(indices)}
-        rowActions={[
-          {
-            onClick: handleEdit,
-            icon: FiEdit,
-          },
-        ]}
+        loadPage={getTemplates}
+        onClickRow={(item) => navigate(`detail/${item.id}`)}
       />
     </Container>
   );
