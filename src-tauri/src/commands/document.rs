@@ -1,4 +1,5 @@
 use crate::client;
+use crate::commands::settings::update_count;
 use crate::company;
 use crate::currency;
 use crate::document;
@@ -7,6 +8,7 @@ use crate::template;
 use crate::types::Indicies;
 use crate::DbState;
 use prisma_client_rust::chrono::{DateTime, FixedOffset};
+use prisma_client_rust::Direction;
 use prisma_client_rust::QueryError;
 
 use serde::{Deserialize, Serialize};
@@ -32,27 +34,28 @@ pub struct DocumentWithPrice {
 pub async fn get_documents(
     client: DbState<'_>,
     company_id: i32,
-    document_type: String,
+    document_type: Option<String>,
     indicies: Indicies,
     client_id: Option<i32>,
 ) -> Result<Vec<DocumentWithPrice>, QueryError> {
     debug!(
-        "Getting documents from {} with type {} and indicies {:?}",
+        "Getting documents from {} with type {:?} and indicies {:?}",
         company_id, document_type, indicies
     );
 
-    let mut conditions = vec![
-        document::company_id::equals(company_id),
-        document::document_type::equals(document_type),
-    ];
+    let mut conditions = vec![document::company_id::equals(company_id)];
 
     if let Some(client_id) = client_id {
         conditions.push(document::client_id::equals(client_id));
+    }
+    if let Some(document_type) = document_type {
+        conditions.push(document::document_type::equals(document_type));
     }
 
     let documents = client
         .document()
         .find_many(conditions)
+        .order_by(document::id::order(Direction::Desc))
         .with(document::items::fetch(vec![]))
         .skip(indicies.skip)
         .take(indicies.take)
@@ -87,6 +90,24 @@ pub async fn get_documents(
         .collect::<Vec<DocumentWithPrice>>();
 
     Ok(documents_with_price)
+}
+
+#[tauri::command]
+pub async fn get_document_count(
+    client: DbState<'_>,
+    document_type: Option<String>,
+    client_id: Option<i32>,
+) -> Result<i64, QueryError> {
+    let mut conditions = vec![];
+
+    if let Some(client_id) = client_id {
+        conditions.push(document::client_id::equals(client_id));
+    }
+    if let Some(document_type) = document_type {
+        conditions.push(document::document_type::equals(document_type));
+    }
+
+    client.document().count(conditions).exec().await
 }
 
 #[tauri::command]
@@ -139,7 +160,10 @@ pub async fn create_document(client: DbState<'_>, data: document::Data) -> Resul
     }
 
     match res {
-        Ok(_) => Ok(()),
+        Ok(_) => {
+            update_count(client, data.company_id, "Invoice").await;
+            Ok(())
+        }
         Err(e) => Err(e.to_string()),
     }
 }

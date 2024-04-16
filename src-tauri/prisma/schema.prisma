@@ -33,8 +33,6 @@ model Company {
 
     // Bank account
     bankAccount String?
-    bankCode    String?
-    bankName    String?
     bankIBAN    String?
 }
 
@@ -54,6 +52,11 @@ model Client {
     email String?
     phone String?
 
+    bankAccount String?
+    bankCode    String?
+    bankName    String?
+    bankIBAN    String?
+
     documents Document[]
 
     company   Company @relation(fields: [companyId], references: [id])
@@ -63,7 +66,7 @@ model Client {
 model Document {
     id           Int    @id @default(autoincrement())
     number       String @unique
-    documentType String // ENUM = INVOICE, PROFORMA, RECIEVE
+    documentType String // ENUM = INVOICE, PROFORMA, RECEIVE
 
     client   Client @relation(fields: [clientId], references: [id])
     clientId Int
@@ -129,8 +132,8 @@ model Settings {
     proformaPrefix  String @default("P")
     proformaCounter Int    @default(1)
 
-    recievePrefix  String @default("R")
-    recieveCounter Int    @default(1)
+    receivePrefix  String @default("R")
+    receiveCounter Int    @default(1)
 }
 
 model Currency {

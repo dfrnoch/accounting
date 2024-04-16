@@ -46,6 +46,7 @@ fn get_month_ranges(months: i32) -> Vec<(DateTime<FixedOffset>, DateTime<FixedOf
     // month_ranges.reverse(); // Ensure the months are in ascending order
     month_ranges
 }
+
 async fn get_default_currency(client: &DbState<'_>, company_id: i32) -> currency::Data {
     let company_settings = client
         .settings()
@@ -164,4 +165,33 @@ pub async fn get_sales_and_expenses(
     let net_values: Vec<(f64, f64)> = sales.into_iter().zip(expenses.into_iter()).collect();
 
     Ok(net_values)
+}
+
+#[tauri::command]
+pub async fn get_documents_stats(
+    client: DbState<'_>,
+    company_id: i32,
+    months: i32,
+    document_type: String,
+) -> Result<Vec<i64>, QueryError> {
+    let month_ranges = get_month_ranges(months);
+    let mut monthly_documents = Vec::new();
+
+    for (start_date, end_date) in month_ranges {
+        let documents = client
+            .document()
+            .count(vec![
+                document::company_id::equals(company_id),
+                document::document_type::equals(document_type.clone()),
+                document::issue_date::gte(start_date),
+                document::issue_date::lte(end_date),
+            ])
+            .exec()
+            .await
+            .unwrap();
+
+        monthly_documents.push(documents);
+    }
+
+    Ok(monthly_documents)
 }

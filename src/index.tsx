@@ -6,19 +6,16 @@ import "uno.css";
 const Overview = lazy(() => import("./screens/Dashboard/pages"));
 const Invoices = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices"));
 const ManageInvoice = lazy(() => import("./screens/Dashboard/pages/Sales/Invoices/ManageInvoice"));
-const InvoiceTemplates = lazy(() => import("./screens/Dashboard/pages/Sales/Templates"));
 const Templates = lazy(() => import("./screens/Dashboard/pages/Other/Templates"));
 const ManageTemplates = lazy(() => import("./screens/Dashboard/pages/Other/Templates/ManageTemplate"));
-const Schedules = lazy(() => import("./screens/Dashboard/pages/Sales/Schedules"));
 const Expenses = lazy(() => import("./screens/Dashboard/pages/Purchase/Expenses"));
 const Clients = lazy(() => import("./screens/Dashboard/pages/Other/Clients"));
 const Print = lazy(() => import("./screens/Print"));
 const Currencies = lazy(() => import("./screens/Dashboard/pages/Other/Currencies"));
 const ManageCurrency = lazy(() => import("./screens/Dashboard/pages/Other/Currencies/ManageCurrency"));
-const RecievedInvoices = lazy(() => import("./screens/Dashboard/pages/Purchase/ReceivedInvoices"));
+const ReceivedInvoices = lazy(() => import("./screens/Dashboard/pages/Purchase/ReceivedInvoices"));
 const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ClientDetail"));
 const ManageClient = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ManageClient"));
-const Reports = lazy(() => import("./screens/Dashboard/pages/Other/Reports"));
 const Settings = lazy(() => import("./screens/Dashboard/pages/Settings"));
 const Dashboard = lazy(() => import("./screens/Dashboard"));
 const Setup = lazy(() => import("./screens/Setup"));
@@ -49,8 +46,6 @@ render(
             <Route path="/new" component={ManageInvoice} />
             <Route path="/:id" component={ManageInvoice} />
           </Route>
-          <Route path="/templates" component={InvoiceTemplates} />
-          <Route path="/schedules" component={Schedules} />
         </Route>
         <Route path="/other">
           <Route path="/clients">
@@ -64,7 +59,6 @@ render(
             <Route path="/new" component={ManageCurrency} />
             <Route path="/:code" component={ManageCurrency} />
           </Route>
-          <Route path="/reports" component={Reports} />
           <Route path="/templates">
             <Route path="/" component={Templates} />
             <Route path="/new" component={ManageTemplates} />
@@ -73,7 +67,7 @@ render(
         </Route>
         <Route path="/purchase/">
           <Route path="/expenses" component={Expenses} />
-          <Route path="/recieved" component={RecievedInvoices} />
+          <Route path="/received" component={ReceivedInvoices} />
         </Route>
         <Route path="/settings" component={Settings} />
         <Route path="*" component={() => <Navigate href={"/dashboard"} />} />

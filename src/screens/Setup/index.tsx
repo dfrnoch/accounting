@@ -1,7 +1,7 @@
 import { locale, setLocale, useI18n } from "@/i18n";
 import { createSignal, type Component, Show, onMount } from "solid-js";
 import ProgressDots from "./components/Progress";
-import { createCompany, migrateAndPopulate } from "@/bindings";
+import { type CreateCompanyData, createCompany, migrateAndPopulate } from "@/bindings";
 import { LANG } from "@/constants";
 import { open } from "@tauri-apps/plugin-shell";
 import { useNavigate } from "@solidjs/router";
@@ -17,17 +17,6 @@ import toast from "solid-toast";
 import Section from "@/shared/components/Form/Section";
 import { useSelector } from "@/store";
 
-interface UserData {
-  name: string;
-  cin: string;
-  vatID?: string;
-  email?: string;
-  phone?: string;
-  address: string;
-  city: string;
-  zip: string;
-}
-
 const SetupWizard: Component = () => {
   const [t] = useI18n();
   const [currentStep, setCurrentStep] = createSignal(0);
@@ -38,13 +27,15 @@ const SetupWizard: Component = () => {
     defaultValues: {
       name: "",
       cin: "",
-      vatID: undefined,
+      vatId: undefined,
       email: undefined,
       phone: undefined,
       address: "",
       city: "",
       zip: "",
-    } as UserData,
+      bankAccount: undefined,
+      bankIBAN: undefined,
+    } as CreateCompanyData,
     validatorAdapter: zodValidator,
     onSubmitInvalid: (e) => {
       console.log("invalid", e.formApi.state.errors);
@@ -107,7 +98,7 @@ const SetupWizard: Component = () => {
         <Show when={currentStep() === 2}>
           <Form>
             <Title>{t("setup.step2.create_company")}</Title>
-            <Section title="Ahoj">
+            <Section title={t("setup.step2.sections.details")}>
               <form.Field
                 name="name"
                 validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}
@@ -115,7 +106,7 @@ const SetupWizard: Component = () => {
                 {(field) => (
                   <Input
                     type="text"
-                    placeholder="Company Name"
+                    placeholder="Acme Inc"
                     label={t("setup.step2.company_name")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
@@ -127,6 +118,7 @@ const SetupWizard: Component = () => {
                 {(field) => (
                   <Input
                     type="text"
+                    placeholder="12345678"
                     label={t("setup.step2.CIN")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
@@ -134,10 +126,11 @@ const SetupWizard: Component = () => {
                   />
                 )}
               </form.Field>
-              <form.Field name="vatID" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+              <form.Field name="vatId" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
                 {(field) => (
                   <Input
                     type="text"
+                    placeholder="CZ12345678"
                     label={t("setup.step2.vatID")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
@@ -146,7 +139,38 @@ const SetupWizard: Component = () => {
                 )}
               </form.Field>
             </Section>
-            <Section title="Contact">
+            <Section title={t("setup.step2.sections.bank")}>
+              <form.Field
+                name="bankAccount"
+                validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}
+              >
+                {(field) => (
+                  <Input
+                    type="text"
+                    placeholder="123456789/1234"
+                    label={t("setup.step2.account")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+              <form.Field
+                name="bankIBAN"
+                validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}
+              >
+                {(field) => (
+                  <Input
+                    type="text"
+                    label={t("setup.step2.iban")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.touchedErrors}
+                  />
+                )}
+              </form.Field>
+            </Section>
+            <Section title={t("setup.step2.sections.contact")}>
               <form.Field
                 name="address"
                 validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}
@@ -154,6 +178,7 @@ const SetupWizard: Component = () => {
                 {(field) => (
                   <Input
                     type="text"
+                    placeholder="123 Main St"
                     label={t("setup.step2.street")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
@@ -165,6 +190,7 @@ const SetupWizard: Component = () => {
                 {(field) => (
                   <Input
                     type="text"
+                    placeholder="Springfield"
                     label={t("setup.step2.city")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
@@ -176,6 +202,7 @@ const SetupWizard: Component = () => {
                 {(field) => (
                   <Input
                     type="text"
+                    placeholder="12345"
                     label={t("setup.step2.zip")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
@@ -183,8 +210,6 @@ const SetupWizard: Component = () => {
                   />
                 )}
               </form.Field>
-            </Section>
-            <Section title="Contact">
               <form.Field
                 name="email"
                 validators={{
@@ -195,6 +220,7 @@ const SetupWizard: Component = () => {
                 {(field) => (
                   <Input
                     type="email"
+                    placeholder="john@acme.com"
                     label={t("setup.step2.email")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
@@ -206,6 +232,7 @@ const SetupWizard: Component = () => {
                 {(field) => (
                   <Input
                     type="tel"
+                    placeholder="+420 123 456 789"
                     label={t("setup.step2.phone")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}

@@ -38,7 +38,7 @@ const Invoices: Component = () => {
           },
         ]}
         totalItems={getModelCount("Invoice")}
-        loadPage={async (indices) => await getDocuments(DocumentType.INVOICE, indices)}
+        loadPage={async (indices) => await getDocuments(indices, DocumentType.INVOICE)}
         onClickRow={(item) => navigate(`${item.id}`)}
       />
     </Container>

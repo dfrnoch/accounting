@@ -37,27 +37,75 @@ const ManageTemplate: Component = () => {
   const [showHints, setShowHints] = createSignal(false);
 
   const [templateCode, setTemplateCode] = createSignal(`
-  {% assign people = "alice, bob, carol" | split: ", " -%}
-
-  <ul>
-  {%- for person in people %}
-    <li>
-      <a href="{{person | prepend: "http://example.com/"}}">
-        {{ person | capitalize }}
-      </a>
-    </li>
-  {%- endfor%}
-  </ul>
+  <div class="bg-white p-8 rounded shadow">
+  <h1 class="text-2xl font-bold mb-4">Invoice</h1>
   
+  <div class="mb-8"> 
+    <p class="text-gray-600">Invoice Number: {{ number }}</p>
+    <p class="text-gray-600">Issue Date: {{ issueDate }}</p>
+    <p class="text-gray-600">Due Date: {{ dueDate }}</p>
+  </div>
+    
+  <div class="grid grid-cols-2 gap-8 mb-8">
+    <div>
+      <h2 class="text-xl font-bold mb-2">Client Details</h2>
+      <p>{{ client.name }}</p>
+      <p>CIN: {{ client.cin }}</p>
+      <p>VAT ID: {{ client.vatId }}</p>
+      <p>{{ client.address }}</p>
+      <p>{{ client.city }}, {{ client.zip }}</p>
+      <p>Email: {{ client.email }}</p>
+      <p>Phone: {{ client.phone }}</p>
+      <p>Bank Account: {{ client.bankAccount }}</p>
+      <p>IBAN: {{ client.IBAN }}</p>
+    </div>
+    
+    <div>
+      <h2 class="text-xl font-bold mb-2">Company Details</h2>
+      <p>{{ company.name }}</p>
+      <p>CIN: {{ company.cin }}</p>
+      <p>VAT ID: {{ company.vatId }}</p>
+      <p>{{ company.address }}</p>
+      <p>{{ company.city }}, {{ company.zip }}</p>
+      <p>Email: {{ company.email }}</p>
+      <p>Phone: {{ company.phone }}</p>
+      <p>Bank Account: {{ company.bankAccount }}</p>
+      <p>IBAN: {{ company.IBAN }}</p>
+    </div>
+  </div>
+  
+  <table class="w-full mb-8">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="px-4 py-2">Description</th>
+        <th class="px-4 py-2">Quantity</th>
+        <th class="px-4 py-2">Price</th>
+        <th class="px-4 py-2">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+        <tr>
+          <td class="border px-4 py-2">{{ item.description }}</td>
+          <td class="border px-4 py-2">{{ item.quantity }}</td>
+          <td class="border px-4 py-2">{{ item.price }} {{ currency.code }}</td>
+          <td class="border px-4 py-2">{{ item.quantity | times: item.price }} {{ currency.code }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <div class="text-right">
+    <p class="text-xl font-bold">Total: {{ items | map: 'price' | sum }} {{ currency.code }}</p>
+  </div>
+</div>
 `);
   const form = createForm<{
     name: string;
-    html: string;
     templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
   }>(() => ({
     defaultValues: {
       name: "",
-      html: templateCode(),
       templateType: "INVOICE",
     },
     onSubmitInvalid: (e) => {
@@ -67,10 +115,16 @@ const ManageTemplate: Component = () => {
     onSubmit: async (template) => {
       try {
         if (params.id) {
-          await updateTemplate(Number.parseInt(params.id), template.value);
+          await updateTemplate(Number.parseInt(params.id), {
+            ...template.value,
+            html: templateCode(),
+          });
           toast.success("Template updated");
         } else {
-          await createTemplate(template.value);
+          await createTemplate({
+            ...template.value,
+            html: templateCode(),
+          });
           toast.success("Template saved");
         }
         navigate("/dashboard/other/templates");
@@ -84,7 +138,11 @@ const ManageTemplate: Component = () => {
   onMount(async () => {
     if (params.id) {
       const data = await getTemplate(Number(params.id));
-      form.update({ ...form.options, defaultValues: data });
+      setTemplateCode(data.html);
+      form.update({
+        ...form.options,
+        defaultValues: data,
+      });
     }
   });
 

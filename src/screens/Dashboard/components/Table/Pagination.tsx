@@ -52,7 +52,7 @@ const Pagination = (props: PaginationProps) => {
   };
 
   return (
-    <div class="grid grid-cols-3 text-primary text-sm select-none items-center" style="height: 50px">
+    <div class="grid grid-cols-3 text-primary text-sm select-none items-center h-12">
       {/* Length Display */}
       <div class="justify-self-start">
         {`${(pageNo() - 1) * count() + 1} - ${Math.min(pageNo() * count(), props.itemCount)}`}

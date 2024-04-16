@@ -3,6 +3,7 @@ import { useSelector } from "@/store";
 import { type Component, Show } from "solid-js";
 
 const StatBox: Component<{
+  class?: string;
   title: string;
   value: number;
   last?: number;
@@ -21,7 +22,9 @@ const StatBox: Component<{
   const isNegative = percentage < 0;
 
   return (
-    <div class="p-2.5 rounded-lg border bg-element border-default h-25 w-full relative overflow-hidden">
+    <div
+      class={`p-2.5 rounded-lg border bg-element border-default h-full max-h-30 w-full relative overflow-hidden ${props.class}`}
+    >
       <div
         class={"absolute top-0 right-0 w-14 h-8 rounded-lg blur-md"}
         classList={{

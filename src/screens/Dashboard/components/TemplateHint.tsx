@@ -24,6 +24,8 @@ const TemplateBuilderHint: Component<{ data?: object }> = (props) => {
       zip: t("hints.client.zip"),
       email: t("hints.client.email"),
       phone: t("hints.client.phone"),
+      bankAccount: t("hints.client.bankAccount"),
+      IBAN: t("hints.client.iban"),
     },
     company: {
       name: t("hints.company.name"),
@@ -34,6 +36,8 @@ const TemplateBuilderHint: Component<{ data?: object }> = (props) => {
       zip: t("hints.company.zip"),
       email: t("hints.company.email"),
       phone: t("hints.company.phone"),
+      bankAccount: t("hints.company.bankAccount"),
+      IBAN: t("hints.company.iban"),
     },
     currency: {
       code: t("hints.currency.code"),

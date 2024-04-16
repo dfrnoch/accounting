@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
 
-export const Hr: Component = () => {
-  return <hr class="w-full border-gray/20" />;
+export const Hr: Component<{ class?: string }> = (props) => {
+  return <hr class={`w-full border-default ${props.class}`} />;
 };

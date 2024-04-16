@@ -44,6 +44,9 @@ pub struct CreateCompanyData {
     zip: String,
     phone: Option<String>,
     email: Option<String>,
+
+    bank_account: Option<String>,
+    bank_iban: Option<String>,
 }
 
 #[tauri::command]
@@ -64,6 +67,8 @@ pub async fn create_company(
                 company::vat_id::set(data.vat_id),
                 company::email::set(data.email),
                 company::phone::set(data.phone),
+                company::bank_account::set(data.bank_account),
+                company::bank_iban::set(data.bank_iban),
             ],
         )
         .exec()

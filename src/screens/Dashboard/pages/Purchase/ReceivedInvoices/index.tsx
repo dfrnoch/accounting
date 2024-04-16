@@ -1,37 +1,23 @@
-import { getDocuments, DocumentType, type GetDocumentsData, getModelCount } from "@/bindings";
+import { DocumentType, getDocuments, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
-import Table, { type Indicies } from "@/screens/Dashboard/components/Table";
-import { FiEdit, FiPlus } from "solid-icons/fi";
+import Table from "@/screens/Dashboard/components/Table";
+import { FiPlus } from "solid-icons/fi";
 import type { Component } from "solid-js";
-import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import Container from "@/screens/Dashboard/components/Container";
+import { useNavigate } from "@solidjs/router";
+import { useSelector } from "@/store";
 
-const Expenses: Component = () => {
+const ReceivedInvoices: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
 
-  const loadPage = async (indices: Indicies) => {
-    await getDocuments(DocumentType.RECIEVE, indices);
-  };
-
-  const handleEdit = (item: GetDocumentsData) => {
-    navigate(`detail/${item.id}`);
-  };
-
-  const rowActions = [
-    {
-      label: "Edit",
-      onClick: handleEdit,
-      icon: FiEdit,
-    },
-  ];
-
+  const settings = useSelector((state) => state.settingsService.settings);
   return (
     <Container>
       <PageHeader
-        title={[t("sidebar.section.purchase"), t("sidebar.button.recievedInvoices")]}
+        title={[t("sidebar.section.sales"), t("sidebar.button.invoices")]}
         actionElements={[
           <HeaderButton onClick={() => navigate("new")} buttonType="primary">
             <FiPlus class="stroke-2" />
@@ -40,15 +26,23 @@ const Expenses: Component = () => {
       />
       <Table
         columns={[
-          { field: "", header: "Number" },
-          { field: "status", header: "Status" },
+          { field: "number", header: "Number" },
+          {
+            field: "totalPrice",
+            header: "Total Price",
+            component: (item) => (
+              <>
+                {item.totalPrice} {settings.defaultCurrency.code}
+              </>
+            ),
+          },
         ]}
-        totalItems={getModelCount("Recieve")}
-        loadPage={loadPage}
-        rowActions={rowActions}
+        totalItems={getModelCount("Receive")}
+        loadPage={async (indices) => await getDocuments(indices, DocumentType.RECEIVE)}
+        onClickRow={(item) => navigate(`${item.id}`)}
       />
     </Container>
   );
 };
 
-export default Expenses;
+export default ReceivedInvoices;

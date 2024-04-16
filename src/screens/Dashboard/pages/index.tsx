@@ -1,17 +1,20 @@
 import type { Component } from "solid-js";
-import { Show, createResource, onMount } from "solid-js";
+import { Show, createResource } from "solid-js";
 import Box from "../components/Box";
 import { useI18n } from "@/i18n";
 import PageHeader from "../components/PageHeader";
 import Container from "../components/Container";
 import { SolidApexCharts } from "solid-apexcharts";
-import { getExpenses, getSales } from "@/bindings";
+import { getDocumentStats, getExpenses, getSales, DocumentType } from "@/bindings";
 import StatBox from "../components/StatBox";
 
 const Overview: Component = () => {
   const [t] = useI18n();
   const [sales] = createResource(6, getSales);
   const [expenses] = createResource(6, getExpenses);
+
+  const [sentInvoices] = createResource(6, () => getDocumentStats(6, DocumentType.INVOICE));
+  const [receivedInvoices] = createResource(6, () => getDocumentStats(6, DocumentType.RECEIVE));
 
   const getLastSixMonths = () => {
     const months = [];
@@ -60,7 +63,7 @@ const Overview: Component = () => {
   return (
     <Container>
       <PageHeader title={[t("sidebar.button.overview")]} />
-      <div class="grid grid-cols-2 grid-rows-5 gap-3 lg:(gap-4 grid-cols-3) w-full h-screen">
+      <div class="grid grid-cols-2 grid-rows-5 gap-3 w-full h-screen">
         <div class="col-span-2">
           <div class="flex flex-row gap-3 lg:gap-4 justify-between items-center w-full h-full">
             <Show when={sales() && expenses()}>
@@ -180,16 +183,129 @@ const Overview: Component = () => {
             </Show>
           </Box>
         </div>
-        <div class="hidden lg:(block col-span-1)">
-          <Box>
-            <div class="flex flex-row">info</div>
+        <div class="col-span-2 row-start-4 row-span-2">
+          <Box chart>
+            <Show when={sentInvoices() && receivedInvoices()}>
+              <SolidApexCharts
+                type="bar"
+                options={{
+                  chart: {
+                    type: "bar",
+                    toolbar: {
+                      show: false,
+                    },
+                    width: "100%",
+                    height: "100%",
+                  },
+                  plotOptions: {
+                    bar: {
+                      horizontal: false,
+                      columnWidth: "55%",
+                    },
+                  },
+                  dataLabels: {
+                    enabled: false,
+                  },
+                  stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ["transparent"],
+                  },
+                  xaxis: {
+                    categories: getLastSixMonths(),
+                    labels: {
+                      style: {
+                        colors: "var(--color-primary)",
+                        fontSize: "12px",
+                        fontWeight: 400,
+                        cssClass: "apexcharts-xaxis-label",
+                      },
+                    },
+                    axisBorder: {
+                      show: true,
+                      color: "var(--color-border)",
+                      offsetX: 0,
+                      offsetY: 0,
+                    },
+                    axisTicks: {
+                      show: true,
+                      borderType: "solid",
+                      color: "var(--color-border)",
+                      height: 6,
+                      offsetX: 0,
+                      offsetY: 0,
+                    },
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: "var(--color-primary)",
+                        fontSize: "12px",
+                        fontWeight: 400,
+                        cssClass: "apexcharts-yaxis-label",
+                      },
+                      formatter: (value: number) => {
+                        if (value % 1 === 0) {
+                          return value;
+                        }
+                        return "";
+                      },
+                    },
+                  },
+                  grid: {
+                    show: true,
+                    borderColor: "var(--color-border)",
+                    strokeDashArray: 0,
+                    position: "back",
+                    xaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                    yaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                    row: {
+                      opacity: 0.5,
+                    },
+                    column: {
+                      opacity: 0.5,
+                    },
+                    padding: {
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      left: 20,
+                    },
+                  },
+                  tooltip: {
+                    theme: "dark",
+                    style: {
+                      fontSize: "12px",
+                    },
+                  },
+                  legend: {
+                    labels: {
+                      colors: "var(--color-primary)",
+                      useSeriesColors: false,
+                    },
+                  },
+                }}
+                series={[
+                  {
+                    name: t("overview.chart.sentInvoices"),
+                    data: sentInvoices() as number[],
+                  },
+                  {
+                    name: t("overview.chart.receivedInvoices"),
+                    data: receivedInvoices() as number[],
+                  },
+                ]}
+              />
+            </Show>
           </Box>
-        </div>
-        <div class="col-span-2 row-start-4">
-          <Box></Box>
-        </div>
-        <div class="lg:(col-start-3 row-span-2 block) hidden">
-          <Box></Box>
         </div>
       </div>
     </Container>

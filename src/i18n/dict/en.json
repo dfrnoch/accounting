@@ -21,6 +21,14 @@
       "zip": "ZIP",
       "email": "Email",
       "phone": "Phone",
+
+      "sections": {
+        "details": "Details",
+        "bank": "Bank details",
+        "contact": "Contact details"
+      },
+      "account": "Account number",
+      "iban": "IBAN",
       "help": {
         "retrieve_by_cin": "After entering your CIN, we will try to retrieve your company information from the government database."
       }
@@ -41,12 +49,13 @@
       "invoices": "Invoices",
       "clients": "Clients",
       "expenses": "Expenses",
-      "recievedInvoices": "Recieved Invoices",
+      "receivedInvoices": "Received Invoices",
       "reports": "Reports",
       "settings": "Settings",
       "templates": "Templates",
       "schedules": "Schedules",
       "currencies": "Currencies",
+
       "company": {
         "create": "Create company"
       }
@@ -64,7 +73,10 @@
   "overview": {
     "chart": {
       "sales": "Sales",
-      "expenses": "Expenses"
+      "expenses": "Expenses",
+
+      "sentInvoices": "Sent invoices",
+      "receivedInvoices": "Received invoices"
     },
     "months": {
       "january": "January",
@@ -101,7 +113,9 @@
       "city": "Client city",
       "zip": "Client zip code",
       "email": "Client email",
-      "phone": "Client phone number"
+      "phone": "Client phone number",
+      "bankAccount": "Bank account number",
+      "iban": "IBAN"
     },
     "company": {
       "name": "Company name",
@@ -111,7 +125,9 @@
       "city": "Company city",
       "zip": "Company zip code",
       "email": "Company email",
-      "phone": "Company phone number"
+      "phone": "Company phone number",
+      "bankAccount": "Bank account number",
+      "iban": "IBAN"
     },
     "currency": {
       "name": "Currency name",

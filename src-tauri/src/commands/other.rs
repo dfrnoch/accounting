@@ -31,15 +31,15 @@ pub async fn get_model_count(
             .exec()
             .await
             .map_err(|e| format!("Error counting proformas: {}", e)),
-        "Recieve" => client
+        "Receive" => client
             .document()
             .count(vec![
                 document::company_id::equals(company_id),
-                document::document_type::equals("RECIEVE".to_string()),
+                document::document_type::equals("RECEIVE".to_string()),
             ])
             .exec()
             .await
-            .map_err(|e| format!("Error counting recieves: {}", e)),
+            .map_err(|e| format!("Error counting received invoices: {}", e)),
         "Company" => client
             .company()
             .count(vec![company::id::equals(company_id)])

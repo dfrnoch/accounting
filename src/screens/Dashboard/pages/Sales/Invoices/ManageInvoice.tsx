@@ -39,10 +39,15 @@ const ManageInvoice: Component = () => {
 
   const form = createForm<ManageDocumentData>(() => ({
     defaultValues: {
-      number: "",
+      id: 0,
+      number: generateDocumentNumber(
+        settingsService.settings.invoicePrefix,
+        settingsService.settings.invoiceCounter + 1,
+      ),
       clientId: 0,
-      templateId: 0,
-      currencyId: "",
+      templateId: settingsService.settings.defaultTemplate.id,
+      documentType: "INVOICE",
+      currencyId: settingsService.settings.defaultCurrency.id,
       issueDate: new Date(),
       dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
       status: "DRAFT",
@@ -128,14 +133,7 @@ const ManageInvoice: Component = () => {
               <Input
                 type="text"
                 label="Number"
-                defaultValue={
-                  params.id
-                    ? field().state.value
-                    : generateDocumentNumber(
-                        settingsService.settings.invoicePrefix,
-                        settingsService.settings.invoiceCounter + 1,
-                      )
-                }
+                defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
               />
             )}
@@ -157,7 +155,7 @@ const ManageInvoice: Component = () => {
               <Show when={templates()}>
                 <SearchDropdown
                   data={templates()?.map((template) => ({ id: template.id, label: template.name })) ?? []}
-                  defaultValueId={params.id ? field().state.value : settingsService.settings.defaultTemplate.id}
+                  defaultValueId={field().state.value}
                   label="Template"
                   onSelect={(data) => field().handleChange(data.id as number)}
                 />
@@ -170,7 +168,7 @@ const ManageInvoice: Component = () => {
               <Show when={currencies()}>
                 <SearchDropdown
                   data={currencies()?.map((currency) => ({ id: currency.id, label: currency.name })) ?? []}
-                  defaultValueId={params.id ? field().state.value : settingsService.settings.defaultCurrency.id}
+                  defaultValueId={field().state.value}
                   label="Currency"
                   onSelect={(data) => field().handleChange(data.id as string)}
                 />

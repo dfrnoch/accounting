@@ -5,14 +5,11 @@ import { useI18n } from "@/i18n";
 import {
   FiCheck,
   FiClipboard,
-  FiClock,
   FiDollarSign,
   FiFileMinus,
   FiFileText,
   FiHome,
-  FiPaperclip,
   FiPlus,
-  FiSave,
   FiSettings,
   FiUsers,
 } from "solid-icons/fi";
@@ -50,31 +47,26 @@ const Sidebar: Component = () => {
 
   const setCompany = (company: Company) => {
     stateService.updateState({ companyId: company.id });
-    toast.success("Cuspic kamarade");
+    toast.success("Switched company");
     navigate("/");
   };
 
   const sidebarSections: SidebarSectionData[] = [
     {
       title: t("sidebar.section.sales"),
-      buttons: [
-        { target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") },
-        // { target: "/dashboard/sales/templates", icon: <FiSave />, label: t("sidebar.button.templates") },
-        // { target: "/dashboard/sales/schedules", icon: <FiClock />, label: t("sidebar.button.schedules") },
-      ],
+      buttons: [{ target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") }],
     },
     {
       title: t("sidebar.section.purchase"),
       buttons: [
         { target: "/dashboard/purchase/expenses", icon: <FiDollarSign />, label: t("sidebar.button.expenses") },
-        { target: "/dashboard/purchase/recieved", icon: <FiFileMinus />, label: t("sidebar.button.recievedInvoices") },
+        { target: "/dashboard/purchase/received", icon: <FiFileMinus />, label: t("sidebar.button.receivedInvoices") },
       ],
     },
     {
       title: t("sidebar.section.other"),
       buttons: [
         { target: "/dashboard/other/clients", icon: <FiUsers />, label: t("sidebar.button.clients") },
-        { target: "/dashboard/other/reports", icon: <FiPaperclip />, label: t("sidebar.button.reports") },
         { target: "/dashboard/other/templates", icon: <FiClipboard />, label: t("sidebar.button.templates") },
         { target: "/dashboard/other/currencies", icon: <FiDollarSign />, label: t("sidebar.button.currencies") },
       ],

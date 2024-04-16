@@ -12,6 +12,7 @@ export type GetDocumentsData = {
   totalPrice: number;
   id: number;
   number: string;
+  documentType: "INVOICE" | "PROFORMA" | "RECEIVE";
   clientId: number;
   templateId: number;
   currency: string;
@@ -29,14 +30,14 @@ export type GetClientData = {
 export enum DocumentType {
   INVOICE = "INVOICE",
   PROFORMA = "PROFORMA",
-  RECIEVE = "RECIEVE",
-  TEMPLATE = "TEMPLATE",
+  RECEIVE = "RECEIVE",
 }
 
-export async function getDocuments(documentType: DocumentType, indicies: Indicies) {
+export async function getDocuments(indicies: Indicies, documentType?: DocumentType, clientId?: number) {
   return invoke<GetDocumentsData[]>("get_documents", {
     companyId: state.companyId,
     documentType,
+    clientId,
     indicies,
   });
 }
@@ -46,6 +47,7 @@ export type ManageDocumentData = {
   number: string;
   clientId: number;
   templateId: number;
+  documentType: "INVOICE" | "PROFORMA" | "RECEIVE";
   currencyId: string;
   issueDate: Date;
   dueDate: Date;
@@ -91,6 +93,9 @@ export async function createCompany(data: CreateCompanyData) {
   return invoke<number>("create_company", { data });
 }
 
+export async function getDocumentStats(months: number, documentType: DocumentType) {
+  return invoke<number[]>("get_documents_stats", { companyId: state.companyId, months, documentType });
+}
 export async function getSales(months: number) {
   return invoke<number[]>("get_sales", { companyId: state.companyId, months });
 }
@@ -104,9 +109,13 @@ export async function getSalesAndExpenses(months: number) {
 }
 
 export async function getModelCount(
-  model: "Invoice" | "Proforma" | "Recieve" | "Company" | "Client" | "Template" | "Currency",
+  model: "Invoice" | "Proforma" | "Receive" | "Company" | "Client" | "Template" | "Currency",
 ) {
   return await invoke<number>("get_model_count", { companyId: state.companyId, model });
+}
+
+export async function getDocumentCount(documentType?: DocumentType, clientId?: number) {
+  return await invoke<number>("get_document_count", { documentType, clientId });
 }
 
 type ManageClientData = {
@@ -204,8 +213,8 @@ export type Settings = {
   proformaPrefix: string;
   proformaCounter: number;
 
-  recievePrefix: string;
-  recieveCounter: number;
+  receivePrefix: string;
+  receiveCounter: number;
 };
 
 export type Currency = {
@@ -225,6 +234,9 @@ export type CreateCompanyData = {
   zip: string;
   phone?: string;
   email?: string;
+
+  bankAccount?: string;
+  bankIBAN?: string;
 };
 
 export interface Document {
@@ -233,6 +245,7 @@ export interface Document {
   clientId: number;
   templateId: number;
   currencyId: string;
+  documentType: "INVOICE" | "PROFORMA" | "RECEIVE";
   issueDate: string;
   dueDate: string;
   status: string;
@@ -258,6 +271,9 @@ export type Company = {
   zip: string;
   phone: string | null;
   email: string | null;
+
+  bankAccount: string | null;
+  bankIBAN: string | null;
 };
 
 export type Template = {

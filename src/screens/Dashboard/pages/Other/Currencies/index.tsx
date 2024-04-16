@@ -1,4 +1,4 @@
-import { type Currency, getCurrencies, getModelCount } from "@/bindings";
+import { getCurrencies, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
 import { FiPlus } from "solid-icons/fi";

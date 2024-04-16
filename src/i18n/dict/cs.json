@@ -19,6 +19,13 @@
       "zip": "PSČ",
       "email": "Email",
       "phone": "Telefon",
+      "sections": {
+        "details": "Detaily",
+        "bank": "Bankovní účet",
+        "contact": "Kontakt"
+      },
+      "account": "Číslo účtu",
+      "iban": "IBAN",
       "help": {
         "retrieve_by_cin": "Po zadání správného IČA se načte zbytek údajů automaticky"
       }
@@ -39,7 +46,7 @@
       "invoices": "Faktury",
       "clients": "Klienti",
       "expenses": "Výdaje",
-      "recievedInvoices": "Přijaté faktury",
+      "receivedInvoices": "Přijaté faktury",
       "reports": "Reporty",
       "settings": "Nastavení",
       "templates": "Šablony",
@@ -62,7 +69,10 @@
   "overview": {
     "chart": {
       "sales": "Prodej",
-      "expenses": "Výdaje"
+      "expenses": "Výdaje",
+
+      "sentInvoices": "Odeslané faktury",
+      "receivedInvoices": "Přijaté faktury"
     },
     "months": {
       "january": "Leden",
@@ -110,7 +120,9 @@
       "city": "Město klienta",
       "zip": "PSČ klienta",
       "email": "E-mail klienta",
-      "phone": "Telefonní číslo klienta"
+      "phone": "Telefonní číslo klienta",
+      "bankAccount": "Bankovní účet klienta",
+      "iban": "IBAN klienta"
     },
     "company": {
       "name": "Název společnosti",
@@ -120,7 +132,9 @@
       "city": "Město společnosti",
       "zip": "PSČ společnosti",
       "email": "E-mail společnosti",
-      "phone": "Telefonní číslo společnosti"
+      "phone": "Telefonní číslo společnosti",
+      "bankAccount": "Bankovní účet společnosti",
+      "iban": "IBAN společnosti"
     },
     "currency": {
       "name": "Název měny",
