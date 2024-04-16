@@ -25,9 +25,8 @@ const ClientDetail: Component = () => {
         ]}
       />
       <div class="grid grid-cols-3 gap-3 lg:gap-4 justify-between items-center w-full ">
-        <StatBox title={t("overview.stats.purchase")} value={1654.43} last={6804.52} />
         <StatBox title={t("overview.stats.sales")} value={100} />
-        <StatBox title={t("overview.stats.tax")} value={120} />
+        <StatBox title={t("overview.stats.expenses")} value={1654.43} last={6804.52} />
       </div>
       <div class="grid grid-cols-6 h-full mt-4 gap-3 lg:gap-4">
         <div class="col-span-4">

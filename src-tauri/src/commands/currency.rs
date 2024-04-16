@@ -27,11 +27,15 @@ pub async fn get_currencies(
 #[tauri::command]
 pub async fn get_currency(
     client: DbState<'_>,
-    id: String,
+    company_id: i32,
+    code: String,
 ) -> Result<Option<currency::Data>, QueryError> {
     client
         .currency()
-        .find_unique(currency::id::equals(id))
+        .find_first(vec![
+            currency::company_id::equals(company_id),
+            currency::code::equals(code),
+        ])
         .exec()
         .await
 }

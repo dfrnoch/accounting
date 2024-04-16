@@ -2,10 +2,31 @@ use crate::client;
 use crate::company;
 use crate::currency;
 use crate::document;
+use crate::document_item;
 use crate::template;
 use crate::types::Indicies;
 use crate::DbState;
+use prisma_client_rust::chrono::{DateTime, FixedOffset};
 use prisma_client_rust::QueryError;
+
+use serde::{Deserialize, Serialize};
+
+#[derive(Deserialize, Serialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct DocumentWithPrice {
+    id: i32,
+    number: String,
+    document_type: String,
+    client_id: i32,
+    template_id: i32,
+    currency_id: String,
+    issue_date: DateTime<FixedOffset>,
+    due_date: DateTime<FixedOffset>,
+    company_id: i32,
+    status: String,
+    items: Option<Vec<document_item::Data>>,
+    total_price: f64,
+}
 
 #[tauri::command]
 pub async fn get_documents(
@@ -13,21 +34,59 @@ pub async fn get_documents(
     company_id: i32,
     document_type: String,
     indicies: Indicies,
-) -> Result<Vec<document::Data>, QueryError> {
+    client_id: Option<i32>,
+) -> Result<Vec<DocumentWithPrice>, QueryError> {
     debug!(
         "Getting documents from {} with type {} and indicies {:?}",
         company_id, document_type, indicies
     );
-    client
+
+    let mut conditions = vec![
+        document::company_id::equals(company_id),
+        document::document_type::equals(document_type),
+    ];
+
+    if let Some(client_id) = client_id {
+        conditions.push(document::client_id::equals(client_id));
+    }
+
+    let documents = client
         .document()
-        .find_many(vec![
-            document::company_id::equals(company_id),
-            document::document_type::equals(document_type),
-        ])
+        .find_many(conditions)
+        .with(document::items::fetch(vec![]))
         .skip(indicies.skip)
         .take(indicies.take)
         .exec()
-        .await
+        .await?;
+
+    let documents_with_price = documents
+        .into_iter()
+        .map(|doc| {
+            let total_price: f64 = doc
+                .items
+                .as_ref()
+                .unwrap_or(&vec![])
+                .iter()
+                .map(|item| item.price * item.quantity as f64)
+                .sum();
+            DocumentWithPrice {
+                id: doc.id,
+                number: doc.number,
+                document_type: doc.document_type,
+                client_id: doc.client_id,
+                template_id: doc.template_id,
+                currency_id: doc.currency_id,
+                issue_date: doc.issue_date,
+                due_date: doc.due_date,
+                company_id: doc.company_id,
+                status: doc.status,
+                items: doc.items,
+                total_price,
+            }
+        })
+        .collect::<Vec<DocumentWithPrice>>();
+
+    Ok(documents_with_price)
 }
 
 #[tauri::command]
@@ -38,6 +97,7 @@ pub async fn get_document(
     client
         .document()
         .find_unique(document::id::equals(id))
+        .with(document::items::fetch(vec![]))
         .exec()
         .await
 }
@@ -45,7 +105,7 @@ pub async fn get_document(
 #[tauri::command]
 pub async fn create_document(client: DbState<'_>, data: document::Data) -> Result<(), String> {
     debug!("Creating document");
-    let data = client
+    let res = client
         .document()
         .create(
             data.number,
@@ -54,7 +114,6 @@ pub async fn create_document(client: DbState<'_>, data: document::Data) -> Resul
             template::id::equals(data.template_id),
             currency::id::equals(data.currency_id),
             data.issue_date,
-            data.tax_date,
             data.due_date,
             company::id::equals(data.company_id),
             vec![document::status::set(data.status)],
@@ -62,7 +121,24 @@ pub async fn create_document(client: DbState<'_>, data: document::Data) -> Resul
         .exec()
         .await;
 
-    match data {
+    if let Some(items) = data.items {
+        for item in items.iter() {
+            let _ = client
+                .document_item()
+                .create(
+                    document::id::equals(res.as_ref().unwrap().company_id),
+                    item.description.clone(),
+                    item.quantity,
+                    item.price,
+                    vec![],
+                )
+                .exec()
+                .await
+                .unwrap();
+        }
+    }
+
+    match res {
         Ok(_) => Ok(()),
         Err(e) => Err(e.to_string()),
     }
@@ -71,7 +147,9 @@ pub async fn create_document(client: DbState<'_>, data: document::Data) -> Resul
 #[tauri::command]
 pub async fn update_document(client: DbState<'_>, data: document::Data) -> Result<(), String> {
     debug!("Updating document");
-    let data = client
+
+    // Update the document fields
+    let updated_document = client
         .document()
         .update(
             document::id::equals(data.id),
@@ -80,9 +158,8 @@ pub async fn update_document(client: DbState<'_>, data: document::Data) -> Resul
                 document::document_type::set(data.document_type),
                 document::client_id::set(data.client_id),
                 document::template_id::set(data.template_id),
-                // document::currency::set(data.currency),
+                document::currency_id::set(data.currency_id),
                 document::issue_date::set(data.issue_date),
-                document::tax_date::set(data.tax_date),
                 document::due_date::set(data.due_date),
                 document::status::set(data.status),
             ],
@@ -90,9 +167,37 @@ pub async fn update_document(client: DbState<'_>, data: document::Data) -> Resul
         .exec()
         .await;
 
-    match data {
-        Ok(_) => Ok(()),
-        Err(e) => Err(e.to_string()),
+    match updated_document {
+        Ok(_) => {
+            let _ = client
+                .document_item()
+                .delete_many(vec![document_item::document_id::equals(data.id)])
+                .exec()
+                .await;
+
+            if let Some(items) = data.items {
+                for item in items.iter() {
+                    println!("ITEMS: {:?}", item);
+                    let _ = client
+                        .document_item()
+                        .create(
+                            document::id::equals(data.id),
+                            item.description.clone(),
+                            item.quantity,
+                            item.price,
+                            vec![],
+                        )
+                        .exec()
+                        .await;
+                }
+            }
+
+            Ok(())
+        }
+        Err(e) => {
+            error!("Error updating document: {}", e);
+            Err(e.to_string())
+        }
     }
 }
 

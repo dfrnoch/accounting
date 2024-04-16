@@ -16,7 +16,7 @@ import { Show, onMount } from "solid-js";
 import Form from "@/shared/components/Form";
 
 const ManageCurrency: Component = () => {
-  const params = useParams<{ readonly id?: string }>();
+  const params = useParams<{ readonly code?: string }>();
   const [t] = useI18n();
   const navigate = useNavigate();
   const form = createForm(() => ({
@@ -49,8 +49,8 @@ const ManageCurrency: Component = () => {
   }));
 
   onMount(async () => {
-    if (params.id) {
-      const currency = await getCurrency(params.id);
+    if (params.code) {
+      const currency = await getCurrency(params.code);
       form.update({ ...form.options, defaultValues: currency });
       console.log(form.state.values);
     }
@@ -62,17 +62,17 @@ const ManageCurrency: Component = () => {
         title={[
           t("sidebar.section.other"),
           t("sidebar.button.currencies"),
-          params.id ? params.id : t("pageHeaader.new"),
+          params.code ? params.code : t("pageHeaader.new"),
         ]}
         actionElements={[
           <HeaderButton onClick={() => form.handleSubmit()} buttonType="primary">
             Save
           </HeaderButton>,
-          <Show when={params.id}>
+          <Show when={params.code}>
             <HeaderButton
               onClick={async () => {
                 try {
-                  await deleteCurrency(params.id as string);
+                  await deleteCurrency(form.state.values.id);
                   toast.success("Currency deleted");
                   navigate("/dashboard/other/currencies");
                 } catch (e) {

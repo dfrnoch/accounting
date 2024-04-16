@@ -62,7 +62,7 @@ render(
           <Route path="/currencies">
             <Route path="/" component={Currencies} />
             <Route path="/new" component={ManageCurrency} />
-            <Route path="/:id" component={ManageCurrency} />
+            <Route path="/:code" component={ManageCurrency} />
           </Route>
           <Route path="/reports" component={Reports} />
           <Route path="/templates">

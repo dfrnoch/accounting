@@ -75,7 +75,7 @@ model Document {
     currencyId String
 
     issueDate DateTime
-    taxDate   DateTime // Datum zdanitelného plnění
+    // taxDate   DateTime // Datum zdanitelného plnění
     dueDate   DateTime
 
     status String         @default("DRAFT") // ENUM = DRAFT, PENDING, PAID, CANCELLED, OVERDUE
@@ -107,7 +107,7 @@ model DocumentItem {
     description String
     quantity    Int
     price       Float
-    tax         Float
+    // tax         Float
 }
 
 model Settings {
@@ -121,9 +121,9 @@ model Settings {
 
     defaultTemplate   Template @relation(fields: [defaultTemplateId], references: [id])
     defaultTemplateId Int
-    tax               Float
+    // tax               Float
 
-    invoicePrefix  String @default("I")
+    invoicePrefix  String @default("I202400000")
     invoiceCounter Int    @default(1)
 
     proformaPrefix  String @default("P")

@@ -3,7 +3,6 @@ import Toolbar from "./components/Toolbar";
 import { FiFileText, FiSettings } from "solid-icons/fi";
 import { useI18n } from "@/i18n";
 import Input from "@/shared/components/Menu/Input";
-import Dropdown from "@/shared/components/Menu/Dropdown";
 import PageHeader from "../../components/PageHeader";
 import HeaderButton from "../../components/PageHeader/HeaderButton";
 
@@ -46,7 +45,6 @@ const Settings: Component = () => {
       </div>
       <div class="w-full h-full px-20">
         <Input label="Název" id="name" placeholder="Název" />
-        <Dropdown />
       </div>
     </>
   );

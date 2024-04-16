@@ -101,7 +101,6 @@ pub async fn create_company(
             company::id::equals(company.id),
             currency::id::equals(currency.id),
             template::id::equals(template.id),
-            0.0,
             vec![],
         )
         .exec()

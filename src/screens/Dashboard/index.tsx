@@ -1,5 +1,5 @@
 import type { ParentComponent } from "solid-js";
-import { Show, Suspense, createResource, onMount } from "solid-js";
+import { Show, Suspense, createResource } from "solid-js";
 import { getCompany } from "../../bindings";
 import Sidebar from "./components/Sidebar";
 import { useNavigate } from "@solidjs/router";

@@ -59,8 +59,8 @@ const Sidebar: Component = () => {
       title: t("sidebar.section.sales"),
       buttons: [
         { target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") },
-        { target: "/dashboard/sales/templates", icon: <FiSave />, label: t("sidebar.button.templates") },
-        { target: "/dashboard/sales/schedules", icon: <FiClock />, label: t("sidebar.button.schedules") },
+        // { target: "/dashboard/sales/templates", icon: <FiSave />, label: t("sidebar.button.templates") },
+        // { target: "/dashboard/sales/schedules", icon: <FiClock />, label: t("sidebar.button.schedules") },
       ],
     },
     {
@@ -108,12 +108,8 @@ const Sidebar: Component = () => {
         <Hr />
         <Listbox value={selected()} onSelectChange={setSelected} defaultOpen={false}>
           <ListboxButton class="text-sm flex flex-row items-center justify-start gap-2.5 lg:gap-4 hover:bg-neutral-100/40 dark:hover:bg-neutral-100/25 bg-transparent rounded-[5px] px-2 py-[3px] w-full">
-            <div class="flex h-8 w-8 items-center justify-center lg:h-10 lg:w-10 rounded-full">
-              <img
-                src="https://wallpapers-clan.com/wp-content/uploads/2023/05/cool-anime-pfp-2-17.jpg"
-                alt="pfp"
-                class="rounded-full"
-              />
+            <div class="flex h-8 w-8 items-center justify-center lg:h-10 lg:w-10 rounded-full bg-secondary opacity-50">
+              <FiUsers class="w-5 h-5 text-primary" />
             </div>
             <span class="block truncate">{company.name}</span>
           </ListboxButton>

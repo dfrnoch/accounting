@@ -4,7 +4,6 @@ use crate::types::Indicies;
 use crate::DbState;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
-
 #[tauri::command]
 pub async fn get_templates(
     client: DbState<'_>,
@@ -20,7 +19,6 @@ pub async fn get_templates(
         .exec()
         .await;
 
-    println!("{:?}", data);
     data
 }
 
@@ -43,6 +41,7 @@ pub struct CreateTemplateData {
     name: String,
     template_type: String,
 }
+
 #[tauri::command]
 pub async fn create_template(
     client: DbState<'_>,
@@ -68,11 +67,22 @@ pub async fn create_template(
 }
 
 #[tauri::command]
-pub async fn update_template(client: DbState<'_>, id: i32, html: String) -> Result<(), String> {
+pub async fn update_template(
+    client: DbState<'_>,
+    id: i32,
+    data: CreateTemplateData,
+) -> Result<(), String> {
     debug!("Updating template");
     let data = client
         .template()
-        .update(template::id::equals(id), vec![template::html::set(html)])
+        .update(
+            template::id::equals(id),
+            vec![
+                template::html::set(data.html),
+                template::name::set(data.name),
+                template::template_type::set(data.template_type),
+            ],
+        )
         .exec()
         .await;
 

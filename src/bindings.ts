@@ -8,7 +8,8 @@ export async function checkDb() {
   return invoke<200 | 400>("check_db");
 }
 
-export type GetDocumentData = {
+export type GetDocumentsData = {
+  totalPrice: number;
   id: number;
   number: string;
   clientId: number;
@@ -33,26 +34,38 @@ export enum DocumentType {
 }
 
 export async function getDocuments(documentType: DocumentType, indicies: Indicies) {
-  return invoke<GetDocumentData[]>("get_documents", {
+  return invoke<GetDocumentsData[]>("get_documents", {
     companyId: state.companyId,
     documentType,
     indicies,
   });
 }
 
+export type ManageDocumentData = {
+  id?: number;
+  number: string;
+  clientId: number;
+  templateId: number;
+  currencyId: string;
+  issueDate: Date;
+  dueDate: Date;
+  status: string;
+  items: DocumentItem[];
+};
+
 export async function getDocument(id: number) {
   return invoke<Document>("get_document", { id });
 }
 
-export async function updateDocument(data: Document) {
-  return invoke<Document>("update_document", { data });
+export async function updateDocument(data: ManageDocumentData) {
+  return invoke("update_document", { data });
 }
 
 export async function deleteDocument(id: number) {
   return invoke("delete_document", { id });
 }
 
-export async function createDocument(data: Document) {
+export async function createDocument(data: ManageDocumentData) {
   return invoke("create_document", { data: { ...data, companyId: state.companyId } });
 }
 
@@ -137,20 +150,22 @@ export async function deleteTemplate(id: number) {
   return await invoke("delete_template", { id });
 }
 
-export async function createTemplate(template: {
+export type ManageTemplateData = {
   templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
   html: string;
   name: string;
-}) {
+};
+
+export async function createTemplate(template: ManageTemplateData) {
   return await invoke("create_template", { companyId: state.companyId, data: template });
 }
 
-export async function updateTemplate(id: number, html: string) {
-  return await invoke("update_template", { id, html });
+export async function updateTemplate(id: number, data: ManageTemplateData) {
+  return await invoke("update_template", { id, data });
 }
 
-export async function getCurrency(id: string) {
-  return await invoke<Currency>("get_currency", { id });
+export async function getCurrency(code: string) {
+  return await invoke<Currency>("get_currency", { companyId: state.companyId, code });
 }
 
 export async function getCurrencies(indicies: Indicies) {
@@ -181,7 +196,7 @@ export type Settings = {
   id: number;
   defaultCurrency: Currency;
   defaultTemplate: Template;
-  tax: number;
+  // tax: number;
 
   invoicePrefix: string;
   invoiceCounter: number;
@@ -217,10 +232,9 @@ export interface Document {
   number: string;
   clientId: number;
   templateId: number;
-  currency: string;
-  issueDate: Date;
-  taxDate: Date;
-  dueDate: Date;
+  currencyId: string;
+  issueDate: string;
+  dueDate: string;
   status: string;
   items: DocumentItem[];
 }
@@ -231,7 +245,7 @@ export interface DocumentItem {
   description: string;
   quantity: number;
   price: number;
-  tax?: number;
+  // tax?: number;
 }
 
 export type Company = {
@@ -309,7 +323,6 @@ export type GetPrintDocumentResult = {
     companyId: number;
   };
   issueDate: Date;
-  taxDate: Date;
   dueDate: Date;
   status: string;
   items: {
@@ -318,7 +331,7 @@ export type GetPrintDocumentResult = {
     description: string;
     quantity: number;
     price: number;
-    tax: number;
+    // tax: number;
   }[];
   companyId: number;
 };

@@ -52,7 +52,7 @@ const Dropdown: Component<DropdownProps> = (props) => {
             >
               <ListboxOptions
                 unmount={false}
-                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-element border-default border-1 rounded-md shadow-lg max-h-60 focus:outline-none sm:text-sm"
+                class="absolute w-full py-1 mt-1  overflow-auto text-base bg-element border-default border-1 rounded-md shadow-lg max-h-60 focus:outline-none sm:text-sm"
               >
                 <For each={props.data}>
                   {(item): JSX.Element => (
@@ -60,7 +60,7 @@ const Dropdown: Component<DropdownProps> = (props) => {
                       {({ isActive, isSelected }): JSX.Element => (
                         <div
                           classList={{
-                            "bg-default": isActive(),
+                            "bg-secondary": isActive(),
                             "cursor-default select-none relative py-2 pl-10 pr-4": true,
                           }}
                         >

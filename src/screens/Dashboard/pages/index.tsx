@@ -63,10 +63,10 @@ const Overview: Component = () => {
       <div class="grid grid-cols-2 grid-rows-5 gap-3 lg:(gap-4 grid-cols-3) w-full h-screen">
         <div class="col-span-2">
           <div class="flex flex-row gap-3 lg:gap-4 justify-between items-center w-full h-full">
-            <Show when={!sales.loading || !expenses.loading}>
-              {/* <StatBox title={t("overview.stats.purchase")} value={sales()[0]} last={sales()[1]} /> */}
-              <StatBox title={t("overview.stats.sales")} value={100} />
-              <StatBox title={t("overview.stats.tax")} value={120} />
+            <Show when={sales() && expenses()}>
+              <StatBox title={t("overview.stats.sales")} value={sales()[0]} last={sales()[1]} />
+              <StatBox title={t("overview.stats.expenses")} value={expenses()[0]} last={expenses()[1]} />
+              {/* <StatBox title={t("overview.stats.tax")} value={120} /> */}
             </Show>
           </div>
         </div>
@@ -169,11 +169,11 @@ const Overview: Component = () => {
                 series={[
                   {
                     name: t("overview.chart.sales"),
-                    data: sales(),
+                    data: sales() as number[],
                   },
                   {
                     name: t("overview.chart.expenses"),
-                    data: expenses(),
+                    data: expenses() as number[],
                   },
                 ]}
               />

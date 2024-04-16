@@ -72,7 +72,7 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
                       {({ isActive, matches }): JSX.Element => (
                         <div
                           classList={{
-                            "bg-default": isActive(),
+                            "bg-secondary": isActive(),
                             "cursor-default select-none relative py-2 pl-10 pr-4": true,
                             hidden: !matches(),
                           }}

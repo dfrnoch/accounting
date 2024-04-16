@@ -80,10 +80,61 @@
     },
     "stats": {
       "sales": "Prodej",
-      "purchase": "Nákup",
-      "tax": "Daň"
+      "expenses": "Výdaje"
     }
   },
+
+  "pages": {
+    "other": {
+      "templates": {
+        "toast": {
+          "success": "Šablona byla úspěšně vytvořena",
+          "error": "Při vytváření šablony došlo k chybě"
+        },
+        "form": {}
+      }
+    }
+  },
+
+  "hints": {
+    "collapsible": {
+      "object": "Objekt",
+      "array": "Pole"
+    },
+    "number": "Číslo faktury",
+    "client": {
+      "name": "Jméno klienta",
+      "cin": "IČO klienta",
+      "vatId": "DIČ klienta",
+      "address": "Adresa klienta",
+      "city": "Město klienta",
+      "zip": "PSČ klienta",
+      "email": "E-mail klienta",
+      "phone": "Telefonní číslo klienta"
+    },
+    "company": {
+      "name": "Název společnosti",
+      "cin": "IČO společnosti",
+      "vatId": "DIČ společnosti",
+      "address": "Adresa společnosti",
+      "city": "Město společnosti",
+      "zip": "PSČ společnosti",
+      "email": "E-mail společnosti",
+      "phone": "Telefonní číslo společnosti"
+    },
+    "currency": {
+      "name": "Název měny",
+      "code": "Kód měny"
+    },
+    "issueDate": "Datum vystavení",
+    "dueDate": "Datum splatnosti",
+    "items": {
+      "description": "Popis položky",
+      "quantity": "Množství položky",
+      "price": "Cena položky"
+    }
+  },
+
   "settings": {
     "general": {
       "title": "Obecné",
@@ -97,14 +148,6 @@
       "currency_placement": "Umístění měny",
       "currency_placement_before": "Před částkou",
       "currency_placement_after": "Za částkou",
-      "tax": "Daň",
-      "tax_included": "Daň zahrnuta",
-      "tax_excluded": "Daň nezahrnuta",
-      "tax_rate": "Sazba daně",
-      "tax_name": "Název daně",
-      "tax_number": "DIČ",
-      "tax_number_help": "DIČ se používá na fakturách a dalších dokumentech.",
-      "tax_number_placeholder": "DIČ",
       "company": "Firma",
       "company_name": "Název firmy",
       "company_name_help": "Název firmy se používá na fakturách a dalších dokumentech.",

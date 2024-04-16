@@ -1,6 +1,14 @@
-import PdfRenderer from "@/shared/components/PdfRenderer";
-import { Hr } from "@/shared/components/Menu/Hr";
-import { type Accessor, type Setter, createEffect, createSignal, on, onMount, type Component, Show } from "solid-js";
+import {
+  type Accessor,
+  type Setter,
+  createEffect,
+  createSignal,
+  on,
+  onMount,
+  type Component,
+  Show,
+  type ParentComponent,
+} from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import { useI18n } from "@/i18n";
 import { useNavigate, useParams } from "@solidjs/router";
@@ -11,9 +19,14 @@ import type { Extension } from "@codemirror/state";
 import { liquid } from "@codemirror/lang-liquid";
 import { material } from "@uiw/codemirror-theme-material";
 import { createTemplate, deleteTemplate, getTemplate, updateTemplate } from "@/bindings";
-import { FiSettings, FiTrash } from "solid-icons/fi";
+import { FiList, FiSettings, FiTrash } from "solid-icons/fi";
 import toast from "solid-toast";
 import TemplateHint from "@/screens/Dashboard/components/TemplateHint";
+import { createForm } from "@tanstack/solid-form";
+import Form from "@/shared/components/Form";
+import Input from "@/shared/components/Form/Input";
+import Section from "@/shared/components/Form/Section";
+import Dropdown from "@/shared/components/Form/Dropdown";
 
 const ManageTemplate: Component = () => {
   const params = useParams<{ readonly id?: string }>();
@@ -21,6 +34,7 @@ const ManageTemplate: Component = () => {
   const [t] = useI18n();
   const [showRender, setShowRender] = createSignal(false);
   const [showSettings, setShowSettings] = createSignal(false);
+  const [showHints, setShowHints] = createSignal(false);
 
   const [templateCode, setTemplateCode] = createSignal(`
   {% assign people = "alice, bob, carol" | split: ", " -%}
@@ -36,11 +50,41 @@ const ManageTemplate: Component = () => {
   </ul>
   
 `);
+  const form = createForm<{
+    name: string;
+    html: string;
+    templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
+  }>(() => ({
+    defaultValues: {
+      name: "",
+      html: templateCode(),
+      templateType: "INVOICE",
+    },
+    onSubmitInvalid: (e) => {
+      console.log("invalid", e.formApi.state.errors);
+    },
+
+    onSubmit: async (template) => {
+      try {
+        if (params.id) {
+          await updateTemplate(Number.parseInt(params.id), template.value);
+          toast.success("Template updated");
+        } else {
+          await createTemplate(template.value);
+          toast.success("Template saved");
+        }
+        navigate("/dashboard/other/templates");
+      } catch (e) {
+        toast.error("Failed to save template");
+        console.error(e);
+      }
+    },
+  }));
 
   onMount(async () => {
     if (params.id) {
       const data = await getTemplate(Number(params.id));
-      setTemplateCode(data.html);
+      form.update({ ...form.options, defaultValues: data });
     }
   });
 
@@ -53,28 +97,7 @@ const ManageTemplate: Component = () => {
           params.id ? params.id : t("pageHeaader.new"),
         ]}
         actionElements={[
-          <HeaderButton
-            onClick={async () => {
-              if (params.id) {
-                try {
-                  await updateTemplate(Number(params.id), templateCode());
-                  toast.success("Template updated"); // TODO: i18n
-                  navigate("/dashboard/other/templates");
-                } catch (e) {
-                  toast.error(e as string);
-                }
-              } else {
-                try {
-                  await createTemplate({ templateType: "INVOICE", html: templateCode(), name: "Cus" });
-                  toast.success("Template created"); // TODO: i18n
-                  navigate("/dashboard/other/templates");
-                } catch (e) {
-                  toast.error(e as string);
-                }
-              }
-            }}
-            buttonType="primary"
-          >
+          <HeaderButton onClick={form.handleSubmit} buttonType="primary">
             Save
           </HeaderButton>,
           <HeaderButton onClick={() => setShowRender(!showRender())} buttonType="secondary">
@@ -82,6 +105,9 @@ const ManageTemplate: Component = () => {
           </HeaderButton>,
           <HeaderButton buttonType="secondary" onClick={() => setShowSettings(!showSettings())}>
             <FiSettings />
+          </HeaderButton>,
+          <HeaderButton buttonType="secondary" onClick={() => setShowHints(!showHints())}>
+            <FiList />
           </HeaderButton>,
           <Show when={params.id}>
             <HeaderButton
@@ -104,17 +130,54 @@ const ManageTemplate: Component = () => {
 
       <div class="relative h-full">
         <Editor code={templateCode} onValueChange={setTemplateCode} />
-        <Show when={showSettings()}>
-          <div class="fixed top-0 left-0 w-full h-full grid grid-cols-6 grid-rows-1 justify-between z-999 ">
-            <div class="bg-black bg-opacity-20 w-full col-span-4" onClick={() => setShowSettings(false)} />
-            <div class="bg-primary col-span-2 p-4 overflow-scroll pt-44px">
-              <h2 class="text-lg font-bold mb-4">Data Hints</h2>
-              <TemplateHint />
-            </div>
-          </div>
-        </Show>
+        <SidePopup show={showHints()} onClickOutside={() => setShowHints(false)}>
+          <h2 class="text-lg font-bold mb-4">Data Hints</h2>
+          <TemplateHint />
+        </SidePopup>
+        <SidePopup show={showSettings()} onClickOutside={() => setShowSettings(false)}>
+          <Form>
+            <Section title="Template Information" columns={1}>
+              <form.Field name="name">
+                {(field) => (
+                  <Input
+                    label="Name"
+                    type="text"
+                    placeholder="Invoice"
+                    defaultValue={field().state.value}
+                    onChange={(e) => field().handleChange(e)}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="templateType">
+                {(field) => (
+                  <Dropdown
+                    label="Template Type"
+                    defaultValueId={form.state.values.templateType}
+                    data={[
+                      { id: "INVOICE", label: "Invoice" },
+                      { id: "ESTIMATE", label: "Estimate" },
+                      { id: "RECEIPT", label: "Receipt" },
+                    ]}
+                    onSelect={(data) => field().handleChange(data.id as "INVOICE" | "ESTIMATE" | "RECEIPT")}
+                  />
+                )}
+              </form.Field>
+            </Section>
+          </Form>
+        </SidePopup>
       </div>
     </>
+  );
+};
+
+const SidePopup: ParentComponent<{ show: boolean; onClickOutside: () => void }> = (props) => {
+  return (
+    <Show when={props.show}>
+      <div class="fixed top-0 left-0 w-full h-full grid grid-cols-6 grid-rows-1 justify-between z-999">
+        <div class="bg-black bg-opacity-20 w-full col-span-4" onClick={props.onClickOutside} />
+        <div class="bg-primary col-span-2 p-4 overflow-scroll pt-44px">{props.children}</div>
+      </div>
+    </Show>
   );
 };
 

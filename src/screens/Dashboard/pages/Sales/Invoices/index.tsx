@@ -1,28 +1,19 @@
-import { DocumentType, getDocuments, getModelCount, type GetDocumentData } from "@/bindings";
+import { DocumentType, getDocuments, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
-import { FiDownload, FiEdit, FiPlus, FiTrash } from "solid-icons/fi";
-import { type Component, createSignal } from "solid-js";
-import Popover from "@/shared/components/Popover";
+import { FiPlus } from "solid-icons/fi";
+import type { Component } from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import Container from "@/screens/Dashboard/components/Container";
 import { useNavigate } from "@solidjs/router";
-import { getInitializedPrintWindow } from "@/utils/savePDF";
+import { useSelector } from "@/store";
 
 const Invoices: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
-  const [invoicePopover, setInvoicePopover] = createSignal(false);
 
-  const handleEdit = (item: GetDocumentData) => {
-    navigate(`${item.id}`);
-  };
-
-  const handleDownload = (item: GetDocumentData) => {
-    getInitializedPrintWindow(item.id);
-  };
-
+  const settings = useSelector((state) => state.settingsService.settings);
   return (
     <Container>
       <PageHeader
@@ -34,24 +25,22 @@ const Invoices: Component = () => {
         ]}
       />
       <Table
-        columns={[{ field: "id", header: "ID" }]}
+        columns={[
+          { field: "number", header: "Number" },
+          {
+            field: "totalPrice",
+            header: "Total Price",
+            component: (item) => (
+              <>
+                {item.totalPrice} {settings.defaultCurrency.code}
+              </>
+            ),
+          },
+        ]}
         totalItems={getModelCount("Invoice")}
         loadPage={async (indices) => await getDocuments(DocumentType.INVOICE, indices)}
         onClickRow={(item) => navigate(`${item.id}`)}
-        rowActions={[
-          {
-            onClick: handleDownload,
-            icon: FiDownload,
-          },
-          {
-            onClick: handleEdit,
-            icon: FiEdit,
-          },
-        ]}
       />
-      <Popover show={invoicePopover()} onClose={() => setInvoicePopover(false)} title="Create Invoice">
-        <div>cuspoic</div>
-      </Popover>
     </Container>
   );
 };

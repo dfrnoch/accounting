@@ -1,7 +1,7 @@
 import { type Currency, getCurrencies, getModelCount } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Table from "@/screens/Dashboard/components/Table";
-import { FiEdit, FiPlus } from "solid-icons/fi";
+import { FiPlus } from "solid-icons/fi";
 import type { Component } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
@@ -29,8 +29,8 @@ const Currencies: Component = () => {
           { field: "rate", header: "Rate" },
         ]}
         totalItems={getModelCount("Currency")}
-        loadPage={async (indicies) => await getCurrencies(indicies)}
-        onClickRow={(item) => navigate(item.id)}
+        loadPage={getCurrencies}
+        onClickRow={(item) => navigate(item.code)}
       />
     </Container>
   );

@@ -64,8 +64,7 @@
   "overview": {
     "chart": {
       "sales": "Sales",
-      "expenses": "Expenses",
-      "tax": "Taxes"
+      "expenses": "Expenses"
     },
     "months": {
       "january": "January",
@@ -84,8 +83,46 @@
 
     "stats": {
       "sales": "Sales",
-      "purchase": "Purchase",
-      "tax": "Taxes"
+      "expenses": "Expenses"
+    }
+  },
+
+  "hints": {
+    "collapsible": {
+      "object": "Object",
+      "array": "Array"
+    },
+    "number": "Invoice number",
+    "client": {
+      "name": "Client name",
+      "cin": "Client identification number",
+      "vatId": "VAT identification number",
+      "address": "Client address",
+      "city": "Client city",
+      "zip": "Client zip code",
+      "email": "Client email",
+      "phone": "Client phone number"
+    },
+    "company": {
+      "name": "Company name",
+      "cin": "Company identification number",
+      "vatId": "VAT identification number",
+      "address": "Company address",
+      "city": "Company city",
+      "zip": "Company zip code",
+      "email": "Company email",
+      "phone": "Company phone number"
+    },
+    "currency": {
+      "name": "Currency name",
+      "code": "Currency code"
+    },
+    "issueDate": "Issue date",
+    "dueDate": "Due date",
+    "items": {
+      "description": "Item description",
+      "quantity": "Item quantity",
+      "price": "Item price"
     }
   },
   "settings": {
@@ -101,17 +138,6 @@
       "currency_placement": "Currency placement",
       "currency_placement_before": "Before amount",
       "currency_placement_after": "After amount",
-      "tax": "Tax",
-      "tax_included": "Tax included",
-      "tax_excluded": "Tax excluded",
-      "tax_rate": "Tax rate",
-      "tax_name": "Tax name",
-      "tax_number": "Tax number",
-      "tax_number_help": "Tax number is used on invoices and other documents.",
-      "tax_number_placeholder": "Tax number",
-      "tax_number_example": "Tax number",
-      "tax_number_example_help": "Example: 1234567890",
-      "tax_number_example_placeholder": "1234567890",
       "company": "Company",
       "company_name": "Company name",
       "company_name_help": "Company name is used on invoices and other documents.",

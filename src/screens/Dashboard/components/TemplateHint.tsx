@@ -1,3 +1,4 @@
+import { useI18n } from "@/i18n";
 import { FiChevronDown, FiChevronUp } from "solid-icons/fi";
 import { type Component, createSignal, For, onMount, Show } from "solid-js";
 
@@ -10,6 +11,43 @@ interface Row {
 
 const TemplateBuilderHint: Component<{ data?: object }> = (props) => {
   const [rows, setRows] = createSignal<Row[]>([]);
+  const [t] = useI18n();
+
+  const hints = {
+    number: t("hints.number"),
+    client: {
+      name: t("hints.client.name"),
+      cin: t("hints.client.cin"),
+      vatId: t("hints.client.vatId"),
+      address: t("hints.client.address"),
+      city: t("hints.client.city"),
+      zip: t("hints.client.zip"),
+      email: t("hints.client.email"),
+      phone: t("hints.client.phone"),
+    },
+    company: {
+      name: t("hints.company.name"),
+      cin: t("hints.company.cin"),
+      vatId: t("hints.company.vatId"),
+      address: t("hints.company.address"),
+      city: t("hints.company.city"),
+      zip: t("hints.company.zip"),
+      email: t("hints.company.email"),
+      phone: t("hints.company.phone"),
+    },
+    currency: {
+      code: t("hints.currency.code"),
+    },
+    issueDate: t("hints.issueDate"),
+    dueDate: t("hints.dueDate"),
+    items: [
+      {
+        description: t("hints.items.description"),
+        quantity: t("hints.items.quantity"),
+        price: t("hints.items.price"),
+      },
+    ],
+  };
 
   const initializeRows = () => {
     const hintData = props.data || hints;
@@ -59,12 +97,12 @@ const TemplateBuilderHint: Component<{ data?: object }> = (props) => {
             </Show>
             <Show when={r.isCollapsible && Array.isArray(r.value)}>
               <div class="text-blue-600 bg-blue-100 border-default border tracking-tighter rounded text-xs px-1">
-                Array
+                {t("hints.collapsible.array")}
               </div>
             </Show>
             <Show when={r.isCollapsible && !Array.isArray(r.value)}>
               <div class="text-pink-600 bg-pink-100 border-default border tracking-tighter rounded text-xs px-1">
-                Object
+                {t("hints.collapsible.object")}
               </div>
             </Show>
             <Show when={r.isCollapsible}>
@@ -85,45 +123,3 @@ const TemplateBuilderHint: Component<{ data?: object }> = (props) => {
 };
 
 export default TemplateBuilderHint;
-
-//TODO: Replace this with i18n
-const hints = {
-  id: "template id",
-  number: "INV-2024-001",
-  documentType: "Invoice",
-  client: {
-    name: "Client Name",
-    cin: "CIN",
-    vatId: "VAT",
-    address: "Address Line",
-    city: "City",
-    zip: "Zip Code",
-    email: "Email",
-    phone: "Phone",
-  },
-  company: {
-    name: "Company Name",
-    cin: "CIN",
-    vatId: "VAT",
-    address: "Address Line",
-    city: "City",
-    zip: "Zip Code",
-    email: "Email",
-    phone: "Phone",
-  },
-  currency: {
-    name: "US Dollar",
-    code: "USD",
-  },
-  issueDate: "2024-04-14",
-  taxDate: "2024-04-14",
-  dueDate: "",
-  items: [
-    {
-      description: "Product description",
-      quantity: 10,
-      price: 9.99,
-      tax: 1.99,
-    },
-  ],
-};

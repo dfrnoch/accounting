@@ -35,7 +35,7 @@ const Templates: Component = () => {
         ]}
         totalItems={getModelCount("Template")}
         loadPage={getTemplates}
-        onClickRow={(item) => navigate(`detail/${item.id}`)}
+        onClickRow={(item) => navigate(`${item.id}`)}
       />
     </Container>
   );

@@ -100,3 +100,16 @@ tr td:last-child {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 } */
+
+@media print {
+    .reset-print-styles * {
+        color: inherit !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        /* Remove any additional styles you don't want to print */
+    }
+}
