@@ -27,7 +27,6 @@ prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust
 tokio = { version = "1.37.0", features = ["macros"] }
 window-vibrancy = { git = "https://github.com/tauri-apps/window-vibrancy", branch = "dev" }
 tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
-tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 # tauri-plugin-updater = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 tauri-plugin-dialog = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 tauri-plugin-http = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
