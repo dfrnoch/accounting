@@ -30,11 +30,11 @@ const Templates: Component = () => {
           {
             field: "templateType",
             header: "Type",
-            component: (item) => <StatusIcon>{item.templateType}</StatusIcon>,
+            component: (item) => <StatusIcon>{item.templateType as string}</StatusIcon>,
           },
         ]}
         totalItems={getModelCount("Template")}
-        loadPage={getTemplates}
+        loadPage={async (indices) => await getTemplates(indices)}
         onClickRow={(item) => navigate(`${item.id}`)}
       />
     </Container>

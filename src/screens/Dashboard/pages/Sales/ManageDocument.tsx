@@ -41,7 +41,7 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
   const navigate = useNavigate();
   const settingsService = useSelector((state) => state.settingsService);
 
-  const [templates] = createResource({ skip: 0, take: 1000 }, getTemplates);
+  const [templates] = createResource(async () => await getTemplates({ skip: 0, take: 1000 }, props.type));
   const [clients] = createResource({ skip: 0, take: 1000 }, getClients);
   const [currencies] = createResource({ skip: 0, take: 1000 }, getCurrencies);
 

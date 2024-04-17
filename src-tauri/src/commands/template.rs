@@ -1,19 +1,28 @@
 use crate::company;
 use crate::template;
+use crate::template::template_type;
 use crate::types::Indicies;
 use crate::DbState;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
+
 #[tauri::command]
 pub async fn get_templates(
     client: DbState<'_>,
     company_id: i32,
     indicies: Indicies,
+    template_type: Option<String>,
 ) -> Result<Vec<template::Data>, QueryError> {
     debug!("Getting templates");
+    let mut conditions = vec![template::company_id::equals(company_id)];
+
+    if let Some(template_type) = template_type {
+        conditions.push(template::template_type::equals(template_type));
+    }
+
     let data = client
         .template()
-        .find_many(vec![template::company_id::equals(company_id)])
+        .find_many(conditions)
         .skip(indicies.skip)
         .take(indicies.take)
         .exec()

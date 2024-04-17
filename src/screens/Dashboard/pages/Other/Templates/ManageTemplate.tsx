@@ -32,7 +32,6 @@ const ManageTemplate: Component = () => {
   const params = useParams<{ readonly id?: string }>();
   const navigate = useNavigate();
   const [t] = useI18n();
-  const [showRender, setShowRender] = createSignal(false);
   const [showSettings, setShowSettings] = createSignal(false);
   const [showHints, setShowHints] = createSignal(false);
 
@@ -102,7 +101,7 @@ const ManageTemplate: Component = () => {
 `);
   const form = createForm<{
     name: string;
-    templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
+    templateType: "INVOICE" | "PROFORMA" | "RECEIVE";
   }>(() => ({
     defaultValues: {
       name: "",
@@ -154,9 +153,9 @@ const ManageTemplate: Component = () => {
           <HeaderButton onClick={form.handleSubmit} buttonType="primary">
             Save
           </HeaderButton>,
-          <HeaderButton onClick={() => setShowRender(!showRender())} buttonType="secondary">
-            {showRender() ? "Edit" : "Preview"}
-          </HeaderButton>,
+          // <HeaderButton onClick={() => setShowRender(!showRender())} buttonType="secondary">
+          //   {showRender() ? "Edit" : "Preview"}
+          // </HeaderButton>,
           <HeaderButton buttonType="secondary" onClick={() => setShowSettings(!showSettings())}>
             <FiSettings />
           </HeaderButton>,
@@ -209,10 +208,10 @@ const ManageTemplate: Component = () => {
                     defaultValueId={form.state.values.templateType}
                     data={[
                       { id: "INVOICE", label: "Invoice" },
-                      { id: "ESTIMATE", label: "Estimate" },
-                      { id: "RECEIPT", label: "Receipt" },
+                      { id: "PROFORMA", label: "Proforma Invoice" },
+                      { id: "RECEIVE", label: "Received Invoice" },
                     ]}
-                    onSelect={(data) => field().handleChange(data.id as "INVOICE" | "ESTIMATE" | "RECEIPT")}
+                    onSelect={(data) => field().handleChange(data.id as "INVOICE" | "PROFORMA" | "RECEIVE")}
                   />
                 )}
               </form.Field>

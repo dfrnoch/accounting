@@ -75,7 +75,7 @@ const Settings: Component = () => {
 export default Settings;
 
 const DocumentPage: Component = () => {
-  const [templates] = createResource({ skip: 0, take: 1000 }, getTemplates);
+  const [templates] = createResource(async () => await getTemplates({ skip: 0, take: 1000 }));
   const [currencies] = createResource({ skip: 0, take: 1000 }, getCurrencies);
   const [t] = useI18n();
 

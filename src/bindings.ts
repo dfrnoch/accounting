@@ -147,8 +147,8 @@ export async function getCompanies(exclude?: number) {
   return await invoke<Company[]>("get_companies", { exclude });
 }
 
-export async function getTemplates(indicies: Indicies) {
-  return await invoke<Template[]>("get_templates", { companyId: state.companyId, indicies });
+export async function getTemplates(indicies: Indicies, templateType?: "INVOICE" | "PROFORMA" | "RECEIVE") {
+  return await invoke<Template[]>("get_templates", { companyId: state.companyId, indicies, templateType });
 }
 
 export async function saveTemplate(template: Template) {
@@ -164,7 +164,7 @@ export async function deleteTemplate(id: number) {
 }
 
 export type ManageTemplateData = {
-  templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
+  templateType: "INVOICE" | "PROFORMA" | "RECEIVE";
   html: string;
   name: string;
 };
@@ -296,7 +296,7 @@ export type Company = {
 
 export type Template = {
   id: number;
-  templateType: "INVOICE" | "ESTIMATE" | "RECEIPT";
+  templateType: "INVOICE" | "PROFORMA" | "RECEIVE";
   name: string;
   html: string;
   companyId: number;

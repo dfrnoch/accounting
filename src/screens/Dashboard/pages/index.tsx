@@ -69,7 +69,6 @@ const Overview: Component = () => {
             <Show when={sales() && expenses()}>
               <StatBox title={t("overview.stats.sales")} value={sales()[0]} last={sales()[1]} />
               <StatBox title={t("overview.stats.expenses")} value={expenses()[0]} last={expenses()[1]} />
-              {/* <StatBox title={t("overview.stats.tax")} value={120} /> */}
             </Show>
           </div>
         </div>
@@ -246,7 +245,7 @@ const Overview: Component = () => {
                       },
                       formatter: (value: number) => {
                         if (value % 1 === 0) {
-                          return value;
+                          return value.toString();
                         }
                         return "";
                       },
