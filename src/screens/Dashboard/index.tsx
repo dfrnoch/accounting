@@ -15,7 +15,7 @@ const Dashboard: ParentComponent = (props) => {
   const settingsService = useSelector((state) => state.settingsService);
 
   const fetchCompany = async (companyId: number) => {
-    if (!companyId) {
+    if (companyId === 0) {
       navigate("/setup");
       return;
     }
@@ -37,12 +37,14 @@ const Dashboard: ParentComponent = (props) => {
 
   return (
     <div class="flex flex-row items-start w-screen">
-      <Sidebar />
-      <div class="overflow-y-auto mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary">
-        <Suspense fallback={<LoadingIcon />}>
-          <Show when={company()}>{props.children}</Show>
-        </Suspense>
-      </div>
+      <Suspense fallback={<LoadingIcon />}>
+        <Show when={company()}>
+          <Sidebar />
+          <div class="overflow-y-auto mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary">
+            {props.children}
+          </div>
+        </Show>
+      </Suspense>
     </div>
   );
 };

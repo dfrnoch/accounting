@@ -1,8 +1,10 @@
 import { onMount } from "solid-js";
 import { type StoreSetter, createStore } from "solid-js/store";
+import { type Platform, platform } from "@tauri-apps/plugin-os";
 
 export interface StateService {
-  companyId: number | null;
+  companyId: number;
+  platform: Platform;
 }
 
 export const stateStore = createStore<StateService>({} as StateService);
@@ -10,10 +12,15 @@ export const stateStore = createStore<StateService>({} as StateService);
 export const StateService = () => {
   const [state, setState] = stateStore;
 
-  onMount(() => {
+  onMount(async () => {
     const stateString = localStorage.getItem("state");
-    if (!stateString) return setState({ companyId: null });
-    setState(() => JSON.parse(stateString) as unknown as StateService);
+
+    if (!stateString) {
+      setState({ companyId: 0, platform: await platform() });
+    } else {
+      const parsedState = JSON.parse(stateString) as unknown as StateService;
+      setState({ ...parsedState, platform: await platform() });
+    }
   });
 
   const updateState = (value: StoreSetter<StateService>) => {

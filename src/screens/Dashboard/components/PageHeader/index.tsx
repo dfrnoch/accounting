@@ -1,6 +1,7 @@
 import { type Component, For, Show, type JSX } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { FiChevronLeft, FiChevronRight } from "solid-icons/fi";
+import { useSelector } from "@/store";
 
 interface PageHeaderProps {
   title: string[];
@@ -8,16 +9,29 @@ interface PageHeaderProps {
 }
 
 const PageHeader: Component<PageHeaderProps> = (props) => {
+  const platform = useSelector((state) => state.stateService.state.platform);
   const navigate = useNavigate();
 
   return (
-    <div class="flex fixed top-0 left-0 flex-row w-screen h-[40px] z-9999">
+    <div
+      class="flex fixed top-0 flex-row h-[40px] z-9999"
+      classList={{
+        "left-200px lg:left-220px w-[calc(100vw-200px)] lg:w-[calc(100vw-220px)]": platform !== "macos",
+        "left-0 w-screen": platform === "macos",
+      }}
+    >
+      <Show when={platform === "macos"}>
+        <div
+          class="flex items-center justify-end h-full shrink-0 px-2.5 lg:px-4 text-primary lg:w-[220px] w-[200px]"
+          data-tauri-drag-region
+        />
+      </Show>
       <div
-        class="flex items-center justify-end w-1/5 h-full lg:max-w-[220px] min-w-[200px] shrink-0 px-2.5 lg:px-4 text-primary"
-        data-tauri-drag-region
-      />
-      <div
-        class="flex justify-between items-center px-3 w-4/5 h-full border-b lg:px-6 lg:w-full border-black/20  backdrop-blur-lg bg-[#E3E3E3]/80 dark:bg-[#262626]/80 z-5"
+        class="flex justify-between items-center px-3 h-full border-b lg:px-6 lg:w-full border-black/20  backdrop-blur-lg bg-[#E3E3E3]/80 dark:bg-[#262626]/80 z-5"
+        classList={{
+          "w-4/5": platform === "macos",
+          "w-full": platform !== "macos",
+        }}
         data-tauri-drag-region
       >
         <div class="flex flex-row h-full">

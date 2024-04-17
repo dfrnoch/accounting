@@ -2,7 +2,6 @@ import { type Component, For, type JSX, createSignal, onMount } from "solid-js";
 import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useI18n } from "@/i18n";
-import { arch } from "@tauri-apps/plugin-os";
 import {
   FiCheck,
   FiClipboard,
@@ -38,13 +37,11 @@ const Sidebar: Component = () => {
   const navigate = useNavigate();
   const company = useSelector((state) => state.companyService.company);
   const stateService = useSelector((state) => state.stateService);
-  const [archName, setArch] = createSignal<string>("");
 
   const [companies, setCompanies] = createSignal<Company[]>([]);
   const [selected, setSelected] = createSignal<Company>(company);
 
   onMount(async () => {
-    setArch(await arch());
     const data = await getCompanies(stateService.state.companyId || undefined);
     setCompanies([company, ...data]);
   });
@@ -75,9 +72,15 @@ const Sidebar: Component = () => {
   ];
 
   return (
-    <div class="text-primary relative flex h-screen w-1/5 min-w-[200px] shrink-0 flex-col justify-between border-r border-zinc-400/70 px-2.5 pb-4 pt-14 lg:max-w-[220px] lg:px-4 dark:border-black/90">
+    <div
+      class="text-primary relative flex h-screen w-1/5 min-w-[200px] shrink-0 flex-col justify-between  border-zinc-400/70 px-2.5 pb-4 lg:max-w-[220px] lg:px-4 dark:border-black/90"
+      classList={{
+        "pt-14 border-r": stateService.state.platform === "macos",
+        "pt-4": stateService.state.platform !== "macos",
+      }}
+    >
       <div>
-        <SidebarButton notInSection target="/dashboard/" icon={<FiHome />}>
+        <SidebarButton notInSection target="/dashboard" icon={<FiHome />}>
           {t("sidebar.button.overview")}
         </SidebarButton>
         <For each={sidebarSections}>
