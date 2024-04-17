@@ -89,8 +89,11 @@
           "save": "Save",
           "sections": {
             "information": "Client Information",
-            "address": "Address"
+            "address": "Address",
+            "bank": "Banking Details"
           },
+          "bankAccount": "Bank Account",
+          "bankIban": "IBAN",
           "name": "Name",
           "email": "Email",
           "clientType": "Client Type",

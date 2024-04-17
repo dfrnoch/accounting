@@ -2,14 +2,14 @@ import { Window } from "@tauri-apps/api/window";
 import { Webview } from "@tauri-apps/api/webview";
 
 export async function getInitializedPrintWindow(id: number) {
-  const appWindow = new Window("invoice", {
-    visible: false,
+  const appWindow = new Window("document", {
+    visible: true,
     decorations: true,
     title: "Invoice (Print)",
     width: 200,
     height: 200,
   });
-  const webview = new Webview(appWindow, "invoice", {
+  const webview = new Webview(appWindow, "document", {
     url: `/print/${id}`,
     width: 2100,
     height: 2970,

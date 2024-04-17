@@ -31,6 +31,8 @@ const ManageClient: Component = () => {
       zip: "",
       phone: undefined,
       email: undefined,
+      bankAccount: undefined,
+      bankIban: undefined,
     } as Client,
     validatorAdapter: zodValidator,
     onSubmitInvalid: (e) => {
@@ -194,6 +196,30 @@ const ManageClient: Component = () => {
               <Input
                 type="tel"
                 label={t("pages.other.clients.form.phone")}
+                defaultValue={field().state.value}
+                onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
+              />
+            )}
+          </form.Field>
+        </Section>
+        <Section title={t("pages.other.clients.form.sections.bank")}>
+          <form.Field name="bankAccount" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+            {(field) => (
+              <Input
+                type="text"
+                label={t("pages.other.clients.form.bankAccount")}
+                defaultValue={field().state.value}
+                onChange={(data) => field().handleChange(data)}
+                errors={field().state.meta.touchedErrors}
+              />
+            )}
+          </form.Field>
+          <form.Field name="bankIban" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
+            {(field) => (
+              <Input
+                type="text"
+                label={t("pages.other.clients.form.bankIban")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}

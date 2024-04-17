@@ -139,8 +139,11 @@
           "save": "Uložit",
           "sections": {
             "information": "Informace o klientovi",
-            "address": "Adresa"
+            "address": "Adresa",
+            "bank": "Bankovní účet"
           },
+          "bankAccount": "Číslo účtu",
+          "bankIban": "IBAN",
           "name": "Jméno",
           "email": "Email",
           "clientType": "Typ klienta",

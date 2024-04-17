@@ -36,7 +36,15 @@ const ClientDetail: Component = () => {
           <Table
             columns={[
               { field: "number", header: "Number" },
-              { field: "totalPrice", header: "Price" },
+              {
+                field: "totalPrice",
+                header: "Total Price",
+                component: (item) => (
+                  <>
+                    {item.totalPrice} {item.currency}
+                  </>
+                ),
+              },
             ]}
             totalItems={getDocumentCount(undefined, Number.parseInt(params.id))}
             allowedCounts={[10]}
