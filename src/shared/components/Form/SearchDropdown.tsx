@@ -34,7 +34,7 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
   };
 
   return (
-    <div class="flex flex-col gap-1 z-auto">
+    <div class="flex flex-col gap-1">
       <span class="text-xs text-secondary">{props.label}</span>
       <Combobox<ComboboxItem>
         defaultOpen={false}
@@ -44,11 +44,11 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
         class="relative"
       >
         <ComboboxInput
-          class="relative w-full py-1.5 pl-3 pr-10 text-left bg-element border-default border-1 rounded-md h-9 cursor-default focus:outline-none text-sm"
+          class="z-1 relative w-full py-1.5 pl-3 pr-10 text-left bg-element border-default border-1 rounded-md h-9 cursor-default focus:outline-none text-sm"
           placeholder="Select an item"
           value={selected()?.label ?? ""}
         />
-        <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+        <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ">
           <TbSelector class="w-5 h-5 text-primary" aria-hidden="true" />
         </span>
         <DisclosureStateChild>
@@ -62,13 +62,10 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <ComboboxOptions
-                unmount={false}
-                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-element border-default border-1 rounded-md shadow-lg max-h-60 focus:outline-none sm:text-sm"
-              >
+              <ComboboxOptions class="z-100 absolute w-full py-1 mt-1 overflow-auto text-base bg-element border-default border-1 rounded-md shadow-lg max-h-60 focus:outline-none sm:text-sm">
                 <For each={props.data}>
                   {(item): JSX.Element => (
-                    <ComboboxOption class="focus:outline-none group" value={item}>
+                    <ComboboxOption class="focus:outline-none group z-99" value={item}>
                       {({ isActive, matches }): JSX.Element => (
                         <div
                           classList={{

@@ -8,6 +8,7 @@ type TextInputProps = {
   placeholder?: string;
   defaultValue?: string;
   errors?: ValidationError[];
+  float?: boolean;
 };
 
 type NumberInputProps = {
@@ -17,6 +18,7 @@ type NumberInputProps = {
   placeholder?: string;
   defaultValue?: number;
   errors?: ValidationError[];
+  float?: boolean;
 };
 
 type InputProps = TextInputProps | NumberInputProps;
@@ -42,6 +44,7 @@ const Input: Component<InputProps> = (props) => {
           "border-default": !props.errors || props.errors.length === 0,
         }}
         onInput={handleInput}
+        step={props.float ? 0.1 : undefined}
         placeholder={props.placeholder}
         value={props.defaultValue ? props.defaultValue : ""}
       />

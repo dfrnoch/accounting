@@ -4,8 +4,10 @@ import { Webview } from "@tauri-apps/api/webview";
 export async function getInitializedPrintWindow(id: number) {
   const appWindow = new Window("invoice", {
     visible: false,
-    decorations: false,
-    title: "Invoice",
+    decorations: true,
+    title: "Invoice (Print)",
+    width: 200,
+    height: 200,
   });
   const webview = new Webview(appWindow, "invoice", {
     url: `/print/${id}`,
@@ -24,7 +26,4 @@ export async function getInitializedPrintWindow(id: number) {
     console.error(e);
     appWindow.close();
   });
-
-  //   await printWindow.loadFile(printFilePath);
-  //   return printWindow;
 }

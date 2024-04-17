@@ -197,15 +197,30 @@ export async function getSettings(id?: number) {
   return await invoke<Settings>("get_settings", { companyId: id ? id : state.companyId });
 }
 
+export async function updateSettings(data: ManageSettingsData) {
+  return await invoke("update_settings", { companyId: state.companyId, data });
+}
+
 export async function getPrintDocument(id: number) {
   return await invoke<GetPrintDocumentResult>("get_print_document", { id });
 }
+
+export type ManageSettingsData = {
+  defaultCurrencyId: string;
+  defaultTemplateId: number;
+  invoicePrefix: string;
+  proformaPrefix: string;
+  receivePrefix: string;
+
+  invoiceCounter: number;
+  proformaCounter: number;
+  receiveCounter: number;
+};
 
 export type Settings = {
   id: number;
   defaultCurrency: Currency;
   defaultTemplate: Template;
-  // tax: number;
 
   invoicePrefix: string;
   invoiceCounter: number;
@@ -296,6 +311,9 @@ export type Client = {
   email?: string;
   phone?: string;
   invoices?: Document[];
+
+  bankAccount?: string;
+  IBAN?: string;
 };
 
 export type GetPrintDocumentResult = {

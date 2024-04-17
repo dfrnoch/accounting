@@ -56,10 +56,10 @@ const ClientDetail: Component = () => {
             }}
           />
         </div>
-        <Box class="col-span-2 row-span-4 relative">
+        <Box class="col-span-2 row-span-4 relative overflow-scroll">
           <Suspense fallback={<LoadingIcon />}>
             <Show when={client()}>
-              <div class="flex items-center flex-row gap-2 mb-2">
+              <div class="flex items-center flex-row gap-2 mb-2 ">
                 <div class="flex h-10 w-10 items-center justify-center lg:h-10 lg:w-10 rounded-full bg-secondary opacity-50">
                   <FiUsers class="w-5 h-5 text-primary" />
                 </div>
@@ -71,7 +71,8 @@ const ClientDetail: Component = () => {
               <Hr class="my-3" />
               <div class="flex flex-col gap-1">
                 <h2 class="text-primary text-sm font-semibold pb-2">Detail</h2>
-                <Item title="VAT Id">{client()?.vatId}</Item>
+                <Item title="CIN">{client()?.cin}</Item>
+                <Item title="VAT">{client()?.vatId}</Item>
                 <Item title="Email">{client()?.email}</Item>
                 <Item title="Phone">{client()?.phone}</Item>
 
@@ -81,12 +82,10 @@ const ClientDetail: Component = () => {
                 <Item title="City">{client()?.city}</Item>
                 <Item title="ZIP">{client()?.zip}</Item>
 
-                {/* <span class="font-medium">VAT ID:</span> {client()?.vatId}
-                <span class="font-medium">Address:</span> {client()?.address}
-                <span class="font-medium">City:</span> {client()?.city}
-                <span class="font-medium">ZIP:</span> {client()?.zip}
-                <span class="font-medium">Email:</span> {client()?.email}
-                <span class="font-medium">Phone:</span> {client()?.phone} */}
+                <Hr class="my-2" />
+                <h2 class="text-primary text-sm font-semibold pb-2">Bank</h2>
+                <Item title="Account">{client()?.bankAccount}</Item>
+                {/* <Item title="IBAN">{client()?.IBAN}</Item> */}
               </div>
             </Show>
           </Suspense>

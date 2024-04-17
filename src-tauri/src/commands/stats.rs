@@ -85,15 +85,23 @@ pub async fn get_sales(
         let total_sales: f64 = sales
             .into_iter()
             .map(|doc| {
-                let mut exchange_rate = 1.0;
-                if doc.currency.unwrap().code != default_currency.code {
-                    exchange_rate = default_currency.rate;
-                }
+                let exchange_rate = if let Some(currency) = doc.currency {
+                    if currency.code != "EUR" {
+                        currency.rate
+                    } else {
+                        1.0
+                    }
+                } else {
+                    1.0
+                };
 
                 doc.items
-                    .unwrap()
+                    .unwrap_or_default()
                     .into_iter()
-                    .map(|item| item.price * item.quantity as f64 * exchange_rate)
+                    .map(|item| {
+                        let base_price = item.price * item.quantity as f64 / exchange_rate;
+                        (base_price * default_currency.rate).round()
+                    })
                     .sum::<f64>()
             })
             .sum();
@@ -132,17 +140,23 @@ pub async fn get_expenses(
         let total_expenses: f64 = expenses
             .into_iter()
             .map(|doc| {
-                let mut exchange_rate = 1.0;
-                if let Some(currency) = doc.currency {
-                    if currency.code != default_currency.code {
-                        exchange_rate = default_currency.rate;
+                let exchange_rate = if let Some(currency) = doc.currency {
+                    if currency.code != "EUR" {
+                        currency.rate
+                    } else {
+                        1.0
                     }
-                }
+                } else {
+                    1.0
+                };
 
                 doc.items
                     .unwrap_or_default()
                     .into_iter()
-                    .map(|item| item.price * item.quantity as f64 * exchange_rate)
+                    .map(|item| {
+                        let base_price = item.price * item.quantity as f64 / exchange_rate;
+                        (base_price * default_currency.rate).round()
+                    })
                     .sum::<f64>()
             })
             .sum();

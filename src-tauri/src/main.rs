@@ -115,6 +115,7 @@ async fn main() {
             commands::currency::update_currency,
             commands::currency::delete_currency,
             commands::settings::get_settings,
+            commands::settings::update_settings
         ])
         .manage(Arc::new(client))
         .run(tauri::generate_context!())

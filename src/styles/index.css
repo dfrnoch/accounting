@@ -102,14 +102,13 @@ tr td:last-child {
 } */
 
 @media print {
-    .reset-print-styles * {
-        color: inherit !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
+    body {
+        width: 21cm !important;
+        height: 29.7cm !important;
         margin: 0 !important;
         padding: 0 !important;
-        border: none !important;
-        /* Remove any additional styles you don't want to print */
+        color: black;
+        background-color: white;
+        print-color-adjust: exact !important;
     }
 }
