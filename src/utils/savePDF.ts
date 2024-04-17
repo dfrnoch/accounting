@@ -5,7 +5,7 @@ export async function getInitializedPrintWindow(id: number) {
   const appWindow = new Window("document", {
     visible: true,
     decorations: true,
-    title: "Invoice (Print)",
+    title: "Document",
     width: 200,
     height: 200,
   });
@@ -17,13 +17,8 @@ export async function getInitializedPrintWindow(id: number) {
     x: 0,
     y: 0,
   });
-  webview.once("tauri://created", () => {
-    console.log("webview created");
-    // get pdf
-  });
   webview.once("tauri://error", (e) => {
     // an error happened creating the webview
     console.error(e);
-    appWindow.close();
   });
 }
