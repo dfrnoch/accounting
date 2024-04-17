@@ -2,7 +2,7 @@ import { type Component, For, type JSX, createSignal, onMount } from "solid-js";
 import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useI18n } from "@/i18n";
-import { arch } from '@tauri-apps/plugin/os';
+import { arch } from "@tauri-apps/plugin-os";
 import {
   FiCheck,
   FiClipboard,

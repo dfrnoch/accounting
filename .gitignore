@@ -8,6 +8,7 @@ prisma.rs
 src-tauri/dev.db 
 src-tauri/app.db 
 gen/
+src-tauri/gen
 
 
 .signore
