@@ -4,6 +4,17 @@
   "description": "Capability for the main window",
   "windows": ["main", "document"],
   "permissions": [
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "https://*"
+        },
+        {
+          "url": "http://*"
+        }
+      ]
+    },
     "path:default",
     "event:default",
     "webview:default",
