@@ -9,6 +9,7 @@ type TextInputProps = {
   defaultValue?: string;
   errors?: ValidationError[];
   float?: boolean;
+  class?: string;
 };
 
 type NumberInputProps = {
@@ -19,6 +20,7 @@ type NumberInputProps = {
   defaultValue?: number;
   errors?: ValidationError[];
   float?: boolean;
+  class?: string;
 };
 
 type InputProps = TextInputProps | NumberInputProps;
@@ -34,7 +36,7 @@ const Input: Component<InputProps> = (props) => {
   };
 
   return (
-    <label class="flex flex-col gap-1">
+    <label class={`flex flex-col gap-1 ${props.class}`}>
       <span class="text-xs text-secondary">{props.label}</span>
       <input
         type={props.type}

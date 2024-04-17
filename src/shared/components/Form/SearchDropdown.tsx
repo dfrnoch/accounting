@@ -1,8 +1,9 @@
 import type { Component, JSX } from "solid-js";
-import { For, createEffect, createSignal } from "solid-js";
+import { For, Show, createEffect, createSignal } from "solid-js";
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, DisclosureStateChild, Transition } from "terracotta";
 import { TbSelector } from "solid-icons/tb";
 import { FiCheck } from "solid-icons/fi";
+import type { ValidationError } from "@tanstack/solid-form";
 
 interface ComboboxItem {
   id: number | string;
@@ -14,13 +15,18 @@ interface ComboboxProps {
   onSelect: (value: ComboboxItem) => void;
   label: string;
   defaultValueId?: number | string;
+  errors?: ValidationError[];
 }
 
 const SearchDropdown: Component<ComboboxProps> = (props) => {
-  const [selected, setSelected] = createSignal<ComboboxItem>(props.data[0]);
+  const [selected, setSelected] = createSignal<ComboboxItem | undefined>(undefined);
 
   createEffect(() => {
-    if (props.defaultValueId) setSelected(props.data.find((item) => item.id === props.defaultValueId) as ComboboxItem);
+    if (props.defaultValueId) {
+      setSelected(props.data.find((item) => item.id === props.defaultValueId));
+    } else {
+      setSelected(undefined);
+    }
   }, [props.defaultValueId]);
 
   const handleSelect = (value: ComboboxItem | undefined) => {
@@ -38,6 +44,7 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
       <span class="text-xs text-secondary">{props.label}</span>
       <Combobox<ComboboxItem>
         defaultOpen={false}
+        // @ts-expect-error - Combobox expects a string
         value={selected()}
         onSelectChange={handleSelect}
         matchBy={matchBy}
@@ -45,6 +52,10 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
       >
         <ComboboxInput
           class="z-1 relative w-full py-1.5 pl-3 pr-10 text-left bg-element border-default border-1 rounded-md h-9 cursor-default focus:outline-none text-sm"
+          classList={{
+            "border-danger ": props.errors ? props.errors.length > 0 : false,
+            "border-default": !props.errors || props.errors.length === 0,
+          }}
           placeholder="Select an item"
           value={selected()?.label ?? ""}
         />
@@ -76,14 +87,14 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
                         >
                           <span
                             classList={{
-                              "font-medium": selected().id === item.id,
-                              "font-normal": selected().id !== item.id,
+                              "font-medium": selected()?.id === item.id,
+                              "font-normal": selected()?.id !== item.id,
                               "block truncate": true,
                             }}
                           >
                             {item.label}
                           </span>
-                          {selected().id === item.id ? (
+                          {selected()?.id === item.id ? (
                             <span
                               classList={{
                                 "text-primary": true,
@@ -103,6 +114,9 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
           )}
         </DisclosureStateChild>
       </Combobox>
+      <Show when={props.errors}>
+        <For each={props.errors}>{(error) => <span class="text-xs text-danger">{error?.toString()}</span>}</For>
+      </Show>
     </div>
   );
 };

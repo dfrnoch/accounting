@@ -11,8 +11,8 @@ export async function getInitializedPrintWindow(id: number) {
   });
   const webview = new Webview(appWindow, "invoice", {
     url: `/print/${id}`,
-    width: 1000,
-    height: 1000,
+    width: 2100,
+    height: 2970,
     transparent: true,
     x: 0,
     y: 0,

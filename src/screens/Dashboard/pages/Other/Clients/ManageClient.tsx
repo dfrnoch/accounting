@@ -65,7 +65,7 @@ const ManageClient: Component = () => {
   return (
     <Container>
       <PageHeader
-        title={[t("sidebar.section.sales"), t("sidebar.button.clients"), params.id ? params.id : t("pageHeaader.new")]}
+        title={[t("sidebar.section.sales"), t("sidebar.button.clients"), params.id ? params.id : t("pageHeader.new")]}
         actionElements={[
           <HeaderButton onClick={() => form.handleSubmit()} buttonType="primary">
             Save

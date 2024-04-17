@@ -35,7 +35,7 @@ pub async fn get_company(
 }
 
 #[derive(Deserialize, Debug)]
-pub struct CreateCompanyData {
+pub struct ManageCompanyData {
     name: String,
     cin: String,
     vat_id: Option<String>,
@@ -52,7 +52,7 @@ pub struct CreateCompanyData {
 #[tauri::command]
 pub async fn create_company(
     client: DbState<'_>,
-    data: CreateCompanyData,
+    data: ManageCompanyData,
 ) -> Result<i32, QueryError> {
     debug!("Creating company {:?}", data);
     let company = client
@@ -113,4 +113,37 @@ pub async fn create_company(
         .unwrap();
 
     Ok(company.id)
+}
+
+#[tauri::command]
+pub async fn update_company(
+    client: DbState<'_>,
+    id: i32,
+    data: ManageCompanyData,
+) -> Result<(), QueryError> {
+    debug!("Updating company");
+    let data = client
+        .company()
+        .update(
+            company::id::equals(id),
+            vec![
+                company::name::set(data.name),
+                company::cin::set(data.cin),
+                company::vat_id::set(data.vat_id),
+                company::address::set(data.address),
+                company::city::set(data.city),
+                company::zip::set(data.zip),
+                company::phone::set(data.phone),
+                company::email::set(data.email),
+                company::bank_account::set(data.bank_account),
+                company::bank_iban::set(data.bank_iban),
+            ],
+        )
+        .exec()
+        .await;
+
+    match data {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e),
+    }
 }

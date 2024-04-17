@@ -21,7 +21,7 @@ pub struct DocumentWithPrice {
     document_type: String,
     client_id: i32,
     template_id: i32,
-    currency_id: String,
+    currency: String,
     issue_date: DateTime<FixedOffset>,
     due_date: DateTime<FixedOffset>,
     company_id: i32,
@@ -57,6 +57,7 @@ pub async fn get_documents(
         .find_many(conditions)
         .order_by(document::id::order(Direction::Desc))
         .with(document::items::fetch(vec![]))
+        .with(document::currency::fetch())
         .skip(indicies.skip)
         .take(indicies.take)
         .exec()
@@ -78,7 +79,7 @@ pub async fn get_documents(
                 document_type: doc.document_type,
                 client_id: doc.client_id,
                 template_id: doc.template_id,
-                currency_id: doc.currency_id,
+                currency: doc.currency.unwrap().code,
                 issue_date: doc.issue_date,
                 due_date: doc.due_date,
                 company_id: doc.company_id,

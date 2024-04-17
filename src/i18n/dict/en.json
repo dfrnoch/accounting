@@ -39,7 +39,7 @@
   "table": {
     "all": "All"
   },
-  "pageHeaader": {
+  "pageHeader": {
     "search": "Search",
     "new": "New Entry"
   },
@@ -47,6 +47,7 @@
     "button": {
       "overview": "Overview",
       "invoices": "Invoices",
+      "proformas": "Proformas",
       "clients": "Clients",
       "expenses": "Expenses",
       "receivedInvoices": "Received Invoices",
@@ -61,8 +62,8 @@
       }
     },
     "section": {
-      "sales": "Sales",
-      "purchase": "Purchase",
+      "sales": "Purchase & Sales",
+      "purchase": "",
       "reports": "Reports",
       "other": "Other"
     }
@@ -180,14 +181,11 @@
       "street_help": "Street is used on invoices and other documents.",
       "street_placeholder": "Street"
     },
-    "invoice": {
-      "title": "Invoice",
-      "invoice_number": "Invoice number prefix",
-      "invoice_number_help": "Define prefix for invoice numbers. Year will be automatically appended to the prefix.",
-      "invoice_number_placeholder": "Invoice prefix",
-      "invoice_number_example": "2018-",
-      "invoice_number_example_help": "Result: 2018-0001"
-    }
+    "document": {
+      "title": "Documents",
+      "save": "Save"
+    },
+    "language": "Language"
   },
   "invoices": {
     "title": "Faktury"

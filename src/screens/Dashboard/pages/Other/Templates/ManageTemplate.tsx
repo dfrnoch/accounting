@@ -149,11 +149,7 @@ const ManageTemplate: Component = () => {
   return (
     <>
       <PageHeader
-        title={[
-          t("sidebar.section.other"),
-          t("sidebar.button.templates"),
-          params.id ? params.id : t("pageHeaader.new"),
-        ]}
+        title={[t("sidebar.section.other"), t("sidebar.button.templates"), params.id ? params.id : t("pageHeader.new")]}
         actionElements={[
           <HeaderButton onClick={form.handleSubmit} buttonType="primary">
             Save

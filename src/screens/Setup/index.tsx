@@ -1,7 +1,7 @@
 import { locale, setLocale, useI18n } from "@/i18n";
 import { createSignal, type Component, Show, onMount } from "solid-js";
 import ProgressDots from "./components/Progress";
-import { type CreateCompanyData, createCompany, migrateAndPopulate } from "@/bindings";
+import { type ManageCompanyData, createCompany, migrateAndPopulate } from "@/bindings";
 import { LANG } from "@/constants";
 import { open } from "@tauri-apps/plugin-shell";
 import { useNavigate } from "@solidjs/router";
@@ -35,7 +35,7 @@ const SetupWizard: Component = () => {
       zip: "",
       bankAccount: undefined,
       bankIBAN: undefined,
-    } as CreateCompanyData,
+    } as ManageCompanyData,
     validatorAdapter: zodValidator,
     onSubmitInvalid: (e) => {
       console.log("invalid", e.formApi.state.errors);

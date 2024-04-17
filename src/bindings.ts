@@ -47,7 +47,7 @@ export type ManageDocumentData = {
   number: string;
   clientId: number;
   templateId: number;
-  documentType: "INVOICE" | "PROFORMA" | "RECEIVE";
+  documentType: DocumentType;
   currencyId: string;
   issueDate: Date;
   dueDate: Date;
@@ -89,8 +89,12 @@ export async function getCompany(id?: number) {
   return invoke<Company>("get_company", { id: id ? id : state.companyId });
 }
 
-export async function createCompany(data: CreateCompanyData) {
+export async function createCompany(data: ManageCompanyData) {
   return invoke<number>("create_company", { data });
+}
+
+export async function updateCompany(data: ManageCompanyData) {
+  return invoke("update_company", { id: state.companyId, data });
 }
 
 export async function getDocumentStats(months: number, documentType: DocumentType) {
@@ -240,7 +244,7 @@ export type Currency = {
   companyId: number;
 };
 
-export type CreateCompanyData = {
+export type ManageCompanyData = {
   name: string;
   cin: string;
   vatId?: string;
@@ -273,7 +277,6 @@ export interface DocumentItem {
   description: string;
   quantity: number;
   price: number;
-  // tax?: number;
 }
 
 export type Company = {

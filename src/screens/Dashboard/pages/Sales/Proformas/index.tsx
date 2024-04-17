@@ -7,13 +7,11 @@ import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import Container from "@/screens/Dashboard/components/Container";
 import { useNavigate } from "@solidjs/router";
-import { useSelector } from "@/store";
 
-const ReceivedInvoices: Component = () => {
+const Invoices: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
 
-  const settings = useSelector((state) => state.settingsService.settings);
   return (
     <Container>
       <PageHeader
@@ -32,17 +30,17 @@ const ReceivedInvoices: Component = () => {
             header: "Total Price",
             component: (item) => (
               <>
-                {item.totalPrice} {settings.defaultCurrency.code}
+                {item.totalPrice} {item.currency}
               </>
             ),
           },
         ]}
-        totalItems={getModelCount("Receive")}
-        loadPage={async (indices) => await getDocuments(indices, DocumentType.RECEIVE)}
+        totalItems={getModelCount("Proforma")}
+        loadPage={async (indices) => await getDocuments(indices, DocumentType.PROFORMA)}
         onClickRow={(item) => navigate(`${item.id}`)}
       />
     </Container>
   );
 };
 
-export default ReceivedInvoices;
+export default Invoices;

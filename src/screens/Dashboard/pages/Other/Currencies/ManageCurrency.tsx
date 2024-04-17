@@ -62,7 +62,7 @@ const ManageCurrency: Component = () => {
         title={[
           t("sidebar.section.other"),
           t("sidebar.button.currencies"),
-          params.code ? params.code : t("pageHeaader.new"),
+          params.code ? params.code : t("pageHeader.new"),
         ]}
         actionElements={[
           <HeaderButton onClick={() => form.handleSubmit()} buttonType="primary">

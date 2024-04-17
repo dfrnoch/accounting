@@ -22,8 +22,7 @@ const PdfRenderer: Component<PdfRendererProps> = (props) => {
     setPdfContent(renderedContent);
   });
 
-  // A4 size
-  return <div class="bg-white text-black" innerHTML={pdfContent()} />;
+  return <div class="bg-white text-black w-210mm h-297mm " innerHTML={pdfContent()} />;
 };
 
 export default PdfRenderer;

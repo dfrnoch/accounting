@@ -105,8 +105,7 @@ tr td:last-child {
     body {
         width: 21cm !important;
         height: 29.7cm !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        margin: 0;
         color: black;
         background-color: white;
         print-color-adjust: exact !important;

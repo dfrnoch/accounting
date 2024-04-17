@@ -7,15 +7,17 @@ import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import Container from "@/screens/Dashboard/components/Container";
 import { useNavigate } from "@solidjs/router";
+import { useSelector } from "@/store";
 
-const Invoices: Component = () => {
+const ReceivedInvoices: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
 
+  const settings = useSelector((state) => state.settingsService.settings);
   return (
     <Container>
       <PageHeader
-        title={[t("sidebar.section.sales"), t("sidebar.button.invoices")]}
+        title={[t("sidebar.section.sales"), t("sidebar.button.receivedInvoices")]}
         actionElements={[
           <HeaderButton onClick={() => navigate("new")} buttonType="primary">
             <FiPlus class="stroke-2" />
@@ -30,17 +32,17 @@ const Invoices: Component = () => {
             header: "Total Price",
             component: (item) => (
               <>
-                {item.totalPrice} {item.currency}
+                {item.totalPrice} {settings.defaultCurrency.code}
               </>
             ),
           },
         ]}
-        totalItems={getModelCount("Invoice")}
-        loadPage={async (indices) => await getDocuments(indices, DocumentType.INVOICE)}
+        totalItems={getModelCount("Receive")}
+        loadPage={async (indices) => await getDocuments(indices, DocumentType.RECEIVE)}
         onClickRow={(item) => navigate(`${item.id}`)}
       />
     </Container>
   );
 };
 
-export default Invoices;
+export default ReceivedInvoices;

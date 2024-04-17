@@ -9,6 +9,7 @@ import {
   FiFileMinus,
   FiFileText,
   FiHome,
+  FiInbox,
   FiPlus,
   FiSettings,
   FiUsers,
@@ -54,13 +55,10 @@ const Sidebar: Component = () => {
   const sidebarSections: SidebarSectionData[] = [
     {
       title: t("sidebar.section.sales"),
-      buttons: [{ target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") }],
-    },
-    {
-      title: t("sidebar.section.purchase"),
       buttons: [
-        { target: "/dashboard/purchase/expenses", icon: <FiDollarSign />, label: t("sidebar.button.expenses") },
-        { target: "/dashboard/purchase/received", icon: <FiFileMinus />, label: t("sidebar.button.receivedInvoices") },
+        { target: "/dashboard/sales/invoices", icon: <FiFileText />, label: t("sidebar.button.invoices") },
+        { target: "/dashboard/sales/received", icon: <FiFileMinus />, label: t("sidebar.button.receivedInvoices") },
+        { target: "/dashboard/sales/proformas", icon: <FiInbox />, label: t("sidebar.button.proformas") },
       ],
     },
     {

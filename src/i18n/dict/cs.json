@@ -36,14 +36,15 @@
   "table": {
     "all": "Vše"
   },
-  "pageHeaader": {
+  "pageHeader": {
     "search": "Hledat",
     "new": "Nový záznam"
   },
   "sidebar": {
     "button": {
       "overview": "Přehled",
-      "invoices": "Faktury",
+      "invoices": "Faktury vydané",
+      "proformas": "Zálohové faktury",
       "clients": "Klienti",
       "expenses": "Výdaje",
       "receivedInvoices": "Přijaté faktury",
@@ -57,8 +58,7 @@
       }
     },
     "section": {
-      "sales": "Prodej",
-      "purchase": "Nákup",
+      "sales": "Nákup & Prodej",
       "reports": "Reporty",
       "other": "Ostatní"
     }
@@ -188,11 +188,11 @@
       "street_help": "Ulice se používá na fakturách a dalších dokumentech.",
       "street_placeholder": "Ulice"
     },
-    "invoice": {
-      "title": "Faktura",
-      "invoice_number": "Prefix čísla faktury",
-      "invoice_number_help": "Prefix čísla faktury. Rok bude automaticky přidán za prefix."
-    }
+    "document": {
+      "title": "Dokumenty",
+      "save": "Uložit"
+    },
+    "language": "Jazyk"
   },
   "invoices": {
     "title": "Faktury"
