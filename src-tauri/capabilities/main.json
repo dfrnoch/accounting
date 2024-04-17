@@ -2,7 +2,7 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "main-capability",
   "description": "Capability for the main window",
-  "windows": ["main", "invoice"],
+  "windows": ["main", "document"],
   "permissions": [
     {
       "identifier": "http:default",
