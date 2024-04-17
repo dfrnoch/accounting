@@ -24,7 +24,6 @@ use migrator::new_client;
 use prisma::*;
 use std::sync::Arc;
 use tauri::{Manager, State};
-use tauri_plugin_autostart::MacosLauncher;
 
 #[cfg(target_os = "macos")]
 use window_ext::{ToolbarThickness, WindowExt};

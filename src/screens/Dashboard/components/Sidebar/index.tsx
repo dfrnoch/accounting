@@ -2,6 +2,7 @@ import { type Component, For, type JSX, createSignal, onMount } from "solid-js";
 import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useI18n } from "@/i18n";
+import { arch } from '@tauri-apps/plugin/os';
 import {
   FiCheck,
   FiClipboard,
@@ -37,11 +38,13 @@ const Sidebar: Component = () => {
   const navigate = useNavigate();
   const company = useSelector((state) => state.companyService.company);
   const stateService = useSelector((state) => state.stateService);
+  const [archName, setArch] = createSignal<string>("");
 
   const [companies, setCompanies] = createSignal<Company[]>([]);
   const [selected, setSelected] = createSignal<Company>(company);
 
   onMount(async () => {
+    setArch(await arch());
     const data = await getCompanies(stateService.state.companyId || undefined);
     setCompanies([company, ...data]);
   });
