@@ -25,6 +25,8 @@ use prisma::*;
 use std::sync::Arc;
 use tauri::{Manager, State};
 use tauri_plugin_autostart::MacosLauncher;
+
+#[cfg(target_os = "macos")]
 use window_ext::{ToolbarThickness, WindowExt};
 use window_vibrancy::NSVisualEffectMaterial;
 
@@ -69,6 +71,8 @@ async fn main() {
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();
+
+            #[cfg(target_os = "macos")]
             window.set_thickness(ToolbarThickness::Thick);
 
             #[cfg(target_os = "macos")]
