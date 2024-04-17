@@ -85,7 +85,7 @@ const ClientDetail: Component = () => {
                 <Hr class="my-2" />
                 <h2 class="text-primary text-sm font-semibold pb-2">Bank</h2>
                 <Item title="Account">{client()?.bankAccount}</Item>
-                {/* <Item title="IBAN">{client()?.IBAN}</Item> */}
+                <Item title="IBAN">{client()?.bankIban}</Item>
               </div>
             </Show>
           </Suspense>

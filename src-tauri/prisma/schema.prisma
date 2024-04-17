@@ -33,7 +33,7 @@ model Company {
 
     // Bank account
     bankAccount String?
-    bankIBAN    String?
+    bankIban    String?
 }
 
 model Client {
@@ -55,7 +55,7 @@ model Client {
     bankAccount String?
     bankCode    String?
     bankName    String?
-    bankIBAN    String?
+    bankIban    String?
 
     documents Document[]
 

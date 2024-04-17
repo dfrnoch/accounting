@@ -34,7 +34,7 @@ const SetupWizard: Component = () => {
       city: "",
       zip: "",
       bankAccount: undefined,
-      bankIBAN: undefined,
+      bankIban: undefined,
     } as ManageCompanyData,
     validatorAdapter: zodValidator,
     onSubmitInvalid: (e) => {
@@ -156,7 +156,7 @@ const SetupWizard: Component = () => {
                 )}
               </form.Field>
               <form.Field
-                name="bankIBAN"
+                name="bankIban"
                 validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}
               >
                 {(field) => (

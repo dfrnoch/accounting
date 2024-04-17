@@ -16,7 +16,7 @@ import { Show, onMount } from "solid-js";
 import Form from "@/shared/components/Form";
 
 const ManageCurrency: Component = () => {
-  const params = useParams<{ readonly code?: string }>();
+  const params = useParams<{ readonly id?: string }>();
   const [t] = useI18n();
   const navigate = useNavigate();
   const form = createForm(() => ({
@@ -35,22 +35,22 @@ const ManageCurrency: Component = () => {
       try {
         if (currency.value.id) {
           await updateCurrency(currency.value.id, currency.value);
-          toast.success("Currency updated");
+          toast.success(t("pages.other.currencies.form.toast.updated"));
         } else {
           await createCurrency(currency.value);
-          toast.success("Currency saved");
+          toast.success(t("pages.other.currencies.form.toast.saved"));
         }
         navigate("/dashboard/other/currencies");
       } catch (e) {
-        toast.error("Failed to save currency");
+        toast.error(t("pages.other.currencies.form.toast.saveFailed"));
         console.error(e);
       }
     },
   }));
 
   onMount(async () => {
-    if (params.code) {
-      const currency = await getCurrency(params.code);
+    if (params.id) {
+      const currency = await getCurrency(params.id);
       form.update({ ...form.options, defaultValues: currency });
       console.log(form.state.values);
     }
@@ -62,18 +62,18 @@ const ManageCurrency: Component = () => {
         title={[
           t("sidebar.section.other"),
           t("sidebar.button.currencies"),
-          params.code ? params.code : t("pageHeader.new"),
+          params.id ? params.id : t("pageHeader.new"),
         ]}
         actionElements={[
           <HeaderButton onClick={() => form.handleSubmit()} buttonType="primary">
-            Save
+            {t("pages.other.currencies.form.save")}
           </HeaderButton>,
-          <Show when={params.code}>
+          <Show when={params.id}>
             <HeaderButton
               onClick={async () => {
                 try {
                   await deleteCurrency(form.state.values.id);
-                  toast.success("Currency deleted");
+                  toast.success(t("pages.other.currencies.form.toast.deleted"));
                   navigate("/dashboard/other/currencies");
                 } catch (e) {
                   toast.error(e as string);
@@ -87,12 +87,12 @@ const ManageCurrency: Component = () => {
         ]}
       />
       <Form>
-        <Section title="Currency Information">
+        <Section title={t("pages.other.currencies.form.sections.information")}>
           <form.Field name="name" validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
-                label="Name"
+                label={t("pages.other.currencies.form.name")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -103,7 +103,7 @@ const ManageCurrency: Component = () => {
             {(field) => (
               <Input
                 type="text"
-                label="Code"
+                label={t("pages.other.currencies.form.code")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -115,7 +115,7 @@ const ManageCurrency: Component = () => {
               <Input
                 float
                 type="number"
-                label="Rate (from EURO)"
+                label={t("pages.other.currencies.form.rate")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(Number(data))}
                 errors={field().state.meta.touchedErrors}

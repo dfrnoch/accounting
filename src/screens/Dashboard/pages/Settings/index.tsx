@@ -99,24 +99,24 @@ const DocumentPage: Component = () => {
       try {
         await updateSettings(data.value);
         await settingsService.updateSettings();
-        toast.success("Settings saved");
+        toast.success(t("settings.document.toast.saved"));
       } catch (e) {
         console.error(e);
-        toast.error("Failed to save settings");
+        toast.error(t("settings.document.toast.saveFailed"));
       }
     },
   }));
 
   return (
     <Form>
-      <Section title="Defaults">
+      <Section title={t("settings.document.sections.defaults")}>
         <form.Field name="defaultTemplateId">
           {(field) => (
             <Show when={templates()}>
               <SearchDropdown
                 data={templates()?.map((template) => ({ id: template.id, label: template.name })) ?? []}
                 defaultValueId={field().state.value}
-                label="Template"
+                label={t("settings.document.template")}
                 onSelect={(data) => field().handleChange(data.id as number)}
               />
             </Show>
@@ -129,19 +129,19 @@ const DocumentPage: Component = () => {
               <SearchDropdown
                 data={currencies()?.map((currency) => ({ id: currency.id, label: currency.name })) ?? []}
                 defaultValueId={field().state.value}
-                label="Currency"
+                label={t("settings.document.currency")}
                 onSelect={(data) => field().handleChange(data.id as string)}
               />
             </Show>
           )}
         </form.Field>
       </Section>
-      <Section title="Prefixes & Counters">
+      <Section title={t("settings.document.sections.prefixesCounters")}>
         <form.Field name="invoicePrefix">
           {(field) => (
             <Input
               type="text"
-              label="Invoice Prefix"
+              label={t("settings.document.invoicePrefix")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -151,7 +151,7 @@ const DocumentPage: Component = () => {
           {(field) => (
             <Input
               type="number"
-              label="Invoice Counter"
+              label={t("settings.document.invoiceCounter")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -161,7 +161,7 @@ const DocumentPage: Component = () => {
           {(field) => (
             <Input
               type="text"
-              label="Proforma Prefix"
+              label={t("settings.document.proformaPrefix")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -171,7 +171,7 @@ const DocumentPage: Component = () => {
           {(field) => (
             <Input
               type="number"
-              label="Proforma Counter"
+              label={t("settings.document.proformaCounter")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -181,7 +181,7 @@ const DocumentPage: Component = () => {
           {(field) => (
             <Input
               type="text"
-              label="Receive Prefix"
+              label={t("settings.document.receivePrefix")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -191,7 +191,7 @@ const DocumentPage: Component = () => {
           {(field) => (
             <Input
               type="number"
-              label="Receive Counter"
+              label={t("settings.document.receiveCounter")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -219,28 +219,28 @@ const CompanyPage: Component = () => {
       phone: companyService.company.phone,
       email: companyService.company.email,
       bankAccount: companyService.company.bankAccount,
-      bankIBAN: companyService.company.bankIBAN,
+      bankIban: companyService.company.bankIban,
     } as ManageCompanyData,
     onSubmit: async (data) => {
       try {
         await updateCompany(data.value);
         await companyService.updateCompany();
-        toast.success("Company information saved");
+        toast.success(t("settings.general.toast.updated"));
       } catch (e) {
         console.error(e);
-        toast.error("Failed to save company information");
+        toast.error(t("settings.general.toast.updateFailed"));
       }
     },
   }));
 
   return (
     <Form>
-      <Section title="Company Information">
+      <Section title={t("settings.general.sections.details")}>
         <form.Field name="name">
           {(field) => (
             <Input
               type="text"
-              label="Company Name"
+              label={t("settings.general.company_name")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -250,7 +250,7 @@ const CompanyPage: Component = () => {
           {(field) => (
             <Input
               type="text"
-              label="Company Identification Number (CIN)"
+              label={t("settings.general.CIN")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -260,17 +260,19 @@ const CompanyPage: Component = () => {
           {(field) => (
             <Input
               type="text"
-              label="VAT ID"
+              label={t("settings.general.vatID")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
           )}
         </form.Field>
+      </Section>
+      <Section title={t("settings.general.sections.contact")}>
         <form.Field name="address">
           {(field) => (
             <Input
               type="text"
-              label="Address"
+              label={t("settings.general.street")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -280,7 +282,7 @@ const CompanyPage: Component = () => {
           {(field) => (
             <Input
               type="text"
-              label="City"
+              label={t("settings.general.city")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -290,7 +292,7 @@ const CompanyPage: Component = () => {
           {(field) => (
             <Input
               type="text"
-              label="ZIP Code"
+              label={t("settings.general.zip")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -300,7 +302,7 @@ const CompanyPage: Component = () => {
           {(field) => (
             <Input
               type="text"
-              label="Phone"
+              label={t("settings.general.phone")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
@@ -310,36 +312,36 @@ const CompanyPage: Component = () => {
           {(field) => (
             <Input
               type="email"
-              label="Email"
+              label={t("settings.general.email")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
           )}
         </form.Field>
       </Section>
-      <Section title="Bank Information">
+      <Section title={t("settings.general.sections.bank")}>
         <form.Field name="bankAccount">
           {(field) => (
             <Input
               type="text"
-              label="Bank Account"
+              label={t("settings.general.account")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
           )}
         </form.Field>
-        <form.Field name="bankIBAN">
+        <form.Field name="bankIban">
           {(field) => (
             <Input
               type="text"
-              label="Bank IBAN"
+              label={t("settings.general.iban")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
             />
           )}
         </form.Field>
       </Section>
-      <Button onClick={() => form.handleSubmit()}>{t("settings.document.save")}</Button>
+      <Button onClick={() => form.handleSubmit()}>{t("other.save")}</Button>
     </Form>
   );
 };

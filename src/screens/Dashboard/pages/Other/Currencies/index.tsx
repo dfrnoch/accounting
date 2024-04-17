@@ -30,7 +30,7 @@ const Currencies: Component = () => {
         ]}
         totalItems={getModelCount("Currency")}
         loadPage={getCurrencies}
-        onClickRow={(item) => navigate(item.code)}
+        onClickRow={(item) => navigate(item.id)}
       />
     </Container>
   );

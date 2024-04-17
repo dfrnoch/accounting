@@ -4,6 +4,7 @@ import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, DisclosureSta
 import { TbSelector } from "solid-icons/tb";
 import { FiCheck } from "solid-icons/fi";
 import type { ValidationError } from "@tanstack/solid-form";
+import { useI18n } from "@/i18n";
 
 interface ComboboxItem {
   id: number | string;
@@ -20,6 +21,7 @@ interface ComboboxProps {
 
 const SearchDropdown: Component<ComboboxProps> = (props) => {
   const [selected, setSelected] = createSignal<ComboboxItem | undefined>(undefined);
+  const [t] = useI18n();
 
   createEffect(() => {
     if (props.defaultValueId) {
@@ -56,7 +58,7 @@ const SearchDropdown: Component<ComboboxProps> = (props) => {
             "border-danger ": props.errors ? props.errors.length > 0 : false,
             "border-default": !props.errors || props.errors.length === 0,
           }}
-          placeholder="Select an item"
+          placeholder={t("components.dropdownSelect")}
           value={selected()?.label ?? ""}
         />
         <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ">

@@ -177,8 +177,8 @@ export async function updateTemplate(id: number, data: ManageTemplateData) {
   return await invoke("update_template", { id, data });
 }
 
-export async function getCurrency(code: string) {
-  return await invoke<Currency>("get_currency", { companyId: state.companyId, code });
+export async function getCurrency(id: string) {
+  return await invoke<Currency>("get_currency", { id });
 }
 
 export async function getCurrencies(indicies: Indicies) {
@@ -255,7 +255,7 @@ export type ManageCompanyData = {
   email?: string;
 
   bankAccount?: string;
-  bankIBAN?: string;
+  bankIban?: string;
 };
 
 export interface Document {
@@ -291,7 +291,7 @@ export type Company = {
   email: string | null;
 
   bankAccount: string | null;
-  bankIBAN: string | null;
+  bankIban: string | null;
 };
 
 export type Template = {
@@ -316,7 +316,7 @@ export type Client = {
   invoices?: Document[];
 
   bankAccount?: string;
-  IBAN?: string;
+  bankIban?: string;
 };
 
 export type GetPrintDocumentResult = {

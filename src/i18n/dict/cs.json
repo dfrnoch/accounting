@@ -97,11 +97,115 @@
   "pages": {
     "other": {
       "templates": {
-        "toast": {
-          "success": "Šablona byla úspěšně vytvořena",
-          "error": "Při vytváření šablony došlo k chybě"
+        "save": "Uložit",
+        "dataHints": "Nápověda dat",
+        "sections": {
+          "information": "Informace o šabloně"
         },
-        "form": {}
+        "name": "Název",
+        "namePlaceholder": "Faktura",
+        "templateType": "Typ šablony",
+        "templateTypes": {
+          "invoice": "Faktura",
+          "proforma": "Zálohová faktura",
+          "receive": "Přijatá faktura"
+        },
+        "toast": {
+          "updated": "Šablona aktualizována",
+          "saved": "Šablona uložena",
+          "saveFailed": "Nepodařilo se uložit šablonu",
+          "deleted": "Šablona smazána"
+        }
+      },
+      "currencies": {
+        "form": {
+          "save": "Uložit",
+          "sections": {
+            "information": "Informace o měně"
+          },
+          "name": "Název",
+          "code": "Kód",
+          "rate": "Kurz (z EURO)",
+          "toast": {
+            "updated": "Měna aktualizována",
+            "saved": "Měna uložena",
+            "saveFailed": "Nepodařilo se uložit měnu",
+            "deleted": "Měna smazána"
+          }
+        }
+      },
+      "clients": {
+        "form": {
+          "save": "Uložit",
+          "sections": {
+            "information": "Informace o klientovi",
+            "address": "Adresa"
+          },
+          "name": "Jméno",
+          "email": "Email",
+          "clientType": "Typ klienta",
+          "clientTypes": {
+            "both": "Oba",
+            "supplier": "Dodavatel",
+            "customer": "Zákazník"
+          },
+          "cin": "IČO",
+          "vatId": "DIČ",
+          "address": "Ulice",
+          "city": "Město",
+          "zip": "PSČ",
+          "phone": "Telefonní číslo",
+          "toast": {
+            "updated": "Klient aktualizován",
+            "saved": "Klient uložen",
+            "saveFailed": "Nepodařilo se uložit klienta",
+            "deleted": "Klient smazán"
+          }
+        }
+      }
+    },
+    "sales": {
+      "document": {
+        "title": {
+          "invoice": "Faktura",
+          "proforma": "Zálohová faktura",
+          "receive": "Přijatá faktura"
+        },
+        "new": "Nový",
+        "delete": "Smazat",
+        "download": "Stáhnout",
+        "information": "Informace",
+        "number": "Číslo",
+        "numberRequired": "Číslo je povinné",
+        "client": "Klient",
+        "clientRequired": "Klient je povinný",
+        "template": "Šablona",
+        "templateRequired": "Šablona je povinná",
+        "currency": "Měna",
+        "currencyRequired": "Měna je povinná",
+        "status": {
+          "label": "Stav",
+          "draft": "Koncept",
+          "sent": "Odesláno",
+          "paid": "Zaplaceno",
+          "cancelled": "Zrušeno",
+          "overdue": "Po splatnosti"
+        },
+        "dates": "Data",
+        "issueDate": "Datum vystavení",
+        "dueDate": "Datum splatnosti",
+        "dueDateError": "Datum splatnosti musí být dnes nebo později",
+        "items": "Položky",
+        "itemDescription": "Popis položky {{number}}",
+        "itemQuantity": "Množství položky {{number}}",
+        "itemPrice": "Cena položky {{number}}",
+        "addItem": "Přidat položku",
+        "toast": {
+          "updated": "Dokument byl úspěšně aktualizovaný",
+          "saved": "Dokument byl uložený",
+          "deleted": "Bokument byl smazán",
+          "saveFailed": "Nepodařilo se uložit dokument"
+        }
       }
     }
   },
@@ -152,45 +256,45 @@
   "settings": {
     "general": {
       "title": "Obecné",
-      "language": "Jazyk",
-      "currency": "Měna",
-      "timezone": "Časová zóna",
-      "date_format": "Formát data",
-      "number_format": "Formát čísla",
-      "decimal_separator": "Oddělovač desetinných míst",
-      "thousand_separator": "Oddělovač tisíců",
-      "currency_placement": "Umístění měny",
-      "currency_placement_before": "Před částkou",
-      "currency_placement_after": "Za částkou",
-      "company": "Firma",
-      "company_name": "Název firmy",
-      "company_name_help": "Název firmy se používá na fakturách a dalších dokumentech.",
-      "company_name_placeholder": "Název firmy",
-      "company_address": "Adresa",
-      "company_address_help": "Adresa firmy se používá na fakturách a dalších dokumentech.",
-      "company_address_placeholder": "Adresa firmy",
-      "email": "Email",
-      "email_help": "Email se používá pro komunikaci a odesílání faktur.",
-      "email_placeholder": "Email",
-      "phone": "Telefon",
-      "phone_help": "Telefon se používá na fakturách a dalších dokumentech.",
-      "phone_placeholder": "Telefon",
-      "country": "Země",
-      "country_help": "Země se používá na fakturách a dalších dokumentech.",
-      "country_placeholder": "Země",
-      "city": "Město",
-      "city_help": "Město se používá na fakturách a dalších dokumentech.",
-      "city_placeholder": "Město",
-      "zip": "PSČ",
-      "zip_help": "PSČ se používá na fakturách a dalších dokumentech.",
-      "zip_placeholder": "PSČ",
+      "company_name": "Název firmy / podnikatele",
+      "CIN": "IČO",
+      "vatID": "DIČ",
       "street": "Ulice",
-      "street_help": "Ulice se používá na fakturách a dalších dokumentech.",
-      "street_placeholder": "Ulice"
+      "city": "Město",
+      "zip": "PSČ",
+      "email": "Email",
+      "phone": "Telefon",
+      "sections": {
+        "details": "Detaily",
+        "bank": "Bankovní účet",
+        "contact": "Kontakt"
+      },
+      "toas": {
+        "updated": "Firma byla úspěšně aktualizována",
+        "updateFailed": "Nepodařilo se uložit firmu"
+      },
+      "account": "Číslo účtu",
+      "iban": "IBAN"
     },
     "document": {
       "title": "Dokumenty",
-      "save": "Uložit"
+      "sections": {
+        "defaults": "Výchozí hodnoty",
+        "prefixesCounters": "Předpony a počítadla"
+      },
+      "template": "Šablona",
+      "currency": "Měna",
+      "invoicePrefix": "Předpona faktury",
+      "invoiceCounter": "Počítadlo faktur",
+      "proformaPrefix": "Předpona zálohové faktury",
+      "proformaCounter": "Počítadlo zálohových faktur",
+      "receivePrefix": "Předpona přijaté faktury",
+      "receiveCounter": "Počítadlo přijatých faktur",
+      "save": "Uložit",
+      "toast": {
+        "saved": "Nastavení uloženo",
+        "saveFailed": "Nepodařilo se uložit nastavení"
+      }
     },
     "language": "Jazyk"
   },
@@ -198,6 +302,10 @@
     "title": "Faktury"
   },
   "components": {
-    "search": "Hledat"
+    "search": "Hledat",
+    "dropdownSelect": "Vyberte z možností"
+  },
+  "other": {
+    "save": "Uložit"
   }
 }

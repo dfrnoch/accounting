@@ -78,15 +78,15 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
             ...document.value,
             id: Number.parseInt(props.id),
           });
-          toast.success(`${props.type} updated`);
+          toast.success(t("pages.sales.document.toast.updated"));
         } else {
           await createDocument(document.value);
-          toast.success(`${props.type} saved`);
+          toast.success(t("pages.sales.document.toast.saved"));
           await settingsService.updateSettings();
         }
         navigate(props.url);
       } catch (e) {
-        toast.error(`Failed to save ${props.type}`);
+        toast.error(t("pages.sales.document.toast.saveFailed"));
         console.error(e);
       }
     },
@@ -114,22 +114,22 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
         title={[
           t("sidebar.section.sales"),
           props.type === DocumentType.INVOICE
-            ? t("sidebar.button.invoices")
+            ? t("pages.sales.document.title.invoice")
             : props.type === DocumentType.PROFORMA
-              ? t("sidebar.button.proformas")
-              : t("sidebar.button.receivedInvoices"),
+              ? t("pages.sales.document.title.proforma")
+              : t("pages.sales.document.title.receive"),
           props.id ? props.id : t("pageHeader.new"),
         ]}
         actionElements={[
           <HeaderButton onClick={() => form.handleSubmit()} buttonType="primary">
-            Save
+            {t("other.save")}
           </HeaderButton>,
           <Show when={props.id}>
             <HeaderButton
               onClick={async () => {
                 try {
                   await deleteDocument(Number.parseInt(props.id as string));
-                  toast.success(`${props.type} deleted`);
+                  toast.success(t("pages.sales.document.toast.deleted"));
                   navigate(props.url);
                 } catch (e) {
                   toast.error(e as string);
@@ -153,24 +153,30 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
         ]}
       />
       <Form>
-        <Section title={`${props.type} Information`}>
-          <form.Field name="number" validators={{ onChange: z.string().min(1, "Number is required") }}>
+        <Section title={t("pages.sales.document.information")}>
+          <form.Field
+            name="number"
+            validators={{ onChange: z.string().min(1, t("pages.sales.document.numberRequired")) }}
+          >
             {(field) => (
               <Input
                 type="text"
-                label="Number"
+                label={t("pages.sales.document.number")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
               />
             )}
           </form.Field>
-          <form.Field name="clientId" validators={{ onChange: z.number().min(1, "Client is required") }}>
+          <form.Field
+            name="clientId"
+            validators={{ onChange: z.number().min(1, t("pages.sales.document.clientRequired")) }}
+          >
             {(field) => (
               <Show when={clients()}>
                 <SearchDropdown
                   data={clients()?.map((client) => ({ id: client.id, label: client.name })) ?? []}
-                  label="Client"
+                  label={t("pages.sales.document.client")}
                   defaultValueId={field().state.value}
                   onSelect={(data) => field().handleChange(data.id as number)}
                   errors={field().state.meta.touchedErrors}
@@ -178,26 +184,32 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
               </Show>
             )}
           </form.Field>
-          <form.Field name="templateId" validators={{ onChange: z.number().min(1, "Template is required") }}>
+          <form.Field
+            name="templateId"
+            validators={{ onChange: z.number().min(1, t("pages.sales.document.templateRequired")) }}
+          >
             {(field) => (
               <Show when={templates()}>
                 <SearchDropdown
                   data={templates()?.map((template) => ({ id: template.id, label: template.name })) ?? []}
                   defaultValueId={field().state.value}
-                  label="Template"
+                  label={t("pages.sales.document.template")}
                   onSelect={(data) => field().handleChange(data.id as number)}
                 />
               </Show>
             )}
           </form.Field>
 
-          <form.Field name="currencyId" validators={{ onChange: z.string().min(1, "Currency is required") }}>
+          <form.Field
+            name="currencyId"
+            validators={{ onChange: z.string().min(1, t("pages.sales.document.currencyRequired")) }}
+          >
             {(field) => (
               <Show when={currencies()}>
                 <SearchDropdown
                   data={currencies()?.map((currency) => ({ id: currency.id, label: currency.name })) ?? []}
                   defaultValueId={field().state.value}
-                  label="Currency"
+                  label={t("pages.sales.document.currency")}
                   onSelect={(data) => field().handleChange(data.id as string)}
                 />
               </Show>
@@ -208,13 +220,13 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
             {(field) => (
               <Dropdown
                 defaultValueId={field().state.value}
-                label="Status"
+                label={t("pages.sales.document.status.label")}
                 data={[
-                  { id: "DRAFT", label: "Draft" },
-                  { id: "SENT", label: "Sent" },
-                  { id: "PAID", label: "Paid" },
-                  { id: "CANCELLED", label: "Cancelled" },
-                  { id: "OVERDUE", label: "Overdue" },
+                  { id: "DRAFT", label: t("pages.sales.document.status.draft") },
+                  { id: "SENT", label: t("pages.sales.document.status.sent") },
+                  { id: "PAID", label: t("pages.sales.document.status.paid") },
+                  { id: "CANCELLED", label: t("pages.sales.document.status.cancelled") },
+                  { id: "OVERDUE", label: t("pages.sales.document.status.overdue") },
                 ]}
                 onSelect={(data) =>
                   field().handleChange(data.id as "DRAFT" | "SENT" | "PAID" | "CANCELLED" | "OVERDUE")
@@ -223,12 +235,12 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
             )}
           </form.Field>
         </Section>
-        <Section title="Dates">
+        <Section title={t("pages.sales.document.dates")}>
           <form.Field name="issueDate" validators={{ onChange: z.date() }}>
             {(field) => (
               <Input
                 type="date"
-                label="Issue Date"
+                label={t("pages.sales.document.issueDate")}
                 defaultValue={field().state.value.toISOString().split("T")[0]}
                 onChange={(data) => field().handleChange(new Date(data))}
                 errors={field().state.meta.touchedErrors}
@@ -237,12 +249,12 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
           </form.Field>
           <form.Field
             name="dueDate"
-            validators={{ onChange: z.date().min(new Date(), "Due date must be today or later") }}
+            validators={{ onChange: z.date().min(new Date(), t("pages.sales.document.dueDateError")) }}
           >
             {(field) => (
               <Input
                 type="date"
-                label="Due Date"
+                label={t("pages.sales.document.dueDate")}
                 defaultValue={field().state.value.toISOString().split("T")[0]}
                 onChange={(data) => field().handleChange(new Date(data))}
                 errors={field().state.meta.touchedErrors}
@@ -250,7 +262,7 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
             )}
           </form.Field>
         </Section>
-        <Section title={`${props.type} Items`} columns={1}>
+        <Section title={t("pages.sales.document.items")} columns={1}>
           <form.Field name="items">
             {(field) => (
               <>
@@ -262,7 +274,7 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
                           <Input
                             type="text"
                             class="w-full"
-                            label={`Description for item ${i + 1}`}
+                            label={t("pages.sales.document.itemDescription", { number: i + 1 })}
                             defaultValue={subField().state.value}
                             errors={subField().state.meta.touchedErrors}
                             onChange={(data) => subField().handleChange(data)}
@@ -273,7 +285,7 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
                         {(subField) => (
                           <Input
                             type="number"
-                            label={`Quantity for item ${i + 1}`}
+                            label={t("pages.sales.document.itemQuantity", { number: i + 1 })}
                             defaultValue={subField().state.value}
                             errors={subField().state.meta.touchedErrors}
                             onChange={(data) => subField().handleChange(Number(data))}
@@ -284,7 +296,7 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
                         {(subField) => (
                           <Input
                             type="number"
-                            label={`Price for item ${i + 1}`}
+                            label={t("pages.sales.document.itemPrice", { number: i + 1 })}
                             defaultValue={subField().state.value}
                             onChange={(data) => subField().handleChange(Number(data))}
                             errors={subField().state.meta.touchedErrors}
@@ -300,7 +312,7 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
                 <Button
                   onClick={() => field().pushValue({ id: 0, description: "", quantity: 1, price: 0, documentId: 0 })}
                 >
-                  Add item
+                  {t("pages.sales.document.addItem")}
                 </Button>
               </>
             )}

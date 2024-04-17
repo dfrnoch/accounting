@@ -41,14 +41,14 @@ const ManageClient: Component = () => {
       try {
         if (client.value.id > 0) {
           await updateClient(client.value);
-          toast.success("Client updated");
+          toast.success(t("pages.other.clients.form.toast.updated"));
         } else {
           await createClient(client.value);
-          toast.success("Client saved");
+          toast.success(t("pages.other.clients.form.toast.saved"));
         }
         navigate("/dashboard/other/clients");
       } catch (e) {
-        toast.error("Failed to save client");
+        toast.error(t("pages.other.clients.form.toast.saveFailed"));
         console.error(e);
       }
     },
@@ -68,14 +68,14 @@ const ManageClient: Component = () => {
         title={[t("sidebar.section.sales"), t("sidebar.button.clients"), params.id ? params.id : t("pageHeader.new")]}
         actionElements={[
           <HeaderButton onClick={() => form.handleSubmit()} buttonType="primary">
-            Save
+            {t("pages.other.clients.form.save")}
           </HeaderButton>,
           <Show when={params.id}>
             <HeaderButton
               onClick={async () => {
                 try {
                   await deleteClient(Number.parseInt(params.id as string));
-                  toast.success("Client deleted");
+                  toast.success(t("pages.other.clients.form.toast.deleted"));
                   navigate("/dashboard/other/clients");
                 } catch (e) {
                   toast.error(e as string);
@@ -89,12 +89,12 @@ const ManageClient: Component = () => {
         ]}
       />
       <Form>
-        <Section title="Client Information">
+        <Section title={t("pages.other.clients.form.sections.information")}>
           <form.Field name="name" validators={{ onChange: z.string().min(2).max(100), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
-                label="Name"
+                label={t("pages.other.clients.form.name")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -111,7 +111,7 @@ const ManageClient: Component = () => {
             {(field) => (
               <Input
                 type="email"
-                label="Email"
+                label={t("pages.other.clients.form.email")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -122,11 +122,11 @@ const ManageClient: Component = () => {
             {(field) => (
               <Dropdown
                 defaultValueId={field().state.value}
-                label="Client Type"
+                label={t("pages.other.clients.form.clientType")}
                 data={[
-                  { id: "BOTH", label: "Both" },
-                  { id: "SUPPLIER", label: "Supplier" },
-                  { id: "CUSTOMER", label: "Customer" },
+                  { id: "BOTH", label: t("pages.other.clients.form.clientTypes.both") },
+                  { id: "SUPPLIER", label: t("pages.other.clients.form.clientTypes.supplier") },
+                  { id: "CUSTOMER", label: t("pages.other.clients.form.clientTypes.customer") },
                 ]}
                 onSelect={(data) => field().handleChange(data.id as "BOTH" | "SUPPLIER" | "CUSTOMER")}
               />
@@ -136,7 +136,7 @@ const ManageClient: Component = () => {
             {(field) => (
               <Input
                 type="text"
-                label="CIN"
+                label={t("pages.other.clients.form.cin")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -147,7 +147,7 @@ const ManageClient: Component = () => {
             {(field) => (
               <Input
                 type="text"
-                label="VAT ID"
+                label={t("pages.other.clients.form.vatId")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -155,12 +155,12 @@ const ManageClient: Component = () => {
             )}
           </form.Field>
         </Section>
-        <Section title="Address">
+        <Section title={t("pages.other.clients.form.sections.address")}>
           <form.Field name="address" validators={{ onChange: z.string().optional(), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
               <Input
                 type="text"
-                label="Street Address"
+                label={t("pages.other.clients.form.address")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -171,7 +171,7 @@ const ManageClient: Component = () => {
             {(field) => (
               <Input
                 type="text"
-                label="City"
+                label={t("pages.other.clients.form.city")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -182,7 +182,7 @@ const ManageClient: Component = () => {
             {(field) => (
               <Input
                 type="text"
-                label="Zip Code"
+                label={t("pages.other.clients.form.zip")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}
@@ -193,7 +193,7 @@ const ManageClient: Component = () => {
             {(field) => (
               <Input
                 type="tel"
-                label="Phone Number"
+                label={t("pages.other.clients.form.phone")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
                 errors={field().state.meta.touchedErrors}

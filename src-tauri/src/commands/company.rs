@@ -35,6 +35,7 @@ pub async fn get_company(
 }
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct ManageCompanyData {
     name: String,
     cin: String,
@@ -122,6 +123,7 @@ pub async fn update_company(
     data: ManageCompanyData,
 ) -> Result<(), QueryError> {
     debug!("Updating company");
+    println!("{:?}", data);
     let data = client
         .company()
         .update(
