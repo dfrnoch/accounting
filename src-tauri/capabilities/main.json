@@ -4,17 +4,6 @@
   "description": "Capability for the main window",
   "windows": ["main", "document"],
   "permissions": [
-    {
-      "identifier": "http:default",
-      "allow": [
-        {
-          "url": "https://*"
-        },
-        {
-          "url": "http://*"
-        }
-      ]
-    },
     "path:default",
     "event:default",
     "webview:default",
@@ -100,14 +89,12 @@
     "shell:allow-kill",
     "shell:allow-open",
     "shell:allow-stdin-write",
-    "dialog:allow-message",
     "fs:allow-app-write",
     "fs:scope-app",
     "fs:scope-appcache",
     "fs:scope-appconfig",
     "fs:scope-appdata",
     "fs:scope-applocaldata",
-    "fs:scope-applog",
-    "process:allow-restart"
+    "fs:scope-applog"
   ]
 }
