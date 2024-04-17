@@ -54,8 +54,8 @@ const SetupWizard: Component = () => {
     },
   }));
 
-  onMount(() => {
-    migrateAndPopulate();
+  onMount(async () => {
+    await migrateAndPopulate();
   });
 
   return (
