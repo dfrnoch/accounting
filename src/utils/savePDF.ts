@@ -9,7 +9,7 @@ export async function getInitializedPrintWindow(id: number) {
     width: 200,
     height: 200,
   });
-  const webview = new Webview(appWindow, "document", {
+  const webview = new Webview(appWindow, "documentweb", {
     url: `/print/${id}`,
     width: 2100,
     height: 2970,

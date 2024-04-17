@@ -22,7 +22,7 @@ pub async fn check_db(client: DbState<'_>) -> CommandResult<i16> {
 // #[specta::specta]
 #[tauri::command]
 pub async fn migrate_and_populate(client: DbState<'_>) -> CommandResult<()> {
-    #[cfg(debug_assertions)]
+    #[cfg(not(debug_assertions))]
     client._db_push().await?;
 
     #[cfg(not(debug_assertions))]
