@@ -18,6 +18,7 @@ const PageHeader: Component<PageHeaderProps> = (props) => {
       classList={{
         "left-200px lg:left-220px w-[calc(100vw-200px)] lg:w-[calc(100vw-220px)]": platform !== "macos",
         "left-0 w-screen": platform === "macos",
+        "rounded-tl-xl": platform == "windows",
       }}
     >
       <Show when={platform === "macos"}>
@@ -31,6 +32,7 @@ const PageHeader: Component<PageHeaderProps> = (props) => {
         classList={{
           "w-4/5": platform === "macos",
           "w-full": platform !== "macos",
+          "rounded-tl-xl": platform === "windows"
         }}
         data-tauri-drag-region
       >

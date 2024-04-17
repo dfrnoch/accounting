@@ -40,7 +40,11 @@ const Dashboard: ParentComponent = (props) => {
       <Suspense fallback={<LoadingIcon />}>
         <Show when={company()}>
           <Sidebar />
-          <div class="overflow-y-auto mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary">
+          <div class="overflow-y-auto mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary"
+          classList={{
+            "rounded-tl-xl": state.platform == "windows",
+          }}
+          >
             {props.children}
           </div>
         </Show>

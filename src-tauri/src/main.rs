@@ -27,6 +27,7 @@ use tauri::{Manager, State};
 
 #[cfg(target_os = "macos")]
 use window_ext::{ToolbarThickness, WindowExt};
+#[cfg(target_os = "macos")]
 use window_vibrancy::NSVisualEffectMaterial;
 
 #[cfg(target_os = "windows")]
