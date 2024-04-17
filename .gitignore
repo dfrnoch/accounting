@@ -7,7 +7,7 @@ target/
 prisma.rs
 src-tauri/dev.db 
 src-tauri/app.db 
-src-tauri/gen/
+gen/
 
 
 .signore
