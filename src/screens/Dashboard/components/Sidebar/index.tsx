@@ -73,10 +73,10 @@ const Sidebar: Component = () => {
 
   return (
     <div
-      class="text-primary relative flex h-screen w-1/5 min-w-[200px] shrink-0 flex-col justify-between  border-zinc-400/70 px-2.5 pb-4 lg:max-w-[220px] lg:px-4 dark:border-black/90"
+      class="text-primary relative flex h-screen w-1/5 min-w-[200px] shrink-0 flex-col justify-between border-zinc-400/70 px-2.5 pb-4 lg:max-w-[220px] lg:px-4 dark:border-black/90"
       classList={{
-        "pt-14 border-r": stateService.state.platform === "macos",
-        "pt-4": stateService.state.platform !== "macos",
+        "pt-14 border-r bg-white/50 dark:bg-black/20": stateService.state.platform === "macos",
+        "pt-2": stateService.state.platform !== "macos",
       }}
     >
       <div>
@@ -103,7 +103,7 @@ const Sidebar: Component = () => {
         </SidebarButton>
         <Hr />
         <Listbox value={selected()} onSelectChange={setSelected} defaultOpen={false}>
-          <ListboxButton class="text-sm flex flex-row items-center justify-start gap-2.5 lg:gap-4 hover:bg-neutral-100/40 dark:hover:bg-neutral-100/25 bg-transparent rounded-[5px] px-2 py-[3px] w-full">
+          <ListboxButton class="text-sm flex flex-row items-center justify-start gap-2.5 lg:gap-4 hover:bg-[#AFAEAF]/20 dark:hover:bg-neutral-100/15 bg-transparent rounded-[5px] px-2 py-[3px] w-full">
             <div class="flex h-8 w-8 items-center justify-center lg:h-10 lg:w-10 rounded-full bg-secondary opacity-50">
               <FiUsers class="w-5 h-5 text-primary" />
             </div>
