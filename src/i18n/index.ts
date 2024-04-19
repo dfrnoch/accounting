@@ -17,5 +17,5 @@ export const [I18nProvider, useMaybeI18n] = createContextProvider<[i18n.Translat
   (props) => [i18n.translator(() => i18n.flatten(dict[props.locale]), i18n.resolveTemplate)],
 );
 
-// biome-ignore lint/style/noNonNullAssertion: burger
+// biome-ignore lint/style/noNonNullAssertion: don't care about the nullability of the return value
 export const useI18n = () => useMaybeI18n()!;
