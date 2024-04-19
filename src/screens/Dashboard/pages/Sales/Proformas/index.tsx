@@ -24,15 +24,21 @@ const Invoices: Component = () => {
       />
       <Table
         columns={[
-          { field: "number", header: "Number" },
+          { field: "number", header: t("pages.sales.table.number") },
+          { field: "client", header: t("pages.sales.table.client") },
           {
             field: "totalPrice",
-            header: "Total Price",
+            header: t("pages.sales.table.total"),
             component: (item) => (
               <>
                 {item.totalPrice} {item.currency}
               </>
             ),
+          },
+          {
+            field: "issueDate",
+            header: t("pages.sales.table.date"),
+            component: (item) => new Date(item.issueDate as string).toLocaleDateString(),
           },
         ]}
         totalItems={getModelCount("Proforma")}

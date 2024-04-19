@@ -46,6 +46,10 @@
   "pages": {
     "other": {
       "templates": {
+        "table": {
+          "name": "Name",
+          "type": "Template Type"
+        },
         "save": "Save",
         "dataHints": "Data Hints",
         "sections": {
@@ -68,6 +72,11 @@
       },
 
       "currencies": {
+        "table": {
+          "code": "Code",
+          "name": "Name",
+          "rate": "Rate"
+        },
         "form": {
           "save": "Save",
           "sections": {
@@ -85,6 +94,11 @@
         }
       },
       "clients": {
+        "table": {
+          "name": "Name",
+          "phone": "Phone",
+          "cin": "CIN"
+        },
         "form": {
           "save": "Save",
           "sections": {
@@ -118,6 +132,12 @@
       }
     },
     "sales": {
+      "table": {
+        "number": "Number",
+        "client": "Client",
+        "total": "Price",
+        "date": "Issue Date"
+      },
       "document": {
         "title": {
           "invoice": "Invoice",
@@ -316,6 +336,7 @@
     "dropdownSelect": "Select an item"
   },
   "other": {
-    "save": "Save"
+    "save": "Save",
+    "delete": "Delete"
   }
 }

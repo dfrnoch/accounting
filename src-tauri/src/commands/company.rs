@@ -149,3 +149,18 @@ pub async fn update_company(
         Err(e) => Err(e),
     }
 }
+
+#[tauri::command]
+pub async fn delete_company(client: DbState<'_>, id: i32) -> Result<(), String> {
+    debug!("Deleting company");
+    let data = client
+        .company()
+        .delete(company::id::equals(id))
+        .exec()
+        .await;
+
+    match data {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
+}

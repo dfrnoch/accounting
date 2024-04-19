@@ -26,11 +26,21 @@ const Templates: Component = () => {
       <Table
         columns={[
           { field: "id", header: "ID" },
-          { field: "name", header: "Name" },
+          { field: "name", header: t("pages.other.templates.table.name") },
           {
             field: "templateType",
-            header: "Type",
-            component: (item) => <StatusIcon>{item.templateType as string}</StatusIcon>,
+            header: t("pages.other.templates.table.type"),
+            component: (item) => (
+              <StatusIcon>
+                {(item.templateType as string) === "INVOICE"
+                  ? t("pages.other.templates.templateTypes.invoice")
+                  : (item.templateType as string) === "PROFORMA"
+                    ? t("pages.other.templates.templateTypes.proforma")
+                    : (item.templateType as string) === "RECEIVE"
+                      ? t("pages.other.templates.templateTypes.receive")
+                      : "N/A"}
+              </StatusIcon>
+            ),
           },
         ]}
         totalItems={getModelCount("Template")}

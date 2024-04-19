@@ -97,6 +97,10 @@
   "pages": {
     "other": {
       "templates": {
+        "table": {
+          "name": "Jméno",
+          "type": "Typ šablony"
+        },
         "save": "Uložit",
         "dataHints": "Nápověda dat",
         "sections": {
@@ -118,6 +122,11 @@
         }
       },
       "currencies": {
+        "table": {
+          "code": "Kód",
+          "name": "Jméno",
+          "rate": "Kurz"
+        },
         "form": {
           "save": "Uložit",
           "sections": {
@@ -135,6 +144,11 @@
         }
       },
       "clients": {
+        "table": {
+          "name": "Jméno",
+          "phone": "Telefon",
+          "cin": "IČO"
+        },
         "form": {
           "save": "Uložit",
           "sections": {
@@ -168,6 +182,12 @@
       }
     },
     "sales": {
+      "table": {
+        "number": "Číslo dokumentu",
+        "client": "Klient",
+        "total": "Cena",
+        "date": "Datum vystavení"
+      },
       "document": {
         "title": {
           "invoice": "Faktura",
@@ -309,6 +329,7 @@
     "dropdownSelect": "Vyberte z možností"
   },
   "other": {
-    "save": "Uložit"
+    "save": "Uložit",
+    "delete": "Smazat"
   }
 }

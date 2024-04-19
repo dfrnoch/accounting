@@ -24,9 +24,9 @@ const Currencies: Component = () => {
       />
       <Table
         columns={[
-          { field: "name", header: "Name" },
-          { field: "code", header: "Code" },
-          { field: "rate", header: "Rate" },
+          { field: "name", header: t("pages.other.currencies.table.name") },
+          { field: "code", header: t("pages.other.currencies.table.code") },
+          { field: "rate", header: t("pages.other.currencies.table.rate") },
         ]}
         totalItems={getModelCount("Currency")}
         loadPage={getCurrencies}

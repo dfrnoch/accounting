@@ -63,20 +63,26 @@ pub async fn get_sales(
     client: DbState<'_>,
     company_id: i32,
     months: i32,
+    client_id: Option<i32>,
 ) -> Result<Vec<f64>, QueryError> {
     let month_ranges = get_month_ranges(months);
     let default_currency = get_default_currency(&client, company_id).await;
     let mut monthly_sales = Vec::new();
 
     for (start_date, end_date) in month_ranges {
+        let mut conditions = vec![
+            document::company_id::equals(company_id),
+            document::document_type::equals("INVOICE".to_string()),
+            document::issue_date::gte(start_date),
+            document::issue_date::lte(end_date),
+        ];
+
+        if let Some(client_id) = client_id {
+            conditions.push(document::client_id::equals(client_id));
+        }
         let sales = client
             .document()
-            .find_many(vec![
-                document::company_id::equals(company_id),
-                document::document_type::equals("INVOICE".to_string()),
-                document::issue_date::gte(start_date),
-                document::issue_date::lte(end_date),
-            ])
+            .find_many(conditions)
             .with(document::items::fetch(vec![]))
             .with(document::currency::fetch())
             .exec()
@@ -117,6 +123,7 @@ pub async fn get_expenses(
     client: DbState<'_>,
     company_id: i32,
     months: i32,
+    client_id: Option<i32>,
 ) -> Result<Vec<f64>, QueryError> {
     debug!("Getting expenses for company_id: {}", company_id);
     let month_ranges = get_month_ranges(months);
@@ -124,14 +131,20 @@ pub async fn get_expenses(
     let mut monthly_expenses = Vec::new();
 
     for (start_date, end_date) in month_ranges {
+        let mut conditions = vec![
+            document::company_id::equals(company_id),
+            document::document_type::equals("RECEIVE".to_string()),
+            document::issue_date::gte(start_date),
+            document::issue_date::lte(end_date),
+        ];
+
+        if let Some(client_id) = client_id {
+            conditions.push(document::client_id::equals(client_id));
+        }
+
         let expenses = client
             .document()
-            .find_many(vec![
-                document::company_id::equals(company_id),
-                document::document_type::equals("RECEIVE".to_string()),
-                document::issue_date::gte(start_date),
-                document::issue_date::lte(end_date),
-            ])
+            .find_many(conditions)
             .with(document::items::fetch(vec![]))
             .with(document::currency::fetch())
             .exec()
@@ -172,9 +185,10 @@ pub async fn get_sales_and_expenses(
     client: DbState<'_>,
     company_id: i32,
     months: i32,
+    client_id: Option<i32>,
 ) -> Result<Vec<(f64, f64)>, QueryError> {
-    let sales = get_sales(client.clone(), company_id, months).await?;
-    let expenses = get_expenses(client, company_id, months).await?;
+    let sales = get_sales(client.clone(), company_id, months, client_id).await?;
+    let expenses = get_expenses(client, company_id, months, client_id).await?;
 
     let net_values: Vec<(f64, f64)> = sales.into_iter().zip(expenses.into_iter()).collect();
 

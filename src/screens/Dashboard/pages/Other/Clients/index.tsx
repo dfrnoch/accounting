@@ -25,9 +25,10 @@ const Clients: Component = () => {
       <Table
         columns={[
           { field: "id", header: "ID" },
-          { field: "name", header: "Name" },
+          { field: "name", header: t("pages.other.clients.table.name") },
+          { field: "cin", header: t("pages.other.clients.table.cin") },
           { field: "email", header: "Email" },
-          { field: "phone", header: "Phone" },
+          { field: "phone", header: t("pages.other.clients.table.phone") },
         ]}
         totalItems={getModelCount("Client")}
         loadPage={getClients}

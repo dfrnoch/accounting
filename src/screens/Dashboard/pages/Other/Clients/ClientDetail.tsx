@@ -1,4 +1,4 @@
-import { getClient, getDocumentCount, getDocuments } from "@/bindings";
+import { getClient, getDocumentCount, getDocuments, getSalesAndExpenses } from "@/bindings";
 import { useI18n } from "@/i18n";
 import Box from "@/screens/Dashboard/components/Box";
 import Container from "@/screens/Dashboard/components/Container";
@@ -16,6 +16,7 @@ const ClientDetail: Component = () => {
   const params = useParams<{ readonly id: string }>();
   const navigate = useNavigate();
   const [t] = useI18n();
+  const [salesAndExpenses] = createResource({ months: 6, clientId: Number.parseInt(params.id) }, getSalesAndExpenses);
 
   const [client] = createResource(Number(params.id), getClient);
 
@@ -30,15 +31,29 @@ const ClientDetail: Component = () => {
         ]}
       />
       <div class="grid grid-cols-6 gap-3 lg:gap-4 h-full grid-rows-5">
-        <StatBox class="col-span-3" title={t("overview.stats.sales")} value={100} />
-        <StatBox class="col-span-3" title={t("overview.stats.expenses")} value={1654.43} last={6804.52} />
+        <Suspense fallback={<LoadingIcon />}>
+          <Show when={salesAndExpenses()}>
+            <StatBox
+              class="col-span-3"
+              title={t("overview.stats.sales")}
+              value={salesAndExpenses()[0][0]}
+              last={salesAndExpenses()[1][0]}
+            />
+            <StatBox
+              class="col-span-3"
+              title={t("overview.stats.expenses")}
+              value={salesAndExpenses()[0][1]}
+              last={salesAndExpenses()[1][1]}
+            />
+          </Show>
+        </Suspense>
         <div class="col-span-4 row-span-4">
           <Table
             columns={[
-              { field: "number", header: "Number" },
+              { field: "number", header: t("pages.sales.table.number") },
               {
                 field: "totalPrice",
-                header: "Total Price",
+                header: t("pages.sales.table.total"),
                 component: (item) => (
                   <>
                     {item.totalPrice} {item.currency}

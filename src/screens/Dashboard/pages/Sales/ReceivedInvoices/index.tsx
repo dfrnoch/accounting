@@ -7,13 +7,11 @@ import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import Container from "@/screens/Dashboard/components/Container";
 import { useNavigate } from "@solidjs/router";
-import { useSelector } from "@/store";
 
 const ReceivedInvoices: Component = () => {
   const [t] = useI18n();
   const navigate = useNavigate();
 
-  const settings = useSelector((state) => state.settingsService.settings);
   return (
     <Container>
       <PageHeader
@@ -26,15 +24,21 @@ const ReceivedInvoices: Component = () => {
       />
       <Table
         columns={[
-          { field: "number", header: "Number" },
+          { field: "number", header: t("pages.sales.table.number") },
+          { field: "client", header: t("pages.sales.table.client") },
           {
             field: "totalPrice",
-            header: "Total Price",
+            header: t("pages.sales.table.total"),
             component: (item) => (
               <>
-                {item.totalPrice} {settings.defaultCurrency.code}
+                {item.totalPrice} {item.currency}
               </>
             ),
+          },
+          {
+            field: "issueDate",
+            header: t("pages.sales.table.date"),
+            component: (item) => new Date(item.issueDate as string).toLocaleDateString(),
           },
         ]}
         totalItems={getModelCount("Receive")}

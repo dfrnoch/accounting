@@ -82,6 +82,7 @@ async fn main() {
             commands::company::get_company,
             commands::company::create_company,
             commands::company::get_companies,
+            commands::company::delete_company,
             commands::company::update_company,
             commands::document::get_documents,
             commands::document::get_document,

@@ -10,8 +10,8 @@ import StatBox from "../components/StatBox";
 
 const Overview: Component = () => {
   const [t] = useI18n();
-  const [sales] = createResource(6, getSales);
-  const [expenses] = createResource(6, getExpenses);
+  const [sales] = createResource({ months: 6 }, getSales);
+  const [expenses] = createResource({ months: 6 }, getExpenses);
 
   const [sentInvoices] = createResource(6, () => getDocumentStats(6, DocumentType.INVOICE));
   const [receivedInvoices] = createResource(6, () => getDocumentStats(6, DocumentType.RECEIVE));

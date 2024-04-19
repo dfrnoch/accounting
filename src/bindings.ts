@@ -13,15 +13,16 @@ export type GetDocumentsData = {
   id: number;
   number: string;
   documentType: "INVOICE" | "PROFORMA" | "RECEIVE";
-  clientId: number;
+  client: string;
   templateId: number;
   currency: string;
-  issueDate: Date;
+  issueDate: string;
   status: string;
 };
 
 export type GetClientData = {
   id: number;
+  cin: string;
   name: string;
   email: string;
   phone: string;
@@ -34,7 +35,7 @@ export enum DocumentType {
 }
 
 export async function getDocuments(indicies: Indicies, documentType?: DocumentType, clientId?: number) {
-  return invoke<GetDocumentsData[]>("get_documents", {
+  return await invoke<GetDocumentsData[]>("get_documents", {
     companyId: state.companyId,
     documentType,
     clientId,
@@ -89,6 +90,10 @@ export async function getCompany(id?: number) {
   return invoke<Company>("get_company", { id: id ? id : state.companyId });
 }
 
+export async function deleteCompany(id: number) {
+  return invoke("delete_company", { id });
+}
+
 export async function createCompany(data: ManageCompanyData) {
   return invoke<number>("create_company", { data });
 }
@@ -100,16 +105,20 @@ export async function updateCompany(data: ManageCompanyData) {
 export async function getDocumentStats(months: number, documentType: DocumentType) {
   return invoke<number[]>("get_documents_stats", { companyId: state.companyId, months, documentType });
 }
-export async function getSales(months: number) {
-  return invoke<number[]>("get_sales", { companyId: state.companyId, months });
+export async function getSales(data: { months: number; clientId?: number }) {
+  return invoke<number[]>("get_sales", { companyId: state.companyId, months: data.months, clientId: data.clientId });
 }
 
-export async function getExpenses(months: number) {
-  return invoke<number[]>("get_expenses", { companyId: state.companyId, months });
+export async function getExpenses(data: { months: number; clientId?: number }) {
+  return invoke<number[]>("get_expenses", { companyId: state.companyId, months: data.months, clientId: data.clientId });
 }
 
-export async function getSalesAndExpenses(months: number) {
-  return invoke<number[]>("get_sales_and_expenses", { companyId: state.companyId, months });
+export async function getSalesAndExpenses(data: { months: number; clientId?: number }) {
+  return invoke<number[]>("get_sales_and_expenses", {
+    companyId: state.companyId,
+    months: data.months,
+    clientId: data.clientId,
+  });
 }
 
 export async function getModelCount(

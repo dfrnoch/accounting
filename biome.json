@@ -1,10 +1,14 @@
 {
+  "$schema": "https://biomejs.dev/schemas/1.6.4/schema.json",
   "linter": {
     "enabled": true,
     "rules": {
       "a11y": {
         "useKeyWithClickEvents": "off",
         "useKeyWithMouseEvents": "off"
+      },
+      "correctness": {
+        "useJsxKeyInIterable": "off"
       },
       "recommended": true
     },
