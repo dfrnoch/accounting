@@ -6,13 +6,14 @@ export async function getInitializedPrintWindow(id: number) {
     visible: true,
     decorations: true,
     title: "Document",
-    width: 200,
-    height: 200,
+    width: 1000,
+    height: 1000,
   });
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   const webview = new Webview(appWindow, "documentweb", {
     url: `/print/${id}`,
-    width: 2100,
-    height: 2970,
+    width: 1000,
+    height: 1000,
     transparent: true,
     x: 0,
     y: 0,

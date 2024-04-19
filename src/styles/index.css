@@ -104,10 +104,17 @@ tr td:last-child {
 @media print {
     body {
         width: 21cm !important;
-        height: 29.7cm !important;
+        height: 20cm !important;
         margin: 0;
         color: black;
         background-color: white;
         print-color-adjust: exact !important;
     }
+}
+.print {
+        width: 21cm !important;
+        margin: 0;
+        color: black;
+        background-color: white;
+        print-color-adjust: exact !important;
 }

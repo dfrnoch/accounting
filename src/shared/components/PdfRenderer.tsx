@@ -22,7 +22,7 @@ const PdfRenderer: Component<PdfRendererProps> = (props) => {
     setPdfContent(renderedContent);
   });
 
-  return <div class="bg-white text-black w-210mm h-297mm " innerHTML={pdfContent()} />;
+  return <div class="bg-white text-black w-210mm print" innerHTML={pdfContent()} />;
 };
 
 export default PdfRenderer;
