@@ -5,6 +5,7 @@ import Container from "@/screens/Dashboard/components/Container";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import StatBox from "@/screens/Dashboard/components/StatBox";
+import StatusIcon from "@/screens/Dashboard/components/StatusIcon";
 import Table from "@/screens/Dashboard/components/Table";
 import LoadingIcon from "@/shared/components/LoadingIcon";
 import { Hr } from "@/shared/components/Menu/Hr";
@@ -60,6 +61,21 @@ const ClientDetail: Component = () => {
                   </>
                 ),
               },
+              {
+                field: "templateType",
+                header: t("pages.other.clients.table.type"),
+                component: (item) => (
+                  <StatusIcon>
+                    {(item.documentType as string) === "INVOICE"
+                      ? t("pages.other.templates.templateTypes.invoice")
+                      : (item.documentType as string) === "PROFORMA"
+                        ? t("pages.other.templates.templateTypes.proforma")
+                        : (item.documentType as string) === "RECEIVE"
+                          ? t("pages.other.templates.templateTypes.receive")
+                          : "N/A"}
+                  </StatusIcon>
+                ),
+              },
             ]}
             totalItems={getDocumentCount(undefined, Number.parseInt(params.id))}
             allowedCounts={[10]}
@@ -70,10 +86,10 @@ const ClientDetail: Component = () => {
                   navigate(`/dashboard/sales/invoices/${item.id}`);
                   break;
                 case "PROFORMA":
-                  navigate(`/dashboard/sales/estimates/${item.id}`);
+                  navigate(`/dashboard/sales/proformas/${item.id}`);
                   break;
                 case "RECEIVE":
-                  navigate(`/dashboard/finance/received/${item.id}`);
+                  navigate(`/dashboard/sales/received/${item.id}`);
                   break;
               }
             }}
@@ -88,27 +104,35 @@ const ClientDetail: Component = () => {
                 </div>
                 <div class="flex flex-col ">
                   <div class="font-semibold">{client()?.name}</div>
-                  <div class="text-sm ">{client()?.clientType}</div>
+                  <div class="text-sm ">
+                    {client()?.clientType === "BOTH"
+                      ? t("pages.other.clients.form.clientTypes.both")
+                      : client()?.clientType === "SUPPLIER"
+                        ? t("pages.other.clients.form.clientTypes.supplier")
+                        : t("pages.other.clients.form.clientTypes.customer")}
+                  </div>
                 </div>
               </div>
               <Hr class="my-3" />
               <div class="flex flex-col gap-1">
                 <h2 class="text-primary text-sm font-semibold pb-2">Detail</h2>
-                <Item title="CIN">{client()?.cin}</Item>
-                <Item title="VAT">{client()?.vatId}</Item>
-                <Item title="Email">{client()?.email}</Item>
-                <Item title="Phone">{client()?.phone}</Item>
+                <Item title={t("pages.other.clients.form.cin")}>{client()?.cin}</Item>
+                <Item title={t("pages.other.clients.form.vatId")}>{client()?.vatId}</Item>
+                <Item title={t("pages.other.clients.form.email")}>{client()?.email}</Item>
+                <Item title={t("pages.other.clients.form.phone")}>{client()?.phone}</Item>
 
                 <Hr class="my-2" />
-                <h2 class="text-primary text-sm font-semibold pb-2">Address</h2>
-                <Item title="Street">{client()?.address}</Item>
-                <Item title="City">{client()?.city}</Item>
-                <Item title="ZIP">{client()?.zip}</Item>
+                <h2 class="text-primary text-sm font-semibold pb-2">
+                  {t("pages.other.clients.form.sections.address")}
+                </h2>
+                <Item title={t("pages.other.clients.form.address")}>{client()?.address}</Item>
+                <Item title={t("pages.other.clients.form.city")}>{client()?.city}</Item>
+                <Item title={t("pages.other.clients.form.zip")}>{client()?.zip}</Item>
 
                 <Hr class="my-2" />
-                <h2 class="text-primary text-sm font-semibold pb-2">Bank</h2>
-                <Item title="Account">{client()?.bankAccount}</Item>
-                <Item title="IBAN">{client()?.bankIban}</Item>
+                <h2 class="text-primary text-sm font-semibold pb-2">{t("pages.other.clients.form.sections.bank")}</h2>
+                <Item title={t("pages.other.clients.form.bankAccount")}>{client()?.bankAccount}</Item>
+                <Item title={t("pages.other.clients.form.bankIban")}>{client()?.bankIban}</Item>
               </div>
             </Show>
           </Suspense>

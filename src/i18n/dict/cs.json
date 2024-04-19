@@ -145,6 +145,7 @@
       },
       "clients": {
         "table": {
+          "type": "Typ",
           "name": "Jméno",
           "phone": "Telefon",
           "cin": "IČO"

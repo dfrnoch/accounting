@@ -95,6 +95,7 @@
       },
       "clients": {
         "table": {
+          "type": "Type",
           "name": "Name",
           "phone": "Phone",
           "cin": "CIN"

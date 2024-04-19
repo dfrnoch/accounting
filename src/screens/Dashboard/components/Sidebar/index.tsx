@@ -73,7 +73,7 @@ const Sidebar: Component = () => {
 
   return (
     <div
-      class="text-primary relative flex h-screen w-1/5 min-w-[200px] shrink-0 flex-col justify-between border-zinc-400/70 px-2.5 pb-4 lg:max-w-[220px] lg:px-4 dark:border-black/90"
+      class="text-primary relative flex h-screen w-[200px] shrink-0 flex-col justify-between border-zinc-400/70 px-2.5 pb-4 lg:w-[220px] lg:px-4 dark:border-black/90"
       classList={{
         "pt-14 border-r bg-white/50 dark:bg-black/20": stateService.state.platform === "macos",
         "pt-2": stateService.state.platform !== "macos",
