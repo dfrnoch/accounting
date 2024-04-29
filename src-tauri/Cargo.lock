@@ -6522,8 +6522,8 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-fs"
-version = "2.0.0-beta.4"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#863874022349739c33e6e8fbc8a10449e79124bc"
+version = "2.0.0-beta.6"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#f8537741542875f7b1a3f7da189666a18ecc610b"
 dependencies = [
  "anyhow",
  "glob",
@@ -6541,7 +6541,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-os"
 version = "2.0.0-beta.3"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#863874022349739c33e6e8fbc8a10449e79124bc"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#f8537741542875f7b1a3f7da189666a18ecc610b"
 dependencies = [
  "gethostname",
  "log",
@@ -6558,7 +6558,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-shell"
 version = "2.0.0-beta.3"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#863874022349739c33e6e8fbc8a10449e79124bc"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#f8537741542875f7b1a3f7da189666a18ecc610b"
 dependencies = [
  "encoding_rs",
  "log",
@@ -6576,8 +6576,8 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-single-instance"
-version = "2.0.0-beta.5"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#863874022349739c33e6e8fbc8a10449e79124bc"
+version = "2.0.0-beta.6"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#f8537741542875f7b1a3f7da189666a18ecc610b"
 dependencies = [
  "log",
  "serde",
