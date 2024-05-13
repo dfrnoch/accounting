@@ -33,7 +33,7 @@ tauri-plugin-os = { git = "https://github.com/tauri-apps/plugins-workspace", bra
 tauri-plugin-shell = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 pretty_env_logger = "0.5.0"
 log = "0.4"
-thiserror = "1.0.58"
+thiserror = "1.0.60"
 platform-dirs = "0.3.0"
 anyhow = "1.0.81"
 # tauri-specta = { git = "https://github.com/oscartbeaumont/tauri-specta", branch = "tauri2-alpha18", features = [
