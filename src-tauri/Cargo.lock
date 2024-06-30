@@ -3,12 +3,6 @@
 version = 3
 
 [[package]]
-name = "Inflector"
-version = "0.11.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fe438c63458706e03479442743baae6c88256498e6431708f6dfc520a26515d3"
-
-[[package]]
 name = "accounting"
 version = "0.0.1"
 dependencies = [
@@ -21,14 +15,12 @@ dependencies = [
  "prisma-client-rust",
  "serde",
  "serde_json",
- "specta",
  "tauri",
  "tauri-build",
  "tauri-plugin-fs",
  "tauri-plugin-os",
  "tauri-plugin-shell",
  "tauri-plugin-single-instance",
- "tauri-specta",
  "thiserror",
  "tokio",
  "window-vibrancy 0.5.0 (git+https://github.com/tauri-apps/window-vibrancy?branch=dev)",
@@ -592,7 +584,7 @@ dependencies = [
  "connection-string 0.1.13",
  "either",
  "enumflags2",
- "indoc 1.0.9",
+ "indoc",
  "lsp-types",
  "once_cell",
  "psl-core",
@@ -1239,7 +1231,7 @@ version = "0.1.0"
 source = "git+https://github.com/Brendonovich/prisma-engines?tag=pcr-0.6.10#c4aeef82dbae310e974d6122160c7e3b5fb6df53"
 dependencies = [
  "colored",
- "indoc 1.0.9",
+ "indoc",
  "pest",
 ]
 
@@ -1373,7 +1365,7 @@ dependencies = [
  "cuid",
  "either",
  "enumflags2",
- "indoc 1.0.9",
+ "indoc",
  "prisma-value",
  "psl-core",
  "schema-ast",
@@ -2656,12 +2648,6 @@ name = "indoc"
 version = "1.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bfa799dd5ed20a7e349f3b4639aa80d74549c81716d9ec4f994c9b5815598306"
-
-[[package]]
-name = "indoc"
-version = "2.0.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b248f5224d1d606005e02c97f5aa4e88eeb230488bcc03bc9ca4d7991399f2b5"
 
 [[package]]
 name = "infer"
@@ -4797,7 +4783,7 @@ dependencies = [
  "chrono",
  "diagnostics",
  "enumflags2",
- "indoc 1.0.9",
+ "indoc",
  "itertools",
  "lsp-types",
  "once_cell",
@@ -6085,31 +6071,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "specta"
-version = "2.0.0-rc.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3624a07cbde326fdf1ec37cbd39d06a224660fa0199b7db7316f2349583df981"
-dependencies = [
- "once_cell",
- "paste",
- "serde",
- "specta-macros",
- "thiserror",
-]
-
-[[package]]
-name = "specta-macros"
-version = "2.0.0-rc.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ef33e9678ae36993fcbfc46aa29568ef10d32fd54428808759c6a450998c43ec"
-dependencies = [
- "Inflector",
- "proc-macro2",
- "quote",
- "syn 1.0.109",
-]
-
-[[package]]
 name = "spin"
 version = "0.9.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6153,7 +6114,7 @@ dependencies = [
  "connection-string 0.1.13",
  "either",
  "enumflags2",
- "indoc 1.0.9",
+ "indoc",
  "migration-connector",
  "once_cell",
  "psl",
@@ -6212,7 +6173,7 @@ dependencies = [
  "bigdecimal",
  "enumflags2",
  "indexmap 1.9.3",
- "indoc 1.0.9",
+ "indoc",
  "once_cell",
  "psl",
  "quaint",
@@ -6530,7 +6491,6 @@ dependencies = [
  "serde_json",
  "serde_repr",
  "serialize-to-javascript",
- "specta",
  "state",
  "swift-rs",
  "tauri-build",
@@ -6739,34 +6699,6 @@ dependencies = [
  "webview2-com",
  "windows 0.56.0",
  "wry",
-]
-
-[[package]]
-name = "tauri-specta"
-version = "2.0.0-rc.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "85f26e4ded13fbeab2216dcb5a59b5cf8b475740afea932918888402bcc62a02"
-dependencies = [
- "heck 0.5.0",
- "indoc 2.0.5",
- "serde",
- "serde_json",
- "specta",
- "tauri",
- "tauri-specta-macros",
- "thiserror",
-]
-
-[[package]]
-name = "tauri-specta-macros"
-version = "2.0.0-rc.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6f9e90bf2012877e2c4029a1bf756277183e9c7c77b850ef965711553998012"
-dependencies = [
- "heck 0.5.0",
- "proc-macro2",
- "quote",
- "syn 2.0.68",
 ]
 
 [[package]]
@@ -7540,7 +7472,7 @@ version = "0.1.0"
 source = "git+https://github.com/Brendonovich/prisma-engines?tag=pcr-0.6.10#c4aeef82dbae310e974d6122160c7e3b5fb6df53"
 dependencies = [
  "backtrace",
- "indoc 1.0.9",
+ "indoc",
  "quaint",
  "serde",
  "serde_json",

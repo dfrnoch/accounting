@@ -36,8 +36,8 @@ log = "0.4"
 thiserror = "1.0.61"
 platform-dirs = "0.3.0"
 anyhow = "1.0.86"
-specta = "=2.0.0-rc.12"
-tauri-specta = { version = "=2.0.0-rc.11", features = ["javascript", "typescript"] }
+# specta = "=2.0.0-rc.12"
+# tauri-specta = { version = "=2.0.0-rc.11", features = ["javascript", "typescript"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 objc = "0.2.7"

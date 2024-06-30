@@ -20,6 +20,9 @@ mod migrator;
 mod types;
 mod util;
 
+// use specta::{Type, TypeCollection};
+// use tauri_specta::*;
+
 use migrator::new_client;
 use prisma::*;
 use std::sync::Arc;
@@ -43,14 +46,6 @@ struct Payload {
 
 type DbState<'a> = State<'a, Arc<PrismaClient>>;
 
-#[tauri::command]
-#[specta::specta]
-pub async fn testjoe(jeo: i32) -> i16 {
-    println!("testjoe {jeo}");
-
-    100
-}
-
 #[tokio::main]
 async fn main() {
     std::env::set_var("RUST_LOG", "trace");
@@ -58,16 +53,16 @@ async fn main() {
 
     let client = new_client().await.unwrap();
 
-    let specta_handler = {
-        let builder = tauri_specta::ts::builder()
-            .commands(tauri_specta::collect_commands![testjoe])
-            .header("// @ts-nocheck");
+    // let specta_handler = {
+    //     let builder = tauri_specta::ts::builder()
+    //         .commands(tauri_specta::collect_commands![commands::db::check_db])
+    //         .header("// @ts-nocheck");
 
-        #[cfg(debug_assertions)]
-        let builder = builder.path("../src/bindings.ts");
+    //     #[cfg(debug_assertions)]
+    //     let builder = builder.path("../src/bindings.ts");
 
-        builder.build().unwrap()
-    };
+    //     builder.build().unwrap()
+    // };
 
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
@@ -95,9 +90,8 @@ async fn main() {
 
             Ok(())
         })
-        .invoke_handler(specta_handler)
+        // .invoke_handler(specta_handler)
         .invoke_handler(tauri::generate_handler![
-            testjoe,
             commands::db::check_db,
             commands::db::migrate_and_populate,
             commands::company::get_company,
