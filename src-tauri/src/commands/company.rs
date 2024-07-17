@@ -93,7 +93,11 @@ pub async fn create_company(
         .template()
         .create(
             "Default Invoice".to_string(),
-            "<html><body><h1>Invoice</h1></body></html>".to_string(),
+            "
+            
+            
+            "
+            .to_string(),
             company::id::equals(company.id),
             vec![],
         )

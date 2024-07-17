@@ -127,13 +127,13 @@ model Settings {
     // tax               Float
 
     invoicePrefix  String @default("I202400000")
-    invoiceCounter Int    @default(1)
+    invoiceCounter Int    @default(0)
 
     proformaPrefix  String @default("P")
-    proformaCounter Int    @default(1)
+    proformaCounter Int    @default(0)
 
     receivePrefix  String @default("R")
-    receiveCounter Int    @default(1)
+    receiveCounter Int    @default(0)
 }
 
 model Currency {

@@ -1,6 +1,7 @@
 {
   "setup": {
-    "welcome": "Vítejte",
+    "welcome": "Pojďme začít",
+    "welcome_message": "Vítejte ve fakturační aplikaci",
     "get_started": "Začít",
     "continue": "Pokračovat",
     "finalize": "Dokončit",

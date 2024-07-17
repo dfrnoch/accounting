@@ -1,8 +1,7 @@
 {
-  "hello": "Hello",
-  "world": "World",
   "setup": {
-    "welcome": "Welcome to the app",
+    "welcome": "Let's get started",
+    "welcome_message": "Welcome to the invoicing app",
     "get_started": "Get started",
     "continue": "Continue",
     "finalize": "Finalize",

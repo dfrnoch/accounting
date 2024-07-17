@@ -66,9 +66,18 @@ const SetupWizard: Component = () => {
 
       <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative overflow-auto mx-auto p-8 px-15% lg:px-23%">
         <Show when={currentStep() === 0}>
-          <div class="flex justify-center items-center h-full flex-col gap-8">
-            <Title>{t("setup.welcome")}</Title>
-            <Button onClick={() => setCurrentStep(1)}>{t("setup.get_started")}</Button>
+          <div class="flex flex-col items-center space-y-8 text-white">
+            <img src="logo.png" alt="Welcome Icon" class="w-24 h-24" />
+            <div class="flex flex-col items-center space-y-4">
+              <Title>{t("setup.welcome")}</Title>
+              <p class="text-xl text-center max-w-md">{t("setup.welcome_message")}</p>
+            </div>
+            <Button
+              onClick={() => setCurrentStep(1)}
+              class="mt-8 px-8 py-3 bg-white text-blue-600 rounded-full text-lg font-medium hover:bg-opacity-90 transition-colors"
+            >
+              {t("setup.get_started")}
+            </Button>
           </div>
         </Show>
 

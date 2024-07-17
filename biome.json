@@ -7,9 +7,6 @@
         "useKeyWithClickEvents": "off",
         "useKeyWithMouseEvents": "off"
       },
-      "correctness": {
-        "useJsxKeyInIterable": "off"
-      },
       "recommended": true
     },
     "ignore": ["node_modules/", ".next/", "dist/", "data/", "src-tauri/"]
