@@ -65,7 +65,7 @@ model Client {
 
 model Document {
     id           Int    @id @default(autoincrement())
-    number       String @unique
+    number       String
     documentType String // ENUM = INVOICE, PROFORMA, RECEIVE
 
     client   Client @relation(fields: [clientId], references: [id])

@@ -101,20 +101,12 @@ tr td:last-child {
     border-bottom-right-radius: 6px;
 } */
 
-@media print {
-    body {
-        width: 21cm !important;
-        height: 20cm !important;
-        margin: 0;
-        color: black;
-        background-color: white;
-        print-color-adjust: exact !important;
-    }
-}
 .print {
-        width: 21cm !important;
-        margin: 0;
-        color: black;
-        background-color: white;
-        print-color-adjust: exact !important;
+    width: 21cm !important;
+    height: 296mm !important;
+    padding: 2rem;
+    margin: 0;
+    color: black;
+    background-color: white;
+    print-color-adjust: exact !important;
 }

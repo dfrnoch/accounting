@@ -147,29 +147,36 @@ pub async fn create_document(client: DbState<'_>, data: document::Data) -> Resul
         .exec()
         .await;
 
-    if let Some(items) = data.items {
-        for item in items.iter() {
-            let _ = client
-                .document_item()
-                .create(
-                    document::id::equals(res.as_ref().unwrap().company_id),
-                    item.description.clone(),
-                    item.quantity,
-                    item.price,
-                    vec![],
-                )
-                .exec()
-                .await
-                .unwrap();
-        }
-    }
-
     match res {
-        Ok(_) => {
+        Ok(created_document) => {
+            if let Some(items) = data.items {
+                for item in items.iter() {
+                    let item_res = client
+                        .document_item()
+                        .create(
+                            document::id::equals(created_document.id),
+                            item.description.clone(),
+                            item.quantity,
+                            item.price,
+                            vec![],
+                        )
+                        .exec()
+                        .await;
+
+                    if let Err(e) = item_res {
+                        error!("Error creating document item: {}", e);
+                        return Err(format!("Error creating document item: {}", e));
+                    }
+                }
+            }
+
             update_count(client, data.company_id, "Invoice").await;
             Ok(())
         }
-        Err(e) => Err(e.to_string()),
+        Err(e) => {
+            error!("Error creating document: {}", e);
+            Err(e.to_string())
+        }
     }
 }
 

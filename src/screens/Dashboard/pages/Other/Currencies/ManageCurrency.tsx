@@ -26,7 +26,7 @@ const ManageCurrency: Component = () => {
       code: "",
       rate: 1,
     } as Currency,
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmitInvalid: (e) => {
       console.log("invalid", e.formApi.state.errors);
     },
@@ -95,7 +95,7 @@ const ManageCurrency: Component = () => {
                 label={t("pages.other.currencies.form.name")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -106,7 +106,7 @@ const ManageCurrency: Component = () => {
                 label={t("pages.other.currencies.form.code")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -118,7 +118,7 @@ const ManageCurrency: Component = () => {
                 label={t("pages.other.currencies.form.rate")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(Number(data))}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>

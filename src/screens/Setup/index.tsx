@@ -36,7 +36,7 @@ const SetupWizard: Component = () => {
       bankAccount: undefined,
       bankIban: undefined,
     } as ManageCompanyData,
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmitInvalid: (e) => {
       console.log("invalid", e.formApi.state.errors);
     },
@@ -64,13 +64,13 @@ const SetupWizard: Component = () => {
         <ProgressDots count={3} active={currentStep()} />
       </div>
 
-      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative overflow-auto mx-auto p-8 px-15% lg:px-23%">
+      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative overflow-auto p-8 flex items-center justify-center">
         <Show when={currentStep() === 0}>
           <div class="flex flex-col items-center space-y-8 text-white">
             <img src="logo.png" alt="Welcome Icon" class="w-24 h-24" />
-            <div class="flex flex-col items-center space-y-4">
+            <div class="flex flex-col items-center space-y-3">
               <Title>{t("setup.welcome")}</Title>
-              <p class="text-xl text-center max-w-md">{t("setup.welcome_message")}</p>
+              <p class="text-lg text-center max-w-md">{t("setup.welcome_message")}</p>
             </div>
             <Button
               onClick={() => setCurrentStep(1)}
@@ -119,7 +119,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.company_name")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -131,7 +131,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.CIN")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -143,7 +143,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.vatID")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -160,7 +160,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.account")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -174,7 +174,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.iban")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -191,7 +191,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.street")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -203,7 +203,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.city")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -215,7 +215,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.zip")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -233,7 +233,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.email")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>
@@ -245,7 +245,7 @@ const SetupWizard: Component = () => {
                     label={t("setup.step2.phone")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
-                    errors={field().state.meta.touchedErrors}
+                    errors={field().state.meta.errors}
                   />
                 )}
               </form.Field>

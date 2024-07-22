@@ -34,7 +34,7 @@ const ManageClient: Component = () => {
       bankAccount: undefined,
       bankIban: undefined,
     } as Client,
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmitInvalid: (e) => {
       console.log("invalid", e.formApi.state.errors);
     },
@@ -99,7 +99,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.name")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -116,7 +116,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.email")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -141,7 +141,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.cin")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -152,7 +152,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.vatId")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -165,7 +165,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.address")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -176,7 +176,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.city")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -187,7 +187,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.zip")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -198,7 +198,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.phone")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -211,7 +211,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.bankAccount")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>
@@ -222,7 +222,7 @@ const ManageClient: Component = () => {
                 label={t("pages.other.clients.form.bankIban")}
                 defaultValue={field().state.value}
                 onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
+                errors={field().state.meta.errors}
               />
             )}
           </form.Field>

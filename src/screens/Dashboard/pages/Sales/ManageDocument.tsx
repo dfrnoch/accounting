@@ -41,25 +41,40 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
   const navigate = useNavigate();
   const settingsService = useSelector((state) => state.settingsService);
 
-  const [templates] = createResource(async () => await getTemplates({ skip: 0, take: 1000 }, props.type));
-  const [clients] = createResource({ skip: 0, take: 1000 }, getClients);
-  const [currencies] = createResource({ skip: 0, take: 1000 }, getCurrencies);
+  const [templates] = createResource(() => getTemplates({ skip: 0, take: 1000 }, props.type));
+  const [clients] = createResource(() => getClients({ skip: 0, take: 1000 }));
+  const [currencies] = createResource(() => getCurrencies({ skip: 0, take: 1000 }));
+
+  const getDocumentPrefix = () => {
+    switch (props.type) {
+      case DocumentType.INVOICE:
+        return settingsService.settings.invoicePrefix;
+      case DocumentType.PROFORMA:
+        return settingsService.settings.proformaPrefix;
+      case DocumentType.RECEIVE:
+        return settingsService.settings.receivePrefix;
+      default:
+        return "";
+    }
+  };
+
+  const getDocumentCounter = () => {
+    switch (props.type) {
+      case DocumentType.INVOICE:
+        return settingsService.settings.invoiceCounter + 1;
+      case DocumentType.PROFORMA:
+        return settingsService.settings.proformaCounter + 1;
+      case DocumentType.RECEIVE:
+        return settingsService.settings.receiveCounter + 1;
+      default:
+        return 1;
+    }
+  };
 
   const form = createForm(() => ({
     defaultValues: {
       id: 0,
-      number: generateDocumentNumber(
-        props.type === DocumentType.INVOICE
-          ? settingsService.settings.invoicePrefix
-          : props.type === DocumentType.PROFORMA
-            ? settingsService.settings.proformaPrefix
-            : settingsService.settings.receivePrefix,
-        props.type === DocumentType.INVOICE
-          ? settingsService.settings.invoiceCounter + 1
-          : props.type === DocumentType.RECEIVE
-            ? settingsService.settings.proformaCounter + 1
-            : settingsService.settings.receiveCounter + 1,
-      ),
+      number: generateDocumentNumber(getDocumentPrefix(), getDocumentCounter()),
       clientId: undefined as number | undefined,
       templateId: settingsService.settings.defaultTemplate.id,
       documentType: props.type,
@@ -69,9 +84,8 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
       status: "DRAFT",
       items: [],
     } as ManageDocumentData,
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmit: async (document) => {
-      console.log(document.value);
       try {
         if (props.id) {
           await updateDocument({
@@ -95,7 +109,6 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
   onMount(async () => {
     if (props.id) {
       const document = await getDocument(Number.parseInt(props.id));
-      console.log(document);
       form.update({
         ...form.options,
         defaultValues: {
@@ -108,16 +121,187 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
     }
   });
 
+  const handleDeleteDocument = async () => {
+    if (!props.id) return;
+    try {
+      await deleteDocument(Number.parseInt(props.id));
+      toast.success(t("pages.sales.document.toast.deleted"));
+      navigate(props.url);
+    } catch (e) {
+      toast.error(e as string);
+    }
+  };
+
+  const renderFormFields = () => (
+    <>
+      <Section title={t("pages.sales.document.information")}>
+        <form.Field
+          name="number"
+          validators={{ onChange: z.string().min(1, t("pages.sales.document.numberRequired")) }}
+        >
+          {(field) => (
+            <Input
+              type="text"
+              label={t("pages.sales.document.number")}
+              defaultValue={field().state.value}
+              onChange={(data) => field().handleChange(data)}
+              errors={field().state.meta.errors}
+            />
+          )}
+        </form.Field>
+        <form.Field
+          name="clientId"
+          validators={{ onChange: z.number().min(1, t("pages.sales.document.clientRequired")) }}
+        >
+          {(field) => (
+            <Show when={clients()}>
+              <SearchDropdown
+                data={clients()?.map((client) => ({ id: client.id, label: client.name })) ?? []}
+                label={t("pages.sales.document.client")}
+                defaultValueId={field().state.value}
+                onSelect={(data) => field().handleChange(data.id as number)}
+                errors={field().state.meta.errors}
+              />
+            </Show>
+          )}
+        </form.Field>
+        <form.Field
+          name="templateId"
+          validators={{ onChange: z.number().min(1, t("pages.sales.document.templateRequired")) }}
+        >
+          {(field) => (
+            <Show when={templates()}>
+              <SearchDropdown
+                data={templates()?.map((template) => ({ id: template.id, label: template.name })) ?? []}
+                defaultValueId={field().state.value}
+                label={t("pages.sales.document.template")}
+                onSelect={(data) => field().handleChange(data.id as number)}
+              />
+            </Show>
+          )}
+        </form.Field>
+        <form.Field
+          name="currencyId"
+          validators={{ onChange: z.string().min(1, t("pages.sales.document.currencyRequired")) }}
+        >
+          {(field) => (
+            <Show when={currencies()}>
+              <SearchDropdown
+                data={currencies()?.map((currency) => ({ id: currency.id, label: currency.name })) ?? []}
+                defaultValueId={field().state.value}
+                label={t("pages.sales.document.currency")}
+                onSelect={(data) => field().handleChange(data.id as string)}
+              />
+            </Show>
+          )}
+        </form.Field>
+        <form.Field name="status">
+          {(field) => (
+            <Dropdown
+              defaultValueId={field().state.value}
+              label={t("pages.sales.document.status.label")}
+              data={[
+                { id: "DRAFT", label: t("pages.sales.document.status.draft") },
+                { id: "SENT", label: t("pages.sales.document.status.sent") },
+                { id: "PAID", label: t("pages.sales.document.status.paid") },
+                { id: "CANCELLED", label: t("pages.sales.document.status.cancelled") },
+                { id: "OVERDUE", label: t("pages.sales.document.status.overdue") },
+              ]}
+              onSelect={(data) => field().handleChange(data.id as "DRAFT" | "SENT" | "PAID" | "CANCELLED" | "OVERDUE")}
+            />
+          )}
+        </form.Field>
+      </Section>
+      <Section title={t("pages.sales.document.dates")}>
+        <form.Field name="issueDate" validators={{ onChange: z.date() }}>
+          {(field) => (
+            <Input
+              type="date"
+              label={t("pages.sales.document.issueDate")}
+              defaultValue={field().state.value.toISOString().split("T")[0]}
+              onChange={(data) => field().handleChange(new Date(data))}
+              errors={field().state.meta.errors}
+            />
+          )}
+        </form.Field>
+        <form.Field
+          name="dueDate"
+          validators={{ onChange: z.date().min(new Date(), t("pages.sales.document.dueDateError")) }}
+        >
+          {(field) => (
+            <Input
+              type="date"
+              label={t("pages.sales.document.dueDate")}
+              defaultValue={field().state.value.toISOString().split("T")[0]}
+              onChange={(data) => field().handleChange(new Date(data))}
+              errors={field().state.meta.errors}
+            />
+          )}
+        </form.Field>
+      </Section>
+      <Section title={t("pages.sales.document.items")} columns={1}>
+        <form.Field name="items">
+          {(field) => (
+            <>
+              <Index each={field().state.value}>
+                {(_item, i) => (
+                  <div class="flex gap-4 items-end">
+                    <form.Field name={`items[${i}].description`} validators={{ onChange: z.string().min(1) }}>
+                      {(subField) => (
+                        <Input
+                          type="text"
+                          class="w-full"
+                          label={t("pages.sales.document.itemDescription", { number: i + 1 })}
+                          defaultValue={subField().state.value}
+                          errors={subField().state.meta.errors}
+                          onChange={(data) => subField().handleChange(data)}
+                        />
+                      )}
+                    </form.Field>
+                    <form.Field name={`items[${i}].quantity`} validators={{ onChange: z.number().min(1) }}>
+                      {(subField) => (
+                        <Input
+                          type="number"
+                          label={t("pages.sales.document.itemQuantity", { number: i + 1 })}
+                          defaultValue={subField().state.value}
+                          errors={subField().state.meta.errors}
+                          onChange={(data) => subField().handleChange(Number(data))}
+                        />
+                      )}
+                    </form.Field>
+                    <form.Field name={`items[${i}].price`} validators={{ onChange: z.number().min(0) }}>
+                      {(subField) => (
+                        <Input
+                          type="number"
+                          label={t("pages.sales.document.itemPrice", { number: i + 1 })}
+                          defaultValue={subField().state.value}
+                          onChange={(data) => subField().handleChange(Number(data))}
+                          errors={subField().state.meta.errors}
+                        />
+                      )}
+                    </form.Field>
+                    <FiX onClick={() => field().removeValue(i)} class="text-danger w-5 h-5 cursor-pointer mb-2" />
+                  </div>
+                )}
+              </Index>
+              <Button
+                onClick={() => field().pushValue({ id: 0, description: "", quantity: 1, price: 0, documentId: 0 })}
+              >
+                {t("pages.sales.document.addItem")}
+              </Button>
+            </>
+          )}
+        </form.Field>
+      </Section>
+    </>
+  );
+
   return (
     <Container>
       <PageHeader
         title={[
           t("sidebar.section.sales"),
-          props.type === DocumentType.INVOICE
-            ? t("pages.sales.document.title.invoice")
-            : props.type === DocumentType.PROFORMA
-              ? t("pages.sales.document.title.proforma")
-              : t("pages.sales.document.title.receive"),
+          t(`pages.sales.document.title.${props.type.toLowerCase()}`),
           props.id ? props.id : t("pageHeader.new"),
         ]}
         actionElements={[
@@ -125,200 +309,18 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
             {t("other.save")}
           </HeaderButton>,
           <Show when={props.id}>
-            <HeaderButton
-              onClick={async () => {
-                try {
-                  await deleteDocument(Number.parseInt(props.id as string));
-                  toast.success(t("pages.sales.document.toast.deleted"));
-                  navigate(props.url);
-                } catch (e) {
-                  toast.error(e as string);
-                }
-              }}
-              buttonType="secondary"
-            >
+            <HeaderButton onClick={handleDeleteDocument} buttonType="secondary">
               <FiTrash />
             </HeaderButton>
           </Show>,
           <Show when={props.id}>
-            <HeaderButton
-              onClick={async () => {
-                getInitializedPrintWindow(props.id as unknown as number);
-              }}
-              buttonType="secondary"
-            >
+            <HeaderButton onClick={() => getInitializedPrintWindow(Number(props.id))} buttonType="secondary">
               <FiDownload />
             </HeaderButton>
           </Show>,
         ]}
       />
-      <Form>
-        <Section title={t("pages.sales.document.information")}>
-          <form.Field
-            name="number"
-            validators={{ onChange: z.string().min(1, t("pages.sales.document.numberRequired")) }}
-          >
-            {(field) => (
-              <Input
-                type="text"
-                label={t("pages.sales.document.number")}
-                defaultValue={field().state.value}
-                onChange={(data) => field().handleChange(data)}
-                errors={field().state.meta.touchedErrors}
-              />
-            )}
-          </form.Field>
-          <form.Field
-            name="clientId"
-            validators={{ onChange: z.number().min(1, t("pages.sales.document.clientRequired")) }}
-          >
-            {(field) => (
-              <Show when={clients()}>
-                <SearchDropdown
-                  data={clients()?.map((client) => ({ id: client.id, label: client.name })) ?? []}
-                  label={t("pages.sales.document.client")}
-                  defaultValueId={field().state.value}
-                  onSelect={(data) => field().handleChange(data.id as number)}
-                  errors={field().state.meta.touchedErrors}
-                />
-              </Show>
-            )}
-          </form.Field>
-          <form.Field
-            name="templateId"
-            validators={{ onChange: z.number().min(1, t("pages.sales.document.templateRequired")) }}
-          >
-            {(field) => (
-              <Show when={templates()}>
-                <SearchDropdown
-                  data={templates()?.map((template) => ({ id: template.id, label: template.name })) ?? []}
-                  defaultValueId={field().state.value}
-                  label={t("pages.sales.document.template")}
-                  onSelect={(data) => field().handleChange(data.id as number)}
-                />
-              </Show>
-            )}
-          </form.Field>
-
-          <form.Field
-            name="currencyId"
-            validators={{ onChange: z.string().min(1, t("pages.sales.document.currencyRequired")) }}
-          >
-            {(field) => (
-              <Show when={currencies()}>
-                <SearchDropdown
-                  data={currencies()?.map((currency) => ({ id: currency.id, label: currency.name })) ?? []}
-                  defaultValueId={field().state.value}
-                  label={t("pages.sales.document.currency")}
-                  onSelect={(data) => field().handleChange(data.id as string)}
-                />
-              </Show>
-            )}
-          </form.Field>
-
-          <form.Field name="status">
-            {(field) => (
-              <Dropdown
-                defaultValueId={field().state.value}
-                label={t("pages.sales.document.status.label")}
-                data={[
-                  { id: "DRAFT", label: t("pages.sales.document.status.draft") },
-                  { id: "SENT", label: t("pages.sales.document.status.sent") },
-                  { id: "PAID", label: t("pages.sales.document.status.paid") },
-                  { id: "CANCELLED", label: t("pages.sales.document.status.cancelled") },
-                  { id: "OVERDUE", label: t("pages.sales.document.status.overdue") },
-                ]}
-                onSelect={(data) =>
-                  field().handleChange(data.id as "DRAFT" | "SENT" | "PAID" | "CANCELLED" | "OVERDUE")
-                }
-              />
-            )}
-          </form.Field>
-        </Section>
-        <Section title={t("pages.sales.document.dates")}>
-          <form.Field name="issueDate" validators={{ onChange: z.date() }}>
-            {(field) => (
-              <Input
-                type="date"
-                label={t("pages.sales.document.issueDate")}
-                defaultValue={field().state.value.toISOString().split("T")[0]}
-                onChange={(data) => field().handleChange(new Date(data))}
-                errors={field().state.meta.touchedErrors}
-              />
-            )}
-          </form.Field>
-          <form.Field
-            name="dueDate"
-            validators={{ onChange: z.date().min(new Date(), t("pages.sales.document.dueDateError")) }}
-          >
-            {(field) => (
-              <Input
-                type="date"
-                label={t("pages.sales.document.dueDate")}
-                defaultValue={field().state.value.toISOString().split("T")[0]}
-                onChange={(data) => field().handleChange(new Date(data))}
-                errors={field().state.meta.touchedErrors}
-              />
-            )}
-          </form.Field>
-        </Section>
-        <Section title={t("pages.sales.document.items")} columns={1}>
-          <form.Field name="items">
-            {(field) => (
-              <>
-                <Index each={field().state.value}>
-                  {(_item, i) => (
-                    <div class="flex gap-4 items-end">
-                      <form.Field name={`items[${i}].description`} validators={{ onChange: z.string().min(1) }}>
-                        {(subField) => (
-                          <Input
-                            type="text"
-                            class="w-full"
-                            label={t("pages.sales.document.itemDescription", { number: i + 1 })}
-                            defaultValue={subField().state.value}
-                            errors={subField().state.meta.touchedErrors}
-                            onChange={(data) => subField().handleChange(data)}
-                          />
-                        )}
-                      </form.Field>
-                      <form.Field name={`items[${i}].quantity`} validators={{ onChange: z.number().min(1) }}>
-                        {(subField) => (
-                          <Input
-                            type="number"
-                            label={t("pages.sales.document.itemQuantity", { number: i + 1 })}
-                            defaultValue={subField().state.value}
-                            errors={subField().state.meta.touchedErrors}
-                            onChange={(data) => subField().handleChange(Number(data))}
-                          />
-                        )}
-                      </form.Field>
-                      <form.Field name={`items[${i}].price`} validators={{ onChange: z.number().min(0) }}>
-                        {(subField) => (
-                          <Input
-                            type="number"
-                            label={t("pages.sales.document.itemPrice", { number: i + 1 })}
-                            defaultValue={subField().state.value}
-                            onChange={(data) => subField().handleChange(Number(data))}
-                            errors={subField().state.meta.touchedErrors}
-                          />
-                        )}
-                      </form.Field>
-
-                      <FiX onClick={() => field().removeValue(i)} class="text-danger w-5 h-5 cursor-pointer mb-2" />
-                    </div>
-                  )}
-                </Index>
-
-                <Button
-                  onClick={() => field().pushValue({ id: 0, description: "", quantity: 1, price: 0, documentId: 0 })}
-                >
-                  {t("pages.sales.document.addItem")}
-                </Button>
-              </>
-            )}
-          </form.Field>
-        </Section>
-      </Form>
+      <Form>{renderFormFields()}</Form>
     </Container>
   );
 };
