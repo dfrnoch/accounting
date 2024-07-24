@@ -11,6 +11,7 @@
       "improve": "Help us improve"
     },
     "step2": {
+      "backToLogin": "Back to login",
       "create_company": "Let's create your company",
       "company_name": "Company name",
       "CIN": "CIN",
@@ -20,11 +21,15 @@
       "zip": "ZIP",
       "email": "Email",
       "phone": "Phone",
+      "password": "Password",
+      "passwordMatch": "Passwords do not match",
+      "passwordConfirm": "Confirm password",
 
       "sections": {
         "details": "Details",
         "bank": "Bank details",
-        "contact": "Contact details"
+        "contact": "Contact details",
+        "password": "Password (Optional)"
       },
       "account": "Account number",
       "iban": "IBAN",
@@ -43,6 +48,17 @@
     "new": "New Entry"
   },
   "pages": {
+    "login": {
+      "manageAccounts": "Manage Accounts",
+      "switchAccountsDescription": "Switch accounts or sign in and sign out.",
+      "invalidPassword": "Invalid password",
+      "switchedCompany": "Switched company",
+      "password": "Password",
+      "enterPassword": "Enter password",
+      "validating": "Validating...",
+      "logIn": "Log in",
+      "addAccount": "Add an account"
+    },
     "other": {
       "templates": {
         "table": {

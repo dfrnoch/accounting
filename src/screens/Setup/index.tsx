@@ -4,7 +4,7 @@ import ProgressDots from "./components/Progress";
 import { type ManageCompanyData, createCompany, migrateAndPopulate } from "@/bindings";
 import { LANG } from "@/constants";
 import { open } from "@tauri-apps/plugin-shell";
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import { createForm } from "@tanstack/solid-form";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import Form from "@/shared/components/Form";
@@ -18,8 +18,10 @@ import Section from "@/shared/components/Form/Section";
 import { useSelector } from "@/store";
 
 const SetupWizard: Component = () => {
+  const params = useParams<{ readonly step?: string }>();
+
   const [t] = useI18n();
-  const [currentStep, setCurrentStep] = createSignal(0);
+  const [currentStep, setCurrentStep] = createSignal(Number(params.step) || 0);
   const navigate = useNavigate();
   const updateState = useSelector((state) => state.stateService.updateState);
 
@@ -35,6 +37,8 @@ const SetupWizard: Component = () => {
       zip: "",
       bankAccount: undefined,
       bankIban: undefined,
+      password: undefined,
+      passwordConfirmation: undefined,
     } as ManageCompanyData,
     validatorAdapter: zodValidator(),
     onSubmitInvalid: (e) => {
@@ -61,23 +65,26 @@ const SetupWizard: Component = () => {
   return (
     <div class="flex justify-center items-end w-screen h-screen px-3 pt-37px pb-3" data-tauri-drag-region>
       <div class="absolute top-0 left-0 w-full bg-transparent h-37px z-30 " data-tauri-drag-region>
-        <ProgressDots count={3} active={currentStep()} />
+        <Show when={!params.step}>
+          <ProgressDots count={3} active={currentStep()} />
+        </Show>
       </div>
 
-      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative overflow-auto p-8 flex items-center justify-center">
+      <div class="w-full h-full bg-primary rounded-xl drop-shadow-xl relative p-8 flex items-center justify-center">
         <Show when={currentStep() === 0}>
           <div class="flex flex-col items-center space-y-8 text-white">
             <img src="logo.png" alt="Welcome Icon" class="w-24 h-24" />
             <div class="flex flex-col items-center space-y-3">
               <Title>{t("setup.welcome")}</Title>
-              <p class="text-lg text-center max-w-md">{t("setup.welcome_message")}</p>
+              <p class="text-lg text-center max-w-md text-secondary">{t("setup.welcome_message")}</p>
             </div>
-            <Button
+            <button
+              type="button"
               onClick={() => setCurrentStep(1)}
-              class="mt-8 px-8 py-3 bg-white text-blue-600 rounded-full text-lg font-medium hover:bg-opacity-90 transition-colors"
+              class="mt-8 px-8 py-3 bg-default rounded-full transition-colors text-white"
             >
               {t("setup.get_started")}
-            </Button>
+            </button>
           </div>
         </Show>
 
@@ -105,8 +112,15 @@ const SetupWizard: Component = () => {
         </Show>
 
         <Show when={currentStep() === 2}>
-          <Form>
-            <Title>{t("setup.step2.create_company")}</Title>
+          <Form class="overflow-auto h-full">
+            <div class="gap-4 flex flex-row items-center">
+              <Title>{t("setup.step2.create_company")}</Title>
+              <Show when={params.step}>
+                <Button type="danger" class="w-40" onClick={() => navigate("/login")}>
+                  {t("setup.step2.backToLogin")}
+                </Button>
+              </Show>
+            </div>
             <Section title={t("setup.step2.sections.details")}>
               <form.Field
                 name="name"
@@ -243,6 +257,47 @@ const SetupWizard: Component = () => {
                     type="tel"
                     placeholder="+420 123 456 789"
                     label={t("setup.step2.phone")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.errors}
+                  />
+                )}
+              </form.Field>
+            </Section>
+            <Section title={t("setup.step2.sections.password")}>
+              <form.Field
+                name="password"
+                validators={{ onChange: z.string().min(8).max(100).optional(), onChangeAsyncDebounceMs: 500 }}
+              >
+                {(field) => (
+                  <Input
+                    type="password"
+                    label={t("setup.step2.password")}
+                    defaultValue={field().state.value}
+                    onChange={(data) => field().handleChange(data)}
+                    errors={field().state.meta.errors}
+                  />
+                )}
+              </form.Field>
+
+              <form.Field
+                name="passwordConfirmation"
+                validators={{
+                  onChange: z
+                    .string()
+                    .min(8)
+                    .max(100)
+                    .optional()
+                    .refine((data) => data === form.state.values.password, {
+                      message: t("setup.step2.passwordMatch"),
+                    }),
+                  onChangeAsyncDebounceMs: 500,
+                }}
+              >
+                {(field) => (
+                  <Input
+                    type="password"
+                    label={t("setup.step2.passwordConfirm")}
                     defaultValue={field().state.value}
                     onChange={(data) => field().handleChange(data)}
                     errors={field().state.meta.errors}

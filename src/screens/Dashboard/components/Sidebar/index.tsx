@@ -1,24 +1,20 @@
-import { type Component, For, type JSX, createSignal, onMount } from "solid-js";
+import { type Component, For, type JSX } from "solid-js";
 import SidebarButton from "./Button";
 import SidebarSection from "./Section";
 import { useI18n } from "@/i18n";
 import {
-  FiCheck,
+  FiBriefcase,
   FiClipboard,
   FiDollarSign,
   FiFileMinus,
   FiFileText,
   FiHome,
   FiInbox,
-  FiPlus,
   FiSettings,
   FiUsers,
 } from "solid-icons/fi";
 import { Hr } from "@/shared/components/Menu/Hr";
-import { DisclosureStateChild, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from "terracotta";
-import { type Company, getCompanies } from "@/bindings";
 import { useNavigate } from "@solidjs/router";
-import toast from "solid-toast";
 import { useSelector } from "@/store";
 
 interface SidebarButtonData {
@@ -37,20 +33,6 @@ const Sidebar: Component = () => {
   const navigate = useNavigate();
   const company = useSelector((state) => state.companyService.company);
   const stateService = useSelector((state) => state.stateService);
-
-  const [companies, setCompanies] = createSignal<Company[]>([]);
-  const [selected, setSelected] = createSignal<Company>(company);
-
-  onMount(async () => {
-    const data = await getCompanies(stateService.state.companyId || undefined);
-    setCompanies([company, ...data]);
-  });
-
-  const setCompany = (company: Company) => {
-    stateService.updateState({ companyId: company.id });
-    toast.success("Switched company");
-    navigate("/");
-  };
 
   const sidebarSections: SidebarSectionData[] = [
     {
@@ -102,16 +84,19 @@ const Sidebar: Component = () => {
           {t("sidebar.button.settings")}
         </SidebarButton>
         <Hr />
-        <Listbox value={selected()} onSelectChange={setSelected} defaultOpen={false}>
-          <ListboxButton class="text-sm flex flex-row items-center justify-start gap-2.5 lg:gap-4 hover:bg-[#AFAEAF]/20 dark:hover:bg-neutral-100/15 bg-transparent rounded-[5px] px-2 py-[3px] w-full">
-            <div class="flex h-8 w-8 items-center justify-center lg:h-10 lg:w-10 rounded-full bg-secondary opacity-50">
-              <FiUsers class="w-5 h-5 text-primary" />
-            </div>
-            <span class="block truncate">{company.name}</span>
-          </ListboxButton>
-          <div class="flex flex-col w-full">
-            <div class="relative">
-              <DisclosureStateChild>
+        {/* <Listbox value={selected()} onSelectChange={setSelected} defaultOpen={false}>  */}
+        <div
+          class="text-sm flex flex-row items-center justify-start gap-2.5 lg:gap-4 hover:bg-[#AFAEAF]/20 dark:hover:bg-neutral-100/15 bg-transparent rounded-[5px] px-2 py-[3px] w-full cursor-pointer"
+          onClick={() => navigate("/login")}
+        >
+          <div class="flex h-8 w-8 items-center justify-center lg:h-10 lg:w-10 rounded-full bg-secondary opacity-50">
+            <FiBriefcase class="w-5 h-5 text-primary" />
+          </div>
+          <span class="block truncate">{company.name}</span>
+        </div>
+        {/* <div class="flex flex-col w-full">
+            <div class="relative"> */}
+        {/* <DisclosureStateChild>
                 {({ isOpen }): JSX.Element => (
                   <Transition
                     show={isOpen()}
@@ -197,10 +182,10 @@ const Sidebar: Component = () => {
                     </ListboxOptions>
                   </Transition>
                 )}
-              </DisclosureStateChild>
-            </div>
+              </DisclosureStateChild> */}
+        {/* </div>
           </div>
-        </Listbox>
+        </Listbox> */}
       </div>
     </div>
   );

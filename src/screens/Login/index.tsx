@@ -1,4 +1,5 @@
 import { type Company, getCompanies, validateCompanyPassword } from "@/bindings";
+import { useI18n } from "@/i18n";
 import Button from "@/shared/components/Button";
 import Input from "@/shared/components/Form/Input";
 import { useSelector } from "@/store";
@@ -15,6 +16,7 @@ const Login: Component = () => {
   const [isValidating, setIsValidating] = createSignal<boolean>(false);
   const [passwordError, setPasswordError] = createSignal<string | null>(null);
   const navigate = useNavigate();
+  const [t] = useI18n();
   const stateService = useSelector((state) => state.stateService);
 
   onMount(async () => {
@@ -29,14 +31,14 @@ const Login: Component = () => {
       const isValid = await validateCompanyPassword(company.id, password());
       setIsValidating(false);
       if (!isValid) {
-        setPasswordError("Invalid password");
-        toast.error("Invalid password");
+        setPasswordError(t("pages.login.invalidPassword"));
+        toast.error(t("pages.login.invalidPassword"));
         return;
       }
     }
     stateService.updateState({ companyId: company.id });
-    toast.success("Switched company");
-    navigate("/");
+    toast.success(t("pages.login.switchedCompany"));
+    navigate("/dashboard");
   };
 
   const handleCompanyClick = (companyId: number) => {
@@ -48,8 +50,8 @@ const Login: Component = () => {
   return (
     <div class="w-screen h-screen flex flex-col justify-center items-center" data-tauri-drag-region>
       <div class="w-96 bg-primary rounded-lg shadow-xl flex flex-col items-center justify-between p-6 gap-4">
-        <h2 class="text-2xl font-bold text-primary">Manage Accounts</h2>
-        <p class="text-sm text-secondary -mt-2">Switch accounts or sign in and sign out.</p>
+        <h2 class="text-2xl font-bold text-primary">{t("pages.login.manageAccounts")}</h2>
+        <p class="text-sm text-secondary -mt-2">{t("pages.login.switchAccountsDescription")}</p>
         <div class="overflow-y-auto w-full max-h-80 space-y-3 shadow-inner rounded-lg p-2">
           <For each={companies()}>
             {(company) => (
@@ -87,15 +89,15 @@ const Login: Component = () => {
                       <Show when={company.isProtected}>
                         <Input
                           type="password"
-                          label="Password"
-                          placeholder="Enter password"
+                          label={t("pages.login.password")}
+                          placeholder={t("pages.login.enterPassword")}
                           onChange={(value) => setPassword(value)}
                           errors={passwordError() ? [passwordError()] : undefined}
                           class="w-full"
                         />
                       </Show>
-                      <Button class="w-full" onClick={() => setCompany(company)} disabled={isValidating()}>
-                        {isValidating() ? "Validating..." : "Log in"}
+                      <Button class="w-2/3" onClick={() => setCompany(company)} disabled={isValidating()}>
+                        {isValidating() ? t("pages.login.validating") : t("pages.login.logIn")}
                       </Button>
                     </Motion.div>
                   )}
@@ -104,8 +106,8 @@ const Login: Component = () => {
             )}
           </For>
         </div>
-        <Button class="w-full" onClick={() => navigate("/setup")}>
-          Add an account
+        <Button class="w-full" onClick={() => navigate("/setup/2")}>
+          {t("pages.login.addAccount")}
         </Button>
       </div>
     </div>

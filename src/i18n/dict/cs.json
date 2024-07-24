@@ -11,6 +11,7 @@
       "improve": "Pomozte nám zlepšit"
     },
     "step2": {
+      "backToLogin": "Zpět na přihlášení",
       "create_company": "Pojďme vytvořit firmu",
       "company_name": "Název firmy / podnikatele",
       "CIN": "IČO",
@@ -20,10 +21,14 @@
       "zip": "PSČ",
       "email": "Email",
       "phone": "Telefon",
+      "password": "Heslo",
+      "passwordMatch": "Hesla se neshodují",
+      "passwordConfirm": "Potvrzení hesla",
       "sections": {
         "details": "Detaily",
         "bank": "Bankovní účet",
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "password": "Heslo (Volitelné)"
       },
       "account": "Číslo účtu",
       "iban": "IBAN",
@@ -96,6 +101,17 @@
   },
 
   "pages": {
+    "login": {
+      "manageAccounts": "Správa účtů",
+      "switchAccountsDescription": "Přepínejte mezi účty nebo se přihlašte a odhlašte.",
+      "invalidPassword": "Neplatné heslo",
+      "switchedCompany": "Firma změněna",
+      "password": "Heslo",
+      "enterPassword": "Zadejte heslo",
+      "validating": "Ověřování...",
+      "logIn": "Přihlásit se",
+      "addAccount": "Přidat účet"
+    },
     "other": {
       "templates": {
         "table": {

@@ -40,7 +40,7 @@ render(
     <Router root={App}>
       <Route path="/" component={Loader} />
       <Route path="/print/:id" component={Print} />
-      <Route path="/setup" component={Setup} />
+      <Route path="/setup/:step?" component={Setup} />
       <Route path="/login" component={Login} />
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/" component={Overview} />
@@ -80,7 +80,7 @@ render(
           </Route>
         </Route>
         <Route path="/settings" component={Settings} />
-        <Route path="*" component={() => <Navigate href={"/login"} />} />
+        <Route path="*" component={() => <Navigate href={"/dashboard"} />} />
       </Route>
     </Router>
   ),

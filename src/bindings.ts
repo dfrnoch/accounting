@@ -268,6 +268,9 @@ export type ManageCompanyData = {
 
   bankAccount?: string;
   bankIban?: string;
+
+  password?: string;
+  passwordConfirmation?: string;
 };
 
 export interface Document {
