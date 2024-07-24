@@ -16,10 +16,10 @@ export const StateService = () => {
     const stateString = localStorage.getItem("state");
 
     if (!stateString) {
-      setState({ companyId: 0, platform: await platform() });
+      setState({ companyId: 0, platform: platform() });
     } else {
       const parsedState = JSON.parse(stateString) as unknown as StateService;
-      setState({ ...parsedState, platform: await platform() });
+      setState({ ...parsedState, platform: platform() });
     }
   });
 

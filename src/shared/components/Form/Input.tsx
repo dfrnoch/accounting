@@ -2,7 +2,7 @@ import type { ValidationError } from "@tanstack/solid-form";
 import { For, Show, type Component } from "solid-js";
 
 type TextInputProps = {
-  type: "text" | "date" | "email" | "tel";
+  type: "text" | "date" | "email" | "tel" | "password";
   onChange: (value: string) => void;
   label: string;
   placeholder?: string;

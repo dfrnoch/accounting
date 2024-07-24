@@ -20,6 +20,7 @@ const ClientDetail = lazy(() => import("./screens/Dashboard/pages/Other/Clients/
 const ManageClient = lazy(() => import("./screens/Dashboard/pages/Other/Clients/ManageClient"));
 const Settings = lazy(() => import("./screens/Dashboard/pages/Settings"));
 const Dashboard = lazy(() => import("./screens/Dashboard"));
+const Login = lazy(() => import("./screens/Login"));
 const Setup = lazy(() => import("./screens/Setup"));
 const App = lazy(() => import("./App"));
 const Loader = lazy(() => import("./Loader"));
@@ -40,6 +41,7 @@ render(
       <Route path="/" component={Loader} />
       <Route path="/print/:id" component={Print} />
       <Route path="/setup" component={Setup} />
+      <Route path="/login" component={Login} />
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/" component={Overview} />
         <Route path="/sales">
@@ -78,7 +80,7 @@ render(
           </Route>
         </Route>
         <Route path="/settings" component={Settings} />
-        <Route path="*" component={() => <Navigate href={"/dashboard"} />} />
+        <Route path="*" component={() => <Navigate href={"/login"} />} />
       </Route>
     </Router>
   ),

@@ -155,6 +155,9 @@ export async function migrateAndPopulate() {
 export async function getCompanies(exclude?: number) {
   return await invoke<Company[]>("get_companies", { exclude });
 }
+export async function validateCompanyPassword(id: number, password: string) {
+  return await invoke<boolean>("validate_company_password", { id, password });
+}
 
 export async function getTemplates(indicies: Indicies, templateType?: "INVOICE" | "PROFORMA" | "RECEIVE") {
   return await invoke<Template[]>("get_templates", { companyId: state.companyId, indicies, templateType });
@@ -301,6 +304,8 @@ export type Company = {
 
   bankAccount: string | null;
   bankIban: string | null;
+
+  isProtected: boolean;
 };
 
 export type Template = {

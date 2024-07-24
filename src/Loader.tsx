@@ -8,7 +8,7 @@ const Loader: Component = () => {
 
   const startup = async () => {
     const data = await checkDb();
-    navigate(data === 200 ? "/dashboard" : "/setup");
+    navigate(data === 200 ? "/login" : "/setup");
   };
 
   startup();

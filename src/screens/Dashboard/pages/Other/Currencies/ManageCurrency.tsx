@@ -112,8 +112,7 @@ const ManageCurrency: Component = () => {
           </form.Field>
           <form.Field name="rate" validators={{ onChange: z.number().min(0), onChangeAsyncDebounceMs: 500 }}>
             {(field) => (
-              <Input
-                float
+              <float
                 type="number"
                 label={t("pages.other.currencies.form.rate")}
                 defaultValue={field().state.value}

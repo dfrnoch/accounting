@@ -16,13 +16,13 @@ const Dashboard: ParentComponent = (props) => {
 
   const fetchCompany = async (companyId: number) => {
     if (companyId === 0) {
-      navigate("/setup");
+      navigate("/login");
       return;
     }
 
     const companyData = await getCompany(companyId);
     if (!companyData) {
-      navigate("/setup");
+      navigate("/login");
       toast.error("Company not found");
       return;
     }

@@ -95,6 +95,7 @@ async fn main() {
             commands::db::check_db,
             commands::db::migrate_and_populate,
             commands::company::get_company,
+            commands::company::validate_company_password,
             commands::company::create_company,
             commands::company::get_companies,
             commands::company::delete_company,

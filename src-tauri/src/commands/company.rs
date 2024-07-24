@@ -2,24 +2,41 @@ use crate::company;
 use crate::currency;
 use crate::template;
 use crate::DbState;
+use bcrypt::{hash, DEFAULT_COST};
 use prisma_client_rust::not;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanyWithProtection {
+    id: i32,
+    name: String,
+    email: Option<String>,
+    is_protected: bool,
+}
 
 #[tauri::command]
 pub async fn get_companies(
     client: DbState<'_>,
     exclude: Option<i32>,
-) -> Result<Vec<company::Data>, QueryError> {
-    println!("Getting companies, exluding {:?}", exclude);
-    let data = client
+) -> Result<Vec<CompanyWithProtection>, QueryError> {
+    println!("Getting companies, excluding {:?}", exclude);
+    let companies = client
         .company()
         .find_many(vec![not![company::id::equals(exclude.unwrap_or(999))]])
         .exec()
-        .await;
+        .await?;
 
-    println!("{:?}", data);
-    data
+    Ok(companies
+        .into_iter()
+        .map(|c| CompanyWithProtection {
+            id: c.id,
+            name: c.name,
+            email: c.email,
+            is_protected: c.password.is_some(),
+        })
+        .collect())
 }
 
 #[tauri::command]
@@ -45,9 +62,9 @@ pub struct ManageCompanyData {
     zip: String,
     phone: Option<String>,
     email: Option<String>,
-
     bank_account: Option<String>,
     bank_iban: Option<String>,
+    password: Option<String>,
 }
 
 #[tauri::command]
@@ -56,6 +73,14 @@ pub async fn create_company(
     data: ManageCompanyData,
 ) -> Result<i32, QueryError> {
     debug!("Creating company {:?}", data);
+
+    let password_hash = match data.password {
+        Some(password) => Some(
+            hash(password, DEFAULT_COST).map_err(|e| QueryError::PasswordHashing(e.to_string()))?,
+        ),
+        None => None,
+    };
+
     let company = client
         .company()
         .create(
@@ -70,6 +95,7 @@ pub async fn create_company(
                 company::phone::set(data.phone),
                 company::bank_account::set(data.bank_account),
                 company::bank_iban::set(data.bank_iban),
+                company::password::set(password_hash),
             ],
         )
         .exec()
@@ -166,5 +192,29 @@ pub async fn delete_company(client: DbState<'_>, id: i32) -> Result<(), String> 
     match data {
         Ok(_) => Ok(()),
         Err(e) => Err(e.to_string()),
+    }
+}
+
+#[tauri::command]
+pub async fn validate_company_password(
+    client: DbState<'_>,
+    id: i32,
+    password: String,
+) -> Result<bool, QueryError> {
+    let company = client
+        .company()
+        .find_first(vec![company::id::equals(id)])
+        .exec()
+        .await?;
+
+    match company {
+        Some(c) => {
+            if let Some(hash) = c.password {
+                Ok(bcrypt::verify(password, &hash).unwrap_or(false))
+            } else {
+                Ok(false)
+            }
+        }
+        None => Ok(false),
     }
 }

@@ -17,6 +17,7 @@ model Company {
     currencies Currency[]
     clients    Client[]
     settings   Settings?
+    password   String?
 
     cin   String  @unique // IČO
     vatId String? @unique // DIČ
