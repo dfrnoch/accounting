@@ -231,6 +231,9 @@ export type ManageSettingsData = {
   invoiceCounter: number;
   proformaCounter: number;
   receiveCounter: number;
+
+  password?: string;
+  passwordConfirmation?: string;
 };
 
 export type Settings = {
@@ -269,7 +272,8 @@ export type ManageCompanyData = {
   bankAccount?: string;
   bankIban?: string;
 
-  password?: string;
+  newPassword?: string;
+  oldPassword?: string;
   passwordConfirmation?: string;
 };
 

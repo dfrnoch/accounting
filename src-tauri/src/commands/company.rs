@@ -1,11 +1,14 @@
 use crate::company;
 use crate::currency;
+use crate::error::CommandResult;
+use crate::error::CoreError;
 use crate::template;
 use crate::DbState;
-use bcrypt::{hash, DEFAULT_COST};
+use bcrypt::{hash, verify, DEFAULT_COST};
 use prisma_client_rust::not;
 use prisma_client_rust::QueryError;
 use serde::Deserialize;
+use serde::Serialize;
 
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -39,16 +42,54 @@ pub async fn get_companies(
         .collect())
 }
 
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanyDataWithoutPassword {
+    id: i32,
+    name: String,
+    cin: String,
+    vat_id: Option<String>,
+    address: String,
+    city: String,
+    zip: String,
+    phone: Option<String>,
+    email: Option<String>,
+    bank_account: Option<String>,
+    bank_iban: Option<String>,
+    is_protected: bool,
+}
+
+impl From<company::Data> for CompanyDataWithoutPassword {
+    fn from(data: company::Data) -> Self {
+        CompanyDataWithoutPassword {
+            id: data.id,
+            name: data.name,
+            cin: data.cin,
+            vat_id: data.vat_id,
+            address: data.address,
+            city: data.city,
+            zip: data.zip,
+            phone: data.phone,
+            email: data.email,
+            bank_account: data.bank_account,
+            bank_iban: data.bank_iban,
+            is_protected: data.password.is_some(),
+        }
+    }
+}
+
 #[tauri::command]
 pub async fn get_company(
     client: DbState<'_>,
     id: Option<i32>,
-) -> Result<Option<company::Data>, QueryError> {
-    client
+) -> CommandResult<Option<CompanyDataWithoutPassword>> {
+    let company_data = client
         .company()
         .find_first(vec![company::id::equals(id.unwrap_or(1))])
         .exec()
-        .await
+        .await?;
+
+    Ok(company_data.map(CompanyDataWithoutPassword::from))
 }
 
 #[derive(Deserialize, Debug)]
@@ -64,7 +105,8 @@ pub struct ManageCompanyData {
     email: Option<String>,
     bank_account: Option<String>,
     bank_iban: Option<String>,
-    password: Option<String>,
+    new_password: Option<String>,
+    old_password: Option<String>,
 }
 
 #[tauri::command]
@@ -74,7 +116,7 @@ pub async fn create_company(
 ) -> Result<i32, QueryError> {
     debug!("Creating company {:?}", data);
 
-    let password_hash = match data.password {
+    let password_hash = match data.new_password {
         Some(password) => Some(
             hash(password, DEFAULT_COST).map_err(|e| QueryError::PasswordHashing(e.to_string()))?,
         ),
@@ -120,7 +162,7 @@ pub async fn create_company(
         .create(
             "Default Invoice".to_string(),
             "
-            
+            TODO
             
             "
             .to_string(),
@@ -145,39 +187,59 @@ pub async fn create_company(
 
     Ok(company.id)
 }
-
 #[tauri::command]
 pub async fn update_company(
     client: DbState<'_>,
     id: i32,
     data: ManageCompanyData,
-) -> Result<(), QueryError> {
+) -> CommandResult<()> {
     debug!("Updating company");
-    println!("{:?}", data);
-    let data = client
-        .company()
-        .update(
-            company::id::equals(id),
-            vec![
-                company::name::set(data.name),
-                company::cin::set(data.cin),
-                company::vat_id::set(data.vat_id),
-                company::address::set(data.address),
-                company::city::set(data.city),
-                company::zip::set(data.zip),
-                company::phone::set(data.phone),
-                company::email::set(data.email),
-                company::bank_account::set(data.bank_account),
-                company::bank_iban::set(data.bank_iban),
-            ],
-        )
-        .exec()
-        .await;
 
-    match data {
-        Ok(_) => Ok(()),
-        Err(e) => Err(e),
+    let current_company = client
+        .company()
+        .find_unique(company::id::equals(id))
+        .exec()
+        .await?
+        .ok_or(CoreError::CompanyNotFound)?;
+
+    if current_company.password.is_some() {
+        if let Some(old_password) = data.old_password {
+            let password_matches = verify(old_password, &current_company.password.unwrap())
+                .map_err(|e| CoreError::PasswordHashingError(e.to_string()))?;
+            if !password_matches {
+                return Err(CoreError::PasswordMismatch.into());
+            }
+        } else {
+            return Err(CoreError::OldPasswordRequired.into());
+        }
     }
+
+    let mut update_params = vec![
+        company::name::set(data.name),
+        company::cin::set(data.cin),
+        company::vat_id::set(data.vat_id),
+        company::address::set(data.address),
+        company::city::set(data.city),
+        company::zip::set(data.zip),
+        company::phone::set(data.phone),
+        company::email::set(data.email),
+        company::bank_account::set(data.bank_account),
+        company::bank_iban::set(data.bank_iban),
+    ];
+
+    if let Some(new_password) = data.new_password {
+        let password_hash = hash(new_password, DEFAULT_COST)
+            .map_err(|e| CoreError::PasswordHashingError(e.to_string()))?;
+        update_params.push(company::password::set(Some(password_hash)));
+    }
+
+    client
+        .company()
+        .update(company::id::equals(id), update_params)
+        .exec()
+        .await?;
+
+    Ok(())
 }
 
 #[tauri::command]

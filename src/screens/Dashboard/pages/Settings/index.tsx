@@ -6,6 +6,7 @@ import Input from "@/shared/components/Form/Input";
 import PageHeader from "../../components/PageHeader";
 import Form from "@/shared/components/Form";
 import { createForm } from "@tanstack/solid-form";
+import { z } from "zod";
 import {
   type ManageSettingsData,
   getCurrencies,
@@ -22,6 +23,7 @@ import Container from "../../components/Container";
 import Section from "@/shared/components/Form/Section";
 import LanguageBox from "@/screens/Setup/components/LanguageBox";
 import { LANG } from "@/constants";
+import { zodValidator } from "@tanstack/zod-form-adapter";
 
 const Settings: Component = () => {
   const [t] = useI18n();
@@ -205,8 +207,8 @@ const DocumentPage: Component = () => {
 
 const CompanyPage: Component = () => {
   const [t] = useI18n();
-
   const companyService = useSelector((state) => state.companyService);
+  const [isProtected, setIsProtected] = createSignal(companyService.company.isProtected);
 
   const form = createForm(() => ({
     defaultValues: {
@@ -220,11 +222,18 @@ const CompanyPage: Component = () => {
       email: companyService.company.email,
       bankAccount: companyService.company.bankAccount,
       bankIban: companyService.company.bankIban,
+      oldPassword: undefined,
+      newPassword: undefined,
     } as ManageCompanyData,
+    onSubmitInvalid: (e) => {
+      console.log("invalid", e.formApi.state.errors);
+    },
+    validatorAdapter: zodValidator(),
     onSubmit: async (data) => {
       try {
         await updateCompany(data.value);
         await companyService.updateCompany();
+        setIsProtected(companyService.company.isProtected);
         toast.success(t("settings.general.toast.updated"));
       } catch (e) {
         console.error(e);
@@ -337,6 +346,46 @@ const CompanyPage: Component = () => {
               label={t("settings.general.iban")}
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
+            />
+          )}
+        </form.Field>
+      </Section>
+      <Section title={t("settings.general.sections.password")}>
+        <form.Field
+          name="oldPassword"
+          validators={{
+            onChange: isProtected()
+              ? z.string().min(1, t("settings.general.oldPasswordRequired"))
+              : z.string().optional(),
+            onChangeAsyncDebounceMs: 500,
+          }}
+        >
+          {(field) => (
+            <Input
+              type="password"
+              label={t("settings.general.oldPassword")}
+              defaultValue={field().state.value}
+              onChange={(data) => field().handleChange(data)}
+              errors={field().state.meta.errors}
+              disabled={!isProtected()}
+            />
+          )}
+        </form.Field>
+
+        <form.Field
+          name="newPassword"
+          validators={{
+            onChange: z.string().min(8).max(100).optional(),
+            onChangeAsyncDebounceMs: 500,
+          }}
+        >
+          {(field) => (
+            <Input
+              type="password"
+              label={t("settings.general.newPassword")}
+              defaultValue={field().state.value}
+              onChange={(data) => field().handleChange(data)}
+              errors={field().state.meta.errors}
             />
           )}
         </form.Field>

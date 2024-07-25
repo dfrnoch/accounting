@@ -10,6 +10,7 @@ type TextInputProps = {
   errors?: ValidationError[];
   float?: boolean;
   class?: string;
+  disabled?: boolean;
 };
 
 type NumberInputProps = {
@@ -21,6 +22,7 @@ type NumberInputProps = {
   errors?: ValidationError[];
   float?: boolean;
   class?: string;
+  disabled?: boolean;
 };
 
 type InputProps = TextInputProps | NumberInputProps;
@@ -44,11 +46,13 @@ const Input: Component<InputProps> = (props) => {
         classList={{
           "border-danger ": props.errors ? props.errors.length > 0 : false,
           "border-default": !props.errors || props.errors.length === 0,
+          "cursor-not-allowed": props.disabled,
         }}
         onInput={handleInput}
         step={props.float ? 0.1 : undefined}
         placeholder={props.placeholder}
         value={props.defaultValue ? props.defaultValue : ""}
+        disabled={props.disabled}
       />
       <Show when={props.errors}>
         <For each={props.errors}>{(error) => <span class="text-xs text-danger">{error?.toString()}</span>}</For>

@@ -6,18 +6,22 @@ use thiserror::Error;
 pub enum CoreError {
     #[error("Prisma New Client Error")]
     PrismaNewClientError(#[from] prisma_client_rust::NewClientError),
-
     #[error("Prisma Query Error")]
     PrismaQueryError(#[from] prisma_client_rust::QueryError),
-
     #[error("Tokio IO Error")]
     TokioError(#[from] tokio::io::Error),
-
     #[error("Tokio Join Error")]
     TokioJoinError(#[from] tokio::task::JoinError),
-
     #[error("Db Push Error")]
-    DbPushError(#[from] DbPushError),
+    DbPushError(#[from] prisma_client_rust::migrations::DbPushError),
+    #[error("Password mismatch")]
+    PasswordMismatch,
+    #[error("Old password required")]
+    OldPasswordRequired,
+    #[error("Password hashing error: {0}")]
+    PasswordHashingError(String),
+    #[error("Company not found")]
+    CompanyNotFound,
 }
 
 impl Serialize for CoreError {

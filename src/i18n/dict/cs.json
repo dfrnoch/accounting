@@ -296,6 +296,9 @@
 
   "settings": {
     "general": {
+      "newPassword": "Nové heslo",
+      "oldPassword": "Staré heslo",
+      "oldPasswordRequired": "Staré heslo je povinné",
       "title": "Obecné",
       "company_name": "Název firmy / podnikatele",
       "CIN": "IČO",
@@ -308,9 +311,10 @@
       "sections": {
         "details": "Detaily",
         "bank": "Bankovní účet",
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "password": "Heslo"
       },
-      "toas": {
+      "toast": {
         "updated": "Firma byla úspěšně aktualizována",
         "updateFailed": "Nepodařilo se uložit firmu"
       },

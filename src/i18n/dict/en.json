@@ -299,6 +299,10 @@
   },
   "settings": {
     "general": {
+      "newPassword": "New password",
+      "oldPassword": "Old password",
+      "oldPasswordRequired": "Old password is required",
+
       "title": "General",
       "create_company": "Let's create your company",
       "company_name": "Company name",
@@ -313,7 +317,8 @@
       "sections": {
         "details": "Details",
         "bank": "Bank details",
-        "contact": "Contact details"
+        "contact": "Contact details",
+        "password": "Password"
       },
       "account": "Account number",
       "iban": "IBAN",

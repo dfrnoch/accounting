@@ -37,7 +37,7 @@ const SetupWizard: Component = () => {
       zip: "",
       bankAccount: undefined,
       bankIban: undefined,
-      password: undefined,
+      newPassword: undefined,
       passwordConfirmation: undefined,
     } as ManageCompanyData,
     validatorAdapter: zodValidator(),
@@ -266,7 +266,7 @@ const SetupWizard: Component = () => {
             </Section>
             <Section title={t("setup.step2.sections.password")}>
               <form.Field
-                name="password"
+                name="newPassword"
                 validators={{ onChange: z.string().min(8).max(100).optional(), onChangeAsyncDebounceMs: 500 }}
               >
                 {(field) => (
@@ -288,7 +288,7 @@ const SetupWizard: Component = () => {
                     .min(8)
                     .max(100)
                     .optional()
-                    .refine((data) => data === form.state.values.password, {
+                    .refine((data) => data === form.state.values.newPassword, {
                       message: t("setup.step2.passwordMatch"),
                     }),
                   onChangeAsyncDebounceMs: 500,
