@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h2>⚠️ Heavily in development (Nothing works rn)</h2>
+  <h2>⚠️ Heavily in development (POC stage)</h2>
 
   <img height="170x" src=".github/assets/icon.png" />
 
