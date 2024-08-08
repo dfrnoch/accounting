@@ -21,7 +21,7 @@ import SearchDropdown from "@/shared/components/Form/SearchDropdown";
 import Button from "@/shared/components/Button";
 import Container from "../../components/Container";
 import Section from "@/shared/components/Form/Section";
-import LanguageBox from "@/screens/Setup/components/LanguageBox";
+import Box from "@/screens/Setup/components/Box";
 import { LANG } from "@/constants";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 
@@ -61,12 +61,12 @@ const Settings: Component = () => {
         </Show>
         <Show when={currentSection() === 2}>
           <div class="flex gap-4 justify-center items-center mt-20">
-            <LanguageBox onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS}>
-              🇨🇿
-            </LanguageBox>
-            <LanguageBox onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN}>
-              🇬🇧
-            </LanguageBox>
+            <Box onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS} icon="🇨🇿">
+              Čeština
+            </Box>
+            <Box onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN} icon="🇬🇧">
+              English
+            </Box>
           </div>
         </Show>
       </div>

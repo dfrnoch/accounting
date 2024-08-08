@@ -1,5 +1,5 @@
 import { locale, setLocale, useI18n } from "@/i18n";
-import { createSignal, type Component, Show, onMount } from "solid-js";
+import { createSignal, type Component, Show, onMount, For } from "solid-js";
 import ProgressDots from "./components/Progress";
 import { type ManageCompanyData, createCompany, migrateAndPopulate } from "@/bindings";
 import { LANG } from "@/constants";
@@ -9,7 +9,7 @@ import { createForm } from "@tanstack/solid-form";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import Form from "@/shared/components/Form";
 import Input from "@/shared/components/Form/Input";
-import LanguageBox from "./components/LanguageBox";
+import Box from "./components/Box";
 import Button from "@/shared/components/Button";
 import { Title } from "./components/Title";
 import { z } from "zod";
@@ -19,11 +19,18 @@ import { useSelector } from "@/store";
 
 const SetupWizard: Component = () => {
   const params = useParams<{ readonly step?: string }>();
+  const [selectedTemplate, setSelectedTemplate] = createSignal(null);
 
   const [t] = useI18n();
   const [currentStep, setCurrentStep] = createSignal(Number(params.step) || 0);
   const navigate = useNavigate();
   const updateState = useSelector((state) => state.stateService.updateState);
+
+  const templates = [
+    { id: 1, name: t("setup.step2.template.basic"), icon: "📄" },
+    { id: 2, name: t("setup.step2.template.modern"), icon: "📊" },
+    { id: 3, name: t("setup.step2.template.creative"), icon: "🎨" },
+  ];
 
   const form = createForm(() => ({
     defaultValues: {
@@ -93,12 +100,12 @@ const SetupWizard: Component = () => {
             <Title>{t("setup.step1.select_language")}</Title>
             <div>
               <div class="flex gap-4">
-                <LanguageBox onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS}>
-                  🇨🇿
-                </LanguageBox>
-                <LanguageBox onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN}>
-                  🇬🇧
-                </LanguageBox>
+                <Box onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS} icon="🇨🇿">
+                  Čeština
+                </Box>
+                <Box onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN} icon="🇬🇧">
+                  English
+                </Box>
               </div>
               <p
                 class="text-primary text-center cursor-pointer text-lightgrey mt-2"
@@ -304,6 +311,21 @@ const SetupWizard: Component = () => {
                   />
                 )}
               </form.Field>
+            </Section>
+            <Section title={t("setup.step2.sections.template")}>
+              <div class="grid grid-cols-3 gap-4">
+                <For each={templates}>
+                  {(template) => (
+                    <Box
+                      onClick={() => setSelectedTemplate(template)}
+                      active={selectedTemplate() === template}
+                      icon={template.icon}
+                    >
+                      {template.name}
+                    </Box>
+                  )}
+                </For>
+              </div>
             </Section>
             <Button class="my-8" onClick={form.handleSubmit}>
               {t("setup.finalize")}

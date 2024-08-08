@@ -24,8 +24,13 @@
       "password": "Password",
       "passwordMatch": "Passwords do not match",
       "passwordConfirm": "Confirm password",
-
+      "template": {
+        "basic": "Basic",
+        "creative": "Creative",
+        "modern": "Modern"
+      },
       "sections": {
+        "template": "Template style",
         "details": "Details",
         "bank": "Bank details",
         "contact": "Contact details",

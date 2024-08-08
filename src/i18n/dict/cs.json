@@ -24,7 +24,13 @@
       "password": "Heslo",
       "passwordMatch": "Hesla se neshodují",
       "passwordConfirm": "Potvrzení hesla",
+      "template": {
+        "basic": "Základní",
+        "creative": "Kreativní",
+        "modern": "Moderní"
+      },
       "sections": {
+        "template": "Styl šablony",
         "details": "Detaily",
         "bank": "Bankovní účet",
         "contact": "Kontakt",

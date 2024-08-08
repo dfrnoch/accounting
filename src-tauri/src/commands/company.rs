@@ -163,7 +163,6 @@ pub async fn create_company(
             "Default Invoice".to_string(),
             "
             TODO
-            
             "
             .to_string(),
             company::id::equals(company.id),

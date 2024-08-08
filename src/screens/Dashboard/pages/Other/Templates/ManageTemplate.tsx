@@ -20,12 +20,13 @@ import { liquid } from "@codemirror/lang-liquid";
 import { material } from "@uiw/codemirror-theme-material";
 import { createTemplate, deleteTemplate, getTemplate, updateTemplate } from "@/bindings";
 import toast from "solid-toast";
-import { FiList, FiSettings, FiTrash } from "solid-icons/fi";
+import { FiEye, FiList, FiSettings, FiTrash } from "solid-icons/fi";
 import TemplateHint from "@/screens/Dashboard/components/TemplateHint";
 import { createForm } from "@tanstack/solid-form";
 import Form from "@/shared/components/Form";
 import Section from "@/shared/components/Form/Section";
 import Input from "@/shared/components/Form/Input";
+import PdfRenderer from "@/shared/components/PdfRenderer";
 import Dropdown from "@/shared/components/Form/Dropdown";
 
 const ManageTemplate: Component = () => {
@@ -34,8 +35,43 @@ const ManageTemplate: Component = () => {
   const [t] = useI18n();
   const [showSettings, setShowSettings] = createSignal(false);
   const [showHints, setShowHints] = createSignal(false);
+  const [showPreview, setShowPreview] = createSignal(false);
 
-  const [templateCode, setTemplateCode] = createSignal(`
+  const mockData = {
+    number: "INV-123",
+    issueDate: "2023-01-01T00:00:00.000Z",
+    dueDate: "2023-01-15T00:00:00.000Z",
+    client: {
+      name: "John Doe",
+      cin: "123456789",
+      vatId: "US12345678",
+      address: "123 Main St",
+      city: "Metropolis",
+      zip: "12345",
+      email: "john.doe@example.com",
+      phone: "+1234567890",
+      bankAccount: "123456789012345",
+      IBAN: "US123456789012345",
+    },
+    company: {
+      name: "Example Corp",
+      cin: "987654321",
+      vatId: "US98765432",
+      address: "456 Elsewhere St",
+      city: "Gotham",
+      zip: "54321",
+      email: "info@example.com",
+      phone: "+0987654321",
+      bankAccount: "543210987654321",
+      IBAN: "US543210987654321",
+    },
+    items: [
+      { description: "Product 1", quantity: 2, price: 19.99 },
+      { description: "Service 1", quantity: 5, price: 49.99 },
+    ],
+    currency: { code: "USD" },
+    template: {
+      html: `
     <div class="bg-white p-8 rounded shadow">
       <h1 class="text-2xl font-bold mb-4">Invoice</h1>
       
@@ -98,7 +134,11 @@ const ManageTemplate: Component = () => {
         <p class="text-xl font-bold">Total: {{ items | map: 'price' | sum }} {{ currency.code }}</p>
       </div>
     </div>
-  `);
+  `,
+    },
+  };
+
+  const [templateCode, setTemplateCode] = createSignal(mockData.template.html);
 
   const form = createForm<{
     name: string;
@@ -160,6 +200,9 @@ const ManageTemplate: Component = () => {
           <HeaderButton buttonType="secondary" onClick={() => setShowHints(!showHints())}>
             <FiList />
           </HeaderButton>,
+          <HeaderButton buttonType="secondary" onClick={() => setShowPreview(!showPreview())}>
+            <FiEye />
+          </HeaderButton>,
           <Show when={params.id}>
             <HeaderButton
               buttonType="secondary"
@@ -217,6 +260,13 @@ const ManageTemplate: Component = () => {
           </Form>
         </SidePopup>
       </div>
+      <Show when={showPreview()}>
+        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center ">
+          <div class="bg-white rounded max-w-4xl p-4 shadow-xl w-full max-h-full overflow-auto">
+            <PdfRenderer data={mockData} />
+          </div>
+        </div>
+      </Show>
     </>
   );
 };

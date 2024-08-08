@@ -41,7 +41,7 @@ const Dashboard: ParentComponent = (props) => {
         <Show when={company()}>
           <Sidebar />
           <div
-            class="overflow-y-auto mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary"
+            class="overflow-y-auto mx-auto w-full h-screen pt-40px no-scrollbar bg-primary text-primary relative"
             classList={{
               "rounded-tl-xl": state.platform === "windows",
             }}
