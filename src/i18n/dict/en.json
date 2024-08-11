@@ -73,7 +73,8 @@
         "save": "Save",
         "dataHints": "Data Hints",
         "sections": {
-          "information": "Template Information"
+          "information": "Template Information",
+          "selectTemplate": "Select Template"
         },
         "name": "Name",
         "namePlaceholder": "Invoice",

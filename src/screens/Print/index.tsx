@@ -1,6 +1,7 @@
 import { getPrintDocument } from "@/bindings";
 import PdfRenderer from "@/shared/components/PdfRenderer";
 import { useParams } from "@solidjs/router";
+import "@/styles/tw.css";
 import { Show, Suspense, createResource, type Component } from "solid-js";
 
 const Print: Component = () => {

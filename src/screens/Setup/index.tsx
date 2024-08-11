@@ -9,7 +9,7 @@ import { createForm } from "@tanstack/solid-form";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import Form from "@/shared/components/Form";
 import Input from "@/shared/components/Form/Input";
-import Box from "./components/Box";
+import Box from "../../shared/components/Box";
 import Button from "@/shared/components/Button";
 import { Title } from "./components/Title";
 import { z } from "zod";

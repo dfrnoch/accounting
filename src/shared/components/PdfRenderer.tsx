@@ -2,6 +2,7 @@ import { type Component, createSignal, onMount } from "solid-js";
 import { Liquid } from "liquidjs";
 import type { GetPrintDocumentResult } from "@/bindings";
 import { format } from "date-fns";
+import "@/styles/print.css";
 
 interface PdfRendererProps {
   data: GetPrintDocumentResult | undefined;

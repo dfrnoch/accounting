@@ -8,6 +8,7 @@ import {
   type Component,
   Show,
   type ParentComponent,
+  For,
 } from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
 import { useI18n } from "@/i18n";
@@ -28,6 +29,8 @@ import Section from "@/shared/components/Form/Section";
 import Input from "@/shared/components/Form/Input";
 import PdfRenderer from "@/shared/components/PdfRenderer";
 import Dropdown from "@/shared/components/Form/Dropdown";
+import Box from "@/shared/components/Box";
+import { templatesHtml } from "@/constants";
 
 const ManageTemplate: Component = () => {
   const params = useParams<{ readonly id?: string }>();
@@ -37,108 +40,13 @@ const ManageTemplate: Component = () => {
   const [showHints, setShowHints] = createSignal(false);
   const [showPreview, setShowPreview] = createSignal(false);
 
-  const mockData = {
-    number: "INV-123",
-    issueDate: "2023-01-01T00:00:00.000Z",
-    dueDate: "2023-01-15T00:00:00.000Z",
-    client: {
-      name: "John Doe",
-      cin: "123456789",
-      vatId: "US12345678",
-      address: "123 Main St",
-      city: "Metropolis",
-      zip: "12345",
-      email: "john.doe@example.com",
-      phone: "+1234567890",
-      bankAccount: "123456789012345",
-      IBAN: "US123456789012345",
-    },
-    company: {
-      name: "Example Corp",
-      cin: "987654321",
-      vatId: "US98765432",
-      address: "456 Elsewhere St",
-      city: "Gotham",
-      zip: "54321",
-      email: "info@example.com",
-      phone: "+0987654321",
-      bankAccount: "543210987654321",
-      IBAN: "US543210987654321",
-    },
-    items: [
-      { description: "Product 1", quantity: 2, price: 19.99 },
-      { description: "Service 1", quantity: 5, price: 49.99 },
-    ],
-    currency: { code: "USD" },
-    template: {
-      html: `
-    <div class="bg-white p-8 rounded shadow">
-      <h1 class="text-2xl font-bold mb-4">Invoice</h1>
-      
-      <div class="mb-8"> 
-        <p class="text-gray-600">Invoice Number: {{ number }}</p>
-        <p class="text-gray-600">Issue Date: {{ issueDate }}</p>
-        <p class="text-gray-600">Due Date: {{ dueDate }}</p>
-      </div>
-        
-      <div class="grid grid-cols-2 gap-8 mb-8">
-        <div>
-          <h2 class="text-xl font-bold mb-2">Client Details</h2>
-          <p>{{ client.name }}</p>
-          <p>CIN: {{ client.cin }}</p>
-          <p>VAT ID: {{ client.vatId }}</p>
-          <p>{{ client.address }}</p>
-          <p>{{ client.city }}, {{ client.zip }}</p>
-          <p>Email: {{ client.email }}</p>
-          <p>Phone: {{ client.phone }}</p>
-          <p>Bank Account: {{ client.bankAccount }}</p>
-          <p>IBAN: {{ client.IBAN }}</p>
-        </div>
-        
-        <div>
-          <h2 class="text-xl font-bold mb-2">Company Details</h2>
-          <p>{{ company.name }}</p>
-          <p>CIN: {{ company.cin }}</p>
-          <p>VAT ID: {{ company.vatId }}</p>
-          <p>{{ company.address }}</p>
-          <p>{{ company.city }}, {{ company.zip }}</p>
-          <p>Email: {{ company.email }}</p>
-          <p>Phone: {{ company.phone }}</p>
-          <p>Bank Account: {{ company.bankAccount }}</p>
-          <p>IBAN: {{ company.IBAN }}</p>
-        </div>
-      </div>
-      
-      <table class="w-full mb-8">
-        <thead>
-          <tr class="bg-gray-100">
-            <th class="px-4 py-2">Description</th>
-            <th class="px-4 py-2">Quantity</th>
-            <th class="px-4 py-2">Price</th>
-            <th class="px-4 py-2">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
-            <tr>
-              <td class="border px-4 py-2">{{ item.description }}</td>
-              <td class="border px-4 py-2">{{ item.quantity }}</td>
-              <td class="border px-4 py-2">{{ item.price }} {{ currency.code }}</td>
-              <td class="border px-4 py-2">{{ item.quantity | times: item.price }} {{ currency.code }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      
-      <div class="text-right">
-        <p class="text-xl font-bold">Total: {{ items | map: 'price' | sum }} {{ currency.code }}</p>
-      </div>
-    </div>
-  `,
-    },
-  };
+  const templates = [
+    { id: 1, name: t("setup.step2.template.basic"), icon: "📄" },
+    { id: 2, name: t("setup.step2.template.modern"), icon: "📊" },
+    { id: 3, name: t("setup.step2.template.creative"), icon: "🎨" },
+  ];
 
-  const [templateCode, setTemplateCode] = createSignal(mockData.template.html);
+  const [templateCode, setTemplateCode] = createSignal("");
 
   const form = createForm<{
     name: string;
@@ -200,9 +108,9 @@ const ManageTemplate: Component = () => {
           <HeaderButton buttonType="secondary" onClick={() => setShowHints(!showHints())}>
             <FiList />
           </HeaderButton>,
-          <HeaderButton buttonType="secondary" onClick={() => setShowPreview(!showPreview())}>
-            <FiEye />
-          </HeaderButton>,
+          // <HeaderButton buttonType="secondary" onClick={() => setShowPreview(!showPreview())}>
+          //   <FiEye />
+          // </HeaderButton>,
           <Show when={params.id}>
             <HeaderButton
               buttonType="secondary"
@@ -257,16 +165,25 @@ const ManageTemplate: Component = () => {
                 )}
               </form.Field>
             </Section>
+            <Section title={t("pages.other.templates.sections.selectTemplate")} columns={1}>
+              <For each={templates}>
+                {(template) => (
+                  <Box onClick={() => setTemplateCode(templatesHtml.cz[1])} icon={template.icon}>
+                    {template.name}
+                  </Box>
+                )}
+              </For>
+            </Section>
           </Form>
         </SidePopup>
       </div>
-      <Show when={showPreview()}>
+      {/* <Show when={showPreview()}>
         <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center ">
           <div class="bg-white rounded max-w-4xl p-4 shadow-xl w-full max-h-full overflow-auto">
             <PdfRenderer data={mockData} />
           </div>
         </div>
-      </Show>
+      </Show> */}
     </>
   );
 };

@@ -127,7 +127,8 @@
         "save": "Uložit",
         "dataHints": "Nápověda dat",
         "sections": {
-          "information": "Informace o šabloně"
+          "information": "Informace o šabloně",
+          "selectTemplate": "Vyberte šablonu"
         },
         "name": "Název",
         "namePlaceholder": "Faktura",

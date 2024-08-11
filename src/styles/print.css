@@ -1,0 +1,9 @@
+.print {
+    width: 21cm !important;
+    height: 296mm !important;
+    padding: 2rem;
+    margin: 0;
+    color: black;
+    background-color: white;
+    print-color-adjust: exact !important;
+}
