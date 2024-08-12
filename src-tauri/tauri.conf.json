@@ -81,7 +81,7 @@
         "title": "Accounting",
         "width": 900,
         "height": 600,
-        "minWidth": 800,
+        "minWidth": 900,
         "minHeight": 550,
         "transparent": true,
         "titleBarStyle": "Overlay",

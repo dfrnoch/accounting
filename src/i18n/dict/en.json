@@ -42,7 +42,7 @@
         "retrieve_by_cin": "After entering your CIN, we will try to retrieve your company information from the government database."
       }
     },
-    "error_creating_ompany": "Error creating company",
+    "error_creating_company": "Error creating company",
     "company_created": "Company created"
   },
   "table": {
@@ -158,7 +158,8 @@
         "number": "Number",
         "client": "Client",
         "total": "Price",
-        "date": "Issue Date"
+        "date": "Issue Date",
+        "status": "Status"
       },
       "document": {
         "title": {

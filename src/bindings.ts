@@ -276,6 +276,7 @@ export type ManageCompanyData = {
   newPassword?: string;
   oldPassword?: string;
   passwordConfirmation?: string;
+  templateCode?: string;
 };
 
 export interface Document {

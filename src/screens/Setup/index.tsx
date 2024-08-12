@@ -2,7 +2,7 @@ import { locale, setLocale, useI18n } from "@/i18n";
 import { createSignal, type Component, Show, onMount, For } from "solid-js";
 import ProgressDots from "./components/Progress";
 import { type ManageCompanyData, createCompany, migrateAndPopulate } from "@/bindings";
-import { LANG } from "@/constants";
+import { LANG, templatesHtml } from "@/constants";
 import { open } from "@tauri-apps/plugin-shell";
 import { useNavigate, useParams } from "@solidjs/router";
 import { createForm } from "@tanstack/solid-form";
@@ -19,7 +19,7 @@ import { useSelector } from "@/store";
 
 const SetupWizard: Component = () => {
   const params = useParams<{ readonly step?: string }>();
-  const [selectedTemplate, setSelectedTemplate] = createSignal(null);
+  const [selectedTemplate, setSelectedTemplate] = createSignal(1);
 
   const [t] = useI18n();
   const [currentStep, setCurrentStep] = createSignal(Number(params.step) || 0);
@@ -46,7 +46,8 @@ const SetupWizard: Component = () => {
       bankIban: undefined,
       newPassword: undefined,
       passwordConfirmation: undefined,
-    } as ManageCompanyData,
+      templateCode: templatesHtml[locale() === "cs-CZ" ? "cz" : "en"][0].code,
+    } as ManageCompanyData & { templateCode: string },
     validatorAdapter: zodValidator(),
     onSubmitInvalid: (e) => {
       console.log("invalid", e.formApi.state.errors);
@@ -60,7 +61,7 @@ const SetupWizard: Component = () => {
         navigate("/");
       } catch (error) {
         console.error("Error creating company:", error);
-        toast.error(t("setup.error_creating_ompany"));
+        toast.error(t("setup.error_creating_company"));
       }
     },
   }));
@@ -68,6 +69,13 @@ const SetupWizard: Component = () => {
   onMount(async () => {
     await migrateAndPopulate();
   });
+
+  const handleTemplateSelection = (templateId: number) => {
+    setSelectedTemplate(templateId);
+    const lang = locale() === LANG.CZ ? "cz" : "en";
+    const selectedTemplateCode = templatesHtml[lang].find((t) => t.id === templateId)?.code || "";
+    form.setFieldValue("templateCode", selectedTemplateCode);
+  };
 
   return (
     <div class="flex justify-center items-end w-screen h-screen px-3 pt-37px pb-3" data-tauri-drag-region>
@@ -100,7 +108,7 @@ const SetupWizard: Component = () => {
             <Title>{t("setup.step1.select_language")}</Title>
             <div>
               <div class="flex gap-4">
-                <Box onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS} icon="🇨🇿">
+                <Box onClick={() => setLocale(LANG.CZ)} active={locale() === LANG.CZ} icon="🇨🇿">
                   Čeština
                 </Box>
                 <Box onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN} icon="🇬🇧">
@@ -317,8 +325,8 @@ const SetupWizard: Component = () => {
                 <For each={templates}>
                   {(template) => (
                     <Box
-                      onClick={() => setSelectedTemplate(template)}
-                      active={selectedTemplate() === template}
+                      onClick={() => handleTemplateSelection(template.id)}
+                      active={selectedTemplate() === template.id}
                       icon={template.icon}
                     >
                       {template.name}

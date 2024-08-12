@@ -7,5 +7,5 @@ export type Dict = Flatten<typeof en>;
 
 export default {
   [LANG.EN]: en,
-  [LANG.CS]: cs,
+  [LANG.CZ]: cs,
 };

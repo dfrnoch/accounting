@@ -128,13 +128,13 @@ model Settings {
     defaultTemplateId Int
     // tax               Float
 
-    invoicePrefix  String @default("I202400000")
+    invoicePrefix  String @default("I{FULL_YEAR}XXX")
     invoiceCounter Int    @default(0)
 
-    proformaPrefix  String @default("P")
+    proformaPrefix  String @default("P{FULL_YEAR}XXX")
     proformaCounter Int    @default(0)
 
-    receivePrefix  String @default("R")
+    receivePrefix  String @default("R{FULL_YEAR}XXX")
     receiveCounter Int    @default(0)
 }
 

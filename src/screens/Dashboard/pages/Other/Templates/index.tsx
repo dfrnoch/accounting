@@ -30,17 +30,20 @@ const Templates: Component = () => {
           {
             field: "templateType",
             header: t("pages.other.templates.table.type"),
-            component: (item) => (
-              <StatusIcon>
-                {(item.templateType as string) === "INVOICE"
-                  ? t("pages.other.templates.templateTypes.invoice")
-                  : (item.templateType as string) === "PROFORMA"
-                    ? t("pages.other.templates.templateTypes.proforma")
-                    : (item.templateType as string) === "RECEIVE"
-                      ? t("pages.other.templates.templateTypes.receive")
-                      : "N/A"}
-              </StatusIcon>
-            ),
+            component: (item) => {
+              const templateType = item.templateType as string;
+              return (
+                <StatusIcon status={templateType}>
+                  {templateType === "INVOICE"
+                    ? t("pages.other.templates.templateTypes.invoice")
+                    : templateType === "PROFORMA"
+                      ? t("pages.other.templates.templateTypes.proforma")
+                      : templateType === "RECEIVE"
+                        ? t("pages.other.templates.templateTypes.receive")
+                        : "N/A"}
+                </StatusIcon>
+              );
+            },
           },
         ]}
         totalItems={getModelCount("Template")}

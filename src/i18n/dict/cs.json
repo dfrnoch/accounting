@@ -42,7 +42,7 @@
         "retrieve_by_cin": "Po zadání správného IČA se načte zbytek údajů automaticky"
       }
     },
-    "error_creating_ompany": "Při vytváření firmy došlo k chybě. Zkuste to prosím znovu.",
+    "error_creating_company": "Při vytváření firmy došlo k chybě. Zkuste to prosím znovu.",
     "company_created": "Firma byla úspěšně vytvořena"
   },
   "table": {
@@ -211,7 +211,8 @@
         "number": "Číslo dokumentu",
         "client": "Klient",
         "total": "Cena",
-        "date": "Datum vystavení"
+        "date": "Datum vystavení",
+        "status": "Status"
       },
       "document": {
         "title": {

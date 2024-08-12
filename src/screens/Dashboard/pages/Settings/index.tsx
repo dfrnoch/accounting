@@ -61,7 +61,7 @@ const Settings: Component = () => {
         </Show>
         <Show when={currentSection() === 2}>
           <div class="flex gap-4 justify-center items-center mt-20">
-            <Box onClick={() => setLocale(LANG.CS)} active={locale() === LANG.CS} icon="🇨🇿">
+            <Box onClick={() => setLocale(LANG.CZ)} active={locale() === LANG.CZ} icon="🇨🇿">
               Čeština
             </Box>
             <Box onClick={() => setLocale(LANG.EN)} active={locale() === LANG.EN} icon="🇬🇧">

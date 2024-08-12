@@ -11,7 +11,7 @@ import {
   For,
 } from "solid-js";
 import PageHeader from "@/screens/Dashboard/components/PageHeader";
-import { useI18n } from "@/i18n";
+import { useI18n, locale } from "@/i18n";
 import { useNavigate, useParams } from "@solidjs/router";
 import HeaderButton from "@/screens/Dashboard/components/PageHeader/HeaderButton";
 import { createCodeMirror, createEditorControlledValue } from "solid-codemirror";
@@ -21,13 +21,12 @@ import { liquid } from "@codemirror/lang-liquid";
 import { material } from "@uiw/codemirror-theme-material";
 import { createTemplate, deleteTemplate, getTemplate, updateTemplate } from "@/bindings";
 import toast from "solid-toast";
-import { FiEye, FiList, FiSettings, FiTrash } from "solid-icons/fi";
+import { FiList, FiSettings, FiTrash } from "solid-icons/fi";
 import TemplateHint from "@/screens/Dashboard/components/TemplateHint";
 import { createForm } from "@tanstack/solid-form";
 import Form from "@/shared/components/Form";
 import Section from "@/shared/components/Form/Section";
 import Input from "@/shared/components/Form/Input";
-import PdfRenderer from "@/shared/components/PdfRenderer";
 import Dropdown from "@/shared/components/Form/Dropdown";
 import Box from "@/shared/components/Box";
 import { templatesHtml } from "@/constants";
@@ -45,15 +44,15 @@ const ManageTemplate: Component = () => {
     { id: 2, name: t("setup.step2.template.modern"), icon: "📊" },
     { id: 3, name: t("setup.step2.template.creative"), icon: "🎨" },
   ];
+  const [templateCode, setTemplateCode] = createSignal(templatesHtml[locale() === "cs-CZ" ? "cz" : "en"][0].code);
 
   createEffect(() => {
-    const template = templatesHtml.cz.find((t) => t.id === activeTemplate());
+    const lang = locale() === "cs-CZ" ? "cz" : "en";
+    const template = templatesHtml[lang].find((t) => t.id === activeTemplate());
     if (template) {
       setTemplateCode(template.code);
     }
   });
-
-  const [templateCode, setTemplateCode] = createSignal(templatesHtml.cz[0].code);
 
   const form = createForm<{
     name: string;

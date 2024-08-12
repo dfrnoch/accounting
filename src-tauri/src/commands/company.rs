@@ -107,6 +107,7 @@ pub struct ManageCompanyData {
     bank_iban: Option<String>,
     new_password: Option<String>,
     old_password: Option<String>,
+    template_code: Option<String>,
 }
 
 #[tauri::command]
@@ -160,11 +161,8 @@ pub async fn create_company(
     let template = client
         .template()
         .create(
-            "Default Invoice".to_string(),
-            "
-            TODO
-            "
-            .to_string(),
+            "Invoice Template".to_string(),
+            data.template_code.unwrap_or("default".to_string()),
             company::id::equals(company.id),
             vec![],
         )
