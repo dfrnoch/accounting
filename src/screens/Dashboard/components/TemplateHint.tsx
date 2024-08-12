@@ -15,6 +15,7 @@ const TemplateBuilderHint: Component<{ data?: object }> = (props) => {
 
   const hints = {
     number: t("hints.number"),
+    subject: t("hints.subject"),
     client: {
       name: t("hints.client.name"),
       cin: t("hints.client.cin"),
@@ -37,7 +38,7 @@ const TemplateBuilderHint: Component<{ data?: object }> = (props) => {
       email: t("hints.company.email"),
       phone: t("hints.company.phone"),
       bankAccount: t("hints.company.bankAccount"),
-      IBAN: t("hints.company.iban"),
+      bankIban: t("hints.company.iban"),
     },
     currency: {
       code: t("hints.currency.code"),

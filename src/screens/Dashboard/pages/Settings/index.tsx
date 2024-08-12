@@ -21,9 +21,9 @@ import SearchDropdown from "@/shared/components/Form/SearchDropdown";
 import Button from "@/shared/components/Button";
 import Container from "../../components/Container";
 import Section from "@/shared/components/Form/Section";
-import Box from "@/screens/Setup/components/Box";
 import { LANG } from "@/constants";
 import { zodValidator } from "@tanstack/zod-form-adapter";
+import Box from "@/shared/components/Box";
 
 const Settings: Component = () => {
   const [t] = useI18n();

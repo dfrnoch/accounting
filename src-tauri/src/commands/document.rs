@@ -18,6 +18,7 @@ use serde::{Deserialize, Serialize};
 pub struct DocumentWithPrice {
     id: i32,
     number: String,
+    subject: String,
     document_type: String,
     client: String,
     template_id: i32,
@@ -77,6 +78,7 @@ pub async fn get_documents(
             DocumentWithPrice {
                 id: doc.id,
                 number: doc.number,
+                subject: doc.subject,
                 document_type: doc.document_type,
                 client: doc
                     .client
@@ -135,6 +137,7 @@ pub async fn create_document(client: DbState<'_>, data: document::Data) -> Resul
         .document()
         .create(
             data.number,
+            data.subject,
             data.document_type,
             client::id::equals(data.client_id),
             template::id::equals(data.template_id),
@@ -191,6 +194,7 @@ pub async fn update_document(client: DbState<'_>, data: document::Data) -> Resul
             document::id::equals(data.id),
             vec![
                 document::number::set(data.number),
+                document::subject::set(data.subject),
                 document::document_type::set(data.document_type),
                 document::client_id::set(data.client_id),
                 document::template_id::set(data.template_id),

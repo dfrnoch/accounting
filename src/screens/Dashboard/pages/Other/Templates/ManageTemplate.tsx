@@ -38,7 +38,7 @@ const ManageTemplate: Component = () => {
   const [t] = useI18n();
   const [showSettings, setShowSettings] = createSignal(false);
   const [showHints, setShowHints] = createSignal(false);
-  const [showPreview, setShowPreview] = createSignal(false);
+  const [activeTemplate, setActiveTemplate] = createSignal(1);
 
   const templates = [
     { id: 1, name: t("setup.step2.template.basic"), icon: "📄" },
@@ -46,7 +46,14 @@ const ManageTemplate: Component = () => {
     { id: 3, name: t("setup.step2.template.creative"), icon: "🎨" },
   ];
 
-  const [templateCode, setTemplateCode] = createSignal("");
+  createEffect(() => {
+    const template = templatesHtml.cz.find((t) => t.id === activeTemplate());
+    if (template) {
+      setTemplateCode(template.code);
+    }
+  });
+
+  const [templateCode, setTemplateCode] = createSignal(templatesHtml.cz[0].code);
 
   const form = createForm<{
     name: string;
@@ -168,7 +175,11 @@ const ManageTemplate: Component = () => {
             <Section title={t("pages.other.templates.sections.selectTemplate")} columns={1}>
               <For each={templates}>
                 {(template) => (
-                  <Box onClick={() => setTemplateCode(templatesHtml.cz[1])} icon={template.icon}>
+                  <Box
+                    active={activeTemplate() === template.id}
+                    onClick={() => setActiveTemplate(template.id)}
+                    icon={template.icon}
+                  >
                     {template.name}
                   </Box>
                 )}
@@ -178,7 +189,7 @@ const ManageTemplate: Component = () => {
         </SidePopup>
       </div>
       {/* <Show when={showPreview()}>
-        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center ">
+        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
           <div class="bg-white rounded max-w-4xl p-4 shadow-xl w-full max-h-full overflow-auto">
             <PdfRenderer data={mockData} />
           </div>

@@ -75,6 +75,7 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
     defaultValues: {
       id: 0,
       number: generateDocumentNumber(getDocumentPrefix(), getDocumentCounter()),
+      subject: "",
       clientId: undefined as number | undefined,
       templateId: settingsService.settings.defaultTemplate.id,
       documentType: props.type,
@@ -146,6 +147,16 @@ const ManageDocument: Component<ManageDocumentProps> = (props) => {
               defaultValue={field().state.value}
               onChange={(data) => field().handleChange(data)}
               errors={field().state.meta.errors}
+            />
+          )}
+        </form.Field>
+        <form.Field name="subject">
+          {(field) => (
+            <Input
+              type="text"
+              label={t("pages.sales.document.subject")}
+              defaultValue={field().state.value}
+              onChange={(data) => field().handleChange(data)}
             />
           )}
         </form.Field>

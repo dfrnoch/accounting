@@ -187,6 +187,7 @@
           "overdue": "Overdue"
         },
         "dates": "Dates",
+        "subject": "Subject",
         "issueDate": "Issue Date",
         "dueDate": "Due Date",
         "dueDateError": "Due date must be today or later",
@@ -267,6 +268,7 @@
       "array": "Array"
     },
     "number": "Invoice number",
+    "subject": "Invoice subject",
     "client": {
       "name": "Client name",
       "cin": "Client identification number",

@@ -46,6 +46,7 @@ export async function getDocuments(indicies: Indicies, documentType?: DocumentTy
 export type ManageDocumentData = {
   id?: number;
   number: string;
+  subject: string;
   clientId: number;
   templateId: number;
   documentType: DocumentType;
@@ -280,6 +281,7 @@ export type ManageCompanyData = {
 export interface Document {
   id: number;
   number: string;
+  subject: string;
   clientId: number;
   templateId: number;
   currencyId: string;

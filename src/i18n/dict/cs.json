@@ -240,6 +240,7 @@
           "overdue": "Po splatnosti"
         },
         "dates": "Data",
+        "subject": "Předmět",
         "issueDate": "Datum vystavení",
         "dueDate": "Datum splatnosti",
         "dueDateError": "Datum splatnosti musí být dnes nebo později",
@@ -264,6 +265,7 @@
       "array": "Pole"
     },
     "number": "Číslo faktury",
+    "subject": "Předmět faktury",
     "client": {
       "name": "Jméno klienta",
       "cin": "IČO klienta",
