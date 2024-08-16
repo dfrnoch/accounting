@@ -7,7 +7,7 @@ use std::path::PathBuf;
 /// - config.toml
 pub fn get_app_dir() -> PathBuf {
     // get app dir with /accounting. use std libary
-    let path = platform_dirs::AppDirs::new(Some("accounting"), true).unwrap();
+    let path = platform_dirs::AppDirs::new(Some("accountingdata"), true).unwrap();
     let mut data_dir = path.data_dir;
 
     // check if in dev mode
