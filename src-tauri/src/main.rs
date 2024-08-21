@@ -34,7 +34,7 @@ use window_ext::{ToolbarThickness, WindowExt};
 use window_vibrancy::NSVisualEffectMaterial;
 
 #[cfg(target_os = "windows")]
-use window_vibrancy::apply_acrylic;
+use window_vibrancy::apply_blur;
 #[cfg(target_os = "macos")]
 use window_vibrancy::apply_vibrancy;
 
@@ -85,8 +85,8 @@ async fn main() {
                 .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
 
             #[cfg(target_os = "windows")]
-            apply_acrylic(&window)
-                .expect("Unsupported platform! 'apply_acrylic' is only supported on Windows");
+            apply_blur(&window, None)
+                .expect("Unsupported platform! 'apply blur' is only supported on Windows");
 
             Ok(())
         })

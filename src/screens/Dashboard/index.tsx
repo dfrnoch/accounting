@@ -36,7 +36,12 @@ const Dashboard: ParentComponent = (props) => {
   const [company] = createResource(state.companyId, fetchCompany);
 
   return (
-    <div class="flex flex-row items-start w-screen">
+    <div class="flex flex-row items-start w-screen"
+    classList={{
+      "dark:bg-neutral-800/70 bg-neutral-100/70": state.platform === "windows",
+    }
+    }
+    >
       <Suspense fallback={<LoadingIcon />}>
         <Show when={company()}>
           <Sidebar />

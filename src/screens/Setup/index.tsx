@@ -24,7 +24,7 @@ const SetupWizard: Component = () => {
   const [t] = useI18n();
   const [currentStep, setCurrentStep] = createSignal(Number(params.step) || 0);
   const navigate = useNavigate();
-  const updateState = useSelector((state) => state.stateService.updateState);
+  const stateService = useSelector((state) => state.stateService);
 
   const templates = [
     { id: 1, name: t("setup.step2.template.basic"), icon: "📄" },
@@ -56,7 +56,7 @@ const SetupWizard: Component = () => {
       try {
         const result = await createCompany(userData.value);
 
-        updateState({ companyId: result });
+        stateService.updateState({ companyId: result });
         toast.success(t("setup.company_created"));
         navigate("/");
       } catch (error) {
@@ -78,7 +78,11 @@ const SetupWizard: Component = () => {
   };
 
   return (
-    <div class="flex justify-center items-end w-screen h-screen px-3 pt-37px pb-3" data-tauri-drag-region>
+    <div class="flex justify-center items-end w-screen h-screen px-3 pt-37px pb-3" data-tauri-drag-region
+    classList={{
+      "dark:bg-neutral-900/40 bg-neutral-100/20": stateService.state.platform === "windows",
+    }}
+    >
       <div class="absolute top-0 left-0 w-full bg-transparent h-37px z-30 " data-tauri-drag-region>
         <Show when={!params.step}>
           <ProgressDots count={3} active={currentStep()} />

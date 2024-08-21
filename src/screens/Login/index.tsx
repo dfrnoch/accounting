@@ -48,7 +48,11 @@ const Login: Component = () => {
   };
 
   return (
-    <div class="w-screen h-screen flex flex-col justify-center items-center" data-tauri-drag-region>
+    <div class="w-screen h-screen flex flex-col justify-center items-center" data-tauri-drag-region
+    classList={{
+      "dark:bg-neutral-900/40 bg-neutral-100/20": stateService.state.platform === "windows",
+    }}
+    >
       <div class="w-96 bg-primary rounded-lg shadow-xl flex flex-col items-center justify-between p-6 gap-4">
         <h2 class="text-2xl font-bold text-primary">{t("pages.login.manageAccounts")}</h2>
         <p class="text-sm text-secondary -mt-2">{t("pages.login.switchAccountsDescription")}</p>

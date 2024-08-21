@@ -119,7 +119,7 @@ pub async fn create_company(
 
     let password_hash = match data.new_password {
         Some(password) => Some(
-            hash(password, DEFAULT_COST).map_err(|e| QueryError::PasswordHashing(e.to_string()))?,
+            hash(password, DEFAULT_COST).map_err(|e| CoreError::PasswordHashingError(e.to_string())).unwrap(),
         ),
         None => None,
     };
