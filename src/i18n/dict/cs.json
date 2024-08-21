@@ -362,6 +362,7 @@
   },
   "other": {
     "save": "Uložit",
+    "edit": "Upravit",
     "delete": "Smazat"
   }
 }

@@ -367,6 +367,7 @@
   },
   "other": {
     "save": "Save",
+    "edit": "Upravit",
     "delete": "Delete"
   }
 }
