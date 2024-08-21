@@ -65,7 +65,7 @@ const ClientDetail: Component = () => {
                 field: "templateType",
                 header: t("pages.other.clients.table.type"),
                 component: (item) => (
-                  <StatusIcon>
+                  <StatusIcon status={(item.documentType as string) === "INVOICE" ? "success" : "warning"}>
                     {(item.documentType as string) === "INVOICE"
                       ? t("pages.other.templates.templateTypes.invoice")
                       : (item.documentType as string) === "PROFORMA"
