@@ -5,7 +5,7 @@ import Input from "@/shared/components/Form/Input";
 import { useSelector } from "@/store";
 import { useNavigate } from "@solidjs/router";
 import { FiCheck, FiLock } from "solid-icons/fi";
-import { createSignal, For, onMount, type Component, Show } from "solid-js";
+import { createSignal, For, onMount, type Component, Show, createEffect } from "solid-js";
 import { Motion, Presence } from "solid-motionone";
 import toast from "solid-toast";
 
@@ -19,7 +19,7 @@ const Login: Component = () => {
   const [t] = useI18n();
   const stateService = useSelector((state) => state.stateService);
 
-  onMount(async () => {
+  createEffect(async () => {
     const data = await getCompanies();
     console.log(data);
     setCompanies(data);
