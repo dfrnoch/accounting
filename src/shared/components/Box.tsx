@@ -5,9 +5,8 @@ const Box: ParentComponent<{ onClick: () => void; active?: boolean; icon: string
     <div
       onclick={props.onClick}
       classList={{
-        "items-center py-4 border text-primary border-neutral-900 rounded-md shadow-inner bg-neutral-900 px-10 transition cursor-pointer flex flex-col gap-2": true,
-        "bg-pimary": props.active,
-        "bg-primary": !props.active,
+        "items-center py-4 border text-primary border-neutral-900 rounded-md shadow-inner  px-10 transition cursor-pointer flex flex-col gap-2": true,
+        "bg-secondary": props.active,
       }}
     >
       <p class="text-3xl">{props.icon}</p>
