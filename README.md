@@ -23,6 +23,7 @@
 ## Overview
 
 The Accounting App is a desktop application built with Tauri, SolidJS and TypeScript. It is designed to help small businesses manage their finances, invoices and accounting.
+![Screenshot 2024-09-05 at 16 54 24](https://github.com/user-attachments/assets/bb0f3b4c-eb73-4aa6-9654-cd16fe8b02a2)
 
 ## Tech Stack
 
